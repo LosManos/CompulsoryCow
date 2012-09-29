@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow", "CompulsoryCow\CompulsoryCow.csproj", "{6E35CAC1-2B16-4A16-B653-EE19DEBBED91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringExtensionTest", "StringExtensionTest\StringExtensionTest.csproj", "{AFDED7A6-E932-441F-A98C-FEE85A88D83E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E35CAC1-2B16-4A16-B653-EE19DEBBED91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E35CAC1-2B16-4A16-B653-EE19DEBBED91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E35CAC1-2B16-4A16-B653-EE19DEBBED91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E35CAC1-2B16-4A16-B653-EE19DEBBED91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFDED7A6-E932-441F-A98C-FEE85A88D83E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFDED7A6-E932-441F-A98C-FEE85A88D83E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFDED7A6-E932-441F-A98C-FEE85A88D83E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFDED7A6-E932-441F-A98C-FEE85A88D83E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
