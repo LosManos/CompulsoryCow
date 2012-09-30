@@ -124,5 +124,11 @@ namespace StringExtensionTest
 			Assert.Fail("Create a thorough test for how the format string is parsed and understood.");
 		}
 
+		[TestMethod]
+		public void FormatFormatstringAndParametersFail()
+		{
+			var res = "{82CE0089-A9F1-489F-81B9-8271D0EFE26E}".SFormat();
+			Assert.AreEqual( "Failed formatting. Format string '{82CE0089-A9F1-489F-81B9-8271D0EFE26E}' and its parameter(s){} was not formattable." , res );
+		}
     }
 }
