@@ -80,7 +80,6 @@ namespace StringExtensionTest
 
 		private class MyClass
 		{
-			//public string MyProperty { get; set; }
 			public override string ToString()
 			{
 				throw new Exception("Exception created for unit testing use.");
@@ -118,17 +117,18 @@ namespace StringExtensionTest
 		}
 
 		[TestMethod]
-		public void FormatStringParser()
-		{
-			//	How do we get inside to internal functions without making teh method public. Protected?  Special method attribute?  Reflection?  Obsolete flag?
-			Assert.Fail("Create a thorough test for how the format string is parsed and understood.");
-		}
-
-		[TestMethod]
 		public void FormatFormatstringAndParametersFail()
 		{
 			var res = "{82CE0089-A9F1-489F-81B9-8271D0EFE26E}".SFormat();
 			Assert.AreEqual( "Failed formatting. Format string '{82CE0089-A9F1-489F-81B9-8271D0EFE26E}' and its parameter(s){} was not formattable." , res );
 		}
-    }
+
+		//[TestMethod]
+		//public void FormatStringParser()
+		//{
+		//	//	How do we get inside to internal functions without making teh method public. Protected?  Special method attribute?  Reflection?  Obsolete flag?
+		//	Assert.Fail("Create a thorough test for how the format string is parsed and understood.");
+		//}
+
+	}
 }

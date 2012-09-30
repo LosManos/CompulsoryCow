@@ -14,10 +14,6 @@ namespace CompulsoryCow.StringExtension
 		private const string ParametersAre = "Parameter(s) was/were:";
 		private const string ParametersMissing = "Parameter(s) missing.";
 
-//#if DEBUG
-//		private const string ExceptionGuid = "{E981C86F-C8D5-46AC-84FB-1AB281A2390B}";
-//#endif
-
 		public static string SFormat(this string format, params object[] parts)
 		{
 			//  Since we know that the SafeFormat handles _all_ exceptions we don't have to try-catch here.
@@ -63,6 +59,11 @@ namespace CompulsoryCow.StringExtension
 			}
 		}
 
+		private static int FormatElementCount(string format)
+		{
+			return Regex.Matches(StringOrEmpty(format), @"\{[0-9]+(,[0-9]+)?(:\w+)?\}").Count;	// http://msdn.microsoft.com/en-us/library/txafckwd.aspx
+		}
+
 		private static string FormatFormatstringAndParameters(string formatString, List<object> partList, Exception exc)
 		{
 			//  We've got an error.  Find out which type of error and format accordingly.
@@ -98,11 +99,6 @@ namespace CompulsoryCow.StringExtension
 			return FailedFormatting + " Format string '" + formatString + "' and its parameter(s)" + FormatParameters(partList) + " was not formattable.";
 		}
 
-		private static bool IsThereTooManyParameters(string formatString, List<object> partList)
-		{
-			return partList.Count() > FormatElementCount(formatString);
-		}
-
 		private static string FormatParameters(List<object> partList)
 		{
 			var lst = new List<string>();
@@ -119,19 +115,19 @@ namespace CompulsoryCow.StringExtension
 			return "{" + string.Join(",", lst) + "}";
 		}
 
-		private static string StringOrEmpty(string arg)
-		{
-			return null == arg ? string.Empty : arg;
-		}
-
 		private static bool IsArgumentElementMissing(string format, List<object> partList)
 		{
 			return FormatElementCount(format) > partList.Count();
 		}
 
-		private static int FormatElementCount(string format)
+		private static bool IsThereTooManyParameters(string formatString, List<object> partList)
 		{
-			return Regex.Matches(StringOrEmpty(format), @"\{[0-9]+\}").Count;
+			return partList.Count() > FormatElementCount(formatString);
+		}
+
+		private static string StringOrEmpty(string arg)
+		{
+			return null == arg ? string.Empty : arg;
 		}
 
 	}
