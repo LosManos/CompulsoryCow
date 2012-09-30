@@ -134,17 +134,5 @@ namespace CompulsoryCow.StringExtension
 			return Regex.Matches(StringOrEmpty(format), @"\{[0-9]+\}").Count;
 		}
 
-		//private static int PartsLength(object[] parts)
-		//{
-		//	if (null == parts)
-		//	{
-		//		return 0;
-		//	}
-		//	else
-		//	{
-		//		return parts.Length;
-		//	}
-		//}
-
 	}
 }
