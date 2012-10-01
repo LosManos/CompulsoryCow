@@ -1,6 +1,8 @@
 CompulsoryCow
 =============
 
+License GPLv3
+
 Useful functionality in C#.  Will in the future take over from CompulsoryCat (http://code.google.com/p/compulsorycat/) of [Selfelected](http://www.selfelected.com) fame.
 
 It will contain
