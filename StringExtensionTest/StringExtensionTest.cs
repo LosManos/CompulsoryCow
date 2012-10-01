@@ -5,7 +5,7 @@ using CompulsoryCow.StringExtension;
 namespace StringExtensionTest
 {
     [TestClass]
-    public class UnitTest1
+    public class StringExtensionTest
     {
         [TestMethod]
         public void NormalSucceed()
