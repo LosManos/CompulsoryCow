@@ -54,7 +54,8 @@
     <Compile Include="..\CompulsoryCow\Properties\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
-    <Compile Include="StringExtensionTest.cs" />
+    <Compile Include="SplitAtExtensionsTest.cs" />
+    <Compile Include="SafeFormatExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

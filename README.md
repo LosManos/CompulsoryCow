@@ -5,8 +5,11 @@ License GPLv3
 
 Useful functionality in C#.  Will in the future take over from CompulsoryCat (http://code.google.com/p/compulsorycat/) of [Selfelected](http://www.selfelected.com) fame.
 
-It will contain
-* a [string.Format method](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#stringformat-that-doesnt-crash) that can't throw exception.
+It contains now:
+* a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception.
+It will contain in the future:
+* a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index.
+* [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
 * [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
 
 ### string.Format that doesn't crash
@@ -49,6 +52,22 @@ log.Error( string.Format( "Method {0} threw an exception with message {1}", meth
 throws an exception.  Resharper warns you but without such a tool you will get a string formatting? exception at runtime and the real exception wasn't logged.
 That is why you have unit tests you might say but 1) do you really have 100% test coveraget and 2) if you know the method succeeds no test is needed.
 
-### Meta info help 
+### SplitAt
+
+Split a string at a certain index.
+```csharp
+"SplitAt".SplitAt(5) => [ "Split", "At" ]
+```
+
+### Left and Right
+
+Feel free to take Left and Right of a string without being afraid of stepping outside the string length as we are with Substr.
+```csharp
+"SplitAt".Left(5) => "Split"
+"SplitAt".Right(2) => "At"
+"SplitAt".Left(100) => "SplitAt"
+```
+
+### Meta info helper 
 For instance get the name of a method of property without writing a string that later might be wrong when the method name is updated.
 Not yet implemented at github.  Code resided at [code.google](http://code.google.com/p/compulsorycat/) for the time being.
