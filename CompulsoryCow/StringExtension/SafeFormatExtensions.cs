@@ -9,7 +9,7 @@ namespace CompulsoryCow.StringExtension
 {
 	/// <summary>This class contains methods for the non-exceptions-throwing string.Format behave-alike method.
 	/// </summary>
-	public static class StringExtension
+	public static class SafeFormatExtensions
 	{
 		private const string FailedFormatting = "Failed formatting.";
 		private const string FormatStringEmpty = "Format string was empty.";

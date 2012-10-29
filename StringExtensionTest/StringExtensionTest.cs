@@ -74,7 +74,7 @@ namespace StringExtensionTest
         [TestMethod]
         public void StaticMethod()
         {
-            var res = CompulsoryCow.StringExtension.StringExtension.SafeFormat("a{0}c", "b");
+            var res = CompulsoryCow.StringExtension.SafeFormatExtensions.SafeFormat("a{0}c", "b");
             Assert.AreEqual("abc", res);
         }
 
@@ -96,7 +96,7 @@ namespace StringExtensionTest
 		[TestMethod]
 		public void ForceOuterExcpetionStatic()
 		{
-			var res = CompulsoryCow.StringExtension.StringExtension.SafeFormat( "a{0}c", new MyClass());
+			var res = CompulsoryCow.StringExtension.SafeFormatExtensions.SafeFormat( "a{0}c", new MyClass());
 			Assert.AreEqual("Exception created for unit testing use.", res);
 		}
 
@@ -113,7 +113,7 @@ namespace StringExtensionTest
 		public void ExceptionThrownStatic()
 		{
 			Tuple<int> myObject = null;
-			var res = CompulsoryCow.StringExtension.StringExtension.SafeFormat( "a{0}c", myObject.Item1);
+			var res = CompulsoryCow.StringExtension.SafeFormatExtensions.SafeFormat( "a{0}c", myObject.Item1);
 		}
 
 		[TestMethod]
