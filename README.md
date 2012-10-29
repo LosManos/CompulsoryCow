@@ -8,7 +8,7 @@ Useful functionality in C#.  Will in the future take over from CompulsoryCat (ht
 It contains now:
 * a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception.
 It will contain in the future:
-* a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index.
+* a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
 * [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
 * [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
 
@@ -57,6 +57,11 @@ That is why you have unit tests you might say but 1) do you really have 100% tes
 Split a string at a certain index.
 ```csharp
 "SplitAt".SplitAt(5) => [ "Split", "At" ]
+```
+
+Split a string at a certain string.
+```csharp
+"SplitAt".SplitAt("it") => [ "Spl", "At" ]
 ```
 
 ### Left and Right

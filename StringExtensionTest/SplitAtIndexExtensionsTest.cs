@@ -8,10 +8,10 @@ using CompulsoryCow.StringExtension;
 namespace StringExtensionTest
 {
     [TestClass]
-    public class SplitAtExtensionsTest
+    public class SplitAtIndexExtensionsTest
     {
         [TestMethod]
-        public void NormalSucceed()
+        public void SplitAtIndexNormalSucceed()
         {
             var res = "".SplitAt(0);
             Assert.AreEqual(new Tuple<string, string>("", ""), res);
@@ -40,5 +40,5 @@ namespace StringExtensionTest
         public void IndexTooBig(){
             "abc".SplitAt( 4 );
         }
-}
+    }
 }
