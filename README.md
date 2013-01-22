@@ -14,7 +14,7 @@ It will contain in the future:
 * [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
 * [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
 
-### string.Format that doesn't crash
+### string.Format that does not crash
 ##### The problem solved
 string.Format _throws an exception_ when the {n} are more than the arguments.  Throwing an exception might be ok during the development phase but maybe not later on; especially during production when logging to a file.
 Read this again:  If a system is running in production the log files are often the only way to search for problems.  _We want the logging to log, not throw exception._
@@ -78,6 +78,8 @@ var myObject = CompulsoryCow.Deserialize<MyClass>( myXmlString );
 ```
 
 ### SplitAt
+##### The problem solved
+Splitting a string is often needed.  The built in Split method cannot split at a certain index or with a string as splitter.
 
 Split a string at a certain index.
 ```csharp
@@ -90,6 +92,8 @@ Split a string at a certain string.
 ```
 
 ### Left and Right
+##### The problem solved
+Today's functionality for taking left and right of a string is not as easy as Left$(mystring) and Right$(mystring) from the BASIC hey days.
 
 Feel free to take Left and Right of a string without being afraid of stepping outside the string length as we are with Substr.
 ```csharp
