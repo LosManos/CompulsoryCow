@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Deserializer.cs" />
     <Compile Include="Properties\AssemblyInfo.shared.cs" />
+    <Compile Include="Serializer.cs" />
     <Compile Include="StringExtension\SafeFormatExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtension\SplitAtExtension.cs" />

@@ -7,6 +7,8 @@ Useful functionality in C#.  Will in the future take over from CompulsoryCat (ht
 
 It contains now:
 * a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception.
+* a [serialize to XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#Seralize.ToXml)
+* a [deseerialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#Deseralize.FromXml)
 It will contain in the future:
 * a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
 * [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
@@ -36,11 +38,11 @@ but if one prefers the string.Format way then there is now a safe way to do it.
 Besides; what happens if whatchagot is null?  Exception...
 
 ##### Remaining bugs and caveats
-* CompulsoryCow [does not handle escaped {](https://github.com/LosManos/CompulsoryCow/issues/1).  
+* SFormat [does not handle escaped {](https://github.com/LosManos/CompulsoryCow/issues/1).  
 * As long as there is no [null dot operator](http://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/2216723-automaticaly-check-object-nullity-before-access-so)
 ```csharp
 class MyClass{
-    MyProp{ get; set; }
+    string MyProp{ get; set; }
 }
 MyClass myObject = null;
 "This {0} fail".SFormat( myObject.MyProp );
@@ -51,6 +53,25 @@ will fail no matter which method one uses.
 log.Error( string.Format( "Method {0} threw an exception with message {1}", methodName ) );
 throws an exception.  Resharper warns you but without such a tool you will get a string formatting? exception at runtime and the real exception wasn't logged.
 That is why you have unit tests you might say but 1) do you really have 100% test coveraget and 2) if you know the method succeeds no test is needed.
+
+### Seralize.ToXml
+
+```csharp
+class MyClass{
+    string MyProp{ get; set; }
+}
+var myObject = new MyClass{ MyProp = "asdf"};
+var xmlDocument = CompulsoryCow.Serialize( myObject );
+```
+
+### Deseralize.FromXml
+
+```csharp
+class MyClass{
+    string MyProp{ get; set; }
+}
+var myObject = CompulsoryCow.Deserialize<MyClass>( myXmlString );
+```
 
 ### SplitAt
 

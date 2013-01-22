@@ -74,7 +74,7 @@ namespace StringExtensionTest
         [TestMethod]
         public void StaticMethod()
         {
-            var res = CompulsoryCow.StringExtension.SafeFormatExtensions.SafeFormat("a{0}c", "b");
+            var res = SafeFormatExtensions.SafeFormat("a{0}c", "b");
             Assert.AreEqual("abc", res);
         }
 
@@ -96,7 +96,7 @@ namespace StringExtensionTest
 		[TestMethod]
 		public void ForceOuterExcpetionStatic()
 		{
-			var res = CompulsoryCow.StringExtension.SafeFormatExtensions.SafeFormat( "a{0}c", new MyClass());
+			var res = SafeFormatExtensions.SafeFormat( "a{0}c", new MyClass());
 			Assert.AreEqual("Exception created for unit testing use.", res);
 		}
 
@@ -105,7 +105,11 @@ namespace StringExtensionTest
 		public void ExceptionThrown()
 		{
 			Tuple<int> myObject = null;
+// ReSharper disable PossibleNullReferenceException
+#pragma warning disable 168
 			var res = "a{0}c".SFormat(myObject.Item1) ;
+#pragma warning restore 168
+// ReSharper restore PossibleNullReferenceException
 		}
 
 		[TestMethod]
@@ -113,7 +117,11 @@ namespace StringExtensionTest
 		public void ExceptionThrownStatic()
 		{
 			Tuple<int> myObject = null;
-			var res = CompulsoryCow.StringExtension.SafeFormatExtensions.SafeFormat( "a{0}c", myObject.Item1);
+// ReSharper disable PossibleNullReferenceException
+#pragma warning disable 168
+			var res = SafeFormatExtensions.SafeFormat( "a{0}c", myObject.Item1);
+#pragma warning restore 168
+// ReSharper restore PossibleNullReferenceException
 		}
 
 		[TestMethod]
