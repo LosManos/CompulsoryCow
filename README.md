@@ -55,6 +55,8 @@ throws an exception.  Resharper warns you but without such a tool you will get a
 That is why you have unit tests you might say but 1) do you really have 100% test coveraget and 2) if you know the method succeeds no test is needed.
 
 ### Seralize.ToXml
+##### The problem solved
+Every time one wants to serialise an object to XML one has to go google hunting.  With this method it is already solved and unit tested.
 
 ```csharp
 class MyClass{
@@ -65,6 +67,8 @@ var xmlDocument = CompulsoryCow.Serialize( myObject );
 ```
 
 ### Deseralize.FromXml
+##### The problem solved
+Every time one wants to deserialise an object from XML one has to go google hunting.  With this method it is already solved and unit tested.
 
 ```csharp
 class MyClass{
