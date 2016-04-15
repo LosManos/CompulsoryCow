@@ -43,6 +43,7 @@
     <Compile Include="Deserializer.cs" />
     <Compile Include="Properties\AssemblyInfo.shared.cs" />
     <Compile Include="Serializer.cs" />
+    <Compile Include="StringExtensions\LeftExtensions.cs" />
     <Compile Include="StringExtensions\SafeFormatExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions\SplitAtExtensions.cs" />

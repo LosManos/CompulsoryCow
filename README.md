@@ -10,9 +10,9 @@ It presently contains:
 * a [serialize to XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#seralizetoxml)
 * a [deserialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#deseralizefromxml)
 * a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
+* [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
 
 It will contain in the future:
-* [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
 * [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
 
 ### string.Format that does not crash
@@ -25,7 +25,7 @@ string.Format( "We are using {0} many {1}", "too" );
 ```
 Will throw an exception.
 
-Mean while
+Meanwhile
 ```csharp
 "We are using {0} many {1}".SFormat( "too" );
 ```
