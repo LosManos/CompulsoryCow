@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace CompulsoryCow.StringExtension
+namespace CompulsoryCow.StringExtensions
 {
 	/// <summary>This class contains methods for the non-exceptions-throwing string.Format behave-alike method.
 	/// </summary>

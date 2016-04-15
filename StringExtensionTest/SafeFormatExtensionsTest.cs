@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CompulsoryCow.StringExtension;
+using CompulsoryCow.StringExtensions;
 
 namespace StringExtensionTest
 {

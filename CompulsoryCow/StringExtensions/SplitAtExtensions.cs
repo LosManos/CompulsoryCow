@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CompulsoryCow.StringExtension
+namespace CompulsoryCow.StringExtensions
 {
-	public static class SplitAtExtension
+	public static class SplitAtExtensions
     {
         /// <summary>This extension method allows the caller to split a string at a certain index.
         /// E.g.: "abc".SplitAt(1) returns a string Tuple "a", "bc".
