@@ -111,7 +111,8 @@ Not yet implemented at github.  Code resided at [code.google](http://code.google
 #### The problem solved
 Getting meta information in C# can be tricky. Some helper method can come in handy.
 
-*GetCallingMethod*
+*GetCallingMethod*  
+Get information about whatever called your code.
 
 ```
 void MyFirstMethod(){
@@ -120,5 +121,19 @@ void MyFirstMethod(){
 void MySecondMethod(){
 	var callingMethod = CompulsoryCow.ReflectionUtilities.GetCallingMethod();
 	//	callingMethod.Name is now "MyFirstMethod".
+}
+```
+
+*GetProperty*
+Get information about the property you are in.
+```
+class MyClass{
+    public string Title{
+	      get{
+	          //  Just call with this.GetProperty.
+            Log( "The user just called the property" + this.GetProperty().Name );
+            return _title;
+        }
+    }
 }
 ```

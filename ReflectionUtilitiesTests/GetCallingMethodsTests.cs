@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CompulsoryCow;
 using System.Reflection;
 using System;
+using CompulsoryCow;
 
 namespace ReflectionUtilitiesTests
 {
 	[TestClass]
-	public class ReflectionUtilitiesTests
+	public class GetCallingMethodsTests
 	{
 		private class MyClass
 		{
@@ -37,7 +37,7 @@ namespace ReflectionUtilitiesTests
 		public void GetCallingMethod_given_ProperData_should_ReturnCaller()
 		{
 			//	#	Arrange.
-			var myClass = new MyClass(ReflectionUtilities.GetCallingMethod);
+			var myClass = new MyClass(Meta.GetCallingMethod);
 
 			//	#	Act.
 			myClass.A();
