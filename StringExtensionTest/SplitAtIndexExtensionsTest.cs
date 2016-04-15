@@ -1,13 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CompulsoryCow.StringExtension;
 
 namespace StringExtensionTest
 {
-    [TestClass]
+	[TestClass]
     public class SplitAtIndexExtensionsTest
     {
         [TestMethod]

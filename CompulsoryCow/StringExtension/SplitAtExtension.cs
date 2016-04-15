@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CompulsoryCow.StringExtension
 {
-    public static class SplitAtExtension
+	public static class SplitAtExtension
     {
         /// <summary>This extension method allows the caller to split a string at a certain index.
         /// E.g.: "abc".SplitAt(1) returns a string Tuple "a", "bc".
