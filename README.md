@@ -11,6 +11,7 @@ It presently contains:
 * a [deserialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#deseralizefromxml)
 * a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
 * [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
+* a method for retrieving information about the calling method.
 
 It will contain in the future:
 * [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
@@ -106,3 +107,18 @@ Feel free to take Left and Right of a string without being afraid of stepping ou
 ### Meta info helper 
 For instance get the name of a method of property without writing a string that later might be wrong when the method name is updated.
 Not yet implemented at github.  Code resided at [code.google](http://code.google.com/p/compulsorycat/) for the time being.
+
+#### The problem solved
+Getting meta information in C# can be tricky. Some helper method can come in handy.
+
+*GetCallingMethod*
+
+```
+void MyFirstMethod(){
+	MySecondMethod();
+}
+void MySecondMethod(){
+	var callingMethod = CompulsoryCow.ReflectionUtilities.GetCallingMethod();
+	//	callingMethod.Name is now "MyFirstMethod".
+}
+```
