@@ -5,7 +5,7 @@ License LGPLv3
 
 Useful functionality in C#.  Will in the future take over from CompulsoryCat (http://code.google.com/p/compulsorycat/) of [Selfelected](http://www.selfelected.com) fame.
 
-It contains now:
+It presently contains:
 * a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception.
 * a [serialize to XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#seralizetoxml)
 * a [deserialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#deseralizefromxml)
