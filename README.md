@@ -10,12 +10,11 @@ It presently contains:
 * a [serialize to XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#seralizetoxml)
 * a [deserialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#deseralizefromxml)
 * a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
-* [Left and Right](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-and-right) methods behaving as we know from the BASIC heydays.
+* [Left, Right and Mid](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left,-right-and-mid) methods behaving as we know from the BASIC heydays.
 * a method for retrieving information about the calling method.
 
 It will contain in the future:
 * [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
-* Mid method like from classic BASIC.
 
 I might contain in the future:
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
@@ -98,7 +97,7 @@ Split a string at a certain string.
 "SplitAt".SplitAt("it") => [ "Spl", "At" ]
 ```
 
-### Left and Right
+### Left, Right and Mid
 ##### The problem solved
 Today's functionality for taking left and right of a string is not as easy as Left$(mystring) and Right$(mystring) from the BASIC hey days.
 
