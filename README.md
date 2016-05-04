@@ -10,7 +10,7 @@ It presently contains:
 * a [serialize to XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#seralizetoxml)
 * a [deserialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#deseralizefromxml)
 * a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
-* [Left, Right and Mid](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left,-right-and-mid) methods behaving as we know from the BASIC heydays.
+* [Left, Right and Mid](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-right-and-mid) methods behaving as we know from the BASIC heydays.
 * a method for retrieving information about the calling method.
 
 It will contain in the future:
@@ -99,13 +99,16 @@ Split a string at a certain string.
 
 ### Left, Right and Mid
 ##### The problem solved
-Today's functionality for taking left and right of a string is not as easy as Left$(mystring) and Right$(mystring) from the BASIC hey days.
+Today's functionality for taking left, right and mid of a string is not as easy as Left$(mystring,length), Right$(mystring,length) and Mid$(mystring,startIndex,length) from the BASIC hey days.
 
-Feel free to take Left and Right of a string without being afraid of stepping outside the string length as we are with Substr.
+Feel free to take Left, Right and Mid of a string without being afraid of stepping outside the string length as we are with Substr.
 ```csharp
 "SplitAt".Left(5) => "Split"
 "SplitAt".Right(2) => "At"
 "SplitAt".Left(100) => "SplitAt"
+"SplitAt".Mid(4,2) => "tA"
+"SplitAt".Mid(5,100) => "At"
+"SplitAt".Mid(6,3) => "itA"
 ```
 
 ### Meta info helper 
