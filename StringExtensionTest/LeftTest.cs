@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CompulsoryCow.StringExtensions;
 
-namespace SerializerTest
+namespace StringExtensionTest
 {
 	[TestClass]
 	public class LeftTest

@@ -4,7 +4,7 @@ namespace CompulsoryCow.StringExtensions
 {
 	public static class LeftExtensions
 	{
-		/// <summary>This method takes the Left of a string like so:
+		/// <summary>This method takes the Left of a string in the BASIC fashion like so:
 		/// "MyString".Left(2) -- "My"
 		/// If one tries to grab for a longer string than there is the string is returned like so:
 		/// "MyString".Left(100) -- "MyString"

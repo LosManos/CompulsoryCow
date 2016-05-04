@@ -45,6 +45,7 @@
     <Compile Include="Meta.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="StringExtensions\LeftExtensions.cs" />
+    <Compile Include="StringExtensions\MidExtensions.cs" />
     <Compile Include="StringExtensions\RightExtensions.cs" />
     <Compile Include="StringExtensions\SafeFormatExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

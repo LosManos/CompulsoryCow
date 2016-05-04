@@ -4,7 +4,7 @@ namespace CompulsoryCow.StringExtensions
 {
     public static class RightExtensions
     {
-        /// <summary>This method takes the Right of a string like so:
+        /// <summary>This method takes the Right of a string in the BASIC fashion like so:
         /// "MyString".Right(6) -- "String"
         /// If one tries to grab for a longer string than there is the string is returned like so:
         /// "MyString".Right(100) -- "MyString"
