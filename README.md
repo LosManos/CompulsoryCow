@@ -164,10 +164,10 @@ Typically used for unit testing.
 
 ```
 [TestMethod]
-public void CustomerTest()
+public void Customer_given_KnownID_should_HaveIDFlagSet()
 {
 	// Arrange.
-    var sut = new Customer{);
+	var sut = new Customer{);
 	dynamic sutPrivate = new ReachPrivateIn<Customer>(sut);
 
 	sutPrivate.id = 12; // id is a private variable and not reachable ny "normal" code.
