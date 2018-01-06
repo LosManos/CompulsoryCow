@@ -153,15 +153,16 @@ class MyClass{
 Getting information, and manipulating, private fields, properties and methods without having to googlewithbing.
 
 *GetPrivateField, GetPrivateMethod, GetPrivateField*
-...
+```
 var method = Meta.GetPrivateMethod(anObject, "GetCustomer");
 method.Invoke(anObject, new[]{42});
-...
+```
 
 ### ReachPrivateIn
 This *dynamic* class makes it possible to manipulate private fields, properties and methods by just writing normal code.
 Typically used for unit testing.
 
+```
 [TestMethod]
 public void CustomerTest()
 {
@@ -177,3 +178,4 @@ public void CustomerTest()
 	// Assert.
 	Assert.IsTrue(res);
 }
+```
