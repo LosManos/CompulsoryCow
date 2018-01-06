@@ -50,10 +50,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GetPrivateTest.cs" />
     <Compile Include="GetPropertyTests.cs" />
     <Compile Include="GetCallingMethodsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompulsoryCow\CompulsoryCow.csproj">
