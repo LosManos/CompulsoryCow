@@ -1,10 +1,8 @@
-﻿using CompulsoryCow.StringExtensions;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace CompulsoryCow
 {
-	public static class Meta
+    public static class Meta
 	{
 		/// <summary>This method returns information about the calling method.
 		/// It walks the stack wich might be expensive.
@@ -55,5 +53,45 @@ namespace CompulsoryCow
 
 			return property;
 		}
-	}
+
+        /// <summary>This method returns <see cref="FieldInfo"/> for the private field in the parameter.
+        /// </summary>
+        /// <param name="theObject"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static FieldInfo GetPrivateField<T>(T theObject, string name)
+        {
+            return theObject.GetType().GetField(
+                name,
+                BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        /// <summary>This method returns <see cref="MethodInfo"/> for the method in the parameter.
+        /// It does not handle overloaded methods.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="theObject"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static MethodInfo GetPrivateMethod<T>(T theObject, string name)
+        {
+            return theObject.GetType().GetMethod(
+                name,
+                BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        /// <summary>This method returns <see cref="PropertyInfo"/> for the property in the parameter.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="theObject"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetPrivateProperty<T>(T theObject, string name)
+        {
+            return theObject.GetType().GetProperty(
+                name,
+                BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+    }
 }
