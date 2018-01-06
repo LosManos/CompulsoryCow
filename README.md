@@ -1,22 +1,26 @@
 CompulsoryCow
 =============
 
-License LGPLv3
+License LGPLv3.
+Exception to LGPLv3 and the code is not available for companies that create, buy or sell weapons. This includes companies and organisations that are owned by companies making weapons. The list includes, but is not limited to Bofors, Saab and Lockheed Martin.
+Exception to LGPLv3 and the code is not available for countries where torture is allowed or used. The list includes, but is not limited to, Egypt and USA.
+An exeption to the above is where the company or organisation takes an active role in working against weapons, torture regardless of country. The list includes, but is not limited to Amnesty and Greenpeace.
 
 Useful functionality in C#.  Will in the future take over from CompulsoryCat (http://code.google.com/p/compulsorycat/) of [Selfelected](http://www.selfelected.com) fame.
 
 It presently contains:
-* a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception.
+* a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
 * a [serialize to XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#seralizetoxml)
 * a [deserialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#deseralizefromxml)
 * a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
 * [Left, Right and Mid](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-right-and-mid) methods behaving as we know from the BASIC heydays.
 * a method for retrieving information about the calling method.
+* methods for reaching private fields, properties and methods.
+* a dynamic class for reading private fields, properties and methods. Typically used for unit unit testing.
 
-It will contain in the future:
-* [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
 
 I might contain in the future:
+* [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
 * A Linq method that returns true if [all items in a list are equal](http://stackoverflow.com/questions/1628658/linq-check-whether-two-list-are-the-same).
 
@@ -144,3 +148,32 @@ class MyClass{
     }
 }
 ```
+
+#### The problem solved
+Getting information, and manipulating, private fields, properties and methods without having to googlewithbing.
+
+*GetPrivateField, GetPrivateMethod, GetPrivateField*
+...
+var method = Meta.GetPrivateMethod(anObject, "GetCustomer");
+method.Invoke(anObject, new[]{42});
+...
+
+### ReachPrivateIn
+This *dynamic* class makes it possible to manipulate private fields, properties and methods by just writing normal code.
+Typically used for unit testing.
+
+[TestMethod]
+public void CustomerTest()
+{
+	// Arrange.
+    var sut = new Customer{);
+	dynamic sutPrivate = new ReachPrivateIn<Customer>(sut);
+
+	sutPrivate.id = 12; // id is a private variable and not reachable ny "normal" code.
+	
+	// Act.
+	var res = sut.HasID();
+	
+	// Assert.
+	Assert.IsTrue(res);
+}
