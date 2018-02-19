@@ -1,6 +1,9 @@
 CompulsoryCow - Release notes
 ====================
 
+### Version 2.3.2
+New tests, and functionality for reaching static field, method and property in an object.
+
 ### Version 2.3.1
 Updated license name to be LGPLv3+NoEvil
 Reordered readme file.

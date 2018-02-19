@@ -10,21 +10,21 @@ namespace ReachPrivateInTest
         [TestMethod]
         public void CallFieldWithAndWithoutReturnValue()
         {
-            var sut = new MyLibrary();
-            dynamic sutPrivate = new ReachPrivateIn<MyLibrary>(sut);
+            var sut = new MyClass();
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
 
-            sutPrivate.myField = 13;
+            sutPrivate._myField = 13;
 
-            var res = sutPrivate.myField;
+            var res = sutPrivate._myField;
 
-            Assert.AreEqual(13, sutPrivate.myField);
+            Assert.AreEqual(13, res);
         }
 
         [TestMethod]
-        public void CallMethodWithAndWIthoutReturnValue()
+        public void CallMethodWithAndWithoutReturnValue()
         {
-            var sut = new MyLibrary();
-            dynamic sutPrivate = new ReachPrivateIn<MyLibrary>(sut);
+            var sut = new MyClass();
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
 
             sutPrivate.SetMethod("my name");
 
@@ -36,8 +36,7 @@ namespace ReachPrivateInTest
         [TestMethod]
         public void CallPropertyWithSetAndGet()
         {
-            var sut = new MyLibrary();
-            dynamic sutPrivate = new ReachPrivateIn<MyLibrary>(sut);
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
 
             sutPrivate.MyProperty = 12;
 
@@ -49,8 +48,8 @@ namespace ReachPrivateInTest
         [TestMethod]
         public void CallNonExistingFieldOrProperty()
         {
-            var sut = new MyLibrary();
-            dynamic sutPrivate = new ReachPrivateIn<MyLibrary>(sut);
+            var sut = new MyClass();
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
 
             Assert.ThrowsException<ArgumentException>(() =>
                 sutPrivate.NonExistingProperty = 12
@@ -65,8 +64,8 @@ namespace ReachPrivateInTest
         [TestMethod]
         public void CallNonExistingMethod()
         {
-            var sut = new MyLibrary();
-            dynamic sutPrivate = new ReachPrivateIn<MyLibrary>(sut);
+            var sut = new MyClass();
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
 
             Assert.ThrowsException<ArgumentException>(() =>
                 sutPrivate.NonExistingVoidMethod(12)
@@ -78,13 +77,54 @@ namespace ReachPrivateInTest
             });
         }
 
-        private class MyLibrary
+        [TestMethod]
+        public void CallStaticFieldWithSetAndGet()
+        {
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
+
+            sutPrivate._myField = 13;
+
+            var res = sutPrivate._myField;
+
+            Assert.AreEqual(13, res);
+        }
+
+        [TestMethod]
+        public void CallStaticMethodWithAndWithoutReturnValue()
+        {
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
+
+            sutPrivate.StaticSetMethod(14);
+
+            var res = sutPrivate.StaticGetMethod();
+
+            Assert.AreEqual(14, res);
+        }
+
+        [TestMethod]
+        public void CallStaticPropertyWithSetAndGet()
+        {
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
+
+            sutPrivate.MyStaticProperty = 15;
+
+            var res = sutPrivate.MyStaticProperty;
+
+            Assert.AreEqual(15, res);
+        }
+
+
+        private class MyClass
         {
             private string myName;
 
             private int MyProperty { get; set; }
 
-            private int myField;
+            private static int MyStaticProperty { get; set; }
+
+            private int _myField;
+
+            private static int _myStaticField;
 
             private string GetMethod()
             {
@@ -95,7 +135,16 @@ namespace ReachPrivateInTest
             {
                 myName = value;
             }
-        }
 
+            private int StaticGetMethod()
+            {
+                return _myStaticField;
+            }
+
+            private void StaticSetMethod(int value)
+            {
+                _myStaticField = value;
+            }
+        }
     }
 }

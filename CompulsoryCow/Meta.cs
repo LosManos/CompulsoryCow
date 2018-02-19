@@ -90,7 +90,7 @@ namespace CompulsoryCow
         {
             return theObject.GetType().GetProperty(
                 name,
-                BindingFlags.NonPublic | BindingFlags.Instance);
+                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
         }
 
     }
