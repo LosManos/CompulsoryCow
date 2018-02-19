@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LosManos")]
 [assembly: AssemblyProduct("CompulsoryCow")]
-[assembly: AssemblyCopyright("GPLv#")]
+[assembly: AssemblyCopyright("GPLv3+NoEvil")]
 [assembly: AssemblyTrademark("Copyleft")]
 [assembly: AssemblyCulture("")]
 

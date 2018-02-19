@@ -10,7 +10,6 @@ obj
 # mstest test results
 TestResults
 *.suo
-
-CompulsoryCow.v11.suo
-
+*.nupkg
 packages
+nuget.exe

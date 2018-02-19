@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CompulsoryCow</id>
+    <version>0.5.0</version>
+    <title>CompulsorCow</title>
+    <authors>LosManos</authors>
+    <owners>LosManos</owners>
+    <licenseUrl>https://github.com/LosManos/CompulsoryCow</licenseUrl>
+    <projectUrl>C</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Various helper methods often used by the author.</description>
+    <summary>A library with various helper functionalities. A string.Format method that does not throw exception; ever. A de/serialise XML method. A string SplitAt method that splits a string at a certain substring. String Left, Right and Mid like the old Basic heydays. A method for walking the stack to get information about calling method. Methods for reaching internal and private methods and properties in other objects. A dynamic class for reaching private fields, properties and methods in other objects.</summary>
+    <releaseNotes>First.</releaseNotes>
+    <copyright>LGPLv3 + no evil.</copyright>
+  </metadata>
+</package>

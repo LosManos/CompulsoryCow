@@ -50,6 +50,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\CompulsoryCow\Properties\AssemblyInfo.shared.cs">
+      <Link>Properties\AssemblyInfo.shared.cs</Link>
+    </Compile>
     <Compile Include="GetPrivateTest.cs" />
     <Compile Include="GetPropertyTests.cs" />
     <Compile Include="GetCallingMethodsTests.cs" />
