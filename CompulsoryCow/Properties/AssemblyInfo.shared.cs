@@ -1,8 +1,4 @@
 ﻿using System.Reflection;
-// ReSharper disable RedundantUsingDirective
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-// ReSharper restore RedundantUsingDirective
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -24,5 +20,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 //  We are using semantic versioning as per http://semver.org
-[assembly: AssemblyVersion("2.3.0.*")]
-[assembly: AssemblyFileVersion("2.3.0.*")]
+[assembly: AssemblyVersion("2.3.0.1")]
+[assembly: AssemblyFileVersion("2.3.0.1")]

@@ -1,12 +1,13 @@
 CompulsoryCow
 =============
 
-License LGPLv3.
-Exception to LGPLv3 and the code is not available for companies that create, buy or sell weapons. This includes companies and organisations that are owned by companies making weapons. The list includes, but is not limited to Bofors, Saab and Lockheed Martin.
-Exception to LGPLv3 and the code is not available for countries where torture is allowed or used. The list includes, but is not limited to, Egypt and USA.
-An exeption to the above is where the company or organisation takes an active role in working against weapons, torture regardless of country. The list includes, but is not limited to Amnesty and Greenpeace.
+Version 2.3.1
 
-Useful functionality in C#.  Will in the future take over from CompulsoryCat (http://code.google.com/p/compulsorycat/) of [Selfelected](http://www.selfelected.com) fame.
+Nuget: https://www.nuget.org/packages/CompulsoryCow/
+
+**Useful functionality in C#.**  Will in the future take over from [CompulsoryCat](http://code.google.com/p/compulsorycat/) of [Selfelected](http://www.selfelected.com) fame.
+
+## Contains
 
 It presently contains:
 * a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
@@ -23,6 +24,15 @@ I might contain in the future:
 * [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
 * A Linq method that returns true if [all items in a list are equal](http://stackoverflow.com/questions/1628658/linq-check-whether-two-list-are-the-same).
+
+## License
+
+License LGPLv3 + NoEvil.
+Exception to LGPLv3 and the code: is not available for companies that create, buy or sell weapons. This includes companies and organisations that are owned by companies making weapons. The list includes, but is not limited to Bofors, Saab and Lockheed Martin.
+Exception to LGPLv3 and the code: is not available for countries where torture is allowed or used. The list includes, but is not limited to, Egypt and USA.
+An exeption to the above is where the company or organisation takes an active role in working against weapons, torture regardless of country. The list includes, but is not limited to Amnesty and Greenpeace.
+
+## Methods
 
 ### string.Format that does not crash
 ##### The problem solved
@@ -170,7 +180,7 @@ public void Customer_given_KnownID_should_HaveIDFlagSet()
 	var sut = new Customer{);
 	dynamic sutPrivate = new ReachPrivateIn<Customer>(sut);
 
-	sutPrivate.id = 12; // id is a private variable and not reachable ny "normal" code.
+	sutPrivate.id = 12; // id is a private variable and not reachable by "normal" code.
 	
 	// Act.
 	var res = sut.HasID();

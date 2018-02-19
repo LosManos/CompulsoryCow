@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow", "CompulsoryCow\CompulsoryCow.csproj", "{6E35CAC1-2B16-4A16-B653-EE19DEBBED91}"
 EndProject
@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3EAE5209-1053-42F0-9AB7-FDEE1D9405C8}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		Release.md = Release.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializerTest", "SerializerTest\SerializerTest.csproj", "{49C17E3B-B4DA-4883-A162-7245809AE9A0}"
