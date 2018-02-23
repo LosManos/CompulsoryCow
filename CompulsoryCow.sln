@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringExtensionTest", "Stri
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3EAE5209-1053-42F0-9AB7-FDEE1D9405C8}"
 	ProjectSection(SolutionItems) = preProject
+		AssemblyInfo.shared.cs = AssemblyInfo.shared.cs
+		BuildNugetPackage.ps1 = BuildNugetPackage.ps1
 		license.txt = license.txt
 		README.md = README.md
 		Release.md = Release.md

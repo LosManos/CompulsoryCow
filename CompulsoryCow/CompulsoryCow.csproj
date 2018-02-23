@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.shared.cs">
+      <Link>Properties\AssemblyInfo.shared.cs</Link>
+    </Compile>
     <Compile Include="Deserializer.cs" />
-    <Compile Include="Properties\AssemblyInfo.shared.cs" />
     <Compile Include="Meta.cs" />
     <Compile Include="ReachPrivateIn.cs" />
     <Compile Include="Serializer.cs" />
@@ -51,6 +53,9 @@
     <Compile Include="StringExtensions\SafeFormatExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions\SplitAtExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CompulsoryCow.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

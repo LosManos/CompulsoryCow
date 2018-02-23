@@ -1,6 +1,11 @@
 CompulsoryCow - Release notes
 ====================
 
+### Version 2.4.0
+Updated code for nuget.
+Updated readme documentation.
+Updated license.
+
 ### Version 2.3.2
 New tests, and functionality for reaching static field, method and property in an object.
 

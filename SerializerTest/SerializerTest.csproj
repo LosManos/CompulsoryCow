@@ -53,7 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\CompulsoryCow\Properties\AssemblyInfo.shared.cs">
+    <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="DeserializerTest.cs" />

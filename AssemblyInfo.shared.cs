@@ -20,5 +20,13 @@
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 //  We are using semantic versioning as per http://semver.org
-[assembly: AssemblyVersion("2.3.0.1")]
-[assembly: AssemblyFileVersion("2.3.0.1")]
+[assembly: AssemblyVersion(MyAssembly.Constants.Version)]
+[assembly: AssemblyFileVersion(MyAssembly.Constants.Version)]
+
+internal class MyAssembly
+{
+    internal class Constants
+    {
+        internal const string Version = "2.4.0";
+    }
+}

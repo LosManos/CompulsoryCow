@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace CompulsoryCow
 {
@@ -12,7 +13,7 @@ namespace CompulsoryCow
 		///		MySecondMethod();
 		///	}
 		///	void MySecondMethod(){
-		///		var callingMethod = CompulsoryCow.ReflectionUtilities.GetCallingMethod();
+		///		var callingMethod = CompulsoryCow.Meta.GetCallingMethod();
 		///		//	callingMethod.Name is now "MyFirstMethod".
 		///	}
 		///	</para>
@@ -66,6 +67,18 @@ namespace CompulsoryCow
                 BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
+        /// <summary>This method returns <see cref="FieldInfo"/> for the private static field in the parameter.
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static FieldInfo GetPrivateStaticField(Type objectType, string name)
+        {
+            return objectType.GetField(
+                name,
+                BindingFlags.NonPublic | BindingFlags.Static);
+        }
+
         /// <summary>This method returns <see cref="MethodInfo"/> for the method in the parameter.
         /// It does not handle overloaded methods.
         /// </summary>
@@ -80,6 +93,19 @@ namespace CompulsoryCow
                 BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
+        /// <summary>This method returns <see cref="MethodInfo"/> for the static method in the parameter.
+        /// It does not handle overloaded methods.
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static MethodInfo GetPrivateStaticMethod(Type objectType, string name)
+        {
+            return objectType.GetMethod(
+                name,
+                BindingFlags.NonPublic | BindingFlags.Static);
+        }
+
         /// <summary>This method returns <see cref="PropertyInfo"/> for the property in the parameter.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -90,7 +116,19 @@ namespace CompulsoryCow
         {
             return theObject.GetType().GetProperty(
                 name,
-                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                BindingFlags.NonPublic | BindingFlags.Instance );
+
+        }
+        /// <summary>This method returns <see cref="PropertyInfo"/> for the static property in the parameter.
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetPrivateStaticProperty(Type objectType, string name)
+        {
+            return objectType.GetProperty(
+                name,
+                BindingFlags.NonPublic | BindingFlags.Static);
         }
 
     }

@@ -1,7 +1,7 @@
 CompulsoryCow
 =============
 
-Version 2.3.2
+Version 2.4.0
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
@@ -10,14 +10,15 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 ## Contains
 
 It presently contains:
-* a [string.Format method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#stringformat-that-doesnt-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
-* a [serialize to XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#seralizetoxml)
-* a [deserialize from XML method](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#deseralizefromxml)
-* a string helper method [SplitAt](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#splitat) that splits a string at a certain index or string.
-* [Left, Right and Mid](https://github.com/LosManos/CompulsoryCow/blob/master/README.md#left-right-and-mid) methods behaving as we know from the BASIC heydays.
-* a method for retrieving information about the calling method.
-* methods for reaching private fields, properties and methods.
-* a dynamic class for reading private fields, properties and methods. Typically used for unit unit testing.
+* a [string.Format method](#string.Format-that-does-not-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
+* a [serialize to XML method](#Serialize.ToXml)
+* a [deserialize from XML method](#Deseralize.FromXml)
+* a string helper method [SplitAt](#SplitAt) that splits a string at a certain index or string.
+* [Left, Right and Mid](#left-right-and-mid) methods behaving as we know from the BASIC heydays.
+* a method GetCallingMethod retrieving information about the calling method. Warning: This method might be deprecated as it only works properly in debug compile and doesn't behave as expected as it contains the historical where-you've-been but rather [where it will go when it returns](https://stackoverflow.com/a/15368508/521554).
+* a method [GetProperty](#GetProperty) for getting information about the property the code is presently in.
+* [methods](#GetPrivate...) for reaching private fields, properties and methods.
+* a dynamic [class](#ReachPrivateIn) for reading private fields, properties and methods. Typically used for unit unit testing.
 
 
 I might contain in the future:
@@ -89,7 +90,7 @@ log.Error( string.Format( "Method {0} threw an exception with message {1}", meth
 throws an exception.  Resharper warns you but without such a tool you will get a string formatting? exception at runtime and the real exception wasn't logged.
 That is why you have unit tests you might say but 1) do you really have 100% test coveraget and 2) if you know the method succeeds no test is needed.
 
-### Seralize.ToXml
+### Serialize.ToXml
 ##### The problem solved
 Every time one wants to serialise an object to XML one has to go google hunting.  With this method it is already solved and unit tested.
 
@@ -142,13 +143,14 @@ Feel free to take Left, Right and Mid of a string without being afraid of steppi
 
 ### Meta info helper 
 For instance get the name of a method of property without writing a string that later might be wrong when the method name is updated.
-Not yet implemented at github.  Code resided at [code.google](http://code.google.com/p/compulsorycat/) for the time being.
+Not yet implemented at github.  Code resides at [code.google](http://code.google.com/p/compulsorycat/) for the time being.
 
 #### The problem solved
 Getting meta information in C# can be tricky. Some helper method can come in handy.
 
-*GetCallingMethod*  
-Get information about whatever called your code.
+##### GetCallingMethod
+
+This method gets information about whatever called your code.
 
 ```
 void MyFirstMethod(){
@@ -160,8 +162,8 @@ void MySecondMethod(){
 }
 ```
 
-*GetProperty*
-Get information about the property you are in.
+##### GetProperty
+This method gets information about the property you are in.
 ```
 class MyClass{
     public string Title{
@@ -174,16 +176,17 @@ class MyClass{
 }
 ```
 
-#### The problem solved
+###### The problem solved
 Getting information, and manipulating, private fields, properties and methods without having to googlewithbing.
 
-*GetPrivateField, GetPrivateMethod, GetPrivateField*
+##### GetPrivate...
+ *GetPrivateField, GetPrivateStaticField, GetPrivateProperty GetPrivateStaticProperty, GetPrivateMethod, GetPrivateStaticMethod*
 ```
 var method = Meta.GetPrivateMethod(anObject, "GetCustomer");
 method.Invoke(anObject, new[]{42});
 ```
 
-### ReachPrivateIn
+##### ReachPrivateIn
 This *dynamic* class makes it possible to manipulate private fields, properties and methods by just writing normal code.
 Typically used for unit testing.
 
