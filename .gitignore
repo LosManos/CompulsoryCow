@@ -13,3 +13,6 @@ TestResults
 *.nupkg
 packages
 nuget.exe
+
+# ncrunch
+*.ncrunchsolution
