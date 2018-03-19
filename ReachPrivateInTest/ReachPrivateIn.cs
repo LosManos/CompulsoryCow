@@ -34,6 +34,21 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
+        public void CallMethodWithAnonymousTupleReturnValue()
+        {
+            var sut = new MyClass();
+            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
+
+            var res = sutPrivate.GetMethodTuple("b", 2);
+
+            //  Tuples names don't traverse the boundaries it seems
+            //  so even if we'd like to test for the names of the items, 
+            //  namely First and Second, we cannot; and are forced to use ItemN nomenclature.
+            Assert.AreEqual("b", res.Item1);
+            Assert.AreEqual(2, res.Item2);
+        }
+
+        [TestMethod]
         public void CallPropertyWithSetAndGet()
         {
             dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
@@ -113,7 +128,6 @@ namespace ReachPrivateInTest
             Assert.AreEqual(15, res);
         }
 
-
         private class MyClass
         {
             private string myName;
@@ -129,6 +143,11 @@ namespace ReachPrivateInTest
             private string GetMethod()
             {
                 return myName;
+            }
+
+            private (string First, int Second) GetMethodTuple(string a, int n)
+            {
+                return (First: a, Second: n);
             }
 
             private void SetMethod(string value)

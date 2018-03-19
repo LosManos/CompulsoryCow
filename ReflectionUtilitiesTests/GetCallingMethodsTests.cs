@@ -33,6 +33,10 @@ namespace ReflectionUtilitiesTests
 			}
 		}
 
+        /// <summary>If this test fails it might be due to it being tested in release mode.
+        /// The MyMethodBase.Name property does not work peorperly then.
+        /// we should consider making the method obsolete.
+        /// </summary>
 		[TestMethod]
 		public void GetCallingMethod_given_ProperData_should_ReturnCaller()
 		{

@@ -73,6 +73,14 @@ namespace ReflectionUtilitiesTests
 
 		}
 
+        /// <summary>If this test fails it might be due to it being tested in release mode.
+        /// The MyMemberInfo method does not work peorperly then.
+        /// we should consider making the method obsolete.
+        /// </summary>
+        /// <summary>If this test fails it might be due to it being tested in release mode.
+        /// The GetCallingMethod method does not work peorperly then.
+        /// we should consider making the method obsolete.
+        /// </summary>
 		[TestMethod]
 		public void GetProperty_given_InternalProperty_should_ReturnCaller()
 		{
@@ -86,6 +94,10 @@ namespace ReflectionUtilitiesTests
 			Assert.AreEqual("MyInternalProperty", myClass.MyMemberInfo.Name);
 		}
 
+        /// <summary>If this test fails it might be due to it being tested in release mode.
+        /// The MyMemberInfo method does not work peorperly then.
+        /// we should consider making the method obsolete.
+        /// </summary>
 		[TestMethod]
 		public void GetProperty_given_ProtectedProperty_should_ReturnCaller()
 		{
@@ -112,6 +124,10 @@ namespace ReflectionUtilitiesTests
 			Assert.AreEqual("MyPublicProperty", myClass.MyMemberInfo.Name);
 		}
 
+        /// <summary>If this test fails it might be due to it being tested in release mode.
+        /// The MyMemberInfo method does not work peorperly then.
+        /// we should consider making the method obsolete.
+        /// </summary>
 		[TestMethod]
 		public void GetProperty_given_PrivateProperty_should_ReturnCaller()
 		{
