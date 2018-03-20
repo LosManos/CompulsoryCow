@@ -7,12 +7,23 @@ namespace ReachPrivateInTest
     [TestClass]
     public class ReachPrivateInTest
     {
-        [TestMethod]
-        public void CallFieldWithAndWithoutReturnValue()
-        {
-            var sut = new MyClass();
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
+        private dynamic[] _suts;
 
+        [TestInitialize]
+        public void Initialise()
+        {
+            _suts = new dynamic[] {
+            new ReachPrivateIn<ReachPrivateInTestClassesDotnetFramework.MyClass>(new ReachPrivateInTestClassesDotnetFramework.MyClass()),
+            new ReachPrivateIn<ReachPrivateInTestClassesDotnetStandard.MyClass>(new ReachPrivateInTestClassesDotnetStandard.MyClass())
+            };
+        }
+
+        [TestMethod]
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallFieldWithAndWithoutReturnValue(int index)
+        {
+            var sutPrivate = _suts[index];
             sutPrivate._myField = 13;
 
             var res = sutPrivate._myField;
@@ -21,10 +32,13 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallMethodWithAndWithoutReturnValue()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallMethodWithAndWithoutReturnValue(int index)
         {
-            var sut = new MyClass();
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
+            //var sut = new MyClass();
+            //dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
+            var sutPrivate = _suts[index];
 
             sutPrivate.SetMethod("my name");
 
@@ -34,10 +48,11 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallMethodWithAnonymousTupleReturnValue()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallMethodWithAnonymousTupleReturnValue(int index)
         {
-            var sut = new MyClass();
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
+            var sutPrivate = _suts[index];
 
             var res = sutPrivate.GetMethodTuple("b", 2);
 
@@ -49,9 +64,12 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallPropertyWithSetAndGet()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallPropertyWithSetAndGet(int index)
         {
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
+            //dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
+            var sutPrivate = _suts[index];
 
             sutPrivate.MyProperty = 12;
 
@@ -61,10 +79,11 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallNonExistingFieldOrProperty()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallNonExistingFieldOrProperty(int index)
         {
-            var sut = new MyClass();
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
+            var sutPrivate = _suts[index];
 
             Assert.ThrowsException<ArgumentException>(() =>
                 sutPrivate.NonExistingProperty = 12
@@ -77,10 +96,11 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallNonExistingMethod()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallNonExistingMethod(int index)
         {
-            var sut = new MyClass();
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(sut);
+            var sutPrivate = _suts[index];
 
             Assert.ThrowsException<ArgumentException>(() =>
                 sutPrivate.NonExistingVoidMethod(12)
@@ -93,10 +113,11 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallStaticFieldWithSetAndGet()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallStaticFieldWithSetAndGet(int index)
         {
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
-
+            var sutPrivate = _suts[index];
             sutPrivate._myField = 13;
 
             var res = sutPrivate._myField;
@@ -105,10 +126,11 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallStaticMethodWithAndWithoutReturnValue()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallStaticMethodWithAndWithoutReturnValue(int index)
         {
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
-
+            var sutPrivate = _suts[index];
             sutPrivate.StaticSetMethod(14);
 
             var res = sutPrivate.StaticGetMethod();
@@ -117,53 +139,16 @@ namespace ReachPrivateInTest
         }
 
         [TestMethod]
-        public void CallStaticPropertyWithSetAndGet()
+        [DataRow(0)]
+        [DataRow(1)]
+        public void CallStaticPropertyWithSetAndGet(int index)
         {
-            dynamic sutPrivate = new ReachPrivateIn<MyClass>(new MyClass());
-
+            var sutPrivate = _suts[index];
             sutPrivate.MyStaticProperty = 15;
 
             var res = sutPrivate.MyStaticProperty;
 
             Assert.AreEqual(15, res);
-        }
-
-        private class MyClass
-        {
-            private string myName;
-
-            private int MyProperty { get; set; }
-
-            private static int MyStaticProperty { get; set; }
-
-            private int _myField;
-
-            private static int _myStaticField;
-
-            private string GetMethod()
-            {
-                return myName;
-            }
-
-            private (string First, int Second) GetMethodTuple(string a, int n)
-            {
-                return (First: a, Second: n);
-            }
-
-            private void SetMethod(string value)
-            {
-                myName = value;
-            }
-
-            private int StaticGetMethod()
-            {
-                return _myStaticField;
-            }
-
-            private void StaticSetMethod(int value)
-            {
-                _myStaticField = value;
-            }
         }
     }
 }

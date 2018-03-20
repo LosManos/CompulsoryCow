@@ -42,7 +42,7 @@ namespace CompulsoryCow
             }
 
             // TODO:Enumerate parameter types.
-            throw new ArgumentException($"The methohd [{binder.Name}] does not exist to call with said parameters.");
+            throw new ArgumentException($"The method [{binder.Name}] does not exist to call with said parameters.");
         }
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
@@ -106,7 +106,7 @@ namespace CompulsoryCow
             }
 
             // TODO:Enumerate parameter types.
-            throw new ArgumentException($"The methohd [{binder.Name}] does not exist to call with said parameters.");
+            throw new ArgumentException($"The method [{binder.Name}] does not exist to call with said parameters.");
         }
 
         public override bool TrySetMember(SetMemberBinder binder, object value)

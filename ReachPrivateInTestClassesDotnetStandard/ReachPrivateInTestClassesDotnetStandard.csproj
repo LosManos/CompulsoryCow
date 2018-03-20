@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Company>LosManos</Company>
+    <Product>CompulsoryCow</Product>
+    <Authors>LosManos</Authors>
+    <AssemblyVersion>2.4.1.0</AssemblyVersion>
+    <FileVersion>2.4.1.0</FileVersion>
+    <Copyright>GPLv3+NoEvil</Copyright>
+  </PropertyGroup>
+
+</Project>

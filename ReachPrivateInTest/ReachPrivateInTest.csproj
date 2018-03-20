@@ -48,17 +48,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReachPrivateInStatic.cs" />
-    <Compile Include="ReachPrivateIn.cs" />
+    <Compile Include="ReachPrivateInStaticTest.cs" />
+    <Compile Include="ReachPrivateInTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -67,6 +64,14 @@
     <ProjectReference Include="..\CompulsoryCow\CompulsoryCow.csproj">
       <Project>{6e35cac1-2b16-4a16-b653-ee19debbed91}</Project>
       <Name>CompulsoryCow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReachPrivateInTestClassesDotnetFramework\ReachPrivateInTestClassesDotnetFramework.csproj">
+      <Project>{693b8417-5a7b-48bd-987c-01c6e13cbb06}</Project>
+      <Name>ReachPrivateInTestClassesDotnetFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReachPrivateInTestClassesDotnetStandard\ReachPrivateInTestClassesDotnetStandard.csproj">
+      <Project>{f09c6d65-7b9a-4bd5-9275-154d60c7443a}</Project>
+      <Name>ReachPrivateInTestClassesDotnetStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
