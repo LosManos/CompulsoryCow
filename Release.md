@@ -1,6 +1,9 @@
 CompulsoryCow - Release notes
 ====================
 
+### Version 2.4.1
+Added ReachPrivateIn tests for both Framework and Standard.
+
 ### Version 2.4.0
 Updated code for nuget.
 Updated readme documentation.
