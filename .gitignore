@@ -16,4 +16,5 @@ nuget.exe
 
 # ncrunch
 *.ncrunchsolution
+*.ncrunchproject
 *.cache

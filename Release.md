@@ -1,6 +1,11 @@
 CompulsoryCow - Release notes
 ====================
 
+### Version 2.4.2
+Added CompulsoryCow.ReachIn to replace ReachPrivateIn.
+Set CompulsoryCow.ReachPrivateIn to obsolete.
+Added Meta.GetClass and meta.GetClassOrNull.
+
 ### Version 2.4.1
 Added ReachPrivateIn tests for both Framework and Standard.
 

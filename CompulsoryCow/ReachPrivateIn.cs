@@ -3,6 +3,9 @@ using System.Dynamic;
 
 namespace CompulsoryCow
 {
+    /// <summary>This class should not be used. Use <see cref="ReachIn"/> instead.
+    /// </summary>
+    [Obsolete("Use ReachIn instead.", false)]
     public class ReachPrivateIn : DynamicObject
     {
         private readonly Type _type;
@@ -41,7 +44,8 @@ namespace CompulsoryCow
                 return true;
             }
 
-            // TODO:Enumerate parameter types.
+            // It would be a nice error message if we enumrated the parameters in the error message, 
+            // maybe also together with members we found..
             throw new ArgumentException($"The method [{binder.Name}] does not exist to call with said parameters.");
         }
 
@@ -66,6 +70,9 @@ namespace CompulsoryCow
         }
     }
 
+    /// <summary>This class should not be used. Use <see cref="ReachIn"/> instead.
+    /// </summary>
+    [Obsolete("Use ReachIn instead.", error: false)]
     public class ReachPrivateIn<T> : DynamicObject
     {
         private T sut;
@@ -105,7 +112,8 @@ namespace CompulsoryCow
                 return true;
             }
 
-            // TODO:Enumerate parameter types.
+            // It would be a nice error message if we enumrated the parameters in the error message, 
+            // maybe also together with members we found..
             throw new ArgumentException($"The method [{binder.Name}] does not exist to call with said parameters.");
         }
 
