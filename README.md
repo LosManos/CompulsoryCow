@@ -9,16 +9,16 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
 ## Contains
 
-It presently contains:
-* a [string.Format method](#string.Format-that-does-not-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
-* a [serialize to XML method](#Serialize.ToXml)
-* a [deserialize from XML method](#Deseralize.FromXml)
-* a string helper method [SplitAt](#SplitAt) that splits a string at a certain index or string.
+CompulsoryCow presently contains:
+* a [string.SFormat method](#string.sformat-that-does-not-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
+* a [serialize to XML method](#serialize.toxml) with `CompulsoryCow.Serialize(myObject)`
+* a [deserialize from XML method](#deseralize.fromxml) with `CompulsoryCow.Deserialize<MyType>(myString)`
+* a string helper method [SplitAt](#splitat) that splits a string at a certain index or string.
 * [Left, Right and Mid](#left-right-and-mid) methods behaving as we know from the BASIC heydays.
 * a method GetCallingMethod retrieving information about the calling method. Warning: This method might be deprecated as it only works properly in debug compile and doesn't behave as expected as it contains the historical where-you've-been but rather [where it will go when it returns](https://stackoverflow.com/a/15368508/521554).
-* a method [GetProperty](#GetProperty) for getting information about the property the code is presently in.
-* [methods](#GetPrivate...) for reaching private fields, properties and methods.
-* a dynamic [class](#ReachPrivateIn) for reading private fields, properties and methods. Typically used for unit unit testing.
+* a method [GetProperty](#getproperty) for getting information about the property the code is presently in.
+* [methods](#getprivate...) for reaching private fields, properties and methods. Warning: These methods might be deprecated in teh future in favour of `ReachIn`.
+* a dynamic class [ReachIn](#reachin) for reading (disregarding visibility(private,protected etc.)) fields, properties and methods. Typically used for unit testing.
 
 
 I might contain in the future:
@@ -50,9 +50,9 @@ The code is also not available for companies and persons dealing with unlawful t
 
 ## Methods
 
-### string.Format that does not crash
+### string.SFormat that does not crash
 ##### The problem solved
-string.Format _throws an exception_ when the {n} are more than the arguments.  Throwing an exception might be ok during the development phase but maybe not later on; especially during production when logging to a file.
+The normal Microsoft string.Format _throws an exception_ when the {n} are more than the arguments.  Throwing an exception might be ok during the development phase but maybe not later on; especially during production when logging to a file.
 Read this again:  If a system is running in production the log files are often the only way to search for problems.  _We want the logging to log, not throw exception._
 
 ```csharp
@@ -60,7 +60,7 @@ string.Format( "We are using {0} many {1}", "too" );
 ```
 Will throw an exception.
 
-Meanwhile
+Contrary SFormat
 ```csharp
 "We are using {0} many {1}".SFormat( "too" );
 ```
@@ -90,6 +90,7 @@ log.Error( string.Format( "Method {0} threw an exception with message {1}", meth
 throws an exception.  Resharper warns you but without such a tool you will get a string formatting? exception at runtime and the real exception wasn't logged.
 That is why you have unit tests you might say but 1) do you really have 100% test coveraget and 2) if you know the method succeeds no test is needed.
 
+----
 ### Serialize.ToXml
 ##### The problem solved
 Every time one wants to serialise an object to XML one has to go google hunting.  With this method it is already solved and unit tested.
@@ -102,6 +103,7 @@ var myObject = new MyClass{ MyProp = "asdf"};
 var xmlDocument = CompulsoryCow.Serialize( myObject );
 ```
 
+----
 ### Deseralize.FromXml
 ##### The problem solved
 Every time one wants to deserialise an object from XML one has to go google hunting.  With this method it is already solved and unit tested.
@@ -113,6 +115,7 @@ class MyClass{
 var myObject = CompulsoryCow.Deserialize<MyClass>( myXmlString );
 ```
 
+----
 ### SplitAt
 ##### The problem solved
 Splitting a string is often needed.  The built in Split method cannot split at a certain index or with a string as splitter.
@@ -127,6 +130,7 @@ Split a string at a certain string.
 "SplitAt".SplitAt("it") => [ "Spl", "At" ]
 ```
 
+----
 ### Left, Right and Mid
 ##### The problem solved
 Today's functionality for taking left, right and mid of a string is not as easy as Left$(mystring,length), Right$(mystring,length) and Mid$(mystring,startIndex,length) from the BASIC hey days.
@@ -141,12 +145,13 @@ Feel free to take Left, Right and Mid of a string without being afraid of steppi
 "SplitAt".Mid(6,3) => "itA"
 ```
 
+----
 ### Meta info helper 
-For instance get the name of a method of property without writing a string that later might be wrong when the method name is updated.
-Not yet implemented at github.  Code resides at [code.google](http://code.google.com/p/compulsorycat/) for the time being.
-
 #### The problem solved
 Getting meta information in C# can be tricky. Some helper method can come in handy.
+
+For instance get the name of a method of property without writing a string that later might be wrong when the method name is updated.
+Not yet implemented at github.  Code resides at [code.google](http://code.google.com/p/compulsorycat/) for the time being.
 
 ##### GetCallingMethod
 
@@ -176,9 +181,6 @@ class MyClass{
 }
 ```
 
-###### The problem solved
-Getting information, and manipulating, private fields, properties and methods without having to googlewithbing.
-
 ##### GetPrivate...
  *GetPrivateField, GetPrivateStaticField, GetPrivateProperty GetPrivateStaticProperty, GetPrivateMethod, GetPrivateStaticMethod*
 ```
@@ -186,7 +188,11 @@ var method = Meta.GetPrivateMethod(anObject, "GetCustomer");
 method.Invoke(anObject, new[]{42});
 ```
 
-##### ReachPrivateIn
+----
+### ReachIn
+#### The problem solved
+There are certain times the scope (private, public etc.) for a member (field, property, method) or class is a hindrance.
+
 This *dynamic* class makes it possible to manipulate private fields, properties and methods by just writing normal code.
 Typically used for unit testing.
 
@@ -196,7 +202,7 @@ public void Customer_given_KnownID_should_HaveIDFlagSet()
 {
 	// Arrange.
 	var sut = new Customer{);
-	dynamic sutPrivate = new ReachPrivateIn<Customer>(sut);
+	dynamic sutPrivate = new ReachIn(typeof(Customer));
 
 	sutPrivate.id = 12; // id is a private variable and not reachable by "normal" code.
 	
@@ -207,3 +213,4 @@ public void Customer_given_KnownID_should_HaveIDFlagSet()
 	Assert.IsTrue(res);
 }
 ```
+*EOF*
