@@ -1,7 +1,7 @@
 CompulsoryCow
 =============
 
-Version 2.4.0
+Version 2.4.3
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
 

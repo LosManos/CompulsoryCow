@@ -1,6 +1,9 @@
 CompulsoryCow - Release notes
 ====================
 
+### Version 2.4.3
+Updated test projects to Dotnet Framework 4.7.1.
+
 ### Version 2.4.2
 Added CompulsoryCow.ReachIn to replace ReachPrivateIn.
 Set CompulsoryCow.ReachPrivateIn to obsolete.

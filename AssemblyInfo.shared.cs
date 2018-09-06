@@ -5,7 +5,7 @@
 // associated with an assembly.
 [assembly: AssemblyCompany("LosManos")]
 [assembly: AssemblyProduct("CompulsoryCow")]
-[assembly: AssemblyCopyright("GPLv3+NoEvil")]
+[assembly: AssemblyCopyright("LGPLv3+NoEvil")]
 [assembly: AssemblyTrademark("Copyleft")]
 [assembly: AssemblyCulture("")]
 
@@ -27,6 +27,6 @@ internal class MyAssembly
 {
     internal class Constants
     {
-        internal const string Version = "2.4.2";
+        internal const string Version = "2.4.3";
     }
 }
