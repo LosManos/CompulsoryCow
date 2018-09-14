@@ -1,7 +1,7 @@
 CompulsoryCow
 =============
 
-CompulsoryCow Version 2.5.0
+CompulsoryCow Version 2.5.0  
 CompulsoryCow.AreEqual Version 0.1.0
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
@@ -10,7 +10,7 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
 ## Contains
 
-*CompulsoryCow* contains:
+### *CompulsoryCow* contains:
 * A [string.SFormat method](#string.sformat-that-does-not-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
 * A [serialize to XML method](#serialize.toxml) with `CompulsoryCow.Serialize(myObject)`
 * A [deserialize from XML method](#deseralize.fromxml) with `CompulsoryCow.Deserialize<MyType>(myString)`
@@ -23,10 +23,10 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 ** [GetPrivate methods](#getprivate...) for reaching private fields, properties and methods. Warning: These methods might be deprecated in teh future in favour of `ReachIn`.
 ** [Method GetPublicProperties](#GetPublicProperties) for getting an array of all public properties on an object.
 
-*CompulsoryCow.AreEqual* contains:
+### *CompulsoryCow.AreEqual* contains:
 * [AreEqual.Public]($areequal) methods for comparing two objects.
 
-The projects might contain in the future:
+### The projects might contain in the future:
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
 * A Linq method that returns true if [all items in a list are equal](http://stackoverflow.com/questions/1628658/linq-check-whether-two-list-are-the-same).
 
