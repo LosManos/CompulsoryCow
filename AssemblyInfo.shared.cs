@@ -27,6 +27,6 @@ internal class MyAssembly
 {
     internal class Constants
     {
-        internal const string Version = "2.4.3";
+        internal const string Version = "2.5.0";
     }
 }

@@ -183,5 +183,15 @@ namespace CompulsoryCow
                 name,
                 BindingFlags.NonPublic | BindingFlags.Static);
         }
-    }
+
+        /// <summary>This method returns <see cref="PropertyInfo"/> for all public properties in a class.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="a"></param>
+        /// <returns></returns>
+		public static PropertyInfo[] GetPublicProperties<T>(T a)
+		{
+			return a.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+		}
+	}
 }

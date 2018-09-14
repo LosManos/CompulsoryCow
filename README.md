@@ -1,7 +1,8 @@
 CompulsoryCow
 =============
 
-Version 2.4.3
+CompulsoryCow Version 2.5.0
+CompulsoryCow.AreEqual Version 0.1.0
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
@@ -9,20 +10,23 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
 ## Contains
 
-CompulsoryCow presently contains:
-* a [string.SFormat method](#string.sformat-that-does-not-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
-* a [serialize to XML method](#serialize.toxml) with `CompulsoryCow.Serialize(myObject)`
-* a [deserialize from XML method](#deseralize.fromxml) with `CompulsoryCow.Deserialize<MyType>(myString)`
-* a string helper method [SplitAt](#splitat) that splits a string at a certain index or string.
+*CompulsoryCow* contains:
+* A [string.SFormat method](#string.sformat-that-does-not-crash) that can't throw exception. This method is going obsolete with the $"" syntax and will be removed.
+* A [serialize to XML method](#serialize.toxml) with `CompulsoryCow.Serialize(myObject)`
+* A [deserialize from XML method](#deseralize.fromxml) with `CompulsoryCow.Deserialize<MyType>(myString)`
+* A string helper method [SplitAt](#splitat) that splits a string at a certain index or string.
 * [Left, Right and Mid](#left-right-and-mid) methods behaving as we know from the BASIC heydays.
-* a method GetCallingMethod retrieving information about the calling method. Warning: This method might be deprecated as it only works properly in debug compile and doesn't behave as expected as it contains the historical where-you've-been but rather [where it will go when it returns](https://stackoverflow.com/a/15368508/521554).
-* a method [GetProperty](#getproperty) for getting information about the property the code is presently in.
-* [methods](#getprivate...) for reaching private fields, properties and methods. Warning: These methods might be deprecated in teh future in favour of `ReachIn`.
-* a dynamic class [ReachIn](#reachin) for reading (disregarding visibility(private,protected etc.)) fields, properties and methods. Typically used for unit testing.
+* A method GetCallingMethod retrieving information about the calling method. Warning: This method might be deprecated as it only works properly in debug compile and doesn't behave as expected as it contains the historical where-you've-been but rather [where it will go when it returns](https://stackoverflow.com/a/15368508/521554).
+* A dynamic class [ReachIn](#reachin) for reading (disregarding visibility(private,protected etc.)) fields, properties and methods. Typically used for unit testing.
+* [Meta info help](#meta-info-help).  Use properties and methods names through lambda and not strings.
+** [GetProperty method](#getproperty) for getting information about the property the code is presently in.
+** [GetPrivate methods](#getprivate...) for reaching private fields, properties and methods. Warning: These methods might be deprecated in teh future in favour of `ReachIn`.
+** [Method GetPublicProperties](#GetPublicProperties) for getting an array of all public properties on an object.
 
+*CompulsoryCow.AreEqual* contains:
+* [AreEqual.Public]($areequal) methods for comparing two objects.
 
-I might contain in the future:
-* [meta info help](https://github.com/LosManos/CompulsoryCow/edit/master/README.md#meta-info-help).  Use properties and methods names through lambda and not strings.
+The projects might contain in the future:
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
 * A Linq method that returns true if [all items in a list are equal](http://stackoverflow.com/questions/1628658/linq-check-whether-two-list-are-the-same).
 
@@ -51,6 +55,8 @@ The code is also not available for companies and persons dealing with unlawful t
 ## Methods
 
 ### string.SFormat that does not crash
+This method is losing its value with the adoptiojn of [string interpolation](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated).
+
 ##### The problem solved
 The normal Microsoft string.Format _throws an exception_ when the {n} are more than the arguments.  Throwing an exception might be ok during the development phase but maybe not later on; especially during production when logging to a file.
 Read this again:  If a system is running in production the log files are often the only way to search for problems.  _We want the logging to log, not throw exception._
@@ -188,6 +194,12 @@ var method = Meta.GetPrivateMethod(anObject, "GetCustomer");
 method.Invoke(anObject, new[]{42});
 ```
 
+##### GetPublicProperties
+*GetPublicProperties*
+```
+var properties = Meta.GetPublicProperties(anObject);
+```
+
 ----
 ### ReachIn
 #### The problem solved
@@ -213,4 +225,20 @@ public void Customer_given_KnownID_should_HaveIDFlagSet()
 	Assert.IsTrue(res);
 }
 ```
+
+### AreEqual.Public
+#### The problem solved
+Comparing two objects in C# requires comparing every property or field one by one. To add insult to injury, reference objects are compared by their references. This can be solved by overriding Equals and operators, a task that is easy to do wrong.
+
+In most cases only public properties are compared so for simplicity's sake the method only looks at public properties.  
+It can also handle nested objects.
+
+```
+var isObjectCopyCorrect = AreEqual.Public(source, destination);
+```
+or more complex, for nexted classes:
+```
+var isObjectDeepCopyCorrect = AreEqual.Public(Depth.Infinite, source, destination);
+```
+
 *EOF*

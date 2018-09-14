@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReachInTest", "ReachInTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReachInTestDotnetFramework", "ReachInTestDotnetFramework\ReachInTestDotnetFramework.csproj", "{DF12FE49-B140-40D2-819D-62EB19666439}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AreEqualTest", "AreEqualTest\AreEqualTest.csproj", "{7FCAA18E-0E4B-4FE9-B48A-B77F900ECD0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.AreEqual", "CompulsoryCow.AreEqual\CompulsoryCow.AreEqual.csproj", "{6738D9F6-4F35-41D8-BF14-F1890B03047A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +82,14 @@ Global
 		{DF12FE49-B140-40D2-819D-62EB19666439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF12FE49-B140-40D2-819D-62EB19666439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF12FE49-B140-40D2-819D-62EB19666439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FCAA18E-0E4B-4FE9-B48A-B77F900ECD0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCAA18E-0E4B-4FE9-B48A-B77F900ECD0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FCAA18E-0E4B-4FE9-B48A-B77F900ECD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCAA18E-0E4B-4FE9-B48A-B77F900ECD0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6738D9F6-4F35-41D8-BF14-F1890B03047A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6738D9F6-4F35-41D8-BF14-F1890B03047A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6738D9F6-4F35-41D8-BF14-F1890B03047A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6738D9F6-4F35-41D8-BF14-F1890B03047A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
