@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		BuildNugetPackage.ps1 = BuildNugetPackage.ps1
 		license.txt = license.txt
 		README.md = README.md
-		Release.md = Release.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializerTest", "SerializerTest\SerializerTest.csproj", "{49C17E3B-B4DA-4883-A162-7245809AE9A0}"
@@ -34,7 +33,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReachInTestDotnetFramework"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AreEqualTest", "AreEqualTest\AreEqualTest.csproj", "{7FCAA18E-0E4B-4FE9-B48A-B77F900ECD0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.AreEqual", "CompulsoryCow.AreEqual\CompulsoryCow.AreEqual.csproj", "{6738D9F6-4F35-41D8-BF14-F1890B03047A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.AreEqual", "CompulsoryCow.AreEqual\CompulsoryCow.AreEqual.csproj", "{6738D9F6-4F35-41D8-BF14-F1890B03047A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{B6BA6D69-846B-4AB1-B9D5-0D2CA3A7FAC8}"
+	ProjectSection(SolutionItems) = preProject
+		Build\build.cake = Build\build.cake
+		Build\build.ps1 = Build\build.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +98,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6BA6D69-846B-4AB1-B9D5-0D2CA3A7FAC8} = {3EAE5209-1053-42F0-9AB7-FDEE1D9405C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C034792-6F0A-4A9F-8155-2858283515F7}
