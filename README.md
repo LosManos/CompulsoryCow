@@ -18,10 +18,10 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 * [Left, Right and Mid](#left-right-and-mid) methods behaving as we know from the BASIC heydays.
 * A method GetCallingMethod retrieving information about the calling method. Warning: This method might be deprecated as it only works properly in debug compile and doesn't behave as expected as it contains the historical where-you've-been but rather [where it will go when it returns](https://stackoverflow.com/a/15368508/521554).
 * A dynamic class [ReachIn](#reachin) for reading (disregarding visibility(private,protected etc.)) fields, properties and methods. Typically used for unit testing.
-* [Meta info help](#meta-info-help).  Use properties and methods names through lambda and not strings.
-** [GetProperty method](#getproperty) for getting information about the property the code is presently in.
-** [GetPrivate methods](#getprivate...) for reaching private fields, properties and methods. Warning: These methods might be deprecated in teh future in favour of `ReachIn`.
-** [Method GetPublicProperties](#GetPublicProperties) for getting an array of all public properties on an object.
+* [Meta info help](#meta-info-help).  Use properties and methods names through lambda and not strings.  
+  * [GetProperty method](#getproperty) for getting information about the property the code is presently in.  
+  * [GetPrivate methods](#getprivate...) for reaching private fields, properties and methods. Warning: These methods might be deprecated in the future in favour of `ReachIn`.  
+  * [Method GetPublicProperties](#GetPublicProperties) for getting an array of all public properties on an object.  
 
 ### *CompulsoryCow.AreEqual* contains:
 * [AreEqual.Public]($areequal) methods for comparing two objects.
