@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfo.shared.cs = AssemblyInfo.shared.cs
 		BuildNugetPackage.ps1 = BuildNugetPackage.ps1
+		HowTo-MergeToMasterAtPublicRepository.md = HowTo-MergeToMasterAtPublicRepository.md
 		license.txt = license.txt
 		README.md = README.md
 	EndProjectSection
@@ -45,11 +46,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.IsEqualsImple
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsEqualsImplementedTest", "IsEqualsImplementedTest\IsEqualsImplementedTest.csproj", "{2232C1DA-EB28-4CFD-ABD6-90EAA2F53D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEqualsImplementedAssemblyOk", "IsEqualsImplementedAssemblyOk\IsEqualsImplementedAssemblyOk.csproj", "{C3DE77E0-4FA2-471E-8533-E8394134D997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsEqualsImplementedAssemblyOk", "IsEqualsImplementedAssemblyOk\IsEqualsImplementedAssemblyOk.csproj", "{C3DE77E0-4FA2-471E-8533-E8394134D997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEqualsImplementedAssemblyNotOk", "IsEqualsImplementedAssemblyNotOk\IsEqualsImplementedAssemblyNotOk.csproj", "{477BAE5E-83B2-4435-90A5-0914038553BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsEqualsImplementedAssemblyNotOk", "IsEqualsImplementedAssemblyNotOk\IsEqualsImplementedAssemblyNotOk.csproj", "{477BAE5E-83B2-4435-90A5-0914038553BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEqualsImplementedAssemblyNoDefinitionAtAll", "IsEqualsImplementedAssemblyNoDefinitionAtAll\IsEqualsImplementedAssemblyNoDefinitionAtAll.csproj", "{D8C66AA4-E8A9-426E-8D56-1D6B15C772A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsEqualsImplementedAssemblyNoDefinitionAtAll", "IsEqualsImplementedAssemblyNoDefinitionAtAll\IsEqualsImplementedAssemblyNoDefinitionAtAll.csproj", "{D8C66AA4-E8A9-426E-8D56-1D6B15C772A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
