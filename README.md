@@ -26,6 +26,10 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 ### *CompulsoryCow.AreEqual* contains:
 * [AreEqual.Public]($areequal) methods for comparing two objects.
 
+### *CompulsoryCow.IsEqualsImplemented* contains:
+* [HasEqualsBeenDeclared]($hasequalsbeenimplemented) method for telling if a class has explicitly declared the Equals method
+* [IsEqualsImplementedCorrectly]($isequalsimplementedcorrectly) method for telling if a class has implemented the Equals method correctly.
+
 ### The projects might contain in the future:
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
 * A Linq method that returns true if [all items in a list are equal](http://stackoverflow.com/questions/1628658/linq-check-whether-two-list-are-the-same).
@@ -240,5 +244,18 @@ or more complex, for nexted classes:
 ```
 var isObjectDeepCopyCorrect = AreEqual.Public(Depth.Infinite, source, destination);
 ```
+
+### HasEqualsBeenDeclared
+#### The problem solved
+Is an explicit Equals declared for a class or not? This method will answer True or False for that. Quite limited usefulness.
+
+### IsEqualsImplementedCorrectly
+#### The problem solved
+It is easy to implement Equals. With today's tools it is just a ctrl-period or alt-enter away; just press and all public properties are compared. But what happens when a property is added, is it certain that the developer remembers to update Equals and GetHashCode? Probably not.  
+So IsEqualsImplemententedCorrectly to the rescue. Call it with two objects with your class of choice and let it change one property at a time. The resutl is a boolean but the last comparisons value is in ResultMember and ResultMessage properties.
+
+### AreAllEqualsImplementedCorrectly
+#### The problem solved
+Like IsEqualsImplementedCorrectly but on an assembly scale. Hand it an assembly and you get all failing Equals implementations back.
 
 *EOF*
