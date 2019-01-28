@@ -2,8 +2,8 @@ CompulsoryCow
 =============
 
 CompulsoryCow Version 2.5.0  
-CompulsoryCow.AreEqual Version 0.1.0
-CompulsoruCow.0.1 IsEqualsImplemented Version 0.1.0
+CompulsoryCow.AreEqual Version 0.1.0  
+CompulsoryCow.IsEqualsImplemented Version 0.1.0
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
