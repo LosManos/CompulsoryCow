@@ -3,7 +3,8 @@ CompulsoryCow
 
 CompulsoryCow Version 2.5.0  
 CompulsoryCow.AreEqual Version 0.1.0  
-CompulsoryCow.IsEqualsImplemented Version 0.1.0
+CompulsoryCow.IsEqualsImplemented Version 0.1.0  
+Compulsorycow.CharacterSeparated Version 0.1.0
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
@@ -30,6 +31,10 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 ### *CompulsoryCow.IsEqualsImplemented* contains:
 * [HasEqualsBeenDeclared]($hasequalsbeenimplemented) method for telling if a class has explicitly declared the Equals method
 * [IsEqualsImplementedCorrectly]($isequalsimplementedcorrectly) method for telling if a class has implemented the Equals method correctly.
+
+### *CompulsoryCow.CharacterSeparated* contains:
+* Parse.StringLine method for splitting a string per character (comma). It is like `string.Split` but with with the possibility to have a comma in the very string.
+* Parse.String method for splitting a string per character (comma) and returns every item as a specific type.
 
 ### The projects might contain in the future:
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
@@ -258,5 +263,15 @@ So IsEqualsImplemententedCorrectly to the rescue. Call it with two objects with 
 ### AreAllEqualsImplementedCorrectly
 #### The problem solved
 Like IsEqualsImplementedCorrectly but on an assembly scale. Hand it an assembly and you get all failing Equals implementations back.
+
+## Parse
+### Parse.StringLine 
+Think of it as a slightly better or more complex `string.Split` or think of it as what is called for every row in a CSV file.  
+`Parse.StringLine( "abc,def" ) => [ "abc", "def" ]
+`Parse.StringLine( "abc\",\"def" ) => [ "abc\"def" ]
+
+### Parse.String
+This method is also a `string.Split` with some extra bells and some fewer whistles. It's raison d'être is that it converts ever item to its type.
+`Parse.String( "\"abc\",1, 1.0, , \"\"" ) => [ (string)"abc", (int)1, (double)1.0, (object)null, (string)"" ]
 
 *EOF*
