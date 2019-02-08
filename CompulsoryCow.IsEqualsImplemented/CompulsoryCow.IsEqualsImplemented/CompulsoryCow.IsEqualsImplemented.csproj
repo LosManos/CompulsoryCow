@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Authors>LosManos</Authors>
+    <Company>LosManos</Company>
+    <Description>Methods for testing if Equals is implemented correctly.</Description>
+    <Copyright>LGPLv3 + NoEvil</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/LosManos/CompulsoryCow/master/License.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/LosManos/CompulsoryCow</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
+    <PackageReleaseNotes>### Version 0.1.0
+Added Verify.AreAllEqualsImplementedCorrectly, Verify.HasEqualsBeenDeclared and IsEqualsImplementedCorrectly.
+</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CompulsoryCow" Version="2.5.0" />
+  </ItemGroup>
+
+</Project>

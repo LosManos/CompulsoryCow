@@ -21,3 +21,6 @@ nuget.exe
 
 # vskr
 Build/tools
+
+# nuget
+*.zip
