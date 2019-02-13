@@ -9,6 +9,13 @@ namespace CompulsoryCow.CharacterSeparated
         private const string QuoteCharacter = "\"";
         private const string SeparatorCharacter = ",";
 
+        private readonly bool _implicitString = false;
+
+        public Parse(bool implicitString)
+        {
+            _implicitString = implicitString;
+        }
+
         /// <summary>This method splits a string into words per comma (,).
         /// If you have a word with a comma in it, quote the string with quotes ("). The quotes are a part of the word.
         /// Everything returned is a string.
@@ -21,7 +28,7 @@ namespace CompulsoryCow.CharacterSeparated
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public static IEnumerable<string> StringLine(string line)
+        public IEnumerable<string> StringLine(string line)
         {
             if (line == null) { throw new ArgumentNullException(nameof(line)); }
 
@@ -29,7 +36,7 @@ namespace CompulsoryCow.CharacterSeparated
             {
                 return line.Split(new[] { SeparatorCharacter }, StringSplitOptions.None);
             }
-            return StringTraverse(line);
+            return StringTraverse(line, _implicitString);
         }
 
         /// <summary>This method splits a string into words per comma (,).
@@ -44,26 +51,26 @@ namespace CompulsoryCow.CharacterSeparated
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public static IEnumerable<object> Line(string line)
+        public IEnumerable<object> Line(string line)
         {
             if (line == null) { throw new ArgumentNullException(nameof(line)); }
 
             if (line.Contains(SeparatorCharacter) == false)
             {
-                return new object[] { ParseWord(line) };
+                return new object[] { ParseWord(line, _implicitString) };
             }
-            return Traverse(line);
+            return Traverse(line, _implicitString);
         }
 
 
-        private static IEnumerable<string> StringTraverse(string line)
+        private static IEnumerable<string> StringTraverse(string line, bool implicitString)
         {
             var res = new List<string>();
             var word = string.Empty;
             var isInQuote = false;
             do
             {
-                var c = Pop(ref line, ref isInQuote);
+                var c = Pop(ref line, ref isInQuote, implicitString);
                 if (c == SeparatorCharacter && isInQuote == false)
                 {
                     res.Add(word);
@@ -78,17 +85,17 @@ namespace CompulsoryCow.CharacterSeparated
             return res;
         }
 
-        private static IEnumerable<object> Traverse(string line)
+        private static IEnumerable<object> Traverse(string line, bool implicitString)
         {
             var res = new List<object>();
             var word = string.Empty;
             var isInQuote = false;
             do
             {
-                var c = Pop(ref line, ref isInQuote);
+                var c = Pop(ref line, ref isInQuote, implicitString);
                 if (c == SeparatorCharacter && isInQuote == false)
                 {
-                    res.Add(ParseWord(word));
+                    res.Add(ParseWord(word, implicitString));
                     word = string.Empty;
                 }
                 else
@@ -97,18 +104,24 @@ namespace CompulsoryCow.CharacterSeparated
                 }
             } while (line.Length >= 1);
 
-            res.Add(ParseWord(word));
+            res.Add(ParseWord(word, implicitString));
             return res;
         }
 
-        private static object ParseWord(string word)
+        private static object ParseWord(string word, bool implicitString)
         {
-            word = word.Trim();
+            if( implicitString == false)
+            {
+                word = word.Trim();
+            }
             if (word.Length == 0)
             {
-                return null;
+                if (implicitString == false)
+                {
+                    return null;
+                }
             }
-            if (word.Left(1) == QuoteCharacter)
+            if ((implicitString == false ) &&  word.Left(1) == QuoteCharacter)
             {
                 return word.Middle();
             }
@@ -116,23 +129,33 @@ namespace CompulsoryCow.CharacterSeparated
             {
                 return intResult;
             }
-            if (bool.TryParse(word, out bool boolResult))
+            if (implicitString == false)
             {
-                return boolResult;
+                if (bool.TryParse(word, out bool boolResult))
+                {
+                    return boolResult;
+                }
             }
             if (double.TryParse(word, out double doubleResult))
             {
                 return doubleResult;
             }
-            throw new ArgumentException($"The string [{word}] was not a recognised format.");
+            if(implicitString)
+            {
+                return word;
+            }
+            else
+            {
+                throw new ArgumentException($"The string [{word}] was not a recognised format.");
+            }
         }
 
-        private static string Pop(ref string line, ref bool isInQuote)
+        private static string Pop(ref string line, ref bool isInQuote, bool implicitString)
         {
             var character = line.Left(1);
             line = line.Tail();
             var isEscaped = character == EscapeCharacter;
-            if (isEscaped)
+            if (isEscaped ) // && implicitString)
             {
                 character = line.Left(1);
                 line = line.Tail();
