@@ -104,8 +104,8 @@ namespace CharacterSeparatedTest
                 yield return new object[] { "Different types.", "\"abc\", 1, 1.0, false", false, new object[] { "abc", (int)1, (double)1.0, false } };
                 yield return new object[] { "Different types.", "\"abc\", 1, 1.0,false", true, new object[] { "\"abc\"", (int)1, (double)1.0, "false" } };
                 yield return new object[] { "Trimming value.", " 1 ", null, new object[] { 1 } };
-                yield return new object[] { "Trimming string.", " \"a\" ", false, new object[] { "a" } };
-                yield return new object[] { "Trimming string.", " \"a\" ", true, new object[] { " \"a\" " } };
+                yield return new object[] { "Only trim implicit string.", " \"a\" ", false, new object[] { "a" } };
+                yield return new object[] { "Only trim implicit string.", " \"a\" ", true, new object[] { " \"a\" " } };
                 yield return new object[] { "Space inside string.", " \" a \" ", false, new object[] { " a " } };
                 yield return new object[] { "Space inside string.", " \" a \" ", true, new object[] { " \" a \" " } };
             }
@@ -117,7 +117,6 @@ namespace CharacterSeparatedTest
         {
             foreach (var implicitString in ImplicitStringVariants(implicitStringOrBoth))
             {
-
                 //  #   Arrange.
                 var sut = new Parse(implicitString);
 

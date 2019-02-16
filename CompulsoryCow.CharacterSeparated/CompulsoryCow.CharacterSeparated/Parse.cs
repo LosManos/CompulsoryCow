@@ -5,7 +5,7 @@ using WordParser = System.Func<string, bool, /*WordParseResult*/ System.Tuple<bo
 
 namespace CompulsoryCow.CharacterSeparated
 {
-    public class Parse
+    public class Parse : IParse
     {
         private const string EscapeCharacter = "\\";
         private const string QuoteCharacter = "\"";
