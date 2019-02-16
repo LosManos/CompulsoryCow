@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using WordParseResult = System.Tuple<bool, object>;
+using WordParser = System.Func<string, bool, /*WordParseResult*/ System.Tuple<bool, object>>;
 
 namespace CompulsoryCow.CharacterSeparated
 {
@@ -10,6 +12,76 @@ namespace CompulsoryCow.CharacterSeparated
         private const string SeparatorCharacter = ",";
 
         private readonly bool _implicitString = false;
+
+        private readonly IList<WordParser> _wordParsers = new List<WordParser>();
+
+        private static readonly IList<WordParser> _defaultWordParserList = new List<WordParser>
+        {
+            (word, implicitString) =>{
+                if (word.Length == 0)
+                {
+                    if (implicitString == false)
+                    {
+                        return ParseResultParsed(null);
+                        }
+                    }
+                return ParseResultNotParsed;
+            },
+            (word, implicitString) => {
+                if ((implicitString == false) && word.Left(1) == QuoteCharacter)
+                {
+                    return ParseResultParsed(word.Middle());
+                }
+                return ParseResultNotParsed;
+            },
+            (word, implicitString) =>
+            {
+                if (int.TryParse(word, out int intResult))
+                {
+                    return ParseResultParsed(intResult);
+                }
+                return ParseResultNotParsed;
+            },
+            (word, implicitString) =>
+            {
+                if (implicitString == false)
+                {
+                    if (bool.TryParse(word, out bool boolResult))
+                    {
+                        return ParseResultParsed( boolResult);
+                    }
+                }
+                return ParseResultNotParsed;
+            },
+            (word, implicitString) =>
+            {
+                if (double.TryParse(word, out double doubleResult))
+                {
+                    return ParseResultParsed(doubleResult);
+                }
+                return ParseResultNotParsed;
+            },
+            (word, implicitString) =>
+            {
+                if (double.TryParse(word, out double doubleResult))
+                {
+                    return ParseResultParsed(doubleResult);
+                }
+                return ParseResultNotParsed;
+            },
+            (word, implicitString) =>
+            {
+                if (implicitString)
+                {
+                    return ParseResultParsed(word);
+                }
+                return ParseResultNotParsed;
+            },
+        };
+
+        private static WordParseResult ParseResultNotParsed => new WordParseResult(false, null);
+
+        private static WordParseResult ParseResultParsed(object result)=> new WordParseResult(true, result);
 
         public Parse(bool implicitString)
         {
@@ -62,7 +134,6 @@ namespace CompulsoryCow.CharacterSeparated
             return Traverse(line, _implicitString);
         }
 
-
         private static IEnumerable<string> StringTraverse(string line, bool implicitString)
         {
             var res = new List<string>();
@@ -110,44 +181,19 @@ namespace CompulsoryCow.CharacterSeparated
 
         private static object ParseWord(string word, bool implicitString)
         {
-            if( implicitString == false)
+            if (implicitString == false)
             {
                 word = word.Trim();
             }
-            if (word.Length == 0)
+            foreach( var wordParser in _defaultWordParserList)
             {
-                if (implicitString == false)
+                var result = wordParser(word, implicitString);
+                if(result.Item1)
                 {
-                    return null;
+                    return result.Item2;
                 }
             }
-            if ((implicitString == false ) &&  word.Left(1) == QuoteCharacter)
-            {
-                return word.Middle();
-            }
-            if (int.TryParse(word, out int intResult))
-            {
-                return intResult;
-            }
-            if (implicitString == false)
-            {
-                if (bool.TryParse(word, out bool boolResult))
-                {
-                    return boolResult;
-                }
-            }
-            if (double.TryParse(word, out double doubleResult))
-            {
-                return doubleResult;
-            }
-            if(implicitString)
-            {
-                return word;
-            }
-            else
-            {
-                throw new ArgumentException($"The string [{word}] was not a recognised format.");
-            }
+            throw new ArgumentException($"The string [{word}] was not a recognised format.");
         }
 
         private static string Pop(ref string line, ref bool isInQuote, bool implicitString)
@@ -155,7 +201,7 @@ namespace CompulsoryCow.CharacterSeparated
             var character = line.Left(1);
             line = line.Tail();
             var isEscaped = character == EscapeCharacter;
-            if (isEscaped ) // && implicitString)
+            if (isEscaped) // && implicitString)
             {
                 character = line.Left(1);
                 line = line.Tail();

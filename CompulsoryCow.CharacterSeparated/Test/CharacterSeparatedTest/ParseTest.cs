@@ -23,6 +23,8 @@ namespace CharacterSeparatedTest
                 yield return new object[] { "Splitting longer.", "abc, def", null, new[] { "abc", " def" } };
                 yield return new object[] { "Split without any special chars.", "a,b", null, new[] { "a", "b" } };
                 yield return new object[] { "With quoted separator.", "\"a,b\",c", null, new[] { "\"a,b\"", "c" } };
+                yield return new object[] { "With escaped escape character.", "\\\\", null, new[] { "\\\\" } };
+                yield return new object[] { "With escaped characters.", "\"\\\"\\", null, new[] { "\"\\\"\\" } };
                 yield return new object[] { "With trimming.", " a ", null, new[] { " a " } };
                 yield return new object[] { "No trimming with quotes.", " \"a\" ", true, new[] { " \"a\" " } };
             }
