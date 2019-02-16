@@ -17,71 +17,93 @@ namespace CompulsoryCow.CharacterSeparated
 
         private static readonly IList<WordParser> _defaultWordParserList = new List<WordParser>
         {
-            (word, implicitString) =>{
-                if (word.Length == 0)
-                {
-                    if (implicitString == false)
-                    {
-                        return ParseResultParsed(null);
-                        }
-                    }
-                return ParseResultNotParsed;
-            },
-            (word, implicitString) => {
-                if ((implicitString == false) && word.Left(1) == QuoteCharacter)
-                {
-                    return ParseResultParsed(word.Middle());
-                }
-                return ParseResultNotParsed;
-            },
-            (word, implicitString) =>
-            {
-                if (int.TryParse(word, out int intResult))
-                {
-                    return ParseResultParsed(intResult);
-                }
-                return ParseResultNotParsed;
-            },
-            (word, implicitString) =>
-            {
-                if (implicitString == false)
-                {
-                    if (bool.TryParse(word, out bool boolResult))
-                    {
-                        return ParseResultParsed( boolResult);
-                    }
-                }
-                return ParseResultNotParsed;
-            },
-            (word, implicitString) =>
-            {
-                if (double.TryParse(word, out double doubleResult))
-                {
-                    return ParseResultParsed(doubleResult);
-                }
-                return ParseResultNotParsed;
-            },
-            (word, implicitString) =>
-            {
-                if (double.TryParse(word, out double doubleResult))
-                {
-                    return ParseResultParsed(doubleResult);
-                }
-                return ParseResultNotParsed;
-            },
-            (word, implicitString) =>
-            {
-                if (implicitString)
-                {
-                    return ParseResultParsed(word);
-                }
-                return ParseResultNotParsed;
-            },
+            (word, implicitString) => _defaultStringIfImplicitParser(word, implicitString),
+            (word, implicitString) => _defaultStringQuotedWhenNotImplicitParser(word, implicitString),
+            (word, implicitString) => _defaultIntParser(word, implicitString),
+            (word, implicitString) => _defaultBoolParser(word, implicitString),
+            (word, implicitString) => _defaultDoubleParser(word, implicitString),
+            (word, implicitString) => _defaultAsIsParser(word, implicitString)
         };
 
-        private static WordParseResult ParseResultNotParsed => new WordParseResult(false, null);
+        private static readonly WordParser _defaultAsIsParser = (word, implicitString) =>
+            implicitString ?
+                ParseResultParsed(word) :
+                ParseResultNotParsed;
 
-        private static WordParseResult ParseResultParsed(object result)=> new WordParseResult(true, result);
+        /// <summary>This method returns a boolean if the word can be parsed as such.
+        /// </summary>
+        private static readonly WordParser _defaultBoolParser = (word, implicitString) =>
+        {
+            if (implicitString == false)
+            {
+                if (bool.TryParse(word, out bool boolResult))
+                {
+                    return ParseResultParsed(boolResult);
+                }
+            }
+            return ParseResultNotParsed;
+        };
+
+        /// <summary>This method returns a double if teh word can be parsed as  such.
+        /// </summary>
+        private static readonly WordParser _defaultDoubleParser = (word, implicitString) =>
+        {
+            if (double.TryParse(word, out double doubleResult))
+            {
+                return ParseResultParsed(doubleResult);
+            }
+            return ParseResultNotParsed;
+        };
+
+        /// <summary>This method returns an int if the word can be parsed as such.
+        /// </summary>
+        private static readonly WordParser _defaultIntParser = (word, implicitString) =>
+        {
+            if (int.TryParse(word, out int intResult))
+            {
+                return ParseResultParsed(intResult);
+            }
+            return ParseResultNotParsed;
+        };
+
+        /// <summary>This method is for returning a blank word as null if we have implicit string.
+        /// </summary>
+        private static readonly WordParser _defaultStringIfImplicitParser = (word, implicitString) =>
+            implicitString == false && word.Length == 0 ?
+                ParseResultParsed(null) :
+                ParseResultNotParsed;
+
+        /// <summary>This method is for returning a quoted string as a string when we do not have implicit string.
+        /// <summary>
+        private static readonly WordParser _defaultStringQuotedWhenNotImplicitParser = (word, implicitString) =>
+            (implicitString == false && word.Left(1) == QuoteCharacter) ?
+                ParseResultParsed(word.Middle()):
+                ParseResultNotParsed;
+
+        /// <summary>This method returns a boolean if the word can be parsed as such.
+        /// </summary>
+        public WordParser DefaultBoolParser = (word, implicitString) =>
+            _defaultBoolParser(word, implicitString);
+
+        /// <summary>This method returns a double if the string can be parsed as such.
+        /// </summary>
+        public WordParser DefaultDoubleParser = (word, implicitString) =>
+            _defaultDoubleParser(word, implicitString);
+
+        /// <summary>This method returns an int if the word can be parsed as such.
+        /// </summary>
+        public WordParser DefaultIntParser = (word, implicitString) =>
+            _defaultIntParser(word, implicitString);
+
+        /// <summary>This method is for returning a blank word as null if we have implicit string.
+        /// </summary>
+        public WordParser DefaultStringIfImplicitParser = (word, implicitString) => 
+            _defaultStringIfImplicitParser(word, implicitString);
+
+        /// <summary>This method is for returning a quoted string as a string when we do not have implicit string.
+        /// </summary>
+        public WordParser DefaultStringQuotedWhenNotImplicitParser = (word, implicitString) => 
+            _defaultStringQuotedWhenNotImplicitParser(word, implicitString);
 
         public Parse(bool implicitString)
         {
@@ -134,6 +156,44 @@ namespace CompulsoryCow.CharacterSeparated
             return Traverse(line, _implicitString);
         }
 
+        private static WordParseResult ParseResultNotParsed => new WordParseResult(false, null);
+
+        private static WordParseResult ParseResultParsed(object result) => new WordParseResult(true, result);
+
+        private static object ParseWord(string word, bool implicitString)
+        {
+            if (implicitString == false)
+            {
+                word = word.Trim();
+            }
+            foreach (var wordParser in _defaultWordParserList)
+            {
+                var result = wordParser(word, implicitString);
+                if (result.Item1)
+                {
+                    return result.Item2;
+                }
+            }
+            throw new ArgumentException($"The string [{word}] was not a recognised format.");
+        }
+
+        private static string Pop(ref string line, ref bool isInQuote, bool implicitString)
+        {
+            var character = line.Left(1);
+            line = line.Tail();
+            var isEscaped = character == EscapeCharacter;
+            if (isEscaped) // && implicitString)
+            {
+                character = line.Left(1);
+                line = line.Tail();
+            }
+            if (isEscaped == false && character == QuoteCharacter)
+            {
+                isInQuote = !isInQuote;
+            }
+            return character;
+        }
+
         private static IEnumerable<string> StringTraverse(string line, bool implicitString)
         {
             var res = new List<string>();
@@ -179,39 +239,6 @@ namespace CompulsoryCow.CharacterSeparated
             return res;
         }
 
-        private static object ParseWord(string word, bool implicitString)
-        {
-            if (implicitString == false)
-            {
-                word = word.Trim();
-            }
-            foreach( var wordParser in _defaultWordParserList)
-            {
-                var result = wordParser(word, implicitString);
-                if(result.Item1)
-                {
-                    return result.Item2;
-                }
-            }
-            throw new ArgumentException($"The string [{word}] was not a recognised format.");
-        }
-
-        private static string Pop(ref string line, ref bool isInQuote, bool implicitString)
-        {
-            var character = line.Left(1);
-            line = line.Tail();
-            var isEscaped = character == EscapeCharacter;
-            if (isEscaped) // && implicitString)
-            {
-                character = line.Left(1);
-                line = line.Tail();
-            }
-            if (isEscaped == false && character == QuoteCharacter)
-            {
-                isInQuote = !isInQuote;
-            }
-            return character;
-        }
     }
 
     internal static class StringExtensions
