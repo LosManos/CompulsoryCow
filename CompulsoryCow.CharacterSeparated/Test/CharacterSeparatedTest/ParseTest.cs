@@ -8,7 +8,7 @@ using WordParseResult = System.Tuple<bool, object>;
 
 namespace CharacterSeparatedTest
 {
-    using WordParser = System.Func<string, bool, WordParseResult>;
+    using WordParser = Func<string, bool, WordParseResult>;
 
     [TestClass]
     public class ParseTest
@@ -17,9 +17,28 @@ namespace CharacterSeparatedTest
         public void CanChangeWordParsers()
         {
             //  #   Arrange.
-            WordParser wordParser = (word, implicitString) =>
-                new WordParseResult(true, "whatever");
-            var sut = new Parse(false, new[] { wordParser });
+            var sut = new Parse(new ParseOptions { ImplicitString = false });
+            WordParser wordParser = (word, implicitString) => new WordParseResult(word == "a", word == "a" ? "match" : "fail");
+
+            //  #   Act.
+            sut._wordParsers = new List<WordParser>
+            {
+                (word, implicitString) => wordParser(word, implicitString)
+            };
+            var res = sut.Line("a").ToList();
+
+            //  #   Assert.
+            res.Single().Should().Be("match", "We parse as simple as can be, just a constant.");
+        }
+
+        [TestMethod]
+        public void CanSetWordParsers()
+        {
+            //  #   Arrange.
+            var sut = new Parse(
+                new ParseOptions { ImplicitString = false }, 
+                new WordParser[] { (word, implicitString) =>
+                    new WordParseResult(true, "whatever") });
 
             //  #   Act.
             var res = sut.Line("a").ToList();
@@ -28,12 +47,36 @@ namespace CharacterSeparatedTest
             res.Single().Should().Be("whatever", "We parse as simple as can be, just a constant.");
         }
 
+        private static IEnumerable<object[]> CanSetOptionsData
+        {
+            get
+            {
+                yield return new object[] { false };
+                yield return new object[] { true };
+            }                                                      
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(CanSetOptionsData))]
+        public void CanSetOptions(bool implicitString)
+        {
+            //  #   Arrange.
+            var options = new ParseOptions { ImplicitString = true };
+            var sut = new Parse(options);
+
+            //  #   Act.
+            var res = sut.Options;
+
+            //  #   Assert.
+            options.Should().Be(res);
+        }
+
         [TestMethod]
         public void CanUseDefaultWordParsers()
         {
             //  #   Arrange.
-            var sut1 = new Parse(true, Parse.DefaultWordParserList);
-            var sut2 = new Parse(true);
+            var sut1 = new Parse(new ParseOptions{ImplicitString = true}, Parse.DefaultWordParserList);
+            var sut2 = new Parse(new ParseOptions { ImplicitString = true });
 
             //  #   Act.
             var res1 = sut1.Line("a,1");
@@ -74,7 +117,7 @@ namespace CharacterSeparatedTest
             foreach (var implicitString in implicitStrings)
             {
                 //  #   Arrange.
-                var sut = new Parse(implicitString);
+                var sut = new Parse(new ParseOptions { ImplicitString = implicitString });
 
                 if (expectedOutput == null)
                 {
@@ -103,7 +146,7 @@ namespace CharacterSeparatedTest
         public void StringLine_NullArgument_ThrowNullArgumentException(bool implicitString)
         {
             //  #   Arrange.
-            var sut = new Parse(implicitString);
+            var sut = new Parse(new ParseOptions { ImplicitString = implicitString });
 
             //  #   Act.
             Action callingWithNull = () => sut.StringLine(null);
@@ -153,7 +196,7 @@ namespace CharacterSeparatedTest
             foreach (var implicitString in ImplicitStringVariants(implicitStringOrBoth))
             {
                 //  #   Arrange.
-                var sut = new Parse(implicitString);
+                var sut = new Parse(new ParseOptions { ImplicitString = implicitString });
 
                 //  #   Act.
                 var res = sut.Line(input).ToList();
@@ -170,7 +213,7 @@ namespace CharacterSeparatedTest
         public void Line_NullArgument_ThrowNullArgumentException(bool implicitString)
         {
             //  #   Arrange.
-            var sut = new Parse(implicitString);
+            var sut = new Parse(new ParseOptions { ImplicitString = implicitString });
 
             //  #   Act.
             Action callingWithNull = () => sut.Line(null);

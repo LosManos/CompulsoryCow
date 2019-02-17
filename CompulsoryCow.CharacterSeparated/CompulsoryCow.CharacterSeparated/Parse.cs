@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using WordParseResult = System.Tuple<bool, object>;
-using WordParser = System.Func<string, bool, /*WordParseResult*/ System.Tuple<bool, object>>;
 using System.Linq;
 
 namespace CompulsoryCow.CharacterSeparated
 {
+    using WordParser = Func<string, bool, WordParseResult>;
+
+    /// <summary>This class contains functionality for parsing a character separated string, 
+    /// often called a CSV.
+    /// </summary>
     public class Parse : IParse
     {
+        #region Properties.
+
+        #region Private properties and constants.
+
         private const string EscapeCharacter = "\\";
         private const string QuoteCharacter = "\"";
         private const string SeparatorCharacter = ",";
 
-        private readonly bool _implicitString = false;
-
-        private readonly IList<WordParser> _wordParsers;
+        public IList<WordParser> _wordParsers;
 
         private static readonly WordParser _defaultAsIsParser = (word, implicitString) =>
             implicitString ?
@@ -71,6 +77,10 @@ namespace CompulsoryCow.CharacterSeparated
                 ParseResultParsed(word.Middle()):
                 ParseResultNotParsed;
 
+        #endregion
+
+        #region Public properties.
+
         /// <summary>This method returns a boolean if the word can be parsed as such.
         /// </summary>
         public WordParser DefaultBoolParser = (word, implicitString) =>
@@ -108,15 +118,52 @@ namespace CompulsoryCow.CharacterSeparated
             (word, implicitString) => _defaultAsIsParser(word, implicitString)
         };
 
-        public Parse(bool implicitString)
+        /// <summary>This property contains the properties for the <see cref="IParse"/> class.
+        /// </summary>
+        public ParseOptions Options { get; set; } = new ParseOptions();
+
+        #endregion
+
+        #endregion
+
+        #region Constructors.
+
+        public Parse( ParseOptions options)
         {
-            _implicitString = implicitString;
+            Options = options;
         }
 
-        public Parse(bool implicitString, IEnumerable<WordParser> wordParsers)
-            :this(implicitString)
+        public Parse(ParseOptions options, IEnumerable<WordParser> wordParsers)
+            :this(options)
         {
             _wordParsers = wordParsers.ToList();
+        }
+
+        #endregion
+
+        #region Public methods.
+
+        /// <summary>This method splits a string into words per comma (,).
+        /// Each word is returns as a value of its type.
+        /// Strings are recognised by quoting (")
+        /// All words are trimmed.
+        /// Unknown types throws an exception.
+        /// Null input throws an exception.
+        /// 
+        /// Parse.Line( "\"a\", 2, 3.14" ) == [ "a", (int)2, (double)3.14 ];
+        /// Parse.Line( "a" ) throws exception.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public IEnumerable<object> Line(string line)
+        {
+            if (line == null) { throw new ArgumentNullException(nameof(line)); }
+
+            if (line.Contains(SeparatorCharacter) == false)
+            {
+                return new object[] { ParseWord(line, Options.ImplicitString, _wordParsers) };
+            }
+            return Traverse(line, Options.ImplicitString, _wordParsers);
         }
 
         /// <summary>This method splits a string into words per comma (,).
@@ -139,31 +186,12 @@ namespace CompulsoryCow.CharacterSeparated
             {
                 return line.Split(new[] { SeparatorCharacter }, StringSplitOptions.None);
             }
-            return StringTraverse(line, _implicitString);
+            return StringTraverse(line, Options.ImplicitString);
         }
 
-        /// <summary>This method splits a string into words per comma (,).
-        /// Each word is returns as a value of its type.
-        /// Strings are recognised by quoting (")
-        /// All words are trimmed.
-        /// Unknown types throws an exception.
-        /// Null input throws an exception.
-        /// 
-        /// Parse.Line( "\"a\", 2, 3.14" ) == [ "a", (int)2, (double)3.14 ];
-        /// Parse.Line( "a" ) throws exception.
-        /// </summary>
-        /// <param name="line"></param>
-        /// <returns></returns>
-        public IEnumerable<object> Line(string line)
-        {
-            if (line == null) { throw new ArgumentNullException(nameof(line)); }
+        #endregion
 
-            if (line.Contains(SeparatorCharacter) == false)
-            {
-                return new object[] { ParseWord(line, _implicitString, _wordParsers) };
-            }
-            return Traverse(line, _implicitString, _wordParsers);
-        }
+        #region Private methods.
 
         private static WordParseResult ParseResultNotParsed => new WordParseResult(false, null);
 
@@ -248,25 +276,6 @@ namespace CompulsoryCow.CharacterSeparated
             return res;
         }
 
-    }
-
-    internal static class StringExtensions
-    {
-        internal static string Middle(this string value)
-        {
-            return value.Substring(1, value.Length - 2);
-        }
-
-        // https://stackoverflow.com/questions/1722334/extract-only-right-most-n-letters-from-a-string
-        public static string Left(this string str, int length)
-        {
-            str = (str ?? string.Empty);
-            return str.Substring(0, Math.Min(length, str.Length));
-        }
-
-        internal static string Tail(this string line)
-        {
-            return line.Length >= 1 ? line.Substring(1) : string.Empty;
-        }
+        #endregion
     }
 }

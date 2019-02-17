@@ -2,7 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
+    <PackageReleaseNotes># 0.1.0
+Can parse a string like "a,b,1,false" and with quotes like "\"a\",2"
+and return the items (words) as strings or a typed value.
+
+# 0.2.0
+Made the `Parse` object non static.
+Created an `IParse`.
+Made the word parsing rules changable.</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
