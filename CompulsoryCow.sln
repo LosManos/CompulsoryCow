@@ -76,9 +76,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{60AB69AC-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DCB4911C-1B0E-44F7-9811-145BAD06271D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.CharacterSeparated", "CompulsoryCow.CharacterSeparated\CompulsoryCow.CharacterSeparated.csproj", "{CB42CD5C-E4BD-4750-9ED0-5704CABD531E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{60AB69AC-F7FF-44F3-8EBB-42E8338EBDB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterSeparatedTest", "CharacterSeparatedTest\CharacterSeparatedTest.csproj", "{E2262C42-E74B-485B-96D4-D7D79EAB5D9F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DCB4911C-1B0E-44F7-9811-145BAD06271D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

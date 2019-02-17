@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CompulsoryCow.CharacterSeparated\CompulsoryCow.CharacterSeparated.csproj" />
+    <ProjectReference Include="..\..\CompulsoryCow.CharacterSeparated\CompulsoryCow.CharacterSeparated.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
+    <PackageReleaseNotes># 0.2.0
+Can set options.
+Made `Parse` class non static.
+# 0.1.0
+Can parse a CSV string and return strings or types.
+</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

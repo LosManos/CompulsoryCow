@@ -4,7 +4,7 @@ CompulsoryCow
 CompulsoryCow Version 2.5.0  
 CompulsoryCow.AreEqual Version 0.1.0  
 CompulsoryCow.IsEqualsImplemented Version 0.1.0  
-Compulsorycow.CharacterSeparated Version 0.1.0
+Compulsorycow.CharacterSeparated Version 0.2.0
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
@@ -267,11 +267,19 @@ Like IsEqualsImplementedCorrectly but on an assembly scale. Hand it an assembly 
 ## Parse
 ### Parse.StringLine 
 Think of it as a slightly better or more complex `string.Split` or think of it as what is called for every row in a CSV file.  
-`Parse.StringLine( "abc,def" ) => [ "abc", "def" ]
-`Parse.StringLine( "abc\",\"def" ) => [ "abc\"def" ]
+`Parse.StringLine( "abc,def" )` => [ "abc", "def" ]  
+`Parse.StringLine( "abc\",\"def" )` => [ "abc\"def" ]  
 
 ### Parse.String
 This method is also a `string.Split` with some extra bells and some fewer whistles. It's raison d'être is that it converts ever item to its type.
-`Parse.String( "\"abc\",1, 1.0, , \"\"" ) => [ (string)"abc", (int)1, (double)1.0, (object)null, (string)"" ]
+`Parse.String( "\"abc\",1, 1.0, , \"\"" )` => [ (string)"abc", (int)1, (double)1.0, (object)null, (string)"" ]
+
+One can make the rules oneself by sending in a list of `Func<...>` that decides whether a word is a string or an int or a bool or your own type.
+
+    var parse = new Parse(
+        new ParseOptions { ImplicitString = false }, // Just some settings. We might get rid of standard settings in the future.
+        new WordParser[] { (word, implicitString) => // A list of...
+            new WordParseResult( word == "1", word == "1" ? bool.Parse(word) : false ),  // ...word parsers....
+            new WordParseResult( word == "yes", word == "yes" ? bool.Parse(word) : false ) });  // ...run after each other.
 
 *EOF*
