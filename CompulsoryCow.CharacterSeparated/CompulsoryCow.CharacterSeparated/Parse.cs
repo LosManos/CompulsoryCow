@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using WordParseResult = System.Tuple<bool, object>;
 using WordParser = System.Func<string, bool, /*WordParseResult*/ System.Tuple<bool, object>>;
+using System.Linq;
 
 namespace CompulsoryCow.CharacterSeparated
 {
@@ -13,17 +14,7 @@ namespace CompulsoryCow.CharacterSeparated
 
         private readonly bool _implicitString = false;
 
-        private readonly IList<WordParser> _wordParsers = new List<WordParser>();
-
-        private static readonly IList<WordParser> _defaultWordParserList = new List<WordParser>
-        {
-            (word, implicitString) => _defaultStringIfImplicitParser(word, implicitString),
-            (word, implicitString) => _defaultStringQuotedWhenNotImplicitParser(word, implicitString),
-            (word, implicitString) => _defaultIntParser(word, implicitString),
-            (word, implicitString) => _defaultBoolParser(word, implicitString),
-            (word, implicitString) => _defaultDoubleParser(word, implicitString),
-            (word, implicitString) => _defaultAsIsParser(word, implicitString)
-        };
+        private readonly IList<WordParser> _wordParsers;
 
         private static readonly WordParser _defaultAsIsParser = (word, implicitString) =>
             implicitString ?
@@ -105,9 +96,27 @@ namespace CompulsoryCow.CharacterSeparated
         public WordParser DefaultStringQuotedWhenNotImplicitParser = (word, implicitString) => 
             _defaultStringQuotedWhenNotImplicitParser(word, implicitString);
 
+        /// <summary>This is the list of default word parsers that should suffice for most lines.
+        /// </summary>
+        public static IList<WordParser> DefaultWordParserList { get; } = new List<WordParser>
+        {
+            (word, implicitString) => _defaultStringIfImplicitParser(word, implicitString),
+            (word, implicitString) => _defaultStringQuotedWhenNotImplicitParser(word, implicitString),
+            (word, implicitString) => _defaultIntParser(word, implicitString),
+            (word, implicitString) => _defaultBoolParser(word, implicitString),
+            (word, implicitString) => _defaultDoubleParser(word, implicitString),
+            (word, implicitString) => _defaultAsIsParser(word, implicitString)
+        };
+
         public Parse(bool implicitString)
         {
             _implicitString = implicitString;
+        }
+
+        public Parse(bool implicitString, IEnumerable<WordParser> wordParsers)
+            :this(implicitString)
+        {
+            _wordParsers = wordParsers.ToList();
         }
 
         /// <summary>This method splits a string into words per comma (,).
@@ -151,22 +160,22 @@ namespace CompulsoryCow.CharacterSeparated
 
             if (line.Contains(SeparatorCharacter) == false)
             {
-                return new object[] { ParseWord(line, _implicitString) };
+                return new object[] { ParseWord(line, _implicitString, _wordParsers) };
             }
-            return Traverse(line, _implicitString);
+            return Traverse(line, _implicitString, _wordParsers);
         }
 
         private static WordParseResult ParseResultNotParsed => new WordParseResult(false, null);
 
         private static WordParseResult ParseResultParsed(object result) => new WordParseResult(true, result);
 
-        private static object ParseWord(string word, bool implicitString)
+        private static object ParseWord(string word, bool implicitString, IList<WordParser> wordParsers)
         {
             if (implicitString == false)
             {
                 word = word.Trim();
             }
-            foreach (var wordParser in _defaultWordParserList)
+            foreach (var wordParser in wordParsers ?? DefaultWordParserList)
             {
                 var result = wordParser(word, implicitString);
                 if (result.Item1)
@@ -216,7 +225,7 @@ namespace CompulsoryCow.CharacterSeparated
             return res;
         }
 
-        private static IEnumerable<object> Traverse(string line, bool implicitString)
+        private static IEnumerable<object> Traverse(string line, bool implicitString, IList<WordParser> wordParsers)
         {
             var res = new List<object>();
             var word = string.Empty;
@@ -226,7 +235,7 @@ namespace CompulsoryCow.CharacterSeparated
                 var c = Pop(ref line, ref isInQuote, implicitString);
                 if (c == SeparatorCharacter && isInQuote == false)
                 {
-                    res.Add(ParseWord(word, implicitString));
+                    res.Add(ParseWord(word, implicitString, wordParsers));
                     word = string.Empty;
                 }
                 else
@@ -235,7 +244,7 @@ namespace CompulsoryCow.CharacterSeparated
                 }
             } while (line.Length >= 1);
 
-            res.Add(ParseWord(word, implicitString));
+            res.Add(ParseWord(word, implicitString, wordParsers));
             return res;
         }
 

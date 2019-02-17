@@ -4,15 +4,50 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WordParseResult = System.Tuple<bool, object>;
 
 namespace CharacterSeparatedTest
 {
+    using WordParser = System.Func<string, bool, WordParseResult>;
+
     [TestClass]
     public class ParseTest
     {
+        [TestMethod]
+        public void CanChangeWordParsers()
+        {
+            //  #   Arrange.
+            WordParser wordParser = (word, implicitString) =>
+                new WordParseResult(true, "whatever");
+            var sut = new Parse(false, new[] { wordParser });
+
+            //  #   Act.
+            var res = sut.Line("a").ToList();
+
+            //  #   Assert.
+            res.Single().Should().Be("whatever", "We parse as simple as can be, just a constant.");
+        }
+
+        [TestMethod]
+        public void CanUseDefaultWordParsers()
+        {
+            //  #   Arrange.
+            var sut1 = new Parse(true, Parse.DefaultWordParserList);
+            var sut2 = new Parse(true);
+
+            //  #   Act.
+            var res1 = sut1.Line("a,1");
+            var res2 = sut2.Line("a,1");
+
+            //  #   Assert.
+            // The assertion lib has functions for comparing lists but this is written on an aircraft, at 11000m.
+            res1.First().Should().Be(res2.First(), "Setting to default word parsers should be the same as ... default.");
+            res1.Skip(1).Single().Should().Be(res2.Skip(1).Single(), "Setting to default word parsers should be the same as ... default.");
+        }
+
         #region StringLine tests.
 
-        public static IEnumerable<object[]> ParseStringLineData
+        private static IEnumerable<object[]> ParseStringLineData
         {
             get
             {
@@ -81,7 +116,7 @@ namespace CharacterSeparatedTest
 
         #region Line tests.
 
-        public static IEnumerable<object[]> ParseLineData
+        private static IEnumerable<object[]> ParseLineData
         {
             get
             {
