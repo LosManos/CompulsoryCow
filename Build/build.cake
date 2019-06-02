@@ -17,33 +17,60 @@ VSTestSettings testSettings = new VSTestSettings {
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 
+Information( "Target={0}.", target );
+Information( "Configuration={0}.", configuration );
+
+var dir = Argument<string>("dir");
+var proj = Argument<string>("proj");
+
+Information( "Parameter dir={0}", dir );
+Information( "Parameter proj={0}", proj );
+
 //////////////////////////////////////////////////////////////////////
 // PREPARATION
 //////////////////////////////////////////////////////////////////////
 
 // Define directories.
-var buildDir = Directory("../CompulsoryCow/bin") + Directory(configuration);
-var solution = "../CompulsoryCow.sln";
+
+// Bail if the dir parameter does not match reality.
+if( DirectoryExists( dir ) == false ){
+	throw new Exception( $"Directory {dir} does not exist.");
+}
+
+// Make sure we have the dirs we need underneath.
+var outputDir = Directory(dir) + Directory("bin") + Directory(configuration);
+CreateDirectory( outputDir );
+
+Information( "Output dir={0}", outputDir );
+
+var project = dir + "/" + proj + ".csproj";
+
+if( FileExists( project )) {
+	Information( "Project={0}", project );
+}else{
+	throw new Exception( $"File project {project} does not exist.");
+}
 
 Task("Clean")
     .Does(() =>{
-        CleanDirectory(buildDir);
+        CleanDirectory(outputDir);
 });
 
 Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() => {
-        NuGetRestore(solution);
+		NuGetRestore(project);
 });
 
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>{
-      MSBuild(solution, settings =>
+      // MSBuild(solution, settings =>
+	  MSBuild(project, settings =>
         settings.SetConfiguration(configuration));  
 });
 
-Task("Run-Unit-Tests-Only")
+Task("Run-Unit-Tests")
     .Does(() =>{
         VSTest(
             "../**/bin/" + configuration + "/*Test.dll", 
@@ -51,33 +78,30 @@ Task("Run-Unit-Tests-Only")
         ); 
 });
 
-Task("Run-Unit-Tests")
+Task("Execute-Unit-Tests")
     .IsDependentOn("Build")
-    .IsDependentOn("Run-Unit-Tests-Only");
-
-Task("Default")
     .IsDependentOn("Run-Unit-Tests");
 
-Task("Package-Only")
+Task("Default")
+    .IsDependentOn("Execute-Unit-Tests");
+
+Task("Run-Package")
     .Does(() =>{
+		Information( "Packing {0}.", project );
         NuGetPack(
-            "../CompulsoryCow/CompulsoryCow.csproj",
+			project,
              new NuGetPackSettings{
                 Verbosity = NuGetVerbosity.Detailed,
-            }
-        );
-        NuGetPack(
-            "../CompulsoryCow.AreEqual/CompulsoryCow.AreEqual.csproj",
-             new NuGetPackSettings{
-                Verbosity = NuGetVerbosity.Detailed,
+				Properties = new Dictionary<string, string>
+				{
+					{ "Configuration", configuration }
+				}
             }
         );
 });
 
-// TODO: Bägge nuget-paketen.
-
 Task("Package")
-    .IsDependentOn("Run-Unit-Tests")
-    .IsDependentOn("Package-Only");
+    .IsDependentOn("Execute-Unit-Tests")
+    .IsDependentOn("Run-Package");
 
 RunTarget(target);

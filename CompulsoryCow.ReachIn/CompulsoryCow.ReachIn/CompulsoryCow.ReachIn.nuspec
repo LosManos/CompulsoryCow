@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/LosManos/CompulsoryCow/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/LosManos/CompulsoryCow</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <summary>
+A library for reaching internal and private methods and properties in other objects.
+    </summary>
+    <releaseNotes>
+### Version 3.0.0
+Moved to a project of its own.
+    </releaseNotes>
+    <copyright>LGPLv3+NoEvil.</copyright>
+    <repository type="git" url="https://github.com/LosManos/CompulsoryCow" />
+  </metadata>
+</package>
