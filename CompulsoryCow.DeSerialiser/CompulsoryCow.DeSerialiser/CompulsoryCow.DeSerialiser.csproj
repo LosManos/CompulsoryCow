@@ -3,25 +3,26 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    
-    <AssemblyVersion>0.3.0</AssemblyVersion>
-    <FileVersion>0.3.0</FileVersion>
-    <Version>0.3.0</Version>
-    
+
+    <AssemblyVersion>0.2.0</AssemblyVersion>
+    <FileVersion>0.2.0</FileVersion>
+    <Version>0.2.0</Version>
+
     <Authors>LosManos</Authors>
     <Company>LosManos</Company>
-    <Product>CompulsoryCow.CharacterSeparated</Product>
-    <Title>CompulsoryCow.CharacterSeparated</Title>
+    <Product>CompulsoryCow.DeSerialiser</Product>
+    <Title>CompulsoryCow.DeSerialiser</Title>
     <Copyright>LGPLv3 + NoEvil</Copyright>
 
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/LosManos/CompulsoryCow</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
-    <Description>A library for reading the items in a character separated string.</Description>
+    <Description>A library for serialising and deserialising dotnet objetcs.</Description>
     <PackageReleaseNotes>
-      ### Version 0.3.0
+      ### Version 0.2.0
       Moved to a project of its own.
+      Renamed DeSerializer to DeSerialiser.
     </PackageReleaseNotes>
   </PropertyGroup>
 
