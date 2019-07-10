@@ -18,12 +18,7 @@
     <PackageProjectUrl>https://github.com/LosManos/CompulsoryCow</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
-    <Description>A library for serialising and deserialising dotnet objetcs.</Description>
-    <PackageReleaseNotes>
-      ### Version 0.2.0
-      Moved to a project of its own.
-      Renamed DeSerializer to DeSerialiser.
-    </PackageReleaseNotes>
+    <Description>A library for serialising and deserialising dotnet objects.</Description>
   </PropertyGroup>
 
   <ItemGroup>

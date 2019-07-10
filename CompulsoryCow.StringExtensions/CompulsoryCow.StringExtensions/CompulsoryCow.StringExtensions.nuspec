@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- Continuously updated elements -->
@@ -9,21 +9,20 @@
         </releaseNotes>
 
         <!-- Required elements -->
-        <id>CompulsoryCow.ReachIn</id>
-        <description>A library for reaching internal and private methods and properties in other objects.</description>
+        <id>CompulsoryCow.StringExtensions</id>
+        <description>String helper methods.</description>
         <authors>LosManos</authors>
 
         <!-- Optional elements -->
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <title>CompulsoryCow.ReachIn</title>
+        <title>CompulsoryCow.StringExtensions</title>
         <owners>LosManos</owners>
         <projectUrl>https://github.com/LosManos/CompulsoryCow</projectUrl>
         <copyright>LGPLv3 + NoEvil</copyright>
         <license type="file">license.txt</license>
-        <summary>A library for reaching internal and private methods and properties in other objects.</summary>
+        <summary>String helper methods.</summary>
         <dependencies>
             <group targetFramework=".NETStandard2.0">
-                <dependency id="CompulsoryCow.Meta" version="3.0.0" exclude="Build,Analyzers" />
             </group>
         </dependencies>
     </metadata>
