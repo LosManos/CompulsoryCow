@@ -19,10 +19,6 @@
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
     <Description>Methods for comparing two objects.</Description>
-    <PackageReleaseNotes>
-      ### Version 3.0.0
-      Moved to a project of its own.
-    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

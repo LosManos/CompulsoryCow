@@ -19,10 +19,6 @@
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
     <Description>A library with various methods for getting meta data about dotnet assemblies, classes, methods, properties and whatnot</Description>
-    <PackageReleaseNotes>
-      ### Version 3.0.0
-      Moved to a project of its own.
-    </PackageReleaseNotes>
 </PropertyGroup>
 
     <ItemGroup>

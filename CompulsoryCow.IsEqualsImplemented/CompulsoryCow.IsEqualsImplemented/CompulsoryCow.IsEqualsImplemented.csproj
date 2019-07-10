@@ -19,21 +19,14 @@
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
     <Description>Methods for testing if `Equals` has been implemented and has done so correctly.</Description>
-    <PackageReleaseNotes>
-      ### Version 0.2.0
-      Moved to a project if its own.
-
-      ### Version 0.1.0
-      Created Verify.AreAllEqualsImplementedCorrectly, Verify.HasEqualsBeenDeclared and IsEqualsImplementedCorrectly.
-    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\license.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+    <None Include="..\..\license.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="CompulsoryCow" Version="2.5.0" />
+    <ProjectReference Include="..\..\CompulsoryCow.Meta\CompulsoryCow.Meta\CompulsoryCow.Meta.csproj" />
   </ItemGroup>
 
 </Project>

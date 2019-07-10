@@ -19,10 +19,6 @@
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
     <Description>A library for reading the items in a character separated string.</Description>
-    <PackageReleaseNotes>
-      ### Version 0.3.0
-      Moved to a project of its own.
-    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

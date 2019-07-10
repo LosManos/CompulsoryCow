@@ -19,14 +19,6 @@
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
     <Description>Methods for comparing two objects.</Description>
-    <PackageReleaseNotes>
-      ### Version 0.2.0
-      Moved to a project of its own.
-
-      ### Version 0.1 0
-      Added PublicProperties.
-      Added AreEqual.Public methods.
-    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

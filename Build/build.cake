@@ -44,6 +44,7 @@ CreateDirectory( outputDir );
 Information( "Output dir={0}", outputDir );
 
 var project = dir + "/" + proj + ".csproj";
+var nuspec = dir + "/" + proj + ".nuspec";
 
 if( FileExists( project )) {
 	Information( "Project={0}", project );
@@ -51,7 +52,33 @@ if( FileExists( project )) {
 	throw new Exception( $"File project {project} does not exist.");
 }
 
+if( FileExists( nuspec)) {
+	Information( "Nuspec={0}", nuspec );
+}else{
+	throw new Exception( $"File nuspec {nuspec} does not exist.");
+}
+
+// Verify all version numberings are the same.
+var csprojAssemblyVersion = XmlPeek( project, @"/Project/PropertyGroup/AssemblyVersion/text()" );
+var csprojFileVersion = XmlPeek( project, "/Project/PropertyGroup/FileVersion/text()" );
+var csprojVersion = XmlPeek( project, "/Project/PropertyGroup/Version/text()" );
+var settings = new XmlPeekSettings{
+	Namespaces = new Dictionary<string, string> {{ "ns", "http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd" }}
+};
+var nuspecVersion = XmlPeek( nuspec, "/ns:package/ns:metadata/ns:version/text()", settings);
+
+Task("Verify-Setup")
+	.Does(() =>{
+		if( csprojAssemblyVersion != csprojFileVersion ||
+			csprojFileVersion != csprojVersion ||
+			csprojVersion != nuspecVersion ){
+				throw new Exception( $"Versions are not the same.");
+		}	
+		Information( "Version = {0}", nuspecVersion);
+});
+
 Task("Clean")
+	.IsDependentOn("Verify-Setup")
     .Does(() =>{
         CleanDirectory(outputDir);
 });
