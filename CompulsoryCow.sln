@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{B6BA6D69
 		Build\Build-DeSerialiser.ps1 = Build\Build-DeSerialiser.ps1
 		Build\Build-IsEqualsImplemented.ps1 = Build\Build-IsEqualsImplemented.ps1
 		Build\Build-Meta.ps1 = Build\Build-Meta.ps1
+		Build\Build-Permutation.ps1 = Build\Build-Permutation.ps1
 		Build\Build-ReachIn.ps1 = Build\Build-ReachIn.ps1
 		Build\Build-StringExtensions.ps1 = Build\Build-StringExtensions.ps1
 		Build\build.cake = Build\build.cake
@@ -94,6 +95,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.DeSerialiser", "CompulsoryCow.DeSerialiser\CompulsoryCow.DeSerialiser\CompulsoryCow.DeSerialiser.csproj", "{BAA8BC46-046F-4768-BAFE-D8BDE3E7A4F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.DeSerialiser.Unit.Tests", "CompulsoryCow.DeSerialiser\Tests\CompulsoryCow.DeSerialiser.Unit.Tests\CompulsoryCow.DeSerialiser.Unit.Tests.csproj", "{81C1E835-9519-4265-8316-3C044B150F1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FB17F9E7-A377-4400-80AC-5F9FEC1CFEA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.Permutation", "CompulsoryCow.Permutation\CompulsoryCow.Permutation\CompulsoryCow.Permutation.csproj", "{7B9C93B2-C548-4C66-A3C8-0FB363972E49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.Permutation.Unit.Tests", "CompulsoryCow.Permutation\Tests\CompulsoryCow.Permutation.Unit.Tests\CompulsoryCow.Permutation.Unit.Tests.csproj", "{5738FC2F-BE51-486D-9A20-A6D8DB6C8037}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompulsoryCow.Permutation", "CompulsoryCow.Permutation", "{5ECC516A-6F32-4060-A4AA-60D8760B1596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +198,14 @@ Global
 		{81C1E835-9519-4265-8316-3C044B150F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81C1E835-9519-4265-8316-3C044B150F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81C1E835-9519-4265-8316-3C044B150F1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B9C93B2-C548-4C66-A3C8-0FB363972E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9C93B2-C548-4C66-A3C8-0FB363972E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9C93B2-C548-4C66-A3C8-0FB363972E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9C93B2-C548-4C66-A3C8-0FB363972E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5738FC2F-BE51-486D-9A20-A6D8DB6C8037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5738FC2F-BE51-486D-9A20-A6D8DB6C8037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5738FC2F-BE51-486D-9A20-A6D8DB6C8037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5738FC2F-BE51-486D-9A20-A6D8DB6C8037}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -224,6 +241,9 @@ Global
 		{76F3B361-67A0-47D7-8834-DB7595533D3F} = {3575BB99-1FEB-4030-B085-482AF0787677}
 		{BAA8BC46-046F-4768-BAFE-D8BDE3E7A4F7} = {3575BB99-1FEB-4030-B085-482AF0787677}
 		{81C1E835-9519-4265-8316-3C044B150F1E} = {76F3B361-67A0-47D7-8834-DB7595533D3F}
+		{FB17F9E7-A377-4400-80AC-5F9FEC1CFEA7} = {5ECC516A-6F32-4060-A4AA-60D8760B1596}
+		{7B9C93B2-C548-4C66-A3C8-0FB363972E49} = {5ECC516A-6F32-4060-A4AA-60D8760B1596}
+		{5738FC2F-BE51-486D-9A20-A6D8DB6C8037} = {FB17F9E7-A377-4400-80AC-5F9FEC1CFEA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C034792-6F0A-4A9F-8155-2858283515F7}

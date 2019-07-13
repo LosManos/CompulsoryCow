@@ -5,6 +5,7 @@ CompulsoryCow Version 2.5.0
 CompulsoryCow.AreEqual Version 0.1.0  
 CompulsoryCow.IsEqualsImplemented Version 0.1.0  
 Compulsorycow.CharacterSeparated Version 0.2.0
+CompulsoryCow.Permutation Version 0.1.0
 
 Nuget: https://www.nuget.org/packages/CompulsoryCow/
 
@@ -36,13 +37,18 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 * Parse.StringLine method for splitting a string per character (comma). It is like `string.Split` but with with the possibility to have a comma in the very string.
 * Parse.String method for splitting a string per character (comma) and returns every item as a specific type.
 
+### *CompulsoryCow.Permutation* contains:
+* Permutate method for permutation all possible values/objects sent to it.  
+It takes a list of list where a latter list is the possible values/objects.  Use it for permutating all possible values to send to a method.
+
 ### The projects might contain in the future:
 * SqlServer exceptions are notorious for having crucial data in the message and in an [integer](http://stackoverflow.com/questions/6221951/sqlexception-catch-and-handling) or in the [free text message](http://stackoverflow.com/questions/6982647/smart-way-to-get-unique-index-name-from-sqlexception-message). The plan is to create a library that can parse the message and return an exception that contains the information is a more technical fashion so it can be understood by a computer. The library might have to read meta data from the database server and then this functionality should be moved to a library of its own so as to not dirty CompulsoryCow with SqlServer dependencies. Another complications are different Sqlserver versions and different languages. A Spanish Sqlserver might return different error messages than an "English".
 * A Linq method that returns true if [all items in a list are equal](http://stackoverflow.com/questions/1628658/linq-check-whether-two-list-are-the-same).
 
 ## License
 
-License LGPLv3 + NoEvil.
+License LGPLv3 + NoEvil.  
+https://raw.githubusercontent.com/LosManos/CompulsoryCow/master/License.txt
 
 ### LGPLv3
 
