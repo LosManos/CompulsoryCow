@@ -72,7 +72,12 @@ Task("Verify-Setup")
 		if( csprojAssemblyVersion != csprojFileVersion ||
 			csprojFileVersion != csprojVersion ||
 			csprojVersion != nuspecVersion ){
-				throw new Exception( $"Versions are not the same.");
+				var versionString = 
+					$"AssemblyVersion in csproj={csprojAssemblyVersion}" + System.Environment.NewLine +
+					$"FileVersion in csproj={csprojFileVersion}" + System.Environment.NewLine +
+					$"Version in csproj={csprojVersion}" + System.Environment.NewLine +
+					$"Version in nuspec={nuspecVersion}.";
+				throw new Exception( $"Versions are not the same." + System.Environment.NewLine + versionString);
 		}	
 		Information( "Version = {0}", nuspecVersion);
 });
