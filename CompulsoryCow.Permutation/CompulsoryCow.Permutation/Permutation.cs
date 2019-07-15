@@ -33,6 +33,8 @@ namespace CompulsoryCow.Permutation
         ///         ...
         ///     }
         /// ```
+        /// 
+        /// For more example of usage, see test code.
         /// </summary>
         /// <param name="parametersCollection"></param>
         /// <returns></returns>
