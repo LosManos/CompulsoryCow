@@ -3,7 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>CompulsoryCow.DateTimeAbstractions</AssemblyName>
-    <RootNamespace>System.DateTime.Abstractions</RootNamespace>
+    <RootNamespace>CompulsoryCow.DateTimeAbstractions</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\license.txt" Link="license.txt" />
+  </ItemGroup>
 
 </Project>
