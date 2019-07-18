@@ -1,9 +1,9 @@
 ﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("CompulsoryCow.DateTimeAbstractions.Unit.Tests")]
 
-namespace CompulsoryCow.DateTimeAbstractions
+namespace CompulsoryCow.DateTime.Abstractions
 {
     // TODO:OF:Implement interfaces found at https://docs.microsoft.com/en-us/dotnet/api/system.datetime?view=netcore-2.2
-    public struct DateTime
+    public class DateTime
     {
         private global::System.DateTime _value;
 

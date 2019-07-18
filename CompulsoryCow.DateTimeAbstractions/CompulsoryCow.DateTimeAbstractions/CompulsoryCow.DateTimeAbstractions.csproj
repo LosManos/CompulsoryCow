@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>CompulsoryCow.DateTimeAbstractions</AssemblyName>
-    <RootNamespace>CompulsoryCow.DateTimeAbstractions</RootNamespace>
+    <RootNamespace>CompulsoryCow.DateTime.Abstractions</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,7 @@ using FluentAssertions;
 using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
+using Abstractions = CompulsoryCow.DateTime.Abstractions;
 
 namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 {
@@ -11,23 +12,25 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         public DateTimeTests(ITestOutputHelper output)
         {
+            //  Get test info.
             var type = output.GetType();
             var testMember = type.GetField("test", BindingFlags.Instance | BindingFlags.NonPublic);
             var test = (ITest)testMember.GetValue(output);
-            _pr = new VacheTacheLibrary.PseudoRandom(test.DisplayName);
 
+            //  Set the seed for randomising.
+            _pr = new VacheTacheLibrary.PseudoRandom(test.DisplayName);
         }
 
         [Fact]
         public void AddShouldAdd()
         {
             var anyTicks = AnyTicks();
-            var anyTimeSpan = new CompulsoryCow.DateTimeAbstractions.TimeSpan();
-            var sut = new CompulsoryCow.DateTimeAbstractions.DateTime(anyTicks);
+            var anyTimeSpan = new Abstractions.TimeSpan();
+            var sut = new Abstractions.DateTime(anyTicks);
 
             var res = sut.Add(anyTimeSpan);
 
-            var expected = new global::System.DateTime(anyTicks)
+            var expected = new System.DateTime(anyTicks)
                 .Add(anyTimeSpan.ToSystemTimeSpan());
             AssertEquals(expected, res);
         }
@@ -38,8 +41,8 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         private static void AssertEquals(
-            global::System.DateTime expectedDateTime,
-            DateTimeAbstractions.DateTime actualDateTime, 
+            System.DateTime expectedDateTime,
+            Abstractions.DateTime actualDateTime, 
             string because = "")
         {
             actualDateTime.Ticks.Should().Be(expectedDateTime.Ticks, because);
