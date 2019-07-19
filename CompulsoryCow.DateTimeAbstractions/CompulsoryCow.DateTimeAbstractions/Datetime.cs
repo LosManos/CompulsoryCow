@@ -2,17 +2,24 @@
 
 namespace CompulsoryCow.DateTime.Abstractions
 {
-    // TODO:OF:Implement interfaces found at https://docs.microsoft.com/en-us/dotnet/api/system.datetime?view=netcore-2.2
-    public class DateTime
+    public interface IDateTime
     {
-        private global::System.DateTime _value;
+        System.DateTimeKind Kind { get; }
+        long Ticks { get; }
+        DateTime Add(TimeSpan value);
+    }
+
+    // TODO:OF:Implement interfaces found at https://docs.microsoft.com/en-us/dotnet/api/system.datetime?view=netcore-2.2
+    public class DateTime : IDateTime
+    {
+        private System.DateTime _value;
 
         public DateTime(long ticks)
         {
             _value = new System.DateTime(ticks);
         }
 
-        public global::System.DateTimeKind Kind
+        public System.DateTimeKind Kind
         {
             get
             {
@@ -20,7 +27,9 @@ namespace CompulsoryCow.DateTime.Abstractions
             }
         }
 
-        public long Ticks { get
+        public long Ticks
+        {
+            get
             {
                 return _value.Ticks;
             }
@@ -28,10 +37,18 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         public DateTime Add(TimeSpan value)
         {
-            return ToSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
+            return FromSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
         }
 
-        private DateTime ToSystemDateTime( global::System.DateTime datetime)
+        public static DateTime UtcNow
+        {
+            get
+            {
+                return new DateTime(System.DateTime.UtcNow.Ticks);
+            }
+        }
+
+        private DateTime FromSystemDateTime(System.DateTime datetime)
         {
             return new DateTime(datetime.Ticks);
         }
