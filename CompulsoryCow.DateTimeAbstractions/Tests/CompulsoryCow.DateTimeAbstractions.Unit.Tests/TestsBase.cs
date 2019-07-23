@@ -1,0 +1,21 @@
+﻿using System.Reflection;
+using Xunit.Abstractions;
+
+namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
+{
+    public abstract class TestsBase
+    {
+        protected readonly VacheTacheLibrary.PseudoRandom _pr;
+
+        protected TestsBase(ITestOutputHelper output)
+        {
+            //  Get test info.
+            var type = output.GetType();
+            var testMember = type.GetField("test", BindingFlags.Instance | BindingFlags.NonPublic);
+            var test = (ITest)testMember.GetValue(output);
+
+            //  Set the seed for randomising.
+            _pr = new VacheTacheLibrary.PseudoRandom(test.DisplayName);
+        }
+    }
+}

@@ -12,41 +12,74 @@ namespace CompulsoryCow.DateTime.Abstractions
     // TODO:OF:Implement interfaces found at https://docs.microsoft.com/en-us/dotnet/api/system.datetime?view=netcore-2.2
     public class DateTime : IDateTime
     {
-        private System.DateTime _value;
+        private readonly System.DateTime _value;
+        internal static System.DateTime? _now;
+        internal static System.DateTime? _utcNow;
 
         public DateTime(long ticks)
         {
             _value = new System.DateTime(ticks);
         }
 
-        public System.DateTimeKind Kind
+        public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, System.DateTimeKind kind)
+        {
+            _value = new System.DateTime(year, month, day, hour, minute, second, millisecond, kind);
+        }
+
+        public DateTime(long ticks, System.DateTimeKind kind)
+        {
+            _value = new System.DateTime(ticks, kind);
+        }
+
+        public static DateTime Now
         {
             get
             {
-                return _value.Kind;
+                return new DateTime(_now?.Ticks ?? System.DateTime.Now.Ticks);
             }
-        }
-
-        public long Ticks
-        {
-            get
-            {
-                return _value.Ticks;
-            }
-        }
-
-        public DateTime Add(TimeSpan value)
-        {
-            return FromSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
         }
 
         public static DateTime UtcNow
         {
             get
             {
-                return new DateTime(System.DateTime.UtcNow.Ticks);
+                return new DateTime(_utcNow?.Ticks ?? System.DateTime.UtcNow.Ticks);
             }
         }
+
+        public long Ticks { get { return _value.Ticks; } }
+        public int Second { get { return _value.Second; } }
+        public DateTime Date { get { return new DateTime(_value.Date.Ticks); } }
+        public int Month { get { return _value.Month; } }
+        public int Minute { get { return _value.Minute; } }
+        public int Millisecond { get { return _value.Millisecond; } }
+        public System.DateTimeKind Kind { get { return _value.Kind; } }
+        public int Hour { get { return _value.Hour; } }
+        public object DayOfYear { get { return _value.DayOfYear; } }
+        public System.DayOfWeek DayOfWeek { get { return _value.DayOfWeek; } }
+        public int Day { get { return _value.Day; } }
+        public TimeSpan TimeOfDay { get { return new TimeSpan(_value.TimeOfDay.Ticks); } }
+        public int Year { get { return _value.Year; } }
+
+
+        public DateTime Add(TimeSpan value)
+        {
+            return FromSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
+        }
+
+        /// <summary>This method sets the <see cref="Now"/> propjerty.
+        /// It should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="DateTime.Now"/> return <see cref="System.DateTime.Now"/>.
+        /// </summary>
+        /// <param name="now"></param>
+        internal static void SetNow(System.DateTime? now) => _now = now;
+
+        /// <summary>Thid method sets the <see cref="DateTime.UtcNow"/> property.
+        /// It should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="DateTime.UtcNow"/> return <see cref="System.DateTime.UtcNow"/>.
+        /// </summary>
+        /// <param name="utcNow"></param>
+        internal static void SetUtcNow(System.DateTime? utcNow) => _utcNow = utcNow;
 
         private DateTime FromSystemDateTime(System.DateTime datetime)
         {

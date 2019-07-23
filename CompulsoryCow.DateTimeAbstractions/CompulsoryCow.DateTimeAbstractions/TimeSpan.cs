@@ -3,13 +3,24 @@
 namespace CompulsoryCow.DateTime.Abstractions
 {
     // TODO:OF:Implement interfaces at https://docs.microsoft.com/en-us/dotnet/api/system.timespan?view=netcore-2.2
-    public struct TimeSpan
+    public struct TimeSpan : ITimeSpan
     {
-        private global::System.TimeSpan _value;
+        private readonly System.TimeSpan _value;
 
-        internal global::System.TimeSpan ToSystemTimeSpan()
+        public TimeSpan(long ticks)
+        {
+            _value = new System.TimeSpan(ticks);
+        }
+
+        public long Ticks { get { return _value.Ticks; } }
+
+        internal System.TimeSpan ToSystemTimeSpan()
         {
             return _value;
         }
+    }
+
+    public interface ITimeSpan
+    {
     }
 }
