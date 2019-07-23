@@ -214,11 +214,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             return _pr.EnumExcept(exceptKind);
         }
 
-        private long AnyTicks()
-        {
-            return _pr.PositiveLong(1, global::System.DateTime.MaxValue.Ticks);
-        }
-
         private static void AssertEquals(
             System.TimeSpan expected, 
             Abstractions.TimeSpan actual,

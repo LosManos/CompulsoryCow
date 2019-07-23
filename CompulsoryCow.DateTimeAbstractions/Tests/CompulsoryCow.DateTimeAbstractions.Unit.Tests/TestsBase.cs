@@ -17,5 +17,11 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Set the seed for randomising.
             _pr = new VacheTacheLibrary.PseudoRandom(test.DisplayName);
         }
+
+        protected long AnyTicks()
+        {
+            return _pr.PositiveLong(1, global::System.DateTime.MaxValue.Ticks);
+        }
+
     }
 }
