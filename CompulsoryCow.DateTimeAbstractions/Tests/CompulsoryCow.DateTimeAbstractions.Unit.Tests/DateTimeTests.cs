@@ -30,10 +30,9 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         [Fact]
-        public void GettersShouldReturnRespeciveValue()
+        public void GettersShouldReturnRespectiveValue()
         {
             //  #   Arrange.
-            //var anyTicks = AnyTicks();
             var expectedYear = 1910;
             var expectedMonth = 11;
             var expectedDay = 12;
@@ -50,7 +49,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             sut.Second.Should().Be(expected.Second);
             sut.Ticks.Should().Be(expected.Ticks);
             AssertEquals(expected.Date, sut.Date, withKind: System.DateTimeKind.Unspecified, "It seems Date part of a DateTime has a hard coded/unset Kind.");
-            //sut.Date.Should().Be(expected.Date);
+            //sut.Date.Should().Be(expected.Date); // TODO:OF:What is this row?
             sut.Month.Should().Be(expected.Month);
             sut.Minute.Should().Be(expected.Minute);
             sut.Millisecond.Should().Be(expected.Millisecond);
@@ -91,6 +90,8 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             Abstractions.DateTime.Now.Ticks.Should().Be(anyTicks);
         }
 
+        /// <summary>This test is not deterministic.
+        /// </summary>
         [Fact]
         public void ResetNowShouldReturnSystemNow()
         {
