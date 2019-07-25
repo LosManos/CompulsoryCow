@@ -49,7 +49,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             sut.Second.Should().Be(expected.Second);
             sut.Ticks.Should().Be(expected.Ticks);
             AssertEquals(expected.Date, sut.Date, withKind: System.DateTimeKind.Unspecified, "It seems Date part of a DateTime has a hard coded/unset Kind.");
-            //sut.Date.Should().Be(expected.Date); // TODO:OF:What is this row?
             sut.Month.Should().Be(expected.Month);
             sut.Minute.Should().Be(expected.Minute);
             sut.Millisecond.Should().Be(expected.Millisecond);
