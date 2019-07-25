@@ -61,6 +61,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         public TimeSpan TimeOfDay { get { return new TimeSpan(_value.TimeOfDay.Ticks); } }
         public int Year { get { return _value.Year; } }
 
+        public static DateTime MaxValue { get { return new DateTime( System.DateTime.MaxValue.Ticks); } }
+        public static DateTime MinValue { get { return new DateTime(System.DateTime.MinValue.Ticks); } }
 
         public DateTime Add(TimeSpan value)
         {

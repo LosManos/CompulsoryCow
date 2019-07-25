@@ -16,6 +16,22 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         { }
 
         [Fact]
+        public void MaxValueShouldReturnMaxValue()
+        {
+            var res = Abstractions.DateTime.MaxValue;
+
+            AssertEquals(System.DateTime.MaxValue, res);
+        }
+
+        [Fact]
+        public void MinValueShouldReturnMinValue()
+        {
+            var res = Abstractions.DateTime.MinValue;
+
+            AssertEquals(System.DateTime.MinValue, res);
+        }
+
+        [Fact]
         public void AddShouldAdd()
         {
             var anyTicks = AnyTicks();
