@@ -4,8 +4,18 @@ namespace CompulsoryCow.DateTime.Abstractions
 {
     public interface IDateTime
     {
+        /// <summary>See <see cref="System.DateTime.Kind"/>.
+        /// </summary>
         System.DateTimeKind Kind { get; }
+
+        /// <summary>See <see cref="System.DateTime.Ticks"/>.
+        /// </summary>
         long Ticks { get; }
+
+        /// <summary>See <see cref="System.DateTime.Add(System.TimeSpan)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         DateTime Add(TimeSpan value);
     }
 
@@ -16,19 +26,46 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static System.DateTime? _now;
         internal static System.DateTime? _utcNow;
 
+        /// <summary>See <see cref="System.DateTime.DateTime(long)"/>.
+        /// </summary>
+        /// <param name="ticks"></param>
         public DateTime(long ticks)
         {
             _value = new System.DateTime(ticks);
         }
 
-        public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, System.DateTimeKind kind)
-        {
-            _value = new System.DateTime(year, month, day, hour, minute, second, millisecond, kind);
-        }
-
+        /// <summary>See <see cref="System.DateTime.DateTime(long, System.DateTimeKind)"/>.
+        /// </summary>
+        /// <param name="ticks"></param>
+        /// <param name="kind"></param>
         public DateTime(long ticks, System.DateTimeKind kind)
         {
             _value = new System.DateTime(ticks, kind);
+        }
+
+        /// <summary>See <see cref="System.DateTime.DateTime(int,int,int)"/>.
+        /// </summary>
+        /// <param name="year"></param>srs
+        /// <param name="month"></param>
+        /// <param name="day"></param>
+        public DateTime(int year, int month, int day)
+        {
+            _value = new System.DateTime(year, month, day);
+        }
+
+        /// <summary>See <see cref="System.DateTime.DateTime(int, int, int, int, int, int, int, System.DateTimeKind)"/>
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <param name="day"></param>
+        /// <param name="hour"></param>
+        /// <param name="minute"></param>
+        /// <param name="second"></param>
+        /// <param name="millisecond"></param>
+        /// <param name="kind"></param>
+        public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, System.DateTimeKind kind)
+        {
+            _value = new System.DateTime(year, month, day, hour, minute, second, millisecond, kind);
         }
 
         public static DateTime Now
@@ -47,6 +84,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             }
         }
 
+        /// <inheritdoc />
         public long Ticks { get { return _value.Ticks; } }
         public int Second { get { return _value.Second; } }
         public DateTime Date { get { return new DateTime(_value.Date.Ticks); } }
