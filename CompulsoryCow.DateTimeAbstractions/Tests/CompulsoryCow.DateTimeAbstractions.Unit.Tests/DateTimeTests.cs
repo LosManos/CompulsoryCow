@@ -32,6 +32,68 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         [Fact]
+        public void Constructor_Ticks_Kind_ShouldCreate()
+        {
+            //  #   Arrange.
+            var anyTicks = AnyTicks();
+            var anyKind = AnyKindExcept(default);
+
+            //  #   Act.
+            var res = new Abstractions.DateTime(anyTicks, anyKind);
+
+            //  #   Assert.
+            res.Ticks.Should().Be(anyTicks);
+            res.Kind.Should().Be(anyKind);
+        }
+
+        [Fact]
+        public void Constructor_Year_Month_Day_Hour_Minute_Second_Millisecond_Kind_ShouldCreate()
+        {
+            //  #   Arrange.
+            var anyDateTime = new System.DateTime(AnyTicks(), AnyKindExcept(default));
+            var expected = new System.DateTime(anyDateTime.Year, anyDateTime.Month, anyDateTime.Day, anyDateTime.Hour, anyDateTime.Minute, anyDateTime.Second, anyDateTime.Millisecond, anyDateTime.Kind);
+
+            //  #   Act.
+            var sut = new Abstractions.DateTime(expected.Year, expected.Month, expected.Day, expected.Hour, expected.Minute, expected.Second, expected.Millisecond, AnyKindExcept(default));
+
+            //  #   Assert.
+            AssertEquals(expected, sut);
+        }
+
+        [Fact]
+        public void Constructor_Ticks_Kind_ShouldThrowExceptionForTicksOutOfRange()
+        {
+            //  #   Arrange.
+            var tooLowTicks = System.DateTime.MinValue.Ticks - 1;
+            var tooHighTicks = System.DateTime.MaxValue.Ticks + 1;
+            var anyKind = AnyKind();
+
+            //  #   Act and Assert.
+            Assert.Throws<System.ArgumentOutOfRangeException>(() =>
+            {
+                new Abstractions.DateTime(tooLowTicks, anyKind);
+            });
+            Assert.Throws<System.ArgumentOutOfRangeException>(() =>
+            {
+                new Abstractions.DateTime(tooHighTicks, anyKind);
+            });
+        }
+
+        [Fact]
+        public void Constructor_Ticks_Kind_ShouldThrowExceptionForUnknowKind()
+        {
+            //  #   Arrange.
+            var anyTicks = AnyTicks();
+            var unknownKind = (System.DateTimeKind)(((int)MaxDateTimeKind()) + 1);
+
+            //  #   Act and Assert.
+            Assert.Throws<System.ArgumentException>(() =>
+            {
+                new Abstractions.DateTime(anyTicks, unknownKind);
+            });
+        }
+
+        [Fact]
         public void AddShouldAdd()
         {
             var anyTicks = AnyTicks();
@@ -156,68 +218,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var after = System.DateTime.UtcNow;
             before.Ticks.Should().BeLessOrEqualTo(now.Ticks);
             now.Ticks.Should().BeLessOrEqualTo(after.Ticks);
-        }
-
-        [Fact]
-        public void Constructor_Ticks_Kind_ShouldCreate()
-        {
-            //  #   Arrange.
-            var anyTicks = AnyTicks();
-            var anyKind = AnyKindExcept(default);
-
-            //  #   Act.
-            var res = new Abstractions.DateTime(anyTicks, anyKind);
-
-            //  #   Assert.
-            res.Ticks.Should().Be(anyTicks);
-            res.Kind.Should().Be(anyKind);
-        }
-
-        [Fact]
-        public void Constructor_Year_Month_Day_Hour_Minute_Second_Millisecond_Kind_ShouldCreate()
-        {
-            //  #   Arrange.
-            var anyDateTime = new System.DateTime(AnyTicks(), AnyKindExcept(default));
-            var expected = new System.DateTime(anyDateTime.Year, anyDateTime.Month, anyDateTime.Day, anyDateTime.Hour, anyDateTime.Minute, anyDateTime.Second, anyDateTime.Millisecond, anyDateTime.Kind);
-
-            //  #   Act.
-            var sut = new Abstractions.DateTime(expected.Year, expected.Month, expected.Day, expected.Hour, expected.Minute, expected.Second, expected.Millisecond, AnyKindExcept(default));
-
-            //  #   Assert.
-            AssertEquals(expected, sut);
-        }
-
-        [Fact]
-        public void Constructor_Ticks_Kind_ShouldThrowExceptionForTicksOutOfRange()
-        {
-            //  #   Arrange.
-            var tooLowTicks = System.DateTime.MinValue.Ticks - 1;
-            var tooHighTicks = System.DateTime.MaxValue.Ticks + 1;
-            var anyKind = AnyKind();
-
-            //  #   Act and Assert.
-            Assert.Throws<System.ArgumentOutOfRangeException>(() =>
-            {
-                new Abstractions.DateTime(tooLowTicks, anyKind);
-            });
-            Assert.Throws<System.ArgumentOutOfRangeException>(() =>
-            {
-                new Abstractions.DateTime(tooHighTicks, anyKind);
-            });
-        }
-
-        [Fact]
-        public void Constructor_Ticks_Kind_ShouldThrowExceptionForUnknowKind()
-        {
-            //  #   Arrange.
-            var anyTicks = AnyTicks();
-            var unknownKind = (System.DateTimeKind)(((int)MaxDateTimeKind()) + 1);
-
-            //  #   Act and Assert.
-            Assert.Throws<System.ArgumentException>(() =>
-            {
-                new Abstractions.DateTime(anyTicks, unknownKind);
-            });
         }
 
         private System.DateTimeKind AnyKind()
