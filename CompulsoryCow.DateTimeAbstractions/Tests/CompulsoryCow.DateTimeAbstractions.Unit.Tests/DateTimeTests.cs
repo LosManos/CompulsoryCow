@@ -31,6 +31,44 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(System.DateTime.MinValue, res);
         }
 
+        #region public DateTime(long ticks) tests.
+
+        [Fact]
+        public void Constructor_Ticks_ShouldCreate()
+        {
+            //  #   Arrange.
+            var anyTicks = AnyTicks();
+            var systemDateTime = new System.DateTime(anyTicks);
+
+            //  #   Act.
+            var res = new Abstractions.DateTime(anyTicks);
+
+            //  #   Assert.
+            AssertEquals(systemDateTime, res);
+        }
+
+        [Fact]
+        public void Constructor_Ticks_ShouldThrowForOutOfRange()
+        {
+            //  #   Arrange.
+            var tooLow = Abstractions.DateTime.MinValue.Ticks - 1;
+            var tooHigh = Abstractions.DateTime.MaxValue.Ticks + 1;
+
+            //  #   Assert.
+            Assert.Throws<System.ArgumentOutOfRangeException>(() =>
+            {
+                new Abstractions.DateTime(tooLow);
+            });
+            Assert.Throws<System.ArgumentOutOfRangeException>(() =>
+            {
+                new Abstractions.DateTime(tooHigh);
+            });
+        }
+
+        #endregion
+
+        #region public DateTime(long ticks, DateTimeKind kind) tests.
+
         [Fact]
         public void Constructor_Ticks_Kind_ShouldCreate()
         {
@@ -44,20 +82,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Assert.
             res.Ticks.Should().Be(anyTicks);
             res.Kind.Should().Be(anyKind);
-        }
-
-        [Fact]
-        public void Constructor_Year_Month_Day_Hour_Minute_Second_Millisecond_Kind_ShouldCreate()
-        {
-            //  #   Arrange.
-            var anyDateTime = new System.DateTime(AnyTicks(), AnyKindExcept(default));
-            var expected = new System.DateTime(anyDateTime.Year, anyDateTime.Month, anyDateTime.Day, anyDateTime.Hour, anyDateTime.Minute, anyDateTime.Second, anyDateTime.Millisecond, anyDateTime.Kind);
-
-            //  #   Act.
-            var sut = new Abstractions.DateTime(expected.Year, expected.Month, expected.Day, expected.Hour, expected.Minute, expected.Second, expected.Millisecond, AnyKindExcept(default));
-
-            //  #   Assert.
-            AssertEquals(expected, sut);
         }
 
         [Fact]
@@ -92,6 +116,26 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
                 new Abstractions.DateTime(anyTicks, unknownKind);
             });
         }
+
+        #endregion
+
+        #region public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond DateTimeKind kind) tests.
+
+        [Fact]
+        public void Constructor_Year_Month_Day_Hour_Minute_Second_Millisecond_Kind_ShouldCreate()
+        {
+            //  #   Arrange.
+            var anyDateTime = new System.DateTime(AnyTicks(), AnyKindExcept(default));
+            var expected = new System.DateTime(anyDateTime.Year, anyDateTime.Month, anyDateTime.Day, anyDateTime.Hour, anyDateTime.Minute, anyDateTime.Second, anyDateTime.Millisecond, anyDateTime.Kind);
+
+            //  #   Act.
+            var sut = new Abstractions.DateTime(expected.Year, expected.Month, expected.Day, expected.Hour, expected.Minute, expected.Second, expected.Millisecond, AnyKindExcept(default));
+
+            //  #   Assert.
+            AssertEquals(expected, sut);
+        }
+
+        #endregion
 
         [Fact]
         public void AddShouldAdd()
