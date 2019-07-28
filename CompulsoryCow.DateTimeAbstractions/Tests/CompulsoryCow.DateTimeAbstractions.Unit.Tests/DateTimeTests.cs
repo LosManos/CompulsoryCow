@@ -197,6 +197,26 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(systemDateTime, sut);
         }
 
+        [Fact]
+        public void Constructor_Year_Mont_Day_Calendar_ShouldThrowArgumentNullForNullCalendar()
+        {
+            //  #   Arrange.
+            var anyYear = 2019;
+            var anyMonth = 7;
+            var anyDay = 26;
+            var anyCalendar = new System.Globalization.TaiwanCalendar();
+            var systemDateTime = new System.DateTime(anyYear, anyMonth, anyDay, anyCalendar);
+
+            //  #   Act.
+            var exc = Record.Exception(() =>
+            {
+                new Abstractions.DateTime(anyYear, anyMonth, anyDay, null);
+            });
+
+            //  #   Assert.
+            exc.Should().BeOfType<System.ArgumentNullException>();
+        }
+
         [Theory]
         [InlineData(0, null, null, "Too low Year.")]
         [InlineData(10000, null, null, "Too high Year.")]
