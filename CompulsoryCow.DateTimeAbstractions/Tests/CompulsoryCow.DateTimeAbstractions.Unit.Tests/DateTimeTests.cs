@@ -493,10 +493,79 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
-        #region DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, DateTimeKind kind) tests.
 
-        // TODO:OF:Add test for if Kind is out of bounds. There are tests to copy.
+        #region DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond) tests.
+
         [Fact]
+        public void Constructor_Year_Mont_Day_Hour_Minute_Second_Millisecond_ShouldCreate()
+        {
+            //  #   Arrange.
+            var anyYear = 2019;
+            var anyMonth = 7;
+            var anyDay = 26;
+            var anyHour = 12;
+            var anyMinute = 34;
+            var anySecond = 56;
+            var anyMillisecond = 789;
+            var systemDateTime = new System.DateTime(anyYear, anyMonth, anyDay, anyHour, anyMinute, anySecond, anyMillisecond);
+
+            //  #   Act.
+            var sut = new Abstractions.DateTime(anyYear, anyMonth, anyDay, anyHour, anyMinute, anySecond, anyMillisecond);
+
+            //  #   Assert.
+            AssertEquals(systemDateTime, sut);
+        }
+
+        [Theory]
+        [InlineData(0, null, null, null, null, null, null, "Too low Year.")]
+        [InlineData(10000, null, null, null, null, null, null, "Too high Year.")]
+        [InlineData(null, 0, null, null, null, null, null, "Too low Month.")]
+        [InlineData(null, 13, null, null, null, null, null, "Too high Month.")]
+        [InlineData(null, null, 0, null, null, null, null, "Too low Day.")]
+        [InlineData(null, null, 32, null, null, null, null, "Too high Day.")]
+        [InlineData(null, null, null, 24, null, null, null, "Too high Hour.")]
+        [InlineData(null, null, null, null, -1, null, null, "Too low Minute.")]
+        [InlineData(null, null, null, null, 60, null, null, "Too high Minute.")]
+        [InlineData(null, null, null, null, null, -1, null, "Too low Second.")]
+        [InlineData(null, null, null, null, null, 60, null, "Too high Second.")]
+        [InlineData(null, null, null, null, null, null, -1, "Too low Millisecond.")]
+        [InlineData(null, null, null, null, null, null, 1000, "Too high Millisecond.")]
+        public void Constructor_Year_Month_Day_Hour_Minute_Second_Millisecond_ShouldThrowForOutOfRange(int? year, int? month, int? day, int? hour, int? minute, int? second, int? millisecond, string reason)
+        {
+            //  #   Arrange.
+            var anyValidYear = 2019;
+            var anyValidMonth = 7;
+            var anyValidDay = 26;
+            var anyValidHour = 12;
+            var anyValidMinute = 34;
+            var anyValidSecond = 56;
+            var anyValidMillisecond = 789;
+            var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyValidMillisecond);
+            res.Should().NotBeNull("Smoke test that we can create at all.");
+
+            //  #   Act.
+            var exc = Record.Exception(() =>
+            {
+                new Abstractions.DateTime(
+                    year ?? anyValidDay,
+                    month ?? anyValidMonth,
+                    day ?? anyValidDay,
+                    hour ?? anyValidHour,
+                    minute ?? anyValidMinute,
+                    second ?? anyValidSecond,
+                    millisecond ?? anyValidMillisecond);
+            });
+
+            //  #   Assert.
+            exc.Should().BeOfType<System.ArgumentOutOfRangeException>(reason);
+        }
+
+    #endregion
+
+    #region DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, DateTimeKind kind) tests.
+
+    // TODO:OF:Add test for if Kind is out of bounds. There are tests to copy.
+    [Fact]
         public void Constructor_Year_Month_Day_Hour_Minute_Second_Millisecond_Kind_ShouldCreate()
         {
             //  #   Arrange.
