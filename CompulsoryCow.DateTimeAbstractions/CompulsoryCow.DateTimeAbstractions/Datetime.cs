@@ -79,6 +79,20 @@ namespace CompulsoryCow.DateTime.Abstractions
             _value = new System.DateTime(year, month, day, hour, minute, second);
         }
 
+        /// <summary>See <see cref="System.DateTime.DateTime(int, int, int, int, int, int, int, Calendar, System.DateTimeKind)"/>
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <param name="day"></param>
+        /// <param name="hour"></param>
+        /// <param name="minute"></param>
+        /// <param name="second"></param>
+        /// <param name="kind"></param>
+        public DateTime(int year, int month, int day, int hour, int minute, int second, System.DateTimeKind kind)
+        {
+            _value = new System.DateTime(year, month, day, hour, minute, second, kind);
+        }
+
         /// <summary>See <see cref="System.DateTime.DateTime(int, int, int, int, int, int, int, System.DateTimeKind)"/>
         /// </summary>
         /// <param name="year"></param>
