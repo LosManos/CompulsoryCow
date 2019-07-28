@@ -15,6 +15,8 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             : base(output)
         { }
 
+        #region MaxValue tests.
+
         [Fact]
         public void MaxValueShouldReturnMaxValue()
         {
@@ -23,6 +25,10 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(System.DateTime.MaxValue, res);
         }
 
+        #endregion
+
+        #region MinValue tests.
+
         [Fact]
         public void MinValueShouldReturnMinValue()
         {
@@ -30,6 +36,10 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             AssertEquals(System.DateTime.MinValue, res);
         }
+
+        #endregion
+
+        #region Constructor tests.
 
         #region public DateTime(long ticks) tests.
 
@@ -185,6 +195,9 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         #endregion
+        #endregion
+
+        #region Add tests.
 
         [Fact]
         public void AddShouldAdd()
@@ -199,6 +212,10 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
                 .Add(anyTimeSpan.ToSystemTimeSpan());
             AssertEquals(expected, res);
         }
+
+        #endregion
+
+        #region Properties tests.
 
         [Fact]
         public void GettersShouldReturnRespectiveValue()
@@ -232,6 +249,8 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             sut.Year.Should().Be(expected.Year);
         }
 
+        #region UtcNow tests.
+
         /// <summary>This test is not deterministic.
         /// </summary>
         [Fact]
@@ -243,40 +262,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var after = System.DateTime.UtcNow;
 
             //  #   Assert.
-            before.Ticks.Should().BeLessOrEqualTo(now.Ticks);
-            now.Ticks.Should().BeLessOrEqualTo(after.Ticks);
-        }
-
-        [Fact]
-        public void NowShouldReturnPresetValue()
-        {
-            //  #   Arrange.
-            var anyTicks = AnyTicks();
-
-            //  #   Act.
-            Abstractions.DateTime.SetNow(new System.DateTime(anyTicks));
-
-            //  #   Assert.
-            Abstractions.DateTime.Now.Ticks.Should().Be(anyTicks);
-        }
-
-        /// <summary>This test is not deterministic.
-        /// </summary>
-        [Fact]
-        public void ResetNowShouldReturnSystemNow()
-        {
-            //  #   Arrange.
-            var anyTicks = AnyTicks();
-            Abstractions.DateTime.SetNow(new System.DateTime(anyTicks));
-            Abstractions.DateTime.Now.Ticks.Should().Be(anyTicks, "Intermediary test we are setting the Now property.");
-
-            //  #   Act.
-            Abstractions.DateTime.SetNow(null);
-
-            //  #   Assert.
-            var before = System.DateTime.Now;
-            var now = Abstractions.DateTime.Now;
-            var after = System.DateTime.Now;
             before.Ticks.Should().BeLessOrEqualTo(now.Ticks);
             now.Ticks.Should().BeLessOrEqualTo(after.Ticks);
         }
@@ -313,6 +298,50 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             now.Ticks.Should().BeLessOrEqualTo(after.Ticks);
         }
 
+        #endregion
+
+        #region Now tests.
+
+        [Fact]
+        public void NowShouldReturnPresetValue()
+        {
+            //  #   Arrange.
+            var anyTicks = AnyTicks();
+
+            //  #   Act.
+            Abstractions.DateTime.SetNow(new System.DateTime(anyTicks));
+
+            //  #   Assert.
+            Abstractions.DateTime.Now.Ticks.Should().Be(anyTicks);
+        }
+
+        /// <summary>This test is not deterministic.
+        /// </summary>
+        [Fact]
+        public void ResetNowShouldReturnSystemNow()
+        {
+            //  #   Arrange.
+            var anyTicks = AnyTicks();
+            Abstractions.DateTime.SetNow(new System.DateTime(anyTicks));
+            Abstractions.DateTime.Now.Ticks.Should().Be(anyTicks, "Intermediary test we are setting the Now property.");
+
+            //  #   Act.
+            Abstractions.DateTime.SetNow(null);
+
+            //  #   Assert.
+            var before = System.DateTime.Now;
+            var now = Abstractions.DateTime.Now;
+            var after = System.DateTime.Now;
+            before.Ticks.Should().BeLessOrEqualTo(now.Ticks);
+            now.Ticks.Should().BeLessOrEqualTo(after.Ticks);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Private helper methods.
+
         private System.DateTimeKind AnyKind()
         {
             return _pr.Enum<System.DateTimeKind>();
@@ -348,5 +377,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         {
             return (System.DateTimeKind)System.Enum.GetValues(typeof(System.DateTimeKind)).Cast<int>().Max();
         }
+
+        #endregion
     }
 }
