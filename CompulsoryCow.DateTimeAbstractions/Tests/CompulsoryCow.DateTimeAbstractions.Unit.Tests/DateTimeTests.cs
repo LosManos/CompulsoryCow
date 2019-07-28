@@ -178,6 +178,57 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region DateTime(int year, int month, int day, Calendar calendar) test.
+
+        [Fact]
+        public void Constructor_Year_Mont_Day_Calendar_ShouldCreate()
+        {
+            //  #   Arrange.
+            var anyYear = 2019;
+            var anyMonth = 7;
+            var anyDay = 26;
+            var anyCalendar = new System.Globalization.TaiwanCalendar();
+            var systemDateTime = new System.DateTime(anyYear, anyMonth, anyDay, anyCalendar);
+
+            //  #   Act.
+            var sut = new Abstractions.DateTime(anyYear, anyMonth, anyDay, anyCalendar);
+
+            //  #   Assert.
+            AssertEquals(systemDateTime, sut);
+        }
+
+        [Theory]
+        [InlineData(0, null, null, "Too low Year.")]
+        [InlineData(10000, null, null, "Too high Year.")]
+        [InlineData(null, 0, null, "Too low Month.")]
+        [InlineData(null, 13, null, "Too high Month.")]
+        [InlineData(null, null, 0, "Too low Day.")]
+        [InlineData(null, null, 32, "Too hight Day.")]
+        public void Constructor_Year_Month_Day_Calendar_ShouldThrowForOutOfRange(int? year, int? month, int? day, string reason)
+        {
+            //  #   Arrange.
+            var anyValidYear = 2019;
+            var anyValidMonth = 7;
+            var anyValidDay = 26;
+            var anyCalendar = new System.Globalization.TaiwanCalendar();
+            var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyCalendar);
+            res.Should().NotBeNull("Smoke test that we can create at all.");
+
+            //  #   Act.
+            var exc = Record.Exception(() =>
+            {
+                new Abstractions.DateTime(
+                    year ?? anyValidDay,
+                    month ?? anyValidMonth,
+                    day ?? anyValidDay, 
+                    anyCalendar);
+            });
+
+            //  #   Assert.
+            exc.Should().BeOfType<System.ArgumentOutOfRangeException>(reason);
+        }
+
+        #endregion
         #region public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond DateTimeKind kind) tests.
 
         [Fact]

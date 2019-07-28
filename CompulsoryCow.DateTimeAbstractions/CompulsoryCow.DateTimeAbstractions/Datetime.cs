@@ -1,4 +1,6 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("CompulsoryCow.DateTimeAbstractions.Unit.Tests")]
+﻿using System.Globalization;
+
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("CompulsoryCow.DateTimeAbstractions.Unit.Tests")]
 
 namespace CompulsoryCow.DateTime.Abstractions
 {
@@ -51,6 +53,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         public DateTime(int year, int month, int day)
         {
             _value = new System.DateTime(year, month, day);
+        }
+
+        /// <summary>See <see cref="System.DateTime.DateTime(int, int, int, Calendar)"/>.
+        /// </summary>
+        /// <param name="anyValidYear"></param>
+        /// <param name="anyValidMonth"></param>
+        /// <param name="anyValidDay"></param>
+        /// <param name="anyCalendar"></param>
+        public DateTime(int anyValidYear, int anyValidMonth, int anyValidDay, TaiwanCalendar anyCalendar)
+        {
+            _value = new System.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyCalendar);
         }
 
         /// <summary>See <see cref="System.DateTime.DateTime(int, int, int, int, int, int, int, System.DateTimeKind)"/>
