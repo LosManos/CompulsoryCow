@@ -283,7 +283,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [InlineData(null, null, null, null, -1, null, "Too low Minute.")]
         [InlineData(null, null, null, null, 60, null, "Too high Minute.")]
         [InlineData(null, null, null, null, null, -1, "Too low Second.")]
-        [InlineData(null, null, null, null, null, 60, "Too .hight Second.")]
+        [InlineData(null, null, null, null, null, 60, "Too .high Second.")]
         public void Constructor_Year_Month_Day_Hour_Minute_Second_ShouldThrowForOutOfRange(int? year, int? month, int? day, int? hour, int? minute, int? second, string reason)
         {
             //  #   Arrange.
@@ -418,6 +418,95 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  #   Assert.
             exc.Should().BeOfType<System.ArgumentException>();
+        }
+
+        #endregion
+
+        #region DateTime(int year, int month, int day, int hour, int minute, int second, Calendar calendar) tests.
+
+        [Fact]
+        public void Constructor_Year_Mont_Day_Hour_Minute_Second_Calendar_ShouldCreate()
+        {
+            //  #   Arrange.
+            var anyYear = 2019;
+            var anyMonth = 7;
+            var anyDay = 26;
+            var anyHour = 12;
+            var anyMinute = 34;
+            var anySecond = 56;
+            var anyCalendar = new System.Globalization.TaiwanCalendar();
+            var systemDateTime = new System.DateTime(anyYear, anyMonth, anyDay, anyHour, anyMinute, anySecond, anyCalendar);
+
+            //  #   Act.
+            var sut = new Abstractions.DateTime(anyYear, anyMonth, anyDay, anyHour, anyMinute, anySecond, anyCalendar);
+
+            //  #   Assert.
+            AssertEquals(systemDateTime, sut);
+        }
+
+        [Fact]
+        public void Constructor_Year_Mont_Day_Hour_Minute_Second_Calendar_ShouldThrowArgumentNullForNullCalendar()
+        {
+            //  #   Arrange.
+            var anyYear = 2019;
+            var anyMonth = 7;
+            var anyDay = 26;
+            var anyHour = 12;
+            var anyMinute = 34;
+            var anySecond = 56;
+            var anyCalendar = new System.Globalization.TaiwanCalendar();
+            var systemDateTime = new System.DateTime(anyYear, anyMonth, anyDay, anyHour, anyMinute, anySecond, anyCalendar);
+
+            //  #   Act.
+            var exc = Record.Exception(() =>
+            {
+                new Abstractions.DateTime(anyYear, anyMonth, anyDay, anyHour, anyMinute, anySecond, null);
+            });
+
+            //  #   Assert.
+            exc.Should().BeOfType<System.ArgumentNullException>();
+        }
+
+        [Theory]
+        [InlineData(0, null, null, null, null, null, "Too low Year.")]
+        [InlineData(10000, null, null, null, null, null, "Too high Year.")]
+        [InlineData(null, 0, null, null, null, null, "Too low Month.")]
+        [InlineData(null, 13, null, null, null, null, "Too high Month.")]
+        [InlineData(null, null, 0, null, null, null, "Too low Day.")]
+        [InlineData(null, null, 32, null, null, null, "Too high Day.")]
+        [InlineData(null, null, null, 24, null, null, "Too high Hour.")]
+        [InlineData(null, null, null, null, -1, null, "Too low Minute.")]
+        [InlineData(null, null, null, null, 60, null, "Too high Minute.")]
+        [InlineData(null, null, null, null, null, -1, "Too low Second.")]
+        [InlineData(null, null, null, null, null, 60, "Too .high Second.")]
+        public void Constructor_Year_Month_Day_Hour_Minute_Second_Calendar_ShouldThrowForOutOfRange(int? year, int? month, int? day, int? hour, int? minute, int? second, string reason)
+        {
+            //  #   Arrange.
+            var anyValidYear = 2019;
+            var anyValidMonth = 7;
+            var anyValidDay = 26;
+            var anyValidHour = 12;
+            var anyValidMinute = 34;
+            var anyValidSecond = 56;
+            var anyCalendar = new System.Globalization.TaiwanCalendar();
+            var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyCalendar);
+            res.Should().NotBeNull("Smoke test that we can create at all.");
+
+            //  #   Act.
+            var exc = Record.Exception(() =>
+            {
+                new Abstractions.DateTime(
+                    year ?? anyValidDay,
+                    month ?? anyValidMonth,
+                    day ?? anyValidDay,
+                    hour ?? anyValidHour, 
+                    minute ?? anyValidMinute, 
+                    second ?? anyValidSecond,
+                    anyCalendar);
+            });
+
+            //  #   Assert.
+            exc.Should().BeOfType<System.ArgumentOutOfRangeException>(reason);
         }
 
         #endregion
