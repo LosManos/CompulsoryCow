@@ -6,13 +6,57 @@ namespace CompulsoryCow.DateTime.Abstractions
 {
     public interface IDateTime
     {
+        /// <summary>See <see cref="System.DateTime.Ticks"/>.
+        /// </summary>
+        long Ticks { get; }
+
+        /// <summary>See <see cref="System.DateTime.Second"/>.
+        /// </summary>
+        int Second { get; }
+
+        /// <summary>See <see cref="System.DateTime.Date"/>.
+        /// </summary>
+        DateTime Date { get; }
+
+        /// <summary>See <see cref="System.DateTime.Month"/>.
+        /// </summary>
+        int Month { get; }
+        
+        /// <summary>See <see cref="Minute"/>.
+        /// </summary>
+         int Minute { get; }
+        
+        /// <summary>See <see cref="Millisecond"/>.
+        /// </summary>
+         int Millisecond { get; }
+
         /// <summary>See <see cref="System.DateTime.Kind"/>.
         /// </summary>
         System.DateTimeKind Kind { get; }
 
-        /// <summary>See <see cref="System.DateTime.Ticks"/>.
+        /// <summary>See <see cref="System.DateTime.Hour"/>.
         /// </summary>
-        long Ticks { get; }
+        int Hour { get; }
+
+        /// <summary>See <see cref="System.DateTime.DayOfYear"/>.
+        /// </summary>
+        int DayOfYear { get; }
+
+        /// <summary>See <see cref="System.DateTime.DayOfWeek"/>.
+        /// </summary>
+        System.DayOfWeek DayOfWeek { get; }
+
+        /// <summary>See <see cref="System.DateTime.Day"/>.
+        /// </summary>
+        int Day { get; }
+
+        /// <summary>See <see cref="System.DateTime.TimeOfDay"/>.
+        /// </summary>
+        TimeSpan TimeOfDay { get; }
+
+        /// <summary>See <see cref="System.DateTime.Year"/>.
+        /// </summary>
+        int Year { get; }
 
         /// <summary>See <see cref="System.DateTime.Add(System.TimeSpan)"/>.
         /// </summary>
@@ -222,7 +266,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         public int Hour { get { return _value.Hour; } }
 
         /// <inheritdoc />
-        public object DayOfYear { get { return _value.DayOfYear; } }
+        public int DayOfYear { get { return _value.DayOfYear; } }
 
         /// <inheritdoc />
         public System.DayOfWeek DayOfWeek { get { return _value.DayOfWeek; } }
