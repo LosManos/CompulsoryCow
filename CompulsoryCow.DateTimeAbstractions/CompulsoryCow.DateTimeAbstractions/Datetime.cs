@@ -72,6 +72,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.DateTime? _now;
         private static System.DateTime? _utcNow;
         private static System.Func<System.DateTime, System.DateTime, int> _compare;
+        private static System.Func<int, int, int> _daysInMonth;
 
         #region Constructors.
 
@@ -297,6 +298,11 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Static methods.
 
+        /// <summary>See <see cref="System.DateTime.Compare(System.DateTime, System.DateTime)"/>.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns></returns>
         public static int Compare(DateTime t1, DateTime t2)
         {
             if( t1 == null)
@@ -308,6 +314,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 throw new System.ArgumentNullException(nameof(t2));
             }
             return (_compare ?? System.DateTime.Compare)(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
+        }
+
+        /// <summary>See <see cref="System.DateTime.DaysInMonth(int, int)"/>.
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        public static int DaysInMonth(int year, int month)
+        {
+            return (_daysInMonth ?? System.DateTime.DaysInMonth)(year, month);
         }
 
         #endregion
@@ -334,6 +350,18 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static void SetCompare(System.Func<System.DateTime, System.DateTime, int> compareFunc)
         {
             _compare = compareFunc;
+        }
+
+        /// <summary>This method sets the function used for <see cref="DaysInMonth(int, int)"/>.
+        /// By default it is set to <see cref="System.DateTime.DaysInMonth(int, int)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="DaysInMonth(int, int)"/> use its default function.
+        /// </summary>
+        /// <param name="daysInMonthFunc"></param>
+        internal static void SetDaysInMonth(System.Func<int, int, int> daysInMonthFunc)
+        {
+            _daysInMonth = daysInMonthFunc;
         }
 
         /// <summary>This method sets the <see cref="Now"/> property.

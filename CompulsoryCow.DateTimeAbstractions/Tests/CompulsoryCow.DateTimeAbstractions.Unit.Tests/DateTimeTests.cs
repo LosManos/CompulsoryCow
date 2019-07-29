@@ -929,6 +929,69 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region DaysInMonth tests.
+
+        [Fact]
+        public void DaysInMonthShouldEqualSystemDaysInMonth()
+        {
+            //  #   Arrange.
+            var anyYear = 2019;
+            var anyMonth = 7;
+            var expected = System.DateTime.DaysInMonth(anyYear, anyMonth);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.DaysInMonth(anyYear, anyMonth);
+
+            //  #   Assert.
+            res.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(0, null)]
+        [InlineData(10000, null)]
+        [InlineData(null, 0)]
+        [InlineData(null, 13)]
+        public void DaysInMonthShouldThrowExceptionForOutOfRange(int? year, int? month)
+        {
+            //  #   Arrange.
+            var anyValidYear = 2019;
+            var anyValidMonth = 7;
+
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.DaysInMonth(year ?? anyValidYear, month ?? anyValidMonth);
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void DaysInMonthShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            var anyYear = 2019;
+            var anyMonth = 7;
+            var expectedDaysInMonth = 42;
+
+            //  #   Act.
+            Abstractions.DateTime.SetDaysInMonth(new System.Func<int, int, int>((year, month) => expectedDaysInMonth));
+
+            //  #   Arrange.
+            var res = Abstractions.DateTime.DaysInMonth(anyYear, anyMonth);
+            res.Should().Be(expectedDaysInMonth);
+
+            //  #   Act.
+            Abstractions.DateTime.SetDaysInMonth(null);
+
+            //  #   Assert.
+            res = Abstractions.DateTime.DaysInMonth(anyYear, anyMonth);
+            res.Should().Be(System.DateTime.DaysInMonth(anyYear, anyMonth));
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.
