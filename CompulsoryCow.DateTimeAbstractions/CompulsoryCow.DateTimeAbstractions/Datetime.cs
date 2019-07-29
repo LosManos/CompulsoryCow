@@ -28,6 +28,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static System.DateTime? _now;
         internal static System.DateTime? _utcNow;
 
+        #region Constructors.
+
         /// <summary>See <see cref="System.DateTime.DateTime(long)"/>.
         /// </summary>
         /// <param name="ticks"></param>
@@ -167,6 +169,12 @@ namespace CompulsoryCow.DateTime.Abstractions
             _value = new System.DateTime(year, month, day, hour, minute, second, millisecond, calendar, kind);
         }
 
+        #endregion
+
+        #region Static properties.
+
+        /// <summary>See <see cref="System.DateTime.Now"/>.
+        /// </summary>
         public static DateTime Now
         {
             get
@@ -175,6 +183,8 @@ namespace CompulsoryCow.DateTime.Abstractions
             }
         }
 
+        /// <summary>See <see cref="System.DateTime.UtcNow"/>.
+        /// </summary>
         public static DateTime UtcNow
         {
             get
@@ -183,30 +193,76 @@ namespace CompulsoryCow.DateTime.Abstractions
             }
         }
 
+        #endregion
+
+        #region Properties.
+
         /// <inheritdoc />
         public long Ticks { get { return _value.Ticks; } }
+
+        /// <inheritdoc />
         public int Second { get { return _value.Second; } }
+
+        /// <inheritdoc />
         public DateTime Date { get { return new DateTime(_value.Date.Ticks); } }
+
+        /// <inheritdoc />
         public int Month { get { return _value.Month; } }
+
+        /// <inheritdoc />
         public int Minute { get { return _value.Minute; } }
+
+        /// <inheritdoc />
         public int Millisecond { get { return _value.Millisecond; } }
+
+        /// <inheritdoc />
         public System.DateTimeKind Kind { get { return _value.Kind; } }
+
+        /// <inheritdoc />
         public int Hour { get { return _value.Hour; } }
+
+        /// <inheritdoc />
         public object DayOfYear { get { return _value.DayOfYear; } }
+
+        /// <inheritdoc />
         public System.DayOfWeek DayOfWeek { get { return _value.DayOfWeek; } }
+
+        /// <inheritdoc />
         public int Day { get { return _value.Day; } }
+
+        /// <inheritdoc />
         public TimeSpan TimeOfDay { get { return new TimeSpan(_value.TimeOfDay.Ticks); } }
+
+        /// <inheritdoc />
         public int Year { get { return _value.Year; } }
 
+        #endregion
+
+        #region Static methods, disguised as properties.
+
+        /// <summary>See <see cref="System.DateTime.MaxValue"/>.
+        /// </summary>
         public static DateTime MaxValue { get { return new DateTime( System.DateTime.MaxValue.Ticks); } }
+
+        /// <summary>See <see cref="System.DateTime.MinValue"/>.
+        /// </summary>
         public static DateTime MinValue { get { return new DateTime(System.DateTime.MinValue.Ticks); } }
+
+        #endregion
+
+        #region Methods.
+
 
         public DateTime Add(TimeSpan value)
         {
             return FromSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
         }
 
-        /// <summary>This method sets the <see cref="Now"/> propjerty.
+        #endregion
+
+        #region Methods used for testing and not production.
+
+        /// <summary>This method sets the <see cref="Now"/> property.
         /// It should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="DateTime.Now"/> return <see cref="System.DateTime.Now"/>.
         /// </summary>
@@ -220,9 +276,15 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="utcNow"></param>
         internal static void SetUtcNow(System.DateTime? utcNow) => _utcNow = utcNow;
 
+        #endregion
+
+        #region Private helper methods.
+
         private DateTime FromSystemDateTime(System.DateTime datetime)
         {
             return new DateTime(datetime.Ticks);
         }
+
+        #endregion
     }
 }
