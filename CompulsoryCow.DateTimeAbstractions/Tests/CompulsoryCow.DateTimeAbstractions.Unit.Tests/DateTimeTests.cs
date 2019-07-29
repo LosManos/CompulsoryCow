@@ -1,8 +1,5 @@
-using CompulsoryCow.DateTime.Abstractions;
 using FluentAssertions;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
 using Abstractions = CompulsoryCow.DateTime.Abstractions;
@@ -493,7 +490,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
-
         #region DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond) tests.
 
         [Fact]
@@ -560,9 +556,9 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             exc.Should().BeOfType<System.ArgumentOutOfRangeException>(reason);
         }
 
-    #endregion
+        #endregion
 
-    #region DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, DateTimeKind kind) tests.
+        #region DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, DateTimeKind kind) tests.
 
         [Fact]
         public void Constructor_Year_Month_Day_Hour_Minute_Second_Millisecond_Kind_ShouldCreate()
@@ -877,9 +873,9 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
 #endregion  //  Constructor tests.
 
-#region Add tests.
+        #region Add tests.
 
-[Fact]
+        [Fact]
         public void AddShouldAdd()
         {
             var anyTicks = AnyTicks();
