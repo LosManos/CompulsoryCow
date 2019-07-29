@@ -69,8 +69,9 @@ namespace CompulsoryCow.DateTime.Abstractions
     public class DateTime : IDateTime
     {
         private readonly System.DateTime _value;
-        internal static System.DateTime? _now;
-        internal static System.DateTime? _utcNow;
+        private static System.DateTime? _now;
+        private static System.DateTime? _utcNow;
+        private static System.Func<System.DateTime, System.DateTime, int> _compare;
 
         #region Constructors.
 
@@ -294,6 +295,23 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #endregion
 
+        #region Static methods.
+
+        public static int Compare(DateTime t1, DateTime t2)
+        {
+            if( t1 == null)
+            {
+                throw new System.ArgumentNullException(nameof(t1));
+            }
+            if( t2 == null)
+            {
+                throw new System.ArgumentNullException(nameof(t2));
+            }
+            return (_compare ?? System.DateTime.Compare)(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
+        }
+
+        #endregion
+
         #region Methods.
 
 
@@ -306,15 +324,29 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Methods used for testing and not production.
 
+        /// <summary>This method sets the function used for <see cref="Compare(DateTime, DateTime)"/>.
+        /// By default it is set to <see cref="System.DateTime.Compare(System.DateTime, System.DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="Compare(DateTime, DateTime)"/> return <see cref="System.DateTime.Compare(System.DateTime, System.DateTime)"/>.
+        /// </summary>
+        /// <param name="compareFunc"></param>
+        internal static void SetCompare(System.Func<System.DateTime, System.DateTime, int> compareFunc)
+        {
+            _compare = compareFunc;
+        }
+
         /// <summary>This method sets the <see cref="Now"/> property.
-        /// It should only be used for testing and really not be in this class at all.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="DateTime.Now"/> return <see cref="System.DateTime.Now"/>.
         /// </summary>
         /// <param name="now"></param>
         internal static void SetNow(System.DateTime? now) => _now = now;
 
         /// <summary>Thid method sets the <see cref="DateTime.UtcNow"/> property.
-        /// It should only be used for testing and really not be in this class at all.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="DateTime.UtcNow"/> return <see cref="System.DateTime.UtcNow"/>.
         /// </summary>
         /// <param name="utcNow"></param>

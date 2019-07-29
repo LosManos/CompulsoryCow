@@ -869,27 +869,67 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             exc.Should().BeOfType<System.ArgumentException>();
         }
 
-#endregion
+        #endregion
 
-#endregion  //  Constructor tests.
+        #endregion  //  Constructor tests.
 
-        #region Add tests.
+        #region Static methods tests.
+
+        #region Compare tests.
+
+        [Theory]
+        [InlineData(10, 20, -1)]
+        [InlineData(10,10,0)]
+        [InlineData(20,10,1)]
+        public void CompareShouldDoValidComparisons(long ticks1, long ticks2, int expectedResult)
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetCompare(null);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.Compare(new Abstractions.DateTime(ticks1), new Abstractions.DateTime(ticks2));
+
+            //  #   Assert.
+            res.Should().Be(expectedResult);
+        }
+
+        [Theory]
+        [InlineData(null, 1L)]
+        [InlineData(1,null)]
+        [InlineData(null, null)]
+        public void CompareShouldThrowNullArgumentExceptionForNullParameters(long? ticks1, long? ticks2)
+        {
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.Compare(
+                    ticks1.HasValue ? new Abstractions.DateTime(ticks1.Value) : null,
+                    ticks2.HasValue ? new Abstractions.DateTime(ticks2.Value) : null);
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType<System.ArgumentNullException>();
+        }
 
         [Fact]
-        public void AddShouldAdd()
+        public void CompareShouldBeSettable()
         {
-            var anyTicks = AnyTicks();
-            var anyTimeSpan = new Abstractions.TimeSpan();
-            var sut = new Abstractions.DateTime(anyTicks);
+            //  #   Arrange.
+            const long anyTicks1 = 1;
+            const long anyTicks2 = 2;
+            const int expectedResult = 42;
+            Abstractions.DateTime.SetCompare(new System.Func<System.DateTime, System.DateTime, int> ((t1, t2) => expectedResult));
 
-            var res = sut.Add(anyTimeSpan);
+            //  #   Act.
+            var res = Abstractions.DateTime.Compare(new Abstractions.DateTime(anyTicks1), new Abstractions.DateTime(anyTicks2));
 
-            var expected = new System.DateTime(anyTicks)
-                .Add(anyTimeSpan.ToSystemTimeSpan());
-            AssertEquals(expected, res);
+            //  #   Assert.
+            res.Should().Be(expectedResult);
         }
 
         #endregion
+
+        #endregion  //  Static methods tests.
 
         #region Properties tests.
 
@@ -930,14 +970,18 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         /// <summary>This test is not deterministic.
         /// </summary>
         [Fact]
-        public void UtcNowShouldReturnUtcNow()
+        public void UtcNowShouldReturnSystemUtcNow()
         {
-            //  #   Arrange and Act.
+            //  #   Arrange.
+            Abstractions.DateTime.SetUtcNow(null);
             var before = System.DateTime.UtcNow;
+
+            //  #   Act.
             var now = Abstractions.DateTime.UtcNow;
-            var after = System.DateTime.UtcNow;
 
             //  #   Assert.
+            var after = System.DateTime.UtcNow;
+
             before.Ticks.Should().BeLessOrEqualTo(now.Ticks);
             now.Ticks.Should().BeLessOrEqualTo(after.Ticks);
         }
@@ -978,6 +1022,8 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #region Now tests.
 
+        // TODO:OF:Write a test that checks System.Now, like UtcNowShouldReturnSystemUtcNow does.
+
         [Fact]
         public void NowShouldReturnPresetValue()
         {
@@ -1013,6 +1059,24 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         #endregion
+
+        #endregion
+
+        #region Add tests.
+
+        [Fact]
+        public void AddShouldAdd()
+        {
+            var anyTicks = AnyTicks();
+            var anyTimeSpan = new Abstractions.TimeSpan();
+            var sut = new Abstractions.DateTime(anyTicks);
+
+            var res = sut.Add(anyTimeSpan);
+
+            var expected = new System.DateTime(anyTicks)
+                .Add(anyTimeSpan.ToSystemTimeSpan());
+            AssertEquals(expected, res);
+        }
 
         #endregion
 
