@@ -1060,6 +1060,90 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region static DateTime FromBinary(long dateData) tests.
+
+        [Fact]
+        public void FromBinaryShouldEqualSystemFromBinary()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromBinary(null);
+            var anyBinary = new System.DateTime(AnyTicks()).ToBinary();
+            var expectedDateTime = System.DateTime.FromBinary(anyBinary);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.FromBinary(anyBinary);
+
+            //  #   Assert.
+            AssertEquals(expectedDateTime, res);
+        }
+
+        [Fact]
+        public void FromBinaryShouldThrowExceptionForTooBigOrLowInput()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromBinary(null);
+            
+            // We cannot test for less-than-min as it does not return an exception as docs says.
+            // A question for this will be written.
+            //var sut = new System.DateTime(Abstractions.DateTime.MinValue.Ticks);
+            //var dateData = sut.ToBinary();
+
+            ////  #   Act.
+            //var res = Record.Exception(() =>
+            //{
+            //    Abstractions.DateTime.FromBinary(dateData - 1);
+            //});
+
+            ////  #   Assert.
+            //res.Should().BeOfType<System.ArgumentException>();
+
+            //  #   Arrange.
+            var sut = new System.DateTime(Abstractions.DateTime.MaxValue.Ticks);
+            var dateData = sut.ToBinary();
+
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.FromBinary(dateData + 1);                
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType<System.ArgumentException>();
+        }
+
+        [Fact]
+        public void FromBinaryShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            var anyDateTime1 = new Abstractions.DateTime(AnyTicks());
+            var anySystemDateTime1 = new System.DateTime(anyDateTime1.Ticks);
+            var anyDateData1 = new System.DateTime(anyDateTime1.Ticks).ToBinary();
+
+            var anyDateTime2 = new Abstractions.DateTime(AnyTicks());
+            var anySystemDateTime2 = new System.DateTime(anyDateTime2.Ticks);
+
+            anySystemDateTime1.Ticks.Should().NotBe(anySystemDateTime2.Ticks, "Smoke test we don't happen to randomise two identical datetimes.");
+
+            //  #   Act.
+            // Set `FromBinary` to always return datetime2.
+            Abstractions.DateTime.SetFromBinary(new System.Func<long, System.DateTime>((dateData) => anySystemDateTime2));
+
+            //  #   Assert..
+            // Deserialise datetime1 but get datetime2 back due to `SetFromBinary` call.
+            var res = Abstractions.DateTime.FromBinary(anyDateData1);
+            AssertEquals(anySystemDateTime2, res, because: "FromBinary should return DateTime2 disregarding parameter value.");
+
+            //  #   Act.
+            // Reset and let `FromBinary` call default function.
+            Abstractions.DateTime.SetFromBinary(null);
+
+            //  #   Assert.
+            res = Abstractions.DateTime.FromBinary(anyDateData1);
+            AssertEquals(anySystemDateTime1, res);
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.
