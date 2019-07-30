@@ -73,6 +73,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.DateTime? _utcNow;
         private static System.Func<System.DateTime, System.DateTime, int> _compare;
         private static System.Func<int, int, int> _daysInMonth;
+        private static System.Func<System.DateTime, System.DateTime, bool> _equals;
 
         #region Constructors.
 
@@ -326,6 +327,25 @@ namespace CompulsoryCow.DateTime.Abstractions
             return (_daysInMonth ?? System.DateTime.DaysInMonth)(year, month);
         }
 
+        /// <summary>See <see cref="System.DateTime.Equals(System.DateTime, System.DateTime)"/>.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns></returns>
+        public static bool Equals(DateTime t1, DateTime t2)
+        {
+            if( t1 == null)
+            {
+                throw new System.ArgumentNullException(nameof(t1));
+            }
+            if( t2 == null)
+            {
+                throw new System.ArgumentNullException(nameof(t2));
+            }
+
+            return (_equals ?? System.DateTime.Equals)(new System.DateTime( t1.Ticks), new System.DateTime( t2.Ticks));
+        }
+
         #endregion
 
         #region Methods.
@@ -362,6 +382,18 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static void SetDaysInMonth(System.Func<int, int, int> daysInMonthFunc)
         {
             _daysInMonth = daysInMonthFunc;
+        }
+        
+        /// <summary>This method sets the function used for <see cref="Equals(DateTime, DateTime)"/>.
+        /// By default it is set to <see cref="System.DateTime.Equals(System.DateTime, System.DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="Equals(DateTime, DateTime)"/> use its default function.
+        /// </summary>
+        /// <param name="equalsFunc"></param>
+        internal static void SetEquals(System.Func<System.DateTime, System.DateTime, bool> equalsFunc)
+        {
+            _equals = equalsFunc;
         }
 
         /// <summary>This method sets the <see cref="Now"/> property.

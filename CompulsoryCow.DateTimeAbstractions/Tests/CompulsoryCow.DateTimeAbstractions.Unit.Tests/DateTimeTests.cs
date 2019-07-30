@@ -992,6 +992,74 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region DaysInMonth tests.
+
+        [Theory]
+        [InlineData(1,1)]
+        [InlineData(1,2)]
+        public void EqualsShouldEqualSystemEquals(int ticks1, int ticks2)
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetEquals(null);
+            var expected = System.DateTime.Equals(
+                new System.DateTime(ticks1), 
+                new System.DateTime(ticks2));
+
+            //  #   Act.
+            var res = Abstractions.DateTime.Equals(
+                new Abstractions.DateTime(ticks1), 
+                new Abstractions.DateTime(ticks2));
+
+            //  #   Assert.
+            res.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(null, 1)]
+        [InlineData(1, null)]
+        [InlineData(null, null)]
+        public void EqualsShouldThrowExceptionForNullArgument(int? ticks1, int? ticks2)
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetEquals(null);
+
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.Equals(
+                    ticks1.HasValue ? new Abstractions.DateTime(ticks1.Value) : null,
+                    ticks2.HasValue ? new Abstractions.DateTime(ticks2.Value) : null);
+            });
+
+            res.Should().BeOfType<System.ArgumentNullException>();
+        }
+
+        [Fact]
+        public void EqualsShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            var anyDateTime1 = new Abstractions.DateTime(1);
+            var anyDateTime2 = new Abstractions.DateTime(2);
+            anyDateTime1.Ticks.Should().NotBe(anyDateTime2.Ticks, "Smoke test that we have different datetimes.");
+            var expectedResult = true;
+
+            //  #   Act.
+            Abstractions.DateTime.SetEquals(new System.Func<System.DateTime, System.DateTime, bool>((t1, t2) => expectedResult));
+
+            //  #   Arrange.
+            var res = Abstractions.DateTime.Equals(anyDateTime1, anyDateTime2);
+            res.Should().Be(expectedResult);
+
+            //  #   Act.
+            Abstractions.DateTime.SetEquals(null);
+
+            //  #   Assert.
+            res = Abstractions.DateTime.Equals(anyDateTime1, anyDateTime2);
+            res.Should().BeFalse();
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.
