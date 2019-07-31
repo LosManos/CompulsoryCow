@@ -328,6 +328,8 @@ namespace CompulsoryCow.DateTime.Abstractions
             return (_daysInMonth ?? System.DateTime.DaysInMonth)(year, month);
         }
 
+        // TODO:Implement Equals properly. System.DateTime is a struct while Abstractions.DateTime is a class which means the whole equals has to be implemented. Also check for == >= etc. Also ToString and GetHashCode.
+
         /// <summary>See <see cref="System.DateTime.Equals(System.DateTime, System.DateTime)"/>.
         /// </summary>
         /// <param name="t1"></param>
