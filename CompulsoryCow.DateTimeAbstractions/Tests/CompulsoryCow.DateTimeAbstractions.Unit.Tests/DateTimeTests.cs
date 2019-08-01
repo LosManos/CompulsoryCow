@@ -1081,34 +1081,46 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         public void FromBinaryShouldThrowExceptionForTooBigOrLowInput()
         {
             //  #   Arrange.
-            Abstractions.DateTime.SetFromBinary(null);
-            
-            // We cannot test for less-than-min as it does not return an exception as docs says.
-            // A question for this will be written.
-            //var sut = new System.DateTime(Abstractions.DateTime.MinValue.Ticks);
-            //var dateData = sut.ToBinary();
+            ////  ##  Create a mask for the 2 highest bits.
+            var kindMask = ((long)System.Math.Pow(2, 63) + (long)System.Math.Pow(2, 62));
+            ////  ##  Create a mask for the lowest 62 bits.
+            var ticksMask = long.MaxValue & (long.MaxValue - kindMask);
 
-            ////  #   Act.
-            //var res = Record.Exception(() =>
-            //{
-            //    Abstractions.DateTime.FromBinary(dateData - 1);
-            //});
+            // ##   Create a too low value.
+            var datedata = System.DateTime.MinValue.ToBinary();
+            var kindPart = datedata & kindMask;
+            var ticksPart = datedata & ticksMask;
+            //(var kindPart, var ticksPart) = getParts(datedata);
+            ticksPart.Should().Be(0);
+            // If I understand the documentation correctly we should do 62 bits based arithmetic
+            // when reducing ticksPart with 1. But 1) since I don't want to write 62 bits arithmetic 
+            // and 2) I am sure the documentation has left something out as I doubt Ticks is in 
+            // 62 bit base; I settle for this. It is not 100% correct but it it works.
+            var tooLowTicksPart = (ticksPart - 1) & ticksMask;
 
-            ////  #   Assert.
-            //res.Should().BeOfType<System.ArgumentException>();
-
-            //  #   Arrange.
-            var sut = new System.DateTime(Abstractions.DateTime.MaxValue.Ticks);
-            var dateData = sut.ToBinary();
+            // ##   Create a too hight value.
+            datedata = System.DateTime.MaxValue.ToBinary();
+            kindPart = datedata & kindMask;
+            ticksPart = datedata & ticksMask;
+            // If I understand the documentation correctly we should do 62 bits based arithmetic
+            // when reducing ticksPart with 1. But 1) since I don't want to write 62 bits arithmetic 
+            // and 2) I am sure the documentation has left something out as I doubt Ticks is in 
+            // 62 bit base; I settle for this. It is not 100% correct but it it works.
+            var tooHighTicksPart = (ticksPart + 1) & ticksMask;
 
             //  #   Act.
-            var res = Record.Exception(() =>
+            var tooLowException = Record.Exception(() =>
             {
-                Abstractions.DateTime.FromBinary(dateData + 1);                
+                System.DateTime.FromBinary(kindPart | tooLowTicksPart);
+            });
+            var tooHighException = Record.Exception(() =>
+            {
+                System.DateTime.FromBinary(kindPart | tooHighTicksPart);
             });
 
             //  #   Assert.
-            res.Should().BeOfType<System.ArgumentException>();
+            tooLowException.Should().BeOfType<System.ArgumentException>();
+            tooHighException.Should().BeOfType<System.ArgumentException>();
         }
 
         [Fact]
