@@ -1226,7 +1226,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         #region FromFileTimeUtc tests.
 
         [Fact]
-        public void FromFileTimeUtcShouldEqualSystemFromFileTime()
+        public void FromFileTimeUtcShouldEqualSystemFromFileTimeUtc()
         {
             //  #   Arrange.
             Abstractions.DateTime.SetFromFileTimeUtc(null);
@@ -1263,13 +1263,13 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         [Fact]
-        public void FromFileTimevShouldBeSettableAndResettable()
+        public void FromFileTimeUtcShouldBeSettableAndResettable()
         {
             //  #   Arrange.
             var anyFileTime = 42;
             var expected = System.DateTime.FromFileTimeUtc(anyFileTime);
             var actual = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
-            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTimeUtc.FromFileTime value.");
+            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTime.FromFileTimeUtc value.");
 
             var anyOtherFileTime = 43;
 
@@ -1285,6 +1285,67 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  #   Assert.
             actual = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
+            AssertEquals(expected, actual);
+        }
+
+        #endregion
+
+        #region FromOADate tests.
+
+        [Fact]
+        public void FromOADateShouldEqualSystemFromOADate()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromOADate(null);
+            var anyFileTime = 1d;
+            var expected = System.DateTime.FromOADate(anyFileTime);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.FromOADate(anyFileTime);
+
+            AssertEquals(expected, res);
+        }
+
+        [Fact]
+        public void FromOADateShouldThrowForInvalidInput()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromOADate(null);
+            var invalidOADate = new System.DateTime(0100, 01, 01).Ticks - 1;
+
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.FromOADate(invalidOADate);
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType<System.ArgumentException>();
+        }
+
+        [Fact]
+        public void FromOADateShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            var anyFileTime = 42d;
+            var expected = System.DateTime.FromOADate(anyFileTime);
+            var actual = Abstractions.DateTime.FromOADate(anyFileTime);
+            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTime.FromOADate value.");
+
+            var anyOtherFileTime = 43;
+
+            //  #   Act.
+            Abstractions.DateTime.SetFromOADate((_) => System.DateTime.FromOADate(anyOtherFileTime));
+
+            //  #   Assert.
+            var otherExpected = System.DateTime.FromOADate(anyOtherFileTime);
+            var otherActual = Abstractions.DateTime.FromOADate(anyOtherFileTime);
+
+            //  #   Act.
+            Abstractions.DateTime.SetFromOADate(null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.FromOADate(anyFileTime);
             AssertEquals(expected, actual);
         }
 

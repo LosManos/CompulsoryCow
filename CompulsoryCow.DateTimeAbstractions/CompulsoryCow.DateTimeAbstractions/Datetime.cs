@@ -77,6 +77,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<long, System.DateTime> _fromBinary;
         private static System.Func<long, System.DateTime> _fromFileTime;
         private static System.Func<long, System.DateTime> _fromFileTimeUtc;
+        private static System.Func<double, System.DateTime> _fromOADate;
 
         #region Constructors.
 
@@ -377,6 +378,14 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return new DateTime((_fromFileTimeUtc ?? System.DateTime.FromFileTimeUtc)(fileTime).Ticks, System.DateTimeKind.Utc);
         }
+        /// <summary>See <see cref="System.DateTime.FromOADate(double)"/>.
+        /// </summary>
+        /// <param name="fileTime"></param>
+        /// <returns></returns>
+        public static DateTime FromOADate(double d)
+        {
+            return new DateTime((_fromOADate ?? System.DateTime.FromOADate)(d).Ticks, System.DateTimeKind.Unspecified);
+        }
 
         #endregion
 
@@ -439,7 +448,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             _fromBinary = fromBinaryFunc;
         }
 
-        /// <summary>This method sets the <see cref="FromFileTime(long)"/> proprty.
+        /// <summary>This method sets the <see cref="FromFileTime(long)"/> property.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="FromFileTime(long)"/> return <see cref="System.DateTime.FromFileTime(long)"/>.
@@ -447,13 +456,21 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="fromFileTimeFunc"></param>
         internal static void SetFromFileTime(System.Func<long, System.DateTime> fromFileTimeFunc) => _fromFileTime = fromFileTimeFunc;
 
-        /// <summary>This method sets the <see cref="FromFileTimeUtc(long)"/> proprty.
+        /// <summary>This method sets the <see cref="FromFileTimeUtc(long)"/> property.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="FromFileTimeUtc(long)"/> return <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
         /// </summary>
         /// <param name="fromFileTimeUtcFunc"></param>
         internal static void SetFromFileTimeUtc(System.Func<long, System.DateTime> fromFileTimeUtcFunc) => _fromFileTimeUtc = fromFileTimeUtcFunc;
+
+        /// <summary>This method sets the <see cref="FromOADate(double)"/> property.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="FromOADate(double)"/> return <see cref="System.DateTime.FromOADate(double)"/>.
+        /// </summary>
+        /// <param name="fromOADateFunc"></param>
+        internal static void SetFromOADate(System.Func<double, System.DateTime> fromOADateFunc) => _fromOADate = fromOADateFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 
