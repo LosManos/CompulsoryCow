@@ -1223,6 +1223,73 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region FromFileTimeUtc tests.
+
+        [Fact]
+        public void FromFileTimeUtcShouldEqualSystemFromFileTime()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromFileTimeUtc(null);
+            var anyFileTime = 1;
+            var expected = System.DateTime.FromFileTimeUtc(anyFileTime);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
+
+            AssertEquals(expected, res);
+        }
+
+        [Fact]
+        public void FromFileTimeUtcShouldThrowForTooLargeOrSmallInput()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromFileTimeUtc(null);
+            var tooSmallFileTime = -1;
+            var tooLargeFileTime = System.DateTime.MaxValue.Ticks + 1;
+
+            //  #   Act.
+            var tooLowRes = Record.Exception(() =>
+            {
+                Abstractions.DateTime.FromFileTimeUtc(tooSmallFileTime);
+            });
+            var tooLargeRes = Record.Exception(() =>
+            {
+                Abstractions.DateTime.FromFileTimeUtc(tooLargeFileTime);
+            });
+
+            //  #   Assert.
+            tooLowRes.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooLargeRes.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void FromFileTimevShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            var anyFileTime = 42;
+            var expected = System.DateTime.FromFileTimeUtc(anyFileTime);
+            var actual = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
+            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTimeUtc.FromFileTime value.");
+
+            var anyOtherFileTime = 43;
+
+            //  #   Act.
+            Abstractions.DateTime.SetFromFileTimeUtc((_) => System.DateTime.FromFileTimeUtc(anyOtherFileTime));
+
+            //  #   Assert.
+            var otherExpected = System.DateTime.FromFileTimeUtc(anyOtherFileTime);
+            var otherActual = Abstractions.DateTime.FromFileTimeUtc(anyOtherFileTime);
+
+            //  #   Act.
+            Abstractions.DateTime.SetFromFileTimeUtc(null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
+            AssertEquals(expected, actual);
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.

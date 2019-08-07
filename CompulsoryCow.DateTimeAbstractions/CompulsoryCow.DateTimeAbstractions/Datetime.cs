@@ -76,6 +76,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<System.DateTime, System.DateTime, bool> _equals;
         private static System.Func<long, System.DateTime> _fromBinary;
         private static System.Func<long, System.DateTime> _fromFileTime;
+        private static System.Func<long, System.DateTime> _fromFileTimeUtc;
 
         #region Constructors.
 
@@ -368,6 +369,15 @@ namespace CompulsoryCow.DateTime.Abstractions
             return new DateTime((_fromFileTime ?? System.DateTime.FromFileTime)(fileTime).Ticks, System.DateTimeKind.Local);
         }
 
+        /// <summary>See <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
+        /// </summary>
+        /// <param name="fileTime"></param>
+        /// <returns></returns>
+        public static DateTime FromFileTimeUtc(long fileTime)
+        {
+            return new DateTime((_fromFileTimeUtc ?? System.DateTime.FromFileTimeUtc)(fileTime).Ticks, System.DateTimeKind.Utc);
+        }
+
         #endregion
 
         #region Instance methods.
@@ -436,6 +446,14 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="fromFileTimeFunc"></param>
         internal static void SetFromFileTime(System.Func<long, System.DateTime> fromFileTimeFunc) => _fromFileTime = fromFileTimeFunc;
+
+        /// <summary>This method sets the <see cref="FromFileTimeUtc(long)"/> proprty.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="FromFileTimeUtc(long)"/> return <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
+        /// </summary>
+        /// <param name="fromFileTimeUtcFunc"></param>
+        internal static void SetFromFileTimeUtc(System.Func<long, System.DateTime> fromFileTimeUtcFunc) => _fromFileTimeUtc = fromFileTimeUtcFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 
