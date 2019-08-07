@@ -879,8 +879,8 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         [Theory]
         [InlineData(10, 20, -1)]
-        [InlineData(10,10,0)]
-        [InlineData(20,10,1)]
+        [InlineData(10, 10, 0)]
+        [InlineData(20, 10, 1)]
         public void CompareShouldDoValidComparisons(long ticks1, long ticks2, int expectedResult)
         {
             //  #   Arrange.
@@ -895,7 +895,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         [Theory]
         [InlineData(null, 1L)]
-        [InlineData(1,null)]
+        [InlineData(1, null)]
         [InlineData(null, null)]
         public void CompareShouldThrowNullArgumentExceptionForNullParameters(long? ticks1, long? ticks2)
         {
@@ -918,7 +918,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             const long anyTicks1 = 1;
             const long anyTicks2 = 2;
             const int expectedResult = 42;
-            Abstractions.DateTime.SetCompare(new System.Func<System.DateTime, System.DateTime, int> ((t1, t2) => expectedResult));
+            Abstractions.DateTime.SetCompare(new System.Func<System.DateTime, System.DateTime, int>((t1, t2) => expectedResult));
 
             //  #   Act.
             var res = Abstractions.DateTime.Compare(new Abstractions.DateTime(anyTicks1), new Abstractions.DateTime(anyTicks2));
@@ -995,19 +995,19 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         #region DaysInMonth tests.
 
         [Theory]
-        [InlineData(1,1)]
-        [InlineData(1,2)]
+        [InlineData(1, 1)]
+        [InlineData(1, 2)]
         public void EqualsShouldEqualSystemEquals(int ticks1, int ticks2)
         {
             //  #   Arrange.
             Abstractions.DateTime.SetEquals(null);
             var expected = System.DateTime.Equals(
-                new System.DateTime(ticks1), 
+                new System.DateTime(ticks1),
                 new System.DateTime(ticks2));
 
             //  #   Act.
             var res = Abstractions.DateTime.Equals(
-                new Abstractions.DateTime(ticks1), 
+                new Abstractions.DateTime(ticks1),
                 new Abstractions.DateTime(ticks2));
 
             //  #   Assert.
@@ -1060,7 +1060,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
-        #region static DateTime FromBinary(long dateData) tests.
+        #region FromBinary tests.
 
         [Fact]
         public void FromBinaryShouldEqualSystemFromBinary()
@@ -1152,6 +1152,73 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Assert.
             res = Abstractions.DateTime.FromBinary(anyDateData1);
             AssertEquals(anySystemDateTime1, res);
+        }
+
+        #endregion
+
+        #region FromFileTime tests.
+
+        [Fact]
+        public void FromFileTimeShouldEqualSystemFromFileTime()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromFileTime(null);
+            var anyFileTime = 1;
+            var expected = System.DateTime.FromFileTime(anyFileTime);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.FromFileTime(anyFileTime);
+
+            AssertEquals(expected, res);
+        }
+
+        [Fact]
+        public void FromFileTimeShouldThrowForTooLargeOrSmallInput()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetFromFileTime(null);
+            var tooSmallFileTime = -1;
+            var tooLargeFileTime = System.DateTime.MaxValue.Ticks + 1;
+
+            //  #   Act.
+            var tooLowRes = Record.Exception(() =>
+            {
+                Abstractions.DateTime.FromFileTime(tooSmallFileTime);
+            });
+            var tooLargeRes = Record.Exception(() =>
+            {
+                Abstractions.DateTime.FromFileTime(tooLargeFileTime);
+            });
+
+            //  #   Assert.
+            tooLowRes.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooLargeRes.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void FromFileTimeShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            var anyFileTime = 42;
+            var expected = System.DateTime.FromFileTime(anyFileTime);
+            var actual = Abstractions.DateTime.FromFileTime(anyFileTime);
+            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTime.FromFileTime value.");
+
+            var anyOtherFileTime = 43;
+
+            //  #   Act.
+            Abstractions.DateTime.SetFromFileTime((_) => System.DateTime.FromFileTime(anyOtherFileTime));
+
+            //  #   Assert.
+            var otherExpected = System.DateTime.FromFileTime(anyOtherFileTime);
+            var otherActual = Abstractions.DateTime.FromFileTime(anyOtherFileTime);
+
+            //  #   Act.
+            Abstractions.DateTime.SetFromFileTime(null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.FromFileTime(anyFileTime);
+            AssertEquals(expected, actual);
         }
 
         #endregion

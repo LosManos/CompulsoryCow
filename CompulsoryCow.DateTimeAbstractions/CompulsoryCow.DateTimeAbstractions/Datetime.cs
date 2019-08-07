@@ -75,6 +75,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<int, int, int> _daysInMonth;
         private static System.Func<System.DateTime, System.DateTime, bool> _equals;
         private static System.Func<long, System.DateTime> _fromBinary;
+        private static System.Func<long, System.DateTime> _fromFileTime;
 
         #region Constructors.
 
@@ -358,11 +359,18 @@ namespace CompulsoryCow.DateTime.Abstractions
             return new DateTime((_fromBinary ?? System.DateTime.FromBinary)(dateData).Ticks);
         }
 
+        /// <summary>See <see cref="System.DateTime.FromFileTime(long)"/>.
+        /// </summary>
+        /// <param name="fileTime"></param>
+        /// <returns></returns>
+        public static DateTime FromFileTime(long fileTime)
+        {
+            return new DateTime((_fromFileTime ?? System.DateTime.FromFileTime)(fileTime).Ticks, System.DateTimeKind.Local);
+        }
+
         #endregion
 
-
-        #region Methods.
-
+        #region Instance methods.
 
         public DateTime Add(TimeSpan value)
         {
@@ -421,6 +429,14 @@ namespace CompulsoryCow.DateTime.Abstractions
             _fromBinary = fromBinaryFunc;
         }
 
+        /// <summary>This method sets the <see cref="FromFileTime(long)"/> proprty.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="FromFileTime(long)"/> return <see cref="System.DateTime.FromFileTime(long)"/>.
+        /// </summary>
+        /// <param name="fromFileTimeFunc"></param>
+        internal static void SetFromFileTime(System.Func<long, System.DateTime> fromFileTimeFunc) => _fromFileTime = fromFileTimeFunc;
+
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
@@ -429,10 +445,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="now"></param>
         internal static void SetNow(System.DateTime? now) => _now = now;
 
-        /// <summary>Thid method sets the <see cref="DateTime.UtcNow"/> property.
+        /// <summary>This method sets the <see cref="DateTime.UtcNow"/> property.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have <see cref="DateTime.UtcNow"/> return <see cref="System.DateTime.UtcNow"/>.
+        /// Set to null to have <see cref="UtcNow"/> return <see cref="System.DateTime.UtcNow"/>.
         /// </summary>
         /// <param name="utcNow"></param>
         internal static void SetUtcNow(System.DateTime? utcNow) => _utcNow = utcNow;
