@@ -78,6 +78,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<long, System.DateTime> _fromFileTime;
         private static System.Func<long, System.DateTime> _fromFileTimeUtc;
         private static System.Func<double, System.DateTime> _fromOADate;
+        private static System.Func<int, bool> _isLeapYear;
 
         #region Constructors.
 
@@ -387,6 +388,15 @@ namespace CompulsoryCow.DateTime.Abstractions
             return new DateTime((_fromOADate ?? System.DateTime.FromOADate)(d).Ticks, System.DateTimeKind.Unspecified);
         }
 
+        /// <summary>See <see cref="System.DateTime.IsLeapYear(int)"/>.
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public static bool IsLeapYear(int year)
+        {
+            return (_isLeapYear ?? System.DateTime.IsLeapYear)(year);
+        }
+
         #endregion
 
         #region Instance methods.
@@ -456,7 +466,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="fromFileTimeFunc"></param>
         internal static void SetFromFileTime(System.Func<long, System.DateTime> fromFileTimeFunc) => _fromFileTime = fromFileTimeFunc;
 
-        /// <summary>This method sets the <see cref="FromFileTimeUtc(long)"/> property.
+        /// <summary>This method sets the <see cref="FromFileTimeUtc(long)"/> method.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="FromFileTimeUtc(long)"/> return <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
@@ -464,13 +474,21 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="fromFileTimeUtcFunc"></param>
         internal static void SetFromFileTimeUtc(System.Func<long, System.DateTime> fromFileTimeUtcFunc) => _fromFileTimeUtc = fromFileTimeUtcFunc;
 
-        /// <summary>This method sets the <see cref="FromOADate(double)"/> property.
+        /// <summary>This method sets the <see cref="FromOADate(double)"/> method.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="FromOADate(double)"/> return <see cref="System.DateTime.FromOADate(double)"/>.
         /// </summary>
         /// <param name="fromOADateFunc"></param>
         internal static void SetFromOADate(System.Func<double, System.DateTime> fromOADateFunc) => _fromOADate = fromOADateFunc;
+
+        /// <summary>This method sets the <see cref="IsLeapYear(int)"/> method.
+        /// Set to null to have <see cref="IsLeapYear(int)"/> return <see cref="System.DateTime.IsLeapYear(int)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all
+        /// </summary>
+        /// <param name="isLeapYearFunc"></param>
+        internal static void SetIsLeapYear(System.Func<int, bool> isLeapYearFunc) => _isLeapYear = isLeapYearFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 

@@ -1351,6 +1351,70 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region IsLeapYear tests.
+
+        [Fact]
+        public void IsLeapYearShouldReturnSystemIsLeapYear()
+        {
+            //  #   Arrange.
+            var anyLeapYear = 2004;
+            var anyNonLeapYear = 2005;
+            Abstractions.DateTime.SetIsLeapYear(null);
+
+            //  #   Act.
+            var resLeap = Abstractions.DateTime.IsLeapYear(anyLeapYear);
+            var resNonLeap = Abstractions.DateTime.IsLeapYear(anyNonLeapYear);
+
+            //  #   Assert.
+            resLeap.Should().Be(System.DateTime.IsLeapYear(anyLeapYear));
+            resNonLeap.Should().Be(System.DateTime.IsLeapYear(anyNonLeapYear));
+        }
+
+        [Fact]
+        public void IsLeapYearShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetIsLeapYear(null);
+            var anyLeapYear = 2004;
+            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().Be(true, "Smoke test we know a positive");
+
+            //  #   Act.
+            Abstractions.DateTime.SetIsLeapYear((n) => false);
+
+            //  #   Assert.
+            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().BeFalse();
+
+            //  #   Act.
+            Abstractions.DateTime.SetIsLeapYear(null);
+            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().BeTrue();
+        }
+
+        [Fact]
+        public void IsLeapYearShouldThrowExceptionForInvalidArgument()
+        {
+            //  # Arrange.
+            const int tooLowYear = 0;
+            const int tooHighYear = 10000;
+            Abstractions.DateTime.SetIsLeapYear(null);
+
+            //  # Act.
+            var tooLowRes = Record.Exception(() =>
+            {
+                Abstractions.DateTime.IsLeapYear(tooLowYear);
+            });
+
+            var tooHighRes = Record.Exception(() =>
+            {
+                Abstractions.DateTime.IsLeapYear(tooHighYear);
+            });
+
+            //  #   Assert.
+            tooLowRes.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooHighRes.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.
