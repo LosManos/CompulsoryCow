@@ -79,6 +79,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<long, System.DateTime> _fromFileTimeUtc;
         private static System.Func<double, System.DateTime> _fromOADate;
         private static System.Func<int, bool> _isLeapYear;
+        private static System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseStringFormatProviderStyle;
 
         #region Constructors.
 
@@ -397,6 +398,14 @@ namespace CompulsoryCow.DateTime.Abstractions
             return (_isLeapYear ?? System.DateTime.IsLeapYear)(year);
         }
 
+        public static DateTime Parse(string s, System.IFormatProvider provider, DateTimeStyles styles)
+        {
+            var result = (_parseStringFormatProviderStyle == null) ?
+                System.DateTime.Parse(s, provider, styles) :
+                _parseStringFormatProviderStyle(s, provider, styles);
+            return new DateTime(result.Ticks, result.Kind);
+        }
+
         #endregion
 
         #region Instance methods.
@@ -489,6 +498,14 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="isLeapYearFunc"></param>
         internal static void SetIsLeapYear(System.Func<int, bool> isLeapYearFunc) => _isLeapYear = isLeapYearFunc;
+
+        /// <summary>This method sets the <see cref="Parse(string, System.IFormatProvider, DateTimeStyles)"/> method.
+        /// Set to null to have <see cref="Parse(string, System.IFormatProvider, DateTimeStyles)"/> return <see cref="System.DateTime.Parse(string, System.IFormatProvider, DateTimeStyles)"/>.
+        /// 
+        /// This method should only be used for testing and should really not be in this class at all.
+        /// </summary>
+        /// <param name="parseFunc"></param>
+        internal static void SetParseStringFormatProviderStyle(System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> parseFunc) => _parseStringFormatProviderStyle = parseFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 
