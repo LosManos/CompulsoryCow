@@ -1575,6 +1575,70 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region Parse(string s, IFormatProvider provider) tests.
+
+        [Fact]
+        public void ParseStringFormatProviderShouldMimicSystemParse()
+        {
+            //  #   Arrange.
+            var anyDateTime = "2019-08-11 13:41";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var expected = System.DateTime.Parse(anyDateTime, anyFormatProvider);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.Parse(anyDateTime, anyFormatProvider);
+
+            //  #   Assert.
+            AssertEquals(expected, res);
+        }
+
+        [Theory]
+        [InlineData(null, typeof(System.ArgumentNullException))]
+        [InlineData("no valid date", typeof(System.FormatException))]
+        public void ParseStringFormatProviderShouldThrowExceptionForBadData(string s, System.Type exceptionType)
+        {
+            //  #   Arrange.
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.Parse(s, anyFormatProvider);
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType(exceptionType);
+        }
+
+        [Fact]
+        public void ParseStringFormatProviderShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseStringFormatProvider(null);
+            var anyDateTime = "2019-08-11 19:37";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            var anyFakeDateTime = new System.DateTime(2);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseStringFormatProvider((s, fp) => anyFakeDateTime);
+
+            //  #   Assert.
+            var actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            AssertEquals(anyFakeDateTime, actual);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseStringFormatProvider(null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            AssertEquals(expected, actual);
+        }
+
+        #endregion
+
         #region Now tests.
 
         // TODO:OF:Write a test that checks System.Now, like UtcNowShouldReturnSystemUtcNow does.

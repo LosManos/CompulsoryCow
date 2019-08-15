@@ -80,6 +80,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<double, System.DateTime> _fromOADate;
         private static System.Func<int, bool> _isLeapYear;
         private static System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseStringFormatProviderStyle;
+        private static System.Func<string, System.IFormatProvider, System.DateTime> _parseStringFormatProvider;
 
         #region Constructors.
 
@@ -398,11 +399,30 @@ namespace CompulsoryCow.DateTime.Abstractions
             return (_isLeapYear ?? System.DateTime.IsLeapYear)(year);
         }
 
+        /// <summary>See <see cref="System.DateTime.Parse(string, System.IFormatProvider, DateTimeStyles)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="provider"></param>
+        /// <param name="styles"></param>
+        /// <returns></returns>
         public static DateTime Parse(string s, System.IFormatProvider provider, DateTimeStyles styles)
         {
             var result = (_parseStringFormatProviderStyle == null) ?
                 System.DateTime.Parse(s, provider, styles) :
                 _parseStringFormatProviderStyle(s, provider, styles);
+            return new DateTime(result.Ticks, result.Kind);
+        }
+
+        /// <summary>See <see cref="System.DateTime.Parse(string, System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        public static DateTime Parse(string s, System.IFormatProvider provider)
+        {
+            var result = (_parseStringFormatProvider == null) ?
+                System.DateTime.Parse(s, provider) :
+                _parseStringFormatProvider(s, provider);
             return new DateTime(result.Ticks, result.Kind);
         }
 
@@ -506,6 +526,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="parseFunc"></param>
         internal static void SetParseStringFormatProviderStyle(System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> parseFunc) => _parseStringFormatProviderStyle = parseFunc;
+
+        internal static void SetParseStringFormatProvider(System.Func<string, System.IFormatProvider, System.DateTime> parseFunc) => _parseStringFormatProvider = parseFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 
