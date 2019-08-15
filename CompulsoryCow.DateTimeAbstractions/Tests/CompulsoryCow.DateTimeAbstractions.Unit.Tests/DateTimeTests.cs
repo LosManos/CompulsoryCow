@@ -1639,6 +1639,65 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region Parse(string s, IFormatProvider provider) tests.
+
+        [Fact]
+        public void ParseStringShouldMimicSystemParse()
+        {
+            //  #   Arrange.
+            var anyDateTime = "2019-08-11 13:41";
+            var expected = System.DateTime.Parse(anyDateTime);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.Parse(anyDateTime);
+
+            //  #   Assert.
+            AssertEquals(expected, res);
+        }
+
+        [Theory]
+        [InlineData(null, typeof(System.ArgumentNullException))]
+        [InlineData("no valid date", typeof(System.FormatException))]
+        public void ParseStringShouldThrowExceptionForBadData(string s, System.Type exceptionType)
+        {
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.Parse(s);
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType(exceptionType);
+        }
+
+        [Fact]
+        public void ParseStringShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseString(null);
+            var anyDateTime = "2019-08-11 19:37";
+            var expected = System.DateTime.Parse(anyDateTime);
+            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime);
+            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            var anyFakeDateTime = new System.DateTime(2);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseString((s) => anyFakeDateTime);
+
+            //  #   Assert.
+            var actual = Abstractions.DateTime.Parse(anyDateTime);
+            AssertEquals(anyFakeDateTime, actual);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseString(null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.Parse(anyDateTime);
+            AssertEquals(expected, actual);
+        }
+
+        #endregion
+
         #region Now tests.
 
         // TODO:OF:Write a test that checks System.Now, like UtcNowShouldReturnSystemUtcNow does.

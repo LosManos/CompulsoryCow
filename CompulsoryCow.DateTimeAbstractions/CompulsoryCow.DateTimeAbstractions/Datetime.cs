@@ -81,6 +81,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<int, bool> _isLeapYear;
         private static System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseStringFormatProviderStyle;
         private static System.Func<string, System.IFormatProvider, System.DateTime> _parseStringFormatProvider;
+        private static System.Func<string, System.DateTime> _parseString;
 
         #region Constructors.
 
@@ -426,6 +427,18 @@ namespace CompulsoryCow.DateTime.Abstractions
             return new DateTime(result.Ticks, result.Kind);
         }
 
+        /// <summary>See <see cref="System.DateTime.Parse(string)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static DateTime Parse(string s)
+        {
+            var result = (_parseString == null) ?
+                System.DateTime.Parse(s) :
+                _parseString(s);
+            return new DateTime(result.Ticks, result.Kind);
+        }
+
         #endregion
 
         #region Instance methods.
@@ -527,7 +540,15 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="parseFunc"></param>
         internal static void SetParseStringFormatProviderStyle(System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> parseFunc) => _parseStringFormatProviderStyle = parseFunc;
 
+        /// <summary>This method set the <see cref="Parse(string, System.IFormatProvider)"/> method.
+        /// Set to null to have <see cref="Parse(string, System.IFormatProvider)"/> return <see cref="System.DateTime.Parse(string, System.IFormatProvider)"/>.
+        /// 
+        /// This method should only be used for testing and should really not be in this class at all.
+        /// </summary>
+        /// <param name="parseFunc"></param>
         internal static void SetParseStringFormatProvider(System.Func<string, System.IFormatProvider, System.DateTime> parseFunc) => _parseStringFormatProvider = parseFunc;
+
+        internal static void SetParseString(System.Func<string, System.DateTime> parseFunc) => _parseString = parseFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 
