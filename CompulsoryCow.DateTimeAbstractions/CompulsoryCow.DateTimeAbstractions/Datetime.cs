@@ -82,6 +82,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseStringFormatProviderStyle;
         private static System.Func<string, System.IFormatProvider, System.DateTime> _parseStringFormatProvider;
         private static System.Func<string, System.DateTime> _parseString;
+        private static System.Func<string, string[], System.IFormatProvider, DateTimeStyles, System.DateTime> _parseExactStringStringArrayFormatProviderStyle;
 
         #region Constructors.
 
@@ -439,6 +440,21 @@ namespace CompulsoryCow.DateTime.Abstractions
             return new DateTime(result.Ticks, result.Kind);
         }
 
+        /// <summary>See <see cref="System.DateTime.ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="formats"></param>
+        /// <param name="provider"></param>
+        /// <param name="style"></param>
+        /// <returns></returns>
+        public static DateTime ParseExact(string s, string[] formats, System.IFormatProvider provider, DateTimeStyles style)
+        {
+            var result = (_parseExactStringStringArrayFormatProviderStyle == null) ?
+                System.DateTime.ParseExact(s, formats, provider, style) :
+                _parseExactStringStringArrayFormatProviderStyle(s, formats, provider, style);
+            return new DateTime(result.Ticks, result.Kind);
+        }
+
         #endregion
 
         #region Instance methods.
@@ -548,7 +564,22 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="parseFunc"></param>
         internal static void SetParseStringFormatProvider(System.Func<string, System.IFormatProvider, System.DateTime> parseFunc) => _parseStringFormatProvider = parseFunc;
 
+        /// <summary>This method set the <see cref="Parse(string)"/> method.
+        /// Set to null to have <see cref="Parse(string)"/> return <see cref="System.DateTime.Parse(string)"/>.
+        /// 
+        /// This method should only be used for testing and should really not in this class att all.
+        /// </summary>
+        /// <param name="parseFunc"></param>
         internal static void SetParseString(System.Func<string, System.DateTime> parseFunc) => _parseString = parseFunc;
+
+        /// <summary>This method set the <see cref="ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/> method.
+        /// Set to null to have <see cref="ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/> return <see cref="System.DateTime.ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/>.
+        /// 
+        /// This method should only be used for testing and should really not in this class att all.
+        /// </summary>
+        /// <param name="parseFunc"></param>
+        internal static void SetParseExactStringStringArrayFormatProviderStyle(System.Func<string, string[], System.IFormatProvider, DateTimeStyles, System.DateTime> parseFunc) =>
+            _parseExactStringStringArrayFormatProviderStyle = parseFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 
