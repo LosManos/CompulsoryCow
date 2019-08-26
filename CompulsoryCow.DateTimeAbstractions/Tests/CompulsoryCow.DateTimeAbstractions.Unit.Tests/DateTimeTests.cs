@@ -1682,6 +1682,81 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region ParseExact(string s, string format, IFormatProvider provider, DateTimeStyles style) tests.
+
+        [Fact]
+        public void ParseExactStringStringFormatProviderStylesShouldMimicSystemParse()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle(null);
+            var anyDateTimeString = "2019-08-11 13:41";
+            var anyFormat = "yyyy-MM-dd HH:mm";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var anyStyle = DateTimeStyles.AllowInnerWhite;
+            var expected = System.DateTime.Parse(anyDateTimeString, anyFormatProvider, anyStyle);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.ParseExact(anyDateTimeString, anyFormat, anyFormatProvider, anyStyle);
+
+            //  #   Assert.
+            AssertEquals(expected, res);
+        }
+
+        [Theory]
+        [InlineData(null, "yyyy-MM-dd HH:mm", null, typeof(System.ArgumentNullException))]
+        [InlineData("", "yyyy-MM-dd HH:mm", null, typeof(System.FormatException))]
+        [InlineData("no valid date", "", null, typeof(System.FormatException))]
+        [InlineData("no valid date", "yyyy-MM-dd HH:mm", null, typeof(System.FormatException))]
+        [InlineData("2019-08-11 19:31", null, DateTimeStyles.AssumeLocal | DateTimeStyles.AssumeUniversal, typeof(System.ArgumentException))]
+        [InlineData("2019-08-11 19:31", "yyyy-MM-dd HH:mm", DateTimeStyles.AssumeLocal | DateTimeStyles.AssumeUniversal, typeof(System.ArgumentException))]
+        public void ParseExactStringStringFormatProviderStylesShouldThrowExceptionForBadData(string s, string format, DateTimeStyles? style, System.Type exceptionType)
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseExactStringStringArrayFormatProviderStyle(null);
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            style = style ?? DateTimeStyles.AllowInnerWhite;
+
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.ParseExact(s, format, anyFormatProvider, style.Value);
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType(exceptionType);
+        }
+
+        [Fact]
+        public void ParseExactStringStringFormatProviderStylesShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+            var anyDateTime = "2019-08-11 19:37";
+            var anyFormat = "yyyy-MM-dd HH:mm";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var anyStyle = DateTimeStyles.AssumeUniversal;
+            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            var anyFakeDateTime = new System.DateTime(2);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle((s, sa, fp, st) => anyFakeDateTime);
+
+            //  #   Assert.
+            var actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
+            AssertEquals(anyFakeDateTime, actual);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            AssertEquals(expected, actual);
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.
