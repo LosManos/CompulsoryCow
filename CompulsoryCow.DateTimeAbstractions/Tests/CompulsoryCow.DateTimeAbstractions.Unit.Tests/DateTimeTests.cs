@@ -1712,7 +1712,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         public void ParseExactStringStringFormatProviderStylesShouldThrowExceptionForBadData(string s, string format, DateTimeStyles? style, System.Type exceptionType)
         {
             //  #   Arrange.
-            Abstractions.DateTime.SetParseExactStringStringArrayFormatProviderStyle(null);
+            Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle(null);
             var anyFormatProvider = CultureInfo.InvariantCulture;
             style = style ?? DateTimeStyles.AllowInnerWhite;
 
@@ -1752,6 +1752,78 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  #   Assert.
             actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            AssertEquals(expected, actual);
+        }
+
+        #endregion
+
+        #region ParseExact(string s, string format, IFormatProvider provider) tests.
+
+        [Fact]
+        public void ParseExactStringStringFormatProviderShouldMimicSystemParse()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseExactStringStringFormatProvider(null);
+            var anyDateTimeString = "2019-08-11 13:41";
+            var anyFormat = "yyyy-MM-dd HH:mm";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var expected = System.DateTime.Parse(anyDateTimeString, anyFormatProvider);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.ParseExact(anyDateTimeString, anyFormat, anyFormatProvider);
+
+            //  #   Assert.
+            AssertEquals(expected, res);
+        }
+
+        [Theory]
+        [InlineData(null, "yyyy-MM-dd HH:mm", typeof(System.ArgumentNullException))]
+        [InlineData("", "yyyy-MM-dd HH:mm", typeof(System.FormatException))]
+        [InlineData("no valid date", "", typeof(System.FormatException))]
+        [InlineData("no valid date", "yyyy-MM-dd HH:mm", typeof(System.FormatException))]
+        [InlineData("2019-08-11 19:31", "", typeof(System.FormatException))]
+        [InlineData("2019-08-11 19:31", "xxx", typeof(System.FormatException))]
+        public void ParseExactStringStringFormatProviderShouldThrowExceptionForBadData(string s, string format, System.Type exceptionType)
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseExactStringStringFormatProvider(null);
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.ParseExact(s, format, anyFormatProvider);
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType(exceptionType);
+        }
+
+        [Fact]
+        public void ParseExactStringStringFormatProviderShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetParseStringFormatProvider(null);
+            var anyDateTime = "2019-08-11 19:37";
+            var anyFormat = "yyyy-MM-dd HH:mm";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            var anyFakeDateTime = new System.DateTime(2);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseExactStringStringFormatProvider((s, sa, fp) => anyFakeDateTime);
+
+            //  #   Assert.
+            var actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
+            AssertEquals(anyFakeDateTime, actual);
+
+            //  #   Act.
+            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
             AssertEquals(expected, actual);
         }
 
