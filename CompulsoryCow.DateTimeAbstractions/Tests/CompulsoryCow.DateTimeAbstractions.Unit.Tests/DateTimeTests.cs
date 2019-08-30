@@ -1618,7 +1618,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var anyStyle = DateTimeStyles.AllowInnerWhite;
-            var expected = System.DateTime.Parse(anyDateTimeString, anyFormatProvider, anyStyle);
+            var expected = System.DateTime.ParseExact(anyDateTimeString, new[] { anyFormat }, anyFormatProvider, anyStyle);
 
             //  #   Act.
             var res = Abstractions.DateTime.ParseExact(anyDateTimeString, new[] { anyFormat }, anyFormatProvider, anyStyle);
@@ -1655,13 +1655,13 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         public void ParseExactStringStringArrayFormatProviderStylesShouldBeSettableAndResettable()
         {
             //  #   Arrange.
-            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+            Abstractions.DateTime.SetParseExactStringStringArrayFormatProviderStyle(null);
             var anyDateTime = "2019-08-11 19:37";
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var anyStyle = DateTimeStyles.AssumeUniversal;
-            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
-            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            var expected = System.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
+            var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
             AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
@@ -1673,10 +1673,10 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(anyFakeDateTime, actual);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+            Abstractions.DateTime.SetParseExactStringStringArrayFormatProviderStyle(null);
 
             //  #   Assert.
-            actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            actual = Abstractions.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
             AssertEquals(expected, actual);
         }
 
@@ -1693,7 +1693,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var anyStyle = DateTimeStyles.AllowInnerWhite;
-            var expected = System.DateTime.Parse(anyDateTimeString, anyFormatProvider, anyStyle);
+            var expected = System.DateTime.ParseExact(anyDateTimeString, anyFormat, anyFormatProvider, anyStyle);
 
             //  #   Act.
             var res = Abstractions.DateTime.ParseExact(anyDateTimeString, anyFormat, anyFormatProvider, anyStyle);
@@ -1730,13 +1730,13 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         public void ParseExactStringStringFormatProviderStylesShouldBeSettableAndResettable()
         {
             //  #   Arrange.
-            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+            Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle(null);
             var anyDateTime = "2019-08-11 19:37";
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var anyStyle = DateTimeStyles.AssumeUniversal;
-            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
-            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            var expected = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
+            var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
             AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
@@ -1748,10 +1748,10 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(anyFakeDateTime, actual);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+            Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle(null);
 
             //  #   Assert.
-            actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
             AssertEquals(expected, actual);
         }
 
@@ -1767,7 +1767,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyDateTimeString = "2019-08-11 13:41";
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
-            var expected = System.DateTime.Parse(anyDateTimeString, anyFormatProvider);
+            var expected = System.DateTime.ParseExact(anyDateTimeString, anyFormat, anyFormatProvider);
 
             //  #   Act.
             var res = Abstractions.DateTime.ParseExact(anyDateTimeString, anyFormat, anyFormatProvider);
@@ -1803,12 +1803,12 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         public void ParseExactStringStringFormatProviderShouldBeSettableAndResettable()
         {
             //  #   Arrange.
-            Abstractions.DateTime.SetParseStringFormatProvider(null);
+            Abstractions.DateTime.SetParseExactStringStringFormatProvider(null);
             var anyDateTime = "2019-08-11 19:37";
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
-            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
-            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            var expected = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
+            var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
             AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
@@ -1820,10 +1820,10 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(anyFakeDateTime, actual);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
+            Abstractions.DateTime.SetParseExactStringStringFormatProvider(null);
 
             //  #   Assert.
-            actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
             AssertEquals(expected, actual);
         }
 
