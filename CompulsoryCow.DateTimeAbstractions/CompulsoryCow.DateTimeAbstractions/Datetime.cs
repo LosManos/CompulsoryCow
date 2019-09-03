@@ -85,6 +85,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<string, string[], System.IFormatProvider, DateTimeStyles, System.DateTime> _parseExactStringStringArrayFormatProviderStyle;
         private static System.Func<string, string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseExactStringStringFormatProviderStyle;
         private static System.Func<string, string, System.IFormatProvider, System.DateTime> _parseExactStringStringFormatProvider;
+        private static System.Func<System.DateTimeKind> _specifyKind;
 
         #region Constructors.
 
@@ -486,6 +487,19 @@ namespace CompulsoryCow.DateTime.Abstractions
             return new DateTime(result.Ticks, result.Kind);
         }
 
+        /// <summary>See <see cref="System.DateTime.SpecifyKind(System.DateTime, System.DateTimeKind)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        public static DateTime SpecifyKind(DateTime value, System.DateTimeKind kind)
+        {
+            var newKind = _specifyKind != null ?
+                _specifyKind() :
+                kind;
+            return new DateTime(value.Ticks, newKind);
+        }
+
         #endregion
 
         #region Instance methods.
@@ -621,7 +635,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static void SetParseExactStringStringFormatProviderStyle(System.Func<string, string, System.IFormatProvider, DateTimeStyles, System.DateTime> parseFunc) =>
             _parseExactStringStringFormatProviderStyle = parseFunc;
 
-        /// <summary>This method set the <see cref="ParseExact(string, string, System.IFormatProvider)"/> method.
+        /// <summary>This method sets the <see cref="ParseExact(string, string, System.IFormatProvider)"/> method.
         /// Set to null to have <see cref="ParseExact(string, string, System.IFormatProvider)"/> return <see cref="System.DateTime.ParseExact(string, string, System.IFormatProvider)"/>.
         /// 
         /// This method should only be used for testing and should really not in this class att all.
@@ -629,6 +643,11 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="parseFunc"></param>
         internal static void SetParseExactStringStringFormatProvider(System.Func<string, string, System.IFormatProvider, System.DateTime> parseFunc) =>
             _parseExactStringStringFormatProvider = parseFunc;
+
+        /// <summary>This method sets teh <see cref="SpecifyKind(DateTime, System.DateTimeKind)"/> method.]Set to null to have <see cref="SpecifyKind(DateTime, System.DateTimeKind)"/> return <see cref="System.DateTime.SpecifyKind(System.DateTime, System.DateTimeKind)"/>.
+        /// </summary>
+        /// <param name="specifyKindFunc"></param>
+        internal static void SetSpecifyKind(System.Func<System.DateTimeKind> specifyKindFunc) => _specifyKind = specifyKindFunc;
 
         /// <summary>This method sets the <see cref="Now"/> property.
         /// 

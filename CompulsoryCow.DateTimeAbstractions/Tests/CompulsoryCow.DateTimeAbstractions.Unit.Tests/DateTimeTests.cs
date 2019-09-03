@@ -1829,6 +1829,53 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region SpecifyKind(DateTime value, DateTimeKind kind) tests.
+
+        [Fact]
+        public void SpecifyKindShouldMimicSystemSpecifyKind()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetSpecifyKind(null);
+            var anyTicks = 42;
+            var anyDateTimeKind = System.DateTimeKind.Local;
+            var expectedDateTimeKind = System.DateTimeKind.Utc;
+
+            var anyDateTime = new Abstractions.DateTime(anyTicks, anyDateTimeKind);
+
+            //  #   Act.
+            var actual = Abstractions.DateTime.SpecifyKind(anyDateTime, expectedDateTimeKind);
+
+            //  #   Assert.
+            actual.Ticks.Should().Be(anyDateTime.Ticks);
+            actual.Kind.Should().Be(expectedDateTimeKind);
+        }
+
+        [Fact]
+        public void SpecifyKindShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetSpecifyKind(null);
+            var anyDateTime = new Abstractions.DateTime(42, System.DateTimeKind.Local);
+            anyDateTime.Kind.Should().Be(System.DateTimeKind.Local,"Smoke test we have a special DateTimeKind.");
+            var anyOtherDateTimeKind = System.DateTimeKind.Utc;
+
+            //  #   Act.
+            Abstractions.DateTime.SetSpecifyKind(() => anyOtherDateTimeKind);
+
+            //  #   Assert.
+            var res = Abstractions.DateTime.SpecifyKind(anyDateTime, System.DateTimeKind.Local);
+            res.Kind.Should().Be(System.DateTimeKind.Utc);
+
+            //  #   Act.
+            Abstractions.DateTime.SetSpecifyKind(null);
+
+            //  #   Assert.
+            res = Abstractions.DateTime.SpecifyKind(anyDateTime, System.DateTimeKind.Local);
+            res.Kind.Should().Be(System.DateTimeKind.Local);
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.
