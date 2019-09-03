@@ -494,10 +494,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static DateTime SpecifyKind(DateTime value, System.DateTimeKind kind)
         {
-            var newKind = _specifyKind != null ?
-                _specifyKind() :
-                kind;
-            return new DateTime(value.Ticks, newKind);
+            var result = System.DateTime.SpecifyKind(
+                new System.DateTime(value.Ticks, value.Kind), 
+                _specifyKind == null ? kind: _specifyKind());
+            return new DateTime(result.Ticks, result.Kind);
         }
 
         #endregion
