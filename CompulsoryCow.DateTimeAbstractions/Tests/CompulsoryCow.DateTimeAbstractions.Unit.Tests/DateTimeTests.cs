@@ -379,6 +379,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             exc.Should().BeOfType<System.ArgumentOutOfRangeException>(reason);
         }
 
+        [Fact]
         public void Constructor_Year_Month_Day_Hour_Minute_Second_Kind_ShouldThrowForInvalidDateTimeKind()
         {
             //  #   Arrange.
@@ -1872,6 +1873,78 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Assert.
             res = Abstractions.DateTime.SpecifyKind(anyDateTime, System.DateTimeKind.Local);
             res.Kind.Should().Be(System.DateTimeKind.Local);
+        }
+
+        #endregion
+
+        #region TryParse(string s, IFormatProvider provider, DateTimeStyles styles, out DateTime result) tests.
+
+        [Fact]
+        public void TryParseStringIFokrmatProviderDateTimeStylesDateTimeShouldMimicSystemTryParse()
+        {
+            //  #   Arrange.
+            var anyDateTime = "2019-08-11 13:41";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var anyStyle = DateTimeStyles.AllowInnerWhite;
+            var expected = System.DateTime.Parse(anyDateTime, anyFormatProvider, anyStyle);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.TryParse(anyDateTime, anyFormatProvider, anyStyle, out var result);
+
+            //  #   Assert.
+            res.Should().BeTrue();
+            AssertEquals(expected, result);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("no valid date")]
+        public void TryParseStringFormatProviderStylesShouldReturnFalseForBadInput(string s)
+        {
+            //  #   Arrange.
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var anyStyle = DateTimeStyles.AllowInnerWhite;
+            var expectedResult = System.DateTime.TryParse(s, anyFormatProvider, anyStyle, out var expected0ut);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.TryParse(s, anyFormatProvider, anyStyle, out var resultOut);
+
+            //  #   Assert.
+            res.Should().BeFalse();
+            res.Should().Be(expectedResult);
+            AssertEquals(expected0ut, resultOut);
+        }
+
+        [Fact]
+        public void TryParseStringIFormatProviderDateTimeStylesDateTimeShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetTryParseStringIFormatProviderDateTimeStylesDateTime(null, null);
+            var anyDateTime = "2019-08-11 19:37";
+            var anyFormatProvider = CultureInfo.InvariantCulture;
+            var anyStyle = DateTimeStyles.AssumeUniversal;
+            var expected = System.DateTime.TryParse(anyDateTime, CultureInfo.InvariantCulture, anyStyle, out var expectedOut);
+            var abstractionResult = Abstractions.DateTime.TryParse(anyDateTime, CultureInfo.InvariantCulture, anyStyle, out var abstractionOut);
+            expected.Should().BeTrue();
+            expected.Should().Be(abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expectedOut, abstractionOut);
+            var anyFakeDateTime = new System.DateTime(2);
+
+            //  #   Act.
+            Abstractions.DateTime.SetTryParseStringIFormatProviderDateTimeStylesDateTime(() => true, () => anyFakeDateTime);
+
+            //  #   Assert.
+            var actual = Abstractions.DateTime.TryParse("not even a date", CultureInfo.InvariantCulture, anyStyle, out var actualOut);
+            actual.Should().BeTrue();
+            AssertEquals(anyFakeDateTime, actualOut);
+
+            //  #   Act.
+            Abstractions.DateTime.SetTryParseStringIFormatProviderDateTimeStylesDateTime(null, null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.TryParse(anyDateTime, CultureInfo.InvariantCulture, anyStyle, out actualOut);
+            actual.Should().BeTrue();
+            AssertEquals(expectedOut, actualOut);
         }
 
         #endregion
