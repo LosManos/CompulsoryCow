@@ -88,6 +88,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<System.DateTimeKind> _specifyKind;
         private static System.Func<bool> _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn;
         private static System.Func<System.DateTime> _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut;
+        private static System.Func<bool> _setTryParseStringDateTimeReturn;
+        private static System.Func<System.DateTime> _setTryParseStringDateTimeOut;
 
         #region Constructors.
 
@@ -502,6 +504,13 @@ namespace CompulsoryCow.DateTime.Abstractions
             return new DateTime(result.Ticks, result.Kind);
         }
 
+        /// <summary>See <see cref="System.DateTime.TryParse(string, System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="provider"></param>
+        /// <param name="styles"></param>
+        /// <param name="resultOut"></param>
+        /// <returns></returns>
         public static bool TryParse(string s, System.IFormatProvider provider, DateTimeStyles styles, out DateTime resultOut)
         {
             var ret = System.DateTime.TryParse(s, provider, styles, out var @out);
@@ -516,6 +525,29 @@ namespace CompulsoryCow.DateTime.Abstractions
                 new DateTime(
                     _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut().Ticks,
                     _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut().Kind);
+
+            return ret;
+        }
+
+        /// <summary>See <see cref="System.DateTime.TryParse(string, out System.DateTime)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="resultOut"></param>
+        /// <returns></returns>
+        public static bool TryParse(string s, out DateTime resultOut)
+        {
+            var ret = System.DateTime.TryParse(s, out var @out);
+
+            ret = _setTryParseStringDateTimeReturn == null ?
+                ret : _setTryParseStringDateTimeReturn();
+
+            resultOut = _setTryParseStringDateTimeOut == null ?
+                new DateTime(
+                    @out.Ticks,
+                    @out.Kind) :
+                new DateTime(
+                    _setTryParseStringDateTimeOut().Ticks,
+                    _setTryParseStringDateTimeOut().Kind);
 
             return ret;
         }
@@ -680,6 +712,18 @@ namespace CompulsoryCow.DateTime.Abstractions
             System.Func<System.DateTime> outFunc) {
             _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn = returnFunc;
             _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut = outFunc;
+        }
+
+        /// <summary>This method sets the <see cref="TryParse(string, out DateTime)"/> method.
+        /// Set to null to have <see cref="TryParse(string, out DateTime)"/> return <see cref="System.DateTime.TryParse(string, out System.DateTime)"/>.
+        /// </summary>
+        /// <param name="returnFunc"></param>
+        /// <param name="outFunc"></param>
+        internal static void SetTryParseStringDateTime(
+            System.Func<bool> returnFunc,
+            System.Func<System.DateTime> outFunc) {
+            _setTryParseStringDateTimeReturn = returnFunc;
+            _setTryParseStringDateTimeOut = outFunc;
         }
 
         /// <summary>This method sets the <see cref="Now"/> property.

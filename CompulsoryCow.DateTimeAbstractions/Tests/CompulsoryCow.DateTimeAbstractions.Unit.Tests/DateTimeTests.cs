@@ -1880,7 +1880,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         #region TryParse(string s, IFormatProvider provider, DateTimeStyles styles, out DateTime result) tests.
 
         [Fact]
-        public void TryParseStringIFokrmatProviderDateTimeStylesDateTimeShouldMimicSystemTryParse()
+        public void TryParseStringIForrmatProviderDateTimeStylesDateTimeShouldMimicSystemTryParse()
         {
             //  #   Arrange.
             var anyDateTime = "2019-08-11 13:41";
@@ -1943,6 +1943,72 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  #   Assert.
             actual = Abstractions.DateTime.TryParse(anyDateTime, CultureInfo.InvariantCulture, anyStyle, out actualOut);
+            actual.Should().BeTrue();
+            AssertEquals(expectedOut, actualOut);
+        }
+
+        #endregion
+
+        #region TryParse(string s, out DateTime result) tests.
+
+        [Fact]
+        public void TryParseStringDateTimeShouldMimicSystemTryParse()
+        {
+            //  #   Arrange.
+            var anyDateTime = "2019-08-11 13:41";
+            var _ = System.DateTime.TryParse(anyDateTime, out var expected);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.TryParse(anyDateTime, out var result);
+
+            //  #   Assert.
+            res.Should().BeTrue();
+            AssertEquals(expected, result);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("no valid date")]
+        public void TryParseStringShouldReturnFalseForBadInput(string s)
+        {
+            //  #   Arrange.
+            var expectedResult = System.DateTime.TryParse(s, out var expected0ut);
+
+            //  #   Act.
+            var res = Abstractions.DateTime.TryParse(s, out var resultOut);
+
+            //  #   Assert.
+            res.Should().BeFalse();
+            res.Should().Be(expectedResult);
+            AssertEquals(expected0ut, resultOut);
+        }
+
+        [Fact]
+        public void TryParseStringDateTimeShouldBeSettableAndResettable()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetTryParseStringDateTime(null, null);
+            var anyDateTime = "2019-08-11 19:37";
+            var expected = System.DateTime.TryParse(anyDateTime, out var expectedOut);
+            var abstractionResult = Abstractions.DateTime.TryParse(anyDateTime, out var abstractionOut);
+            expected.Should().BeTrue();
+            expected.Should().Be(abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expectedOut, abstractionOut);
+            var anyFakeDateTime = new System.DateTime(2);
+
+            //  #   Act.
+            Abstractions.DateTime.SetTryParseStringDateTime(() => true, () => anyFakeDateTime);
+
+            //  #   Assert.
+            var actual = Abstractions.DateTime.TryParse("not even a date", out var actualOut);
+            actual.Should().BeTrue();
+            AssertEquals(anyFakeDateTime, actualOut);
+
+            //  #   Act.
+            Abstractions.DateTime.SetTryParseStringDateTime(null, null);
+
+            //  #   Assert.
+            actual = Abstractions.DateTime.TryParse(anyDateTime, out actualOut);
             actual.Should().BeTrue();
             AssertEquals(expectedOut, actualOut);
         }
