@@ -2097,6 +2097,88 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region TryParseExact(string s, string[] format, IFormatProvider provider, DateTimeStyles style, out DateTime result) tests.
+
+        [Fact]
+        public void TryParseExact_StringStringArrayIFormatProviderDateTimeStylesDateTime_ShouldMimicSystem()
+        {
+            Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(null, null);
+            var anyDate = "2019-09-19 20:32";
+            var anyFormats = new[] { "yyyy-MM-dd HH:mm" };
+            var anyProvider = CultureInfo.InvariantCulture;
+            var anyDateTimeStyle = DateTimeStyles.None;
+            var expectedReturn = System.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out var expectedOut);
+
+            //  Act.
+            var actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out var actualOut);
+
+            //  Assert.
+            actualReturn.Should().BeTrue();
+            actualReturn.Should().Be(expectedReturn);
+            AssertEquals(expectedOut, actualOut);
+        }
+
+        [Fact]
+        public void TryParseExact_StringStringArrayIFormatProviderDateTimeStylesDateTime_ShouldThrowOnInvalidDateTimeStyles()
+        {
+            Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(null, null);
+            var anyDate = "2019-09-19 20:32";
+            var anyFormats = new[] { "yyyy-MMdd HH:mm" };
+            var anyProvider = CultureInfo.InvariantCulture;
+            var anInvalidDateTimeStyle = DateTimeStyles.AssumeLocal | DateTimeStyles.AssumeUniversal;
+
+            //  Act.
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anInvalidDateTimeStyle, out var _);
+            });
+
+            res.Should().BeOfType<System.ArgumentException>();
+        }
+
+        [Fact]
+        public void SetTryParseExactStringStringArrayIFormatProviderDateTimeStylesDateTime_ShouldSetAndClear()
+        {
+            Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(null, null);
+            var anyDate = "2019-09-19 20:32";
+            var anyFormats = new[] { "yyyy-MM-dd HH:mm" };
+            var anyProvider = CultureInfo.InvariantCulture;
+            var anyDateTimeStyle = DateTimeStyles.None;
+            var expectedReturn = System.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out var expectedOut);
+            // Sanity test we are reset.
+            var actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out var actualOut);
+            actualReturn.Should().BeTrue();
+            actualReturn.Should().Be(expectedReturn);
+            AssertEquals(expectedOut, actualOut);
+
+            var anyOtherExpectedReturn = false;
+            var anyOtherExpectedOut = System.DateTime.MinValue.AddDays(1);
+
+            //  Act.
+            Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
+                () => anyOtherExpectedReturn,
+                () => anyOtherExpectedOut);
+
+            //  Assert.
+            actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out actualOut);
+            actualReturn.Should().Be(anyOtherExpectedReturn);
+            AssertEquals(anyOtherExpectedOut, actualOut);
+
+            //  Act.
+            Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
+                null,
+                null);
+
+            //  Assert.
+            actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out actualOut);
+            actualReturn.Should().BeTrue();
+            actualReturn.Should().Be(expectedReturn);
+            AssertEquals(expectedOut, actualOut);
+        }
+
+        #endregion
+
         #endregion  //  Static methods tests.
 
         #region Properties tests.

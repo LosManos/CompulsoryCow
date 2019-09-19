@@ -92,6 +92,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<System.DateTime> _setTryParseStringDateTimeOut;
         private static System.Func<bool> _setTryParseExactStringStringIFormatProviderDateTimeStylesReturn;
         private static System.Func<System.DateTime> _setTryParseExactStringStringIFormatProviderDateTimeStylesOut;
+        private static System.Func<bool> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn;
+        private static System.Func<System.DateTime> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut;
 
         #region Constructors.
 
@@ -554,6 +556,14 @@ namespace CompulsoryCow.DateTime.Abstractions
             return ret;
         }
 
+        /// <summary>See <see cref="System.DateTime.TryParseExact(string, string, System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <param name="style"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public static bool TryParseExact(string s, string format, System.IFormatProvider provider, DateTimeStyles style, out DateTime result)
         {
             var ret = System.DateTime.TryParseExact(s, format, provider, style, out var @out);
@@ -568,6 +578,32 @@ namespace CompulsoryCow.DateTime.Abstractions
                     new DateTime(
                         _setTryParseExactStringStringIFormatProviderDateTimeStylesOut().Ticks,
                         _setTryParseExactStringStringIFormatProviderDateTimeStylesOut().Kind);
+
+            return ret;
+        }
+
+        /// <summary>See <see cref="System.DateTime.TryParseExact(string, string[], System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="formats"></param>
+        /// <param name="provider"></param>
+        /// <param name="style"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool TryParseExact(string s, string[] formats, System.IFormatProvider provider, DateTimeStyles style, out DateTime result)
+        {
+            var ret = System.DateTime.TryParseExact(s, formats, provider, style, out var @out);
+
+            ret = _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn == null ?
+                ret : _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn();
+
+            result = _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut == null ?
+                new DateTime(
+                    @out.Ticks,
+                    @out.Kind) :
+                    new DateTime(
+                        _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut().Ticks,
+                        _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut().Kind);
 
             return ret;
         }
@@ -757,6 +793,19 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             _setTryParseExactStringStringIFormatProviderDateTimeStylesReturn = returnFunc;
             _setTryParseExactStringStringIFormatProviderDateTimeStylesOut = outFunc;
+        }
+
+        /// <summary>This method sets the <see cref="TryParseExact(string, string[], System.IFormatProvider, DateTimeStyles, out System.DateTime)"/> method.
+        /// Set to null to have <see cref="TryParseExact(string, string[], System.IFormatProvider, DateTimeStyles, out System.DateTime)"/> return <see cref="System.DateTime.TryParseExact(string, string[], System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
+        /// </summary>
+        /// <param name="returnFunc"></param>
+        /// <param name="outFunc"></param>
+        internal static void SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
+            System.Func<bool> returnFunc, 
+            System.Func<System.DateTime> outFunc)
+        {
+            _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn = returnFunc;
+            _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut = outFunc;
         }
 
         /// <summary>This method sets the <see cref="Now"/> property.
