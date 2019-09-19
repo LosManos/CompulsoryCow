@@ -159,7 +159,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyValidMonth = 7;
             var anyValidDay = 26;
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -230,7 +230,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyValidDay = 26;
             var anyCalendar = new System.Globalization.TaiwanCalendar();
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyCalendar);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -293,7 +293,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyValidSecond = 56;
             var anyCalendar = new System.Globalization.TaiwanCalendar();
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -360,7 +360,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyKind = System.DateTimeKind.Utc;
             var anyCalendar = new System.Globalization.TaiwanCalendar();
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyKind);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -471,7 +471,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyValidSecond = 56;
             var anyCalendar = new System.Globalization.TaiwanCalendar();
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyCalendar);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -539,7 +539,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyValidSecond = 56;
             var anyValidMillisecond = 789;
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyValidMillisecond);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -611,7 +611,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyKind = System.DateTimeKind.Utc;
             var anyCalendar = new System.Globalization.TaiwanCalendar();
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyValidMillisecond, anyKind);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -729,7 +729,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyValidMillisecond = 789;
             var anyCalendar = new System.Globalization.TaiwanCalendar();
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyValidMillisecond, anyCalendar);
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -827,7 +827,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyDateTimeKind = System.DateTimeKind.Utc;
             var anyCalendar = new System.Globalization.TaiwanCalendar();
             var res = new Abstractions.DateTime(anyValidYear, anyValidMonth, anyValidDay, anyValidHour, anyValidMinute, anyValidSecond, anyValidMillisecond, anyCalendar, anyDateTimeKind); ;
-            res.Should().NotBeNull("Smoke test that we can create at all.");
+            res.Should().NotBeNull("Sanity test that we can create at all.");
 
             //  #   Act.
             var exc = Record.Exception(() =>
@@ -1042,7 +1042,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Arrange.
             var anyDateTime1 = new Abstractions.DateTime(1);
             var anyDateTime2 = new Abstractions.DateTime(2);
-            anyDateTime1.Ticks.Should().NotBe(anyDateTime2.Ticks, "Smoke test that we have different datetimes.");
+            anyDateTime1.Ticks.Should().NotBe(anyDateTime2.Ticks, "Sanity test that we have different datetimes.");
             var expectedResult = true;
 
             //  #   Act.
@@ -1136,7 +1136,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyDateTime2 = new Abstractions.DateTime(AnyTicks());
             var anySystemDateTime2 = new System.DateTime(anyDateTime2.Ticks);
 
-            anySystemDateTime1.Ticks.Should().NotBe(anySystemDateTime2.Ticks, "Smoke test we don't happen to randomise two identical datetimes.");
+            anySystemDateTime1.Ticks.Should().NotBe(anySystemDateTime2.Ticks, "Sanity test we don't happen to randomise two identical datetimes.");
 
             //  #   Act.
             // Set `FromBinary` to always return datetime2.
@@ -1204,7 +1204,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFileTime = 42;
             var expected = System.DateTime.FromFileTime(anyFileTime);
             var actual = Abstractions.DateTime.FromFileTime(anyFileTime);
-            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTime.FromFileTime value.");
+            AssertEquals(expected, actual, because: "Sanity test we get the standard System.DateTime.FromFileTime value.");
 
             var anyOtherFileTime = 43;
 
@@ -1271,7 +1271,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFileTime = 42;
             var expected = System.DateTime.FromFileTimeUtc(anyFileTime);
             var actual = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
-            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTime.FromFileTimeUtc value.");
+            AssertEquals(expected, actual, because: "Sanity test we get the standard System.DateTime.FromFileTimeUtc value.");
 
             var anyOtherFileTime = 43;
 
@@ -1332,7 +1332,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFileTime = 42d;
             var expected = System.DateTime.FromOADate(anyFileTime);
             var actual = Abstractions.DateTime.FromOADate(anyFileTime);
-            AssertEquals(expected, actual, because: "Smoke test we get the standard System.DateTime.FromOADate value.");
+            AssertEquals(expected, actual, because: "Sanity test we get the standard System.DateTime.FromOADate value.");
 
             var anyOtherFileTime = 43;
 
@@ -1378,7 +1378,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Arrange.
             Abstractions.DateTime.SetIsLeapYear(null);
             var anyLeapYear = 2004;
-            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().Be(true, "Smoke test we know a positive");
+            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().Be(true, "Sanity test we know a positive");
 
             //  #   Act.
             Abstractions.DateTime.SetIsLeapYear((n) => false);
@@ -1465,7 +1465,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyStyle = DateTimeStyles.AssumeUniversal;
             var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
             var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
             //  #   Act.
@@ -1529,7 +1529,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
             var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
-            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
             //  #   Act.
@@ -1588,7 +1588,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyDateTime = "2019-08-11 19:37";
             var expected = System.DateTime.Parse(anyDateTime);
             var abstractionResult = Abstractions.DateTime.Parse(anyDateTime);
-            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
             //  #   Act.
@@ -1663,7 +1663,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyStyle = DateTimeStyles.AssumeUniversal;
             var expected = System.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
             var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
             //  #   Act.
@@ -1738,7 +1738,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyStyle = DateTimeStyles.AssumeUniversal;
             var expected = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
             var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
             //  #   Act.
@@ -1810,7 +1810,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var expected = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
             var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
-            AssertEquals(expected, abstractionResult, because: "Smoke test that we know what we are testing.");
+            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
             var anyFakeDateTime = new System.DateTime(2);
 
             //  #   Act.
@@ -1857,7 +1857,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Arrange.
             Abstractions.DateTime.SetSpecifyKind(null);
             var anyDateTime = new Abstractions.DateTime(42, System.DateTimeKind.Local);
-            anyDateTime.Kind.Should().Be(System.DateTimeKind.Local,"Smoke test we have a special DateTimeKind.");
+            anyDateTime.Kind.Should().Be(System.DateTimeKind.Local, "Sanity test we have a special DateTimeKind.");
             var anyOtherDateTimeKind = System.DateTimeKind.Utc;
 
             //  #   Act.
@@ -1926,7 +1926,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var expected = System.DateTime.TryParse(anyDateTime, CultureInfo.InvariantCulture, anyStyle, out var expectedOut);
             var abstractionResult = Abstractions.DateTime.TryParse(anyDateTime, CultureInfo.InvariantCulture, anyStyle, out var abstractionOut);
             expected.Should().BeTrue();
-            expected.Should().Be(abstractionResult, because: "Smoke test that we know what we are testing.");
+            expected.Should().Be(abstractionResult, because: "Sanity test that we know what we are testing.");
             AssertEquals(expectedOut, abstractionOut);
             var anyFakeDateTime = new System.DateTime(2);
 
@@ -1992,7 +1992,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var expected = System.DateTime.TryParse(anyDateTime, out var expectedOut);
             var abstractionResult = Abstractions.DateTime.TryParse(anyDateTime, out var abstractionOut);
             expected.Should().BeTrue();
-            expected.Should().Be(abstractionResult, because: "Smoke test that we know what we are testing.");
+            expected.Should().Be(abstractionResult, because: "Sanity test that we know what we are testing.");
             AssertEquals(expectedOut, abstractionOut);
             var anyFakeDateTime = new System.DateTime(2);
 
@@ -2010,6 +2010,88 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Assert.
             actual = Abstractions.DateTime.TryParse(anyDateTime, out actualOut);
             actual.Should().BeTrue();
+            AssertEquals(expectedOut, actualOut);
+        }
+
+        #endregion
+
+        #region TryParseExact(string s, string format, IFormatProvider provider, DateTimeStyles style, out DateTime result) tests.
+
+        [Fact]
+        public void TryParseExact_StringStringIFormatProviderDateTimeStylesDateTime_ShouldMimicSystem()
+        {
+            Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(null, null);
+            var anyDate = "2019-09-19 20:32";
+            var anyFormat = "yyyy-MM-dd HH:mm";
+            var anyProvider = CultureInfo.InvariantCulture;
+            var anyDateTimeStyle = DateTimeStyles.None;
+            var expectedReturn = System.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out var expectedOut);
+
+            //  Act.
+            var actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out var actualOut);
+
+            //  Assert.
+            actualReturn.Should().BeTrue();
+            actualReturn.Should().Be(expectedReturn);
+            AssertEquals(expectedOut, actualOut);
+        }
+
+        [Fact]
+        public void TryParseExact_StringStringIFormatProviderDateTimeStylesDateTime_ShouldThrowOnInvalidDateTimeStyles()
+        {
+            Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(null, null);
+            var anyDate = "2019-09-19 20:32";
+            var anyFormat = "yyyy-MMdd HH:mm";
+            var anyProvider = CultureInfo.InvariantCulture;
+            var anInvalidDateTimeStyle = DateTimeStyles.AssumeLocal | DateTimeStyles.AssumeUniversal;
+
+            //  Act.
+            //  #   Act.
+            var res = Record.Exception(() =>
+            {
+                Abstractions.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anInvalidDateTimeStyle, out var _);
+            });
+
+            res.Should().BeOfType<System.ArgumentException>();
+        }
+
+        [Fact]
+        public void SetTryParseExactStringStringIFormatProviderDateTimeStylesDateTime_ShouldSetAndClear()
+        {
+            Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(null, null);
+            var anyDate = "2019-09-19 20:32";
+            var anyFormat = "yyyy-MM-dd HH:mm";
+            var anyProvider = CultureInfo.InvariantCulture;
+            var anyDateTimeStyle = DateTimeStyles.None;
+            var expectedReturn = System.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out var expectedOut);
+            // Sanity test we are reset.
+            var actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out var actualOut);
+            actualReturn.Should().BeTrue();
+            actualReturn.Should().Be(expectedReturn);
+            AssertEquals(expectedOut, actualOut);
+
+            var anyOtherExpectedReturn = false;
+            var anyOtherExpectedOut = System.DateTime.MinValue.AddDays(1);
+
+            //  Act.
+            Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(
+                () => anyOtherExpectedReturn,
+                () => anyOtherExpectedOut);
+
+            //  Assert.
+            actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out actualOut);
+            actualReturn.Should().Be(anyOtherExpectedReturn);
+            AssertEquals(anyOtherExpectedOut, actualOut);
+
+            //  Act.
+            Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(
+                null,
+                null);
+
+            //  Assert.
+            actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out actualOut);
+            actualReturn.Should().BeTrue();
+            actualReturn.Should().Be(expectedReturn);
             AssertEquals(expectedOut, actualOut);
         }
 
