@@ -2317,17 +2317,77 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         #region Add tests.
 
         [Fact]
-        public void AddShouldAdd()
+        public void Add_ShouldMimicSystem()
         {
-            var anyTicks = AnyTicks();
-            var anyTimeSpan = new Abstractions.TimeSpan();
-            var sut = new Abstractions.DateTime(anyTicks);
+            var anyTimeSpanTicks = 100;
+            var anyDateTimeTicks = 200;
 
+            var anyTimeSpan = new Abstractions.TimeSpan(anyTimeSpanTicks);
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+
+            var anySystemTimeSpan = new System.TimeSpan(anyTimeSpanTicks);
+            var anySystemDateTime = new System.DateTime(anyDateTimeTicks);
+            var expectedResult = anySystemDateTime.Add(anySystemTimeSpan); ;
+
+            //  Act.
             var res = sut.Add(anyTimeSpan);
 
-            var expected = new System.DateTime(anyTicks)
-                .Add(anyTimeSpan.ToSystemTimeSpan());
-            AssertEquals(expected, res);
+            //  Assert.
+            AssertEquals(expectedResult, res);
+        }
+
+        [Fact]
+        public void Add_ShouldThrownIfOutOfRange()
+        {
+            var subtract = new Abstractions.TimeSpan(-1);
+            var add = new Abstractions.TimeSpan(1);
+
+            //  Act.
+            var tooLowException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MinValue.Add(subtract);
+            });
+            var tooHighException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MaxValue.Add(add);
+            });
+
+            //  Assert.
+            tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetAdd_ShouldSetAndClear()
+        {
+            var anyTimeSpanTicks = 100;
+            var anyDateTimeTicks = 200;
+            var fakeTicks = 300;
+
+            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
+            var anyTimeSpan = new Abstractions.TimeSpan(anyTimeSpanTicks);
+
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+            sut.SetAdd(null);
+
+            var anySystemTimeSpan = new System.TimeSpan(anyTimeSpanTicks);
+            var anySystemDateTime = new System.DateTime(anyDateTimeTicks);
+            var expectedResult = anySystemDateTime.Add(anySystemTimeSpan); ;
+            var res = sut.Add(anyTimeSpan);
+            // Sanity check we get system result to start with.
+            AssertEquals(expectedResult, res);
+
+            // Act.
+            sut.SetAdd(() => fakeDateTime);
+
+            //  Assert.
+            sut.Add(anyTimeSpan).Should().Be(fakeDateTime);
+
+            //  Act.
+            sut.SetAdd(null);
+
+            // Assert.
+            AssertEquals(expectedResult, sut.Add(anyTimeSpan));
         }
 
         #endregion

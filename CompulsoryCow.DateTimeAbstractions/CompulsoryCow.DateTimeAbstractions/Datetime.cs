@@ -68,7 +68,6 @@ namespace CompulsoryCow.DateTime.Abstractions
     // TODO:OF:Implement interfaces found at https://docs.microsoft.com/en-us/dotnet/api/system.datetime?view=netcore-2.2
     public class DateTime : IDateTime
     {
-        private readonly System.DateTime _value;
         private static System.DateTime? _now;
         private static System.DateTime? _utcNow;
         private static System.Func<System.DateTime, System.DateTime, int> _compare;
@@ -94,6 +93,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<System.DateTime> _setTryParseExactStringStringIFormatProviderDateTimeStylesOut;
         private static System.Func<bool> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn;
         private static System.Func<System.DateTime> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut;
+
+        private readonly System.DateTime _value;
+
+        private System.Func<DateTime> _add;
 
         #region Constructors.
 
@@ -614,12 +617,16 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         public DateTime Add(TimeSpan value)
         {
-            return FromSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
+            return _add == null ?
+                FromSystemDateTime(_value.Add(value.ToSystemTimeSpan())) :
+                _add();
         }
 
         #endregion
 
         #region Methods used for testing and not production.
+
+        #region Static methods used for testing and not production.
 
         /// <summary>This method sets the function used for <see cref="Compare(DateTime, DateTime)"/>.
         /// By default it is set to <see cref="System.DateTime.Compare(System.DateTime, System.DateTime)"/>.
@@ -823,6 +830,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="utcNow"></param>
         internal static void SetUtcNow(System.DateTime? utcNow) => _utcNow = utcNow;
+
+        #endregion
+
+        #region Instance methods used for testing and not production.
+
+        internal void SetAdd(System.Func<DateTime> func)
+        {
+            _add = func;
+        }
+
+        #endregion
 
         #endregion
 
