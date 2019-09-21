@@ -2626,6 +2626,84 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region AddMinutes tests.
+
+        [Fact]
+        public void AddMinutes_ShouldMimicSystem()
+        {
+            var anyDateTimeTicks = 200;
+            var anyDays = 5.5d;
+
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+            var systemDateTime = new System.DateTime(anyDateTimeTicks);
+
+            //  Act.
+            var res = sut.AddMinutes(anyDays);
+
+            //  Assert.
+            var expectedResult = systemDateTime.AddMinutes(anyDays);
+            AssertEquals(expectedResult, res);
+        }
+
+        [Fact]
+        public void AddMinutes_ShouldThrownIfOutOfRange()
+        {
+            var subtract = -1;
+            var add = 1;
+
+            //  Act.
+            var tooLowException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MinValue.AddMinutes(subtract);
+            });
+            var tooHighException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MaxValue.AddMinutes(add);
+            });
+
+            //  Assert.
+            tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetAddMinutes_ShouldSetAndClear()
+        {
+            var anyDateTimeTicks = 200;
+            var anyDays = 5.5;
+
+            var fakeTicks = 300;
+            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
+
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+            var systemDateTime = new System.DateTime(anyDateTimeTicks);
+
+            sut.SetAddMinutes(null);
+
+            // Sanity check we get system result to start with.
+            AssertEquals(
+                systemDateTime.AddMinutes(anyDays),
+                sut.AddMinutes(anyDays)
+                );
+
+            // Act.
+            sut.SetAddMinutes(() => fakeDateTime);
+
+            //  Assert.
+            sut.AddMinutes(anyDays).Should().Be(fakeDateTime);
+
+            //  Act.
+            sut.SetAddMinutes(null);
+
+            // Assert.
+            AssertEquals(
+                systemDateTime.AddMinutes(anyDays),
+                sut.AddMinutes(anyDays)
+            );
+        }
+
+        #endregion
+
         #endregion // Instance method tests.
 
         #region Private helper methods.

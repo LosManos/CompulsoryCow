@@ -100,6 +100,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<DateTime> _addDays;
         private System.Func<DateTime> _addHours;
         private System.Func<DateTime> _addMilliseconds;
+        private System.Func<DateTime> _addMinutes;
 
         #region Constructors.
 
@@ -662,6 +663,17 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addMilliseconds();
         }
 
+        /// <summary>See <see cref="System.DateTime.AddMinutes(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public DateTime AddMinutes(double value)
+        {
+            return _addMinutes == null ?
+                FromSystemDateTime(_value.AddMinutes(value)) :
+                _addMinutes();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -917,6 +929,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetAddMilliseconds(System.Func<DateTime> func)
         {
             _addMilliseconds = func;
+        }
+
+        /// <summary>This method sets the <see cref="AddMinutes(double)"/> return value.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have the method return <see cref="System.DateTime.AddMinutes(double)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetAddMinutes(System.Func<DateTime> func)
+        {
+            _addMinutes = func;
         }
 
         #endregion
