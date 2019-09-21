@@ -103,6 +103,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<DateTime> _addMinutes;
         private System.Func<DateTime> _addMonths;
         private System.Func<DateTime> _addSeconds;
+        private System.Func<DateTime> _addTicks;
 
         #region Constructors.
 
@@ -698,6 +699,17 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addSeconds();
         }
 
+        /// <summary>See <see cref="System.DateTime.AddTicks(long)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public DateTime AddTicks(long value)
+        {
+            return _addTicks == null ?
+                FromSystemDateTime(_value.AddTicks(value)) :
+                _addTicks();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -986,6 +998,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetAddSeconds(System.Func<DateTime> func)
         {
             _addSeconds = func;
+        }
+
+        /// <summary>This method sets the <see cref="AddTicks(long)"/> return value.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have the method return <see cref="System.DateTime.AddTicks(long)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetAddTicks(System.Func<DateTime> func)
+        {
+            _addTicks = func;
         }
 
         #endregion

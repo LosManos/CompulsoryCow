@@ -2860,6 +2860,84 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region AddTicks tests.
+
+        [Fact]
+        public void AddTicks_ShouldMimicSystem()
+        {
+            var anyDateTimeTicks = 200;
+            var anyTicks = 5;
+
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+            var systemDateTime = new System.DateTime(anyDateTimeTicks);
+
+            //  Act.
+            var res = sut.AddTicks(anyTicks);
+
+            //  Assert.
+            var expectedResult = systemDateTime.AddTicks(anyTicks);
+            AssertEquals(expectedResult, res);
+        }
+
+        [Fact]
+        public void AddTicks_ShouldThrownIfOutOfRange()
+        {
+            var subtract = -1;
+            var add = 1;
+
+            //  Act.
+            var tooLowException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MinValue.AddTicks(subtract);
+            });
+            var tooHighException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MaxValue.AddTicks(add);
+            });
+
+            //  Assert.
+            tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetAddTicks_ShouldSetAndClear()
+        {
+            var anyDateTimeTicks = 200;
+            var anyTicks = 5;
+
+            var fakeTicks = 300;
+            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
+
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+            var systemDateTime = new System.DateTime(anyDateTimeTicks);
+
+            sut.SetAddTicks(null);
+
+            // Sanity check we get system result to start with.
+            AssertEquals(
+                systemDateTime.AddTicks(anyTicks),
+                sut.AddTicks(anyTicks)
+                );
+
+            // Act.
+            sut.SetAddTicks(() => fakeDateTime);
+
+            //  Assert.
+            sut.AddTicks(anyTicks).Should().Be(fakeDateTime);
+
+            //  Act.
+            sut.SetAddTicks(null);
+
+            // Assert.
+            AssertEquals(
+                systemDateTime.AddTicks(anyTicks),
+                sut.AddTicks(anyTicks)
+            );
+        }
+
+        #endregion
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
