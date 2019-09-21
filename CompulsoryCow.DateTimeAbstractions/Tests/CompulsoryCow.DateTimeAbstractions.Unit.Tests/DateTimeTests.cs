@@ -2938,6 +2938,84 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region AddYears tests.
+
+        [Fact]
+        public void AddYears_ShouldMimicSystem()
+        {
+            var anyDateTimeYears = 200;
+            var anyYears = 5;
+
+            var sut = new Abstractions.DateTime(anyDateTimeYears);
+            var systemDateTime = new System.DateTime(anyDateTimeYears);
+
+            //  Act.
+            var res = sut.AddYears(anyYears);
+
+            //  Assert.
+            var expectedResult = systemDateTime.AddYears(anyYears);
+            AssertEquals(expectedResult, res);
+        }
+
+        [Fact]
+        public void AddYears_ShouldThrownIfOutOfRange()
+        {
+            var subtract = -1;
+            var add = 1;
+
+            //  Act.
+            var tooLowException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MinValue.AddYears(subtract);
+            });
+            var tooHighException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MaxValue.AddYears(add);
+            });
+
+            //  Assert.
+            tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetAddYears_ShouldSetAndClear()
+        {
+            var anyDateTimeYears = 200;
+            var anyYears = 5;
+
+            var fakeYears = 300;
+            var fakeDateTime = new Abstractions.DateTime(fakeYears);
+
+            var sut = new Abstractions.DateTime(anyDateTimeYears);
+            var systemDateTime = new System.DateTime(anyDateTimeYears);
+
+            sut.SetAddYears(null);
+
+            // Sanity check we get system result to start with.
+            AssertEquals(
+                systemDateTime.AddYears(anyYears),
+                sut.AddYears(anyYears)
+                );
+
+            // Act.
+            sut.SetAddYears(() => fakeDateTime);
+
+            //  Assert.
+            sut.AddYears(anyYears).Should().Be(fakeDateTime);
+
+            //  Act.
+            sut.SetAddYears(null);
+
+            // Assert.
+            AssertEquals(
+                systemDateTime.AddYears(anyYears),
+                sut.AddYears(anyYears)
+            );
+        }
+
+        #endregion
+
         #endregion // Instance method tests.
 
         #region Private helper methods.

@@ -104,6 +104,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<DateTime> _addMonths;
         private System.Func<DateTime> _addSeconds;
         private System.Func<DateTime> _addTicks;
+        private System.Func<DateTime> _addYears;
 
         #region Constructors.
 
@@ -710,6 +711,17 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addTicks();
         }
 
+        /// <summary>See <see cref="System.DateTime.AddYears(int)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public DateTime AddYears(int value)
+        {
+            return _addYears == null ?
+                FromSystemDateTime(_value.AddYears(value)) :
+                _addYears();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1009,6 +1021,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetAddTicks(System.Func<DateTime> func)
         {
             _addTicks = func;
+        }
+
+        /// <summary>This method sets the <see cref="AddYears(int)"/> return value.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have the method return <see cref="System.DateTime.AddYears(int)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetAddYears(System.Func<DateTime> func)
+        {
+            _addYears = func;
         }
 
         #endregion
