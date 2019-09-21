@@ -97,6 +97,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private readonly System.DateTime _value;
 
         private System.Func<DateTime> _add;
+        private System.Func<DateTime> _addDays;
 
         #region Constructors.
 
@@ -615,11 +616,26 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Instance methods.
 
+        /// <summary>See <see cref="System.DateTime.Add(System.TimeSpan)"/>l
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public DateTime Add(TimeSpan value)
         {
             return _add == null ?
                 FromSystemDateTime(_value.Add(value.ToSystemTimeSpan())) :
                 _add();
+        }
+
+        /// <summary>See <see cref="System.DateTime.AddDays(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public DateTime AddDays(double value)
+        {
+            return _addDays == null ?
+            FromSystemDateTime(_value.AddDays(value)) :
+            _addDays();
         }
 
         #endregion
@@ -835,9 +851,26 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Instance methods used for testing and not production.
 
+        /// <summary>This method sets the <see cref="Add(TimeSpan)"/> return value.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="Add(TimeSpan)"/> return <see cref="System.DateTime.Add(System.TimeSpan)"/>.
+        /// </summary>
+        /// <param name="func"></param>
         internal void SetAdd(System.Func<DateTime> func)
         {
             _add = func;
+        }
+
+        /// <summary>This method sets the <see cref="AddDays(double)"/> return value.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have the method return <see cref="System.DateTime.AddDays(double)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetAddDays(System.Func<DateTime> func)
+        {
+            _addDays = func;
         }
 
         #endregion
