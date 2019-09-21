@@ -2470,7 +2470,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
-        #region AddDays tests.
+        #region AddHours tests.
 
         [Fact]
         public void AddHours_ShouldMimicSystem()
@@ -2543,6 +2543,84 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(
                 systemDateTime.AddHours(anyDays),
                 sut.AddHours(anyDays)
+            );
+        }
+
+        #endregion
+
+        #region AddMilliseconds tests.
+
+        [Fact]
+        public void AddMilliseconds_ShouldMimicSystem()
+        {
+            var anyDateTimeTicks = 200;
+            var anyDays = 5.5d;
+
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+            var systemDateTime = new System.DateTime(anyDateTimeTicks);
+
+            //  Act.
+            var res = sut.AddMilliseconds(anyDays);
+
+            //  Assert.
+            var expectedResult = systemDateTime.AddMilliseconds(anyDays);
+            AssertEquals(expectedResult, res);
+        }
+
+        [Fact]
+        public void AddMilliseconds_ShouldThrownIfOutOfRange()
+        {
+            var subtract = -1;
+            var add = 1;
+
+            //  Act.
+            var tooLowException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MinValue.AddMilliseconds(subtract);
+            });
+            var tooHighException = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MaxValue.AddMilliseconds(add);
+            });
+
+            //  Assert.
+            tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+            tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetAddMilliseconds_ShouldSetAndClear()
+        {
+            var anyDateTimeTicks = 200;
+            var anyDays = 5.5;
+
+            var fakeTicks = 300;
+            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
+
+            var sut = new Abstractions.DateTime(anyDateTimeTicks);
+            var systemDateTime = new System.DateTime(anyDateTimeTicks);
+
+            sut.SetAddMilliseconds(null);
+
+            // Sanity check we get system result to start with.
+            AssertEquals(
+                systemDateTime.AddMilliseconds(anyDays),
+                sut.AddMilliseconds(anyDays)
+                );
+
+            // Act.
+            sut.SetAddMilliseconds(() => fakeDateTime);
+
+            //  Assert.
+            sut.AddMilliseconds(anyDays).Should().Be(fakeDateTime);
+
+            //  Act.
+            sut.SetAddMilliseconds(null);
+
+            // Assert.
+            AssertEquals(
+                systemDateTime.AddMilliseconds(anyDays),
+                sut.AddMilliseconds(anyDays)
             );
         }
 

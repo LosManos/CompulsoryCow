@@ -99,6 +99,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<DateTime> _add;
         private System.Func<DateTime> _addDays;
         private System.Func<DateTime> _addHours;
+        private System.Func<DateTime> _addMilliseconds;
 
         #region Constructors.
 
@@ -635,8 +636,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         public DateTime AddDays(double value)
         {
             return _addDays == null ?
-            FromSystemDateTime(_value.AddDays(value)) :
-            _addDays();
+                FromSystemDateTime(_value.AddDays(value)) :
+                _addDays();
         }
 
         /// <summary>See <see cref="System.DateTime.AddHours(double)"/>.
@@ -646,8 +647,19 @@ namespace CompulsoryCow.DateTime.Abstractions
         public DateTime AddHours(double value)
         {
             return _addHours == null ?
-            FromSystemDateTime(_value.AddHours(value)) :
-            _addHours();
+                FromSystemDateTime(_value.AddHours(value)) :
+                _addHours();
+        }
+
+        /// <summary>See <see cref="System.DateTime.AddMilliseconds(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public DateTime AddMilliseconds(double value)
+        {
+            return _addMilliseconds == null ?
+                FromSystemDateTime(_value.AddMilliseconds(value)) :
+                _addMilliseconds();
         }
 
         #endregion
@@ -894,6 +906,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetAddHours(System.Func<DateTime> func)
         {
             _addHours = func;
+        }
+
+        /// <summary>This method sets the <see cref="AddMilliseconds(double)"/> return value.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have the method return <see cref="System.DateTime.AddMilliseconds(double)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetAddMilliseconds(System.Func<DateTime> func)
+        {
+            _addMilliseconds = func;
         }
 
         #endregion
