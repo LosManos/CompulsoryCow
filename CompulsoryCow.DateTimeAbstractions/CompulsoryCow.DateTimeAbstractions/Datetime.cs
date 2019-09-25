@@ -105,6 +105,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<DateTime> _addSeconds;
         private System.Func<DateTime> _addTicks;
         private System.Func<DateTime> _addYears;
+        private System.Func<int> _compareToDateTime;
 
         #region Constructors.
 
@@ -722,6 +723,28 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addYears();
         }
 
+        /// <summary>See <see cref="System.DateTime.CompareTo(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public int CompareTo(DateTime value)
+        {
+            if( _compareToDateTime != null)
+            {
+                return _compareToDateTime();
+            }
+            // Value is never null for System.DateTime.CompareTo as
+            // System.DateTime is not nullable.
+            // With Dotnet3 we can probably replicate that with setting the parameter
+            // to be not nullable but for now we return the same result as 
+            // System.DateTime.CompareTo(object).
+            if( value == null)
+            {
+                return _value.CompareTo(value);
+            }
+            return _value.CompareTo(ToSystem(value));
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1034,6 +1057,17 @@ namespace CompulsoryCow.DateTime.Abstractions
             _addYears = func;
         }
 
+        /// <summary>This method set the <see cref="CompareTo(DateTime)"/> return value.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have the method return <see cref="System.DateTime.CompareTo(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetCompareToDateTime(System.Func<int> func)
+        {
+            _compareToDateTime = func;
+        }
+
         #endregion
 
         #endregion
@@ -1042,7 +1076,12 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private DateTime FromSystemDateTime(System.DateTime datetime)
         {
-            return new DateTime(datetime.Ticks);
+            return new DateTime(datetime.Ticks, datetime.Kind);
+        }
+
+        private System.DateTime ToSystem(DateTime datetime)
+        {
+            return new System.DateTime(datetime.Ticks, datetime.Kind);
         }
 
         #endregion

@@ -3016,6 +3016,72 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region CompareTo(DateTime value) tests.
+
+        [Fact]
+        public void CompareTo_DateTime_ShouldMimicSystem()
+        {
+            var lowerTicks = 1;
+            var sameTicks = 2;
+            var higherTicks = 3;
+
+            var sameSystemDate = new System.DateTime(sameTicks);
+            var expectedHigher = sameSystemDate.CompareTo(new System.DateTime(lowerTicks));
+            var expectedSame = sameSystemDate.CompareTo(new System.DateTime(sameTicks));
+            var expectedLower = sameSystemDate.CompareTo(new System.DateTime(higherTicks));
+            var expectedForNull = sameSystemDate.CompareTo(null);
+            expectedLower.Should().Be(-1, "Sanity check we know the result");
+            expectedSame.Should().Be(0, "Sanity check we know the result");
+            expectedHigher.Should().Be(1, "Sanity check we know the result");
+            expectedForNull.Should().Be(1, "Sanity check we know the result");
+
+            var sut = new Abstractions.DateTime(sameTicks);
+
+            //  Act.
+            var actualHigher = sut.CompareTo(new Abstractions.DateTime(lowerTicks));
+            var actualSame = sut.CompareTo(new Abstractions.DateTime(sameTicks));
+            var actualLower = sut.CompareTo(new Abstractions.DateTime(higherTicks));
+            var actualForNull = sut.CompareTo(null);
+
+            //  Assert.
+            actualHigher.Should().Be(expectedHigher);
+            actualSame.Should().Be(expectedSame);
+            actualLower.Should().Be(expectedLower);
+            actualForNull.Should().Be(expectedForNull);
+        }
+
+        // There are not exceptions thrown by CompareTo(DateTime).
+
+        [Fact]
+        public void SetCompareToDateTime_Should_SetAndClear()
+        {
+            var anyTicks = 32;
+            var anyOtherTicks = 33;
+            var sameSystemDate = new System.DateTime(anyTicks);
+            var otherSystemDate = new System.DateTime(anyOtherTicks);
+            var expected = sameSystemDate.CompareTo(otherSystemDate);
+            expected.Should().Be(-1, "Sanity check we know the result.");
+
+            var sut = new Abstractions.DateTime(anyTicks);
+            sut.SetCompareToDateTime(null);
+            sut.CompareTo(new Abstractions.DateTime( anyOtherTicks)).Should().Be(expected);
+
+            //  Act.
+            sut.SetCompareToDateTime(() => 1);
+
+            //  Assert.
+            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks)).Should().Be(1);
+
+            //  Act.
+            sut.SetCompareToDateTime(null);
+
+            //  Assert.
+            sut.CompareTo(new Abstractions.DateTime( anyOtherTicks)).Should().Be(expected);
+
+        }
+
+        #endregion
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
