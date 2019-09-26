@@ -3064,7 +3064,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             var sut = new Abstractions.DateTime(anyTicks);
             sut.SetCompareToDateTime(null);
-            sut.CompareTo(new Abstractions.DateTime( anyOtherTicks)).Should().Be(expected);
+            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks)).Should().Be(expected);
 
             //  Act.
             sut.SetCompareToDateTime(() => 1);
@@ -3076,7 +3076,86 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             sut.SetCompareToDateTime(null);
 
             //  Assert.
-            sut.CompareTo(new Abstractions.DateTime( anyOtherTicks)).Should().Be(expected);
+            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks)).Should().Be(expected);
+
+        }
+
+        #endregion
+
+        #region CompareTo(object value) tests.
+
+        [Fact]
+        public void CompareTo_Object_ShouldMimicSystem()
+        {
+            var lowerTicks = 1;
+            var sameTicks = 2;
+            var higherTicks = 3;
+
+            var sameSystemDate = new System.DateTime(sameTicks);
+            var expectedHigher = sameSystemDate.CompareTo(new System.DateTime(lowerTicks) as object);
+            var expectedSame = sameSystemDate.CompareTo(new System.DateTime(sameTicks) as object);
+            var expectedLower = sameSystemDate.CompareTo(new System.DateTime(higherTicks) as object);
+            var expectedForNull = sameSystemDate.CompareTo(null as object);
+            expectedLower.Should().Be(-1, "Sanity check we know the result");
+            expectedSame.Should().Be(0, "Sanity check we know the result");
+            expectedHigher.Should().Be(1, "Sanity check we know the result");
+            expectedForNull.Should().Be(1, "Sanity check we know the result");
+
+            var sut = new Abstractions.DateTime(sameTicks);
+
+            //  Act.
+            var actualHigher = sut.CompareTo(new Abstractions.DateTime(lowerTicks) as object);
+            var actualSame = sut.CompareTo(new Abstractions.DateTime(sameTicks) as object);
+            var actualLower = sut.CompareTo(new Abstractions.DateTime(higherTicks) as object);
+            var actualForNull = sut.CompareTo(null as object);
+
+            //  Assert.
+            actualHigher.Should().Be(expectedHigher);
+            actualSame.Should().Be(expectedSame);
+            actualLower.Should().Be(expectedLower);
+            actualForNull.Should().Be(expectedForNull);
+        }
+
+        [Fact]
+        public void CompareToObject_Should_ThrowForNonDateTimeArgument()
+        {
+            object nonDate = "2019-09-26 18:47:48";
+            var date = new Abstractions.DateTime(1);
+
+            //  Act.
+            var res = Record.Exception(() =>
+            {
+                date.CompareTo(nonDate);
+            });
+
+            res.Should().BeOfType<System.ArgumentException>();
+        }
+
+        [Fact]
+        public void SetCompareToObject_Should_SetAndClear()
+        {
+            var anyTicks = 32;
+            var anyOtherTicks = 33;
+            var sameSystemDate = new System.DateTime(anyTicks);
+            var otherSystemDate = new System.DateTime(anyOtherTicks);
+            var expected = sameSystemDate.CompareTo(otherSystemDate as object);
+            expected.Should().Be(-1, "Sanity check we know the result.");
+
+            var sut = new Abstractions.DateTime(anyTicks);
+            sut.SetCompareToObject(null);
+            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks) as object).Should().Be(expected);
+
+            //  Act.
+            sut.SetCompareToObject(() => 1);
+
+            //  Assert.
+            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks) as object).Should().Be(1);
+
+            //  Act.
+            sut.SetCompareToObject(null);
+
+            //  Assert.
+            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks) as object).Should().Be(expected);
 
         }
 
