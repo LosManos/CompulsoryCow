@@ -3161,6 +3161,53 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region Equals(object value) tests.
+
+        [Fact]
+        public void EqualsObject_Should_MimicSystem()
+        {
+            new Abstractions.DateTime(1).Equals(null as object)
+                .Should()
+                .Be(new System.DateTime(1).Equals(null as object));
+
+            new Abstractions.DateTime(1).Equals(new Abstractions.DateTime(1) as object)
+                .Should()
+                .Be(new System.DateTime(1).Equals(new System.DateTime(1) as object));
+
+            new Abstractions.DateTime(1).Equals(new Abstractions.DateTime(2) as object)
+                .Should()
+                .Be(new System.DateTime(1).Equals(new System.DateTime(2) as object));
+        }
+
+        [Fact]
+        public void SetEqualsObject_Should_SetAndReset()
+        {
+            var sut = new Abstractions.DateTime(1);
+            sut.SetEqualsObject(null);
+            var actualResult = sut.Equals(new Abstractions.DateTime(1) as object);
+            var expectedResult = new System.DateTime(1).Equals(new System.DateTime(1) as object);
+            actualResult.Should().BeTrue("Sanity check we know what we are testing.");
+            actualResult.Should().Be(expectedResult, "Sanity check we know what we are testing.");
+
+            //  Act.
+            sut.SetEqualsObject(() => false);
+
+            //  Assert.
+            sut.Equals(new Abstractions.DateTime(1) as object)
+                .Should()
+                .BeFalse();
+
+            //  Act.
+            sut.SetEqualsObject(null);
+
+            //  Assret
+            actualResult = sut.Equals(new Abstractions.DateTime(1) as object);
+            actualResult.Should().BeTrue("Sanity check we know what we are testing.");
+            actualResult.Should().Be(expectedResult, "Sanity check we know what we are testing.");
+        }
+
+        #endregion
+
         #endregion // Instance method tests.
 
         #region Private helper methods.

@@ -107,6 +107,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<DateTime> _addYears;
         private System.Func<int> _compareToDateTime;
         private System.Func<int> _compareToObject;
+        private System.Func<bool> _equalsObject;
 
         #region Constructors.
 
@@ -767,6 +768,24 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.CompareTo(ToSystem((DateTime)value));
         }
 
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if( _equalsObject != null)
+            {
+                return _equalsObject();
+            }
+            if (obj == null)
+            {
+                return _value.Equals(obj);
+            }
+            if( obj is DateTime)
+            {
+                return _value.Equals(ToSystem((DateTime)obj));
+            }
+            return _value.Equals(obj);
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1090,15 +1109,24 @@ namespace CompulsoryCow.DateTime.Abstractions
             _compareToDateTime = func;
         }
 
-        /// <summary>This method set the  <see cref="CompareTo(object)"/> return value.
+        /// <summary>This method sets the <see cref="CompareTo(object)"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.CompareTo(object)"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.CompareTo(object)"/>.
         /// </summary>
         /// <param name="func"></param>
         internal void SetCompareToObject(System.Func<int> func)
         {
             _compareToObject = func;
+        }
+
+        /// <summary>This method sets teh <see cref="Equals(object)"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.Equals(object)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetEqualsObject(System.Func<bool> func)
+        {
+            _equalsObject = func;
         }
 
         #endregion
