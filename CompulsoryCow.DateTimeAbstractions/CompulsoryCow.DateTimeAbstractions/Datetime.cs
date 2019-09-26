@@ -108,6 +108,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<int> _compareToDateTime;
         private System.Func<int> _compareToObject;
         private System.Func<bool> _equalsObject;
+        private System.Func<bool> _equalsDateTime;
 
         #region Constructors.
 
@@ -768,22 +769,44 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.CompareTo(ToSystem((DateTime)value));
         }
 
-        // override object.Equals
-        public override bool Equals(object obj)
+        public override bool Equals(object value)
         {
             if( _equalsObject != null)
             {
                 return _equalsObject();
             }
-            if (obj == null)
+            if (value == null)
             {
-                return _value.Equals(obj);
+                return _value.Equals(value);
             }
-            if( obj is DateTime)
+            if( value is DateTime)
             {
-                return _value.Equals(ToSystem((DateTime)obj));
+                return _value.Equals(ToSystem((DateTime)value));
             }
-            return _value.Equals(obj);
+            return _value.Equals(value);
+        }
+
+        public bool Equals(DateTime value)
+        {
+            // Value is never null for System.DateTime.CompareTo as
+            // System.DateTime is not nullable.
+            // With Dotnet3 we can probably replicate that with setting the parameter
+            // to be not nullable but for now we return the same result as 
+            // System.DateTime.CompareTo(object).
+            if (value == null)
+            {
+                return _value.Equals(value);
+            }
+
+            if ( _equalsDateTime != null)
+            {
+                return _equalsDateTime();
+            }
+            if( value is DateTime)
+            {
+                return _value.Equals(ToSystem((DateTime)value));
+            }
+            return _value.Equals(value);
         }
 
         #endregion
@@ -1120,13 +1143,22 @@ namespace CompulsoryCow.DateTime.Abstractions
             _compareToObject = func;
         }
 
-        /// <summary>This method sets teh <see cref="Equals(object)"/> return value.
+        /// <summary>This method sets the <see cref="Equals(object)"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.Equals(object)"/>.
         /// </summary>
         /// <param name="func"></param>
         internal void SetEqualsObject(System.Func<bool> func)
         {
             _equalsObject = func;
+        }
+
+        /// <summary>This method sets the <see cref="Equals(System.DateTime)"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.Equals(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetEqualsDateTime(System.Func<bool> func)
+        {
+            _equalsDateTime = func;
         }
 
         #endregion
