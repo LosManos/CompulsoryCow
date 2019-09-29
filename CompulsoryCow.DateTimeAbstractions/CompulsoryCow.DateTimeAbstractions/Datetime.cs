@@ -112,6 +112,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string[]> _getDateTimeFormatsCharIFormatProvider;
         private System.Func<string[]> _getDateTimeFormatsChar;
         private System.Func<string[]> _getDateTimeFormats;
+        private System.Func<string[]> _getDateTimeFormatsIFormatProvider;
 
         #region Constructors.
 
@@ -856,6 +857,18 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetDateTimeFormats();
         }
 
+        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        public string[] GetDateTimeFormats(System.IFormatProvider provider)
+        {
+            return
+                _getDateTimeFormatsIFormatProvider != null ?
+                _getDateTimeFormatsIFormatProvider() :
+                _value.GetDateTimeFormats(provider);
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1233,6 +1246,15 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetGetDateTimeFormats(System.Func<string[]> func)
         {
             _getDateTimeFormats = func;
+        }
+
+        /// <summary>This methods sets the <see cref="GetDateTimeFormats(System.IFormatProvider)"/> return value.
+        /// Set to null to have the methdo return <see cref="System.DateTime.GetDateTimeFormats(System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetGetDateTimeFormatsIFormatProvider(System.Func<string[]> func)
+        {
+            _getDateTimeFormatsIFormatProvider = func;
         }
 
         #endregion

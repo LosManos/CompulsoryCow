@@ -3451,6 +3451,56 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  GetDateTimeFormats(char format) gets methods
 
+        #region GetDateTimeFormatsCharIFormatProvider test methods.
+
+        [Fact]
+        public void GetDateTimeFormatsIFormatProvider_should_MimicSystem()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+
+            var expectedResult = anySystemDate.GetDateTimeFormats(culture);
+
+            //  Act.
+            // Get the short date formats using the "fr-FR" culture.
+            var res = anyDate.GetDateTimeFormats(culture);
+
+            //  Assert.
+            res.Should().Equal(expectedResult);
+        }
+
+        [Fact]
+        public void SetGetDateTimeFormatsIFormatProvider_should_SetAndReset()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+
+            var expectedResult = anySystemDate.GetDateTimeFormats(culture);
+
+            var res = anyDate.GetDateTimeFormats(culture);
+            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
+
+            var expectedFake = new[] { "this is my fake result" };
+
+            //  Act.
+            anyDate.SetGetDateTimeFormatsIFormatProvider(() => expectedFake);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats(culture);
+            res.Should().Equal(expectedFake);
+
+            //  Act.
+            anyDate.SetGetDateTimeFormatsIFormatProvider(null);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats(culture);
+            res.Should().Equal(expectedResult);
+        }
+
+        #endregion  // GetDateTimeFormatsCharIformatProvider test methods.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
