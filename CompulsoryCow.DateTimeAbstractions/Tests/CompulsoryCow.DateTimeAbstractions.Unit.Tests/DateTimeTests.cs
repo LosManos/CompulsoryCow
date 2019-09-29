@@ -3255,6 +3255,89 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion
 
+        #region GetDateTimeFormatsCharIFormatProvider test methods.
+
+        [Fact]
+        public void GetDateTimeFormatsCharIFormatProvider_should_MimicSystem()
+        {
+            var anyDate= new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+
+            var expectedResult = anySystemDate.GetDateTimeFormats('d', culture);
+            expectedResult.Should().Equal(new[]
+            {
+                "28/07/2009",
+                "28/07/09",
+                "28.07.09",
+                "28-07-09",
+                "2009-07-28",
+            }, "Sanity check we have setup the test correctly");
+
+            //  Act.
+            // Get the short date formats using the "fr-FR" culture.
+            var res = anyDate.GetDateTimeFormats('d', culture);
+
+            //  Assert.
+            res.Should().Equal(expectedResult);
+        }
+
+        [Fact]
+        public void GetDateTimeFormatsCharIFormatProvider_should_ThrowExceptions()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+
+            //  Act.
+            // Use an invalid format.
+            var res = Record.Exception(() =>
+            {
+                anyDate.GetDateTimeFormats('a', culture);
+            });
+
+            res.Should().BeOfType<System.FormatException>();
+        }
+
+        [Fact]
+        public void SetGetDateTimeFormatsCharIFormatProvider_should_SetAndReset()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+
+            var expectedResult = new[]
+            {
+                "28/07/2009",
+                "28/07/09",
+                "28.07.09",
+                "28-07-09",
+                "2009-07-28",
+            };
+            var systemResult = anySystemDate.GetDateTimeFormats('d', culture);
+            systemResult.Should().Equal(expectedResult, "Sanity check we have setup the test correctly");
+
+            var res = anyDate.GetDateTimeFormats('d', culture);
+            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
+
+            var expectedFake = new[] { "this is my fake result" };
+
+            //  Act.
+            anyDate.SetGetDateTimeFormatsCharIFormatProvider(() => expectedFake);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats('x', culture); // We can use whatever format and culture.
+            res.Should().Equal(expectedFake);
+
+            //  Act.
+            anyDate.SetGetDateTimeFormatsCharIFormatProvider(null);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats('d', culture);
+            res.Should().Equal(expectedResult);
+        }
+
+        #endregion  // GetDateTimeFormatsCharIformatProvider test methods.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.

@@ -109,6 +109,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<int> _compareToObject;
         private System.Func<bool> _equalsObject;
         private System.Func<bool> _equalsDateTime;
+        private System.Func<string[]> _getDateTimeFormatsCharIFormatProvider;
 
         #region Constructors.
 
@@ -769,6 +770,10 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.CompareTo(ToSystem((DateTime)value));
         }
 
+        /// <summary>See <see cref="System.DateTime.Equals(object)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public override bool Equals(object value)
         {
             if( _equalsObject != null)
@@ -786,6 +791,10 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.Equals(value);
         }
 
+        /// <summary>See <see cref="System.DateTime.Equals(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool Equals(DateTime value)
         {
             // Value is never null for System.DateTime.CompareTo as
@@ -807,6 +816,14 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _value.Equals(ToSystem((DateTime)value));
             }
             return _value.Equals(value);
+        }
+
+        public string[] GetDateTimeFormats(char format, System.IFormatProvider provider)
+        {
+            return
+                _getDateTimeFormatsCharIFormatProvider != null ?
+                _getDateTimeFormatsCharIFormatProvider() :
+                _value.GetDateTimeFormats(format, provider);
         }
 
         #endregion
@@ -1159,6 +1176,11 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetEqualsDateTime(System.Func<bool> func)
         {
             _equalsDateTime = func;
+        }
+
+        internal void SetGetDateTimeFormatsCharIFormatProvider(System.Func<string[]> func)
+        {
+            _getDateTimeFormatsCharIFormatProvider = func;
         }
 
         #endregion
