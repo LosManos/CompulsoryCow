@@ -110,6 +110,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<bool> _equalsObject;
         private System.Func<bool> _equalsDateTime;
         private System.Func<string[]> _getDateTimeFormatsCharIFormatProvider;
+        private System.Func<string[]> _getDateTimeFormatsChar;
 
         #region Constructors.
 
@@ -818,12 +819,29 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.Equals(value);
         }
 
+        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
         public string[] GetDateTimeFormats(char format, System.IFormatProvider provider)
         {
             return
                 _getDateTimeFormatsCharIFormatProvider != null ?
                 _getDateTimeFormatsCharIFormatProvider() :
                 _value.GetDateTimeFormats(format, provider);
+        }
+
+        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(char)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public string[] GetDateTimeFormats(char format)
+        {
+            return
+                _getDateTimeFormatsChar != null ?
+                _getDateTimeFormatsChar() :
+                _value.GetDateTimeFormats(format);
         }
 
         #endregion
@@ -1178,9 +1196,22 @@ namespace CompulsoryCow.DateTime.Abstractions
             _equalsDateTime = func;
         }
 
+        /// <summary>This methods sets the <see cref="GetDateTimeFormats(char, System.IFormatProvider)"/> return value.
+        /// Set to null to have the methdo return <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="func"></param>
         internal void SetGetDateTimeFormatsCharIFormatProvider(System.Func<string[]> func)
         {
             _getDateTimeFormatsCharIFormatProvider = func;
+        }
+
+        /// <summary>This methods sets the <see cref="GetDateTimeFormats(char)"/> return value.
+        /// Set to null to have the methdo return <see cref="System.DateTime.GetDateTimeFormats(char)"/>.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetGetDateTimeFormatsChar(System.Func<string[]> func)
+        {
+            _getDateTimeFormatsChar = func;
         }
 
         #endregion

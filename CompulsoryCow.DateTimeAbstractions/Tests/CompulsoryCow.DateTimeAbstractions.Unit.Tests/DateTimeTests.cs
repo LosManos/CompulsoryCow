@@ -3338,6 +3338,70 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  // GetDateTimeFormatsCharIformatProvider test methods.
 
+        #region GetDateTimeFormats(char format) test methods.
+
+        [Fact]
+        public void GetDateTimeFormatsChar_should_MimicSystem()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+
+            var expectedResult = anySystemDate.GetDateTimeFormats('d');
+            // We cannot check for the exact result because it depends on the environment.
+
+            //  Act.
+            var res = anyDate.GetDateTimeFormats('d');
+
+            //  Assert.
+            res.Should().Equal(expectedResult);
+        }
+
+        [Fact]
+        public void GetDateTimeFormatsChar_should_ThrowExceptions()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+
+            //  Act.
+            // Use an invalid format.
+            var res = Record.Exception(() =>
+            {
+                anyDate.GetDateTimeFormats('a');
+            });
+
+            res.Should().BeOfType<System.FormatException>();
+        }
+
+        [Fact]
+        public void SetGetDateTimeFormatsChar_should_SetAndReset()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+
+            var expectedResult = anySystemDate.GetDateTimeFormats('d');
+            // We cannot check for the exact result because it depends on the environment.
+
+            var res = anyDate.GetDateTimeFormats('d');
+            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
+
+            var expectedFake = new[] { "this is my fake result" };
+
+            //  Act.
+            anyDate.SetGetDateTimeFormatsChar(() => expectedFake);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats('x'); // We can use whatever format and culture.
+            res.Should().Equal(expectedFake);
+
+            //  Act.
+            anyDate.SetGetDateTimeFormatsChar(null);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats('d');
+            res.Should().Equal(expectedResult);
+        }
+
+        #endregion  //  GetDateTimeFormats(char format) gets methods
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
