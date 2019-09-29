@@ -3402,6 +3402,55 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  GetDateTimeFormats(char format) gets methods
 
+        #region GetDateTimeFormats(char format) test methods.
+
+        [Fact]
+        public void GetDateTimeFormats_should_MimicSystem()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+
+            var expectedResult = anySystemDate.GetDateTimeFormats();
+            // We cannot check for the exact result because it depends on the environment.
+
+            //  Act.
+            var res = anyDate.GetDateTimeFormats();
+
+            //  Assert.
+            res.Should().Equal(expectedResult);
+        }
+
+        [Fact]
+        public void SetGetDateTimeFormats_should_SetAndReset()
+        {
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
+
+            var expectedResult = anySystemDate.GetDateTimeFormats();
+            // We cannot check for the exact result because it depends on the environment.
+
+            var res = anyDate.GetDateTimeFormats();
+            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
+
+            var expectedFake = new[] { "this is my fake result" };
+
+            //  Act.
+            anyDate.SetGetDateTimeFormats(() => expectedFake);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats();
+            res.Should().Equal(expectedFake);
+
+            //  Act.
+            anyDate.SetGetDateTimeFormats(null);
+
+            //  Assert.
+            res = anyDate.GetDateTimeFormats();
+            res.Should().Equal(expectedResult);
+        }
+
+        #endregion  //  GetDateTimeFormats(char format) gets methods
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
