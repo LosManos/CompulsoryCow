@@ -113,6 +113,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string[]> _getDateTimeFormatsChar;
         private System.Func<string[]> _getDateTimeFormats;
         private System.Func<string[]> _getDateTimeFormatsIFormatProvider;
+        private System.Func<int> _getHashCode;
 
         #region Constructors.
 
@@ -869,6 +870,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetDateTimeFormats(provider);
         }
 
+        /// <summary>See <see cref="System.DateTime.GetHashCode"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return _getHashCode != null ?
+                _getHashCode() :
+                _value.GetHashCode();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1205,6 +1216,8 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         /// <summary>This method sets the <see cref="Equals(object)"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.Equals(object)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
         internal void SetEqualsObject(System.Func<bool> func)
@@ -1214,6 +1227,8 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         /// <summary>This method sets the <see cref="Equals(System.DateTime)"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.Equals(System.DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
         internal void SetEqualsDateTime(System.Func<bool> func)
@@ -1222,7 +1237,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This methods sets the <see cref="GetDateTimeFormats(char, System.IFormatProvider)"/> return value.
-        /// Set to null to have the methdo return <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
         internal void SetGetDateTimeFormatsCharIFormatProvider(System.Func<string[]> func)
@@ -1231,7 +1248,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This methods sets the <see cref="GetDateTimeFormats(char)"/> return value.
-        /// Set to null to have the methdo return <see cref="System.DateTime.GetDateTimeFormats(char)"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats(char)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
         internal void SetGetDateTimeFormatsChar(System.Func<string[]> func)
@@ -1240,7 +1259,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This methods sets the <see cref="GetDateTimeFormats()"/> return value.
-        /// Set to null to have the methdo return <see cref="System.DateTime.GetDateTimeFormats()"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats()"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
         internal void SetGetDateTimeFormats(System.Func<string[]> func)
@@ -1249,12 +1270,25 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This methods sets the <see cref="GetDateTimeFormats(System.IFormatProvider)"/> return value.
-        /// Set to null to have the methdo return <see cref="System.DateTime.GetDateTimeFormats(System.IFormatProvider)"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats(System.IFormatProvider)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
         internal void SetGetDateTimeFormatsIFormatProvider(System.Func<string[]> func)
         {
             _getDateTimeFormatsIFormatProvider = func;
+        }
+
+        /// <summary>This method set the <see cref="GetHashCode"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.GetHashCode"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetGetHashCode(System.Func<int> func)
+        {
+            _getHashCode = func;
         }
 
         #endregion
