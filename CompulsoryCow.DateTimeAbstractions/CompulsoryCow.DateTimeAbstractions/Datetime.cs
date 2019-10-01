@@ -114,6 +114,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string[]> _getDateTimeFormats;
         private System.Func<string[]> _getDateTimeFormatsIFormatProvider;
         private System.Func<int> _getHashCode;
+        private System.Func<System.TypeCode> _getTypeCode;
 
         #region Constructors.
 
@@ -880,6 +881,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetHashCode();
         }
 
+        /// <summary>See <see cref="System.DateTime.GetTypeCode"/>.
+        /// </summary>
+        /// <returns></returns>
+        public System.TypeCode GetTypeCode()
+        {
+            return _getTypeCode != null ?
+                _getTypeCode() :
+                _value.GetTypeCode();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1280,7 +1291,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             _getDateTimeFormatsIFormatProvider = func;
         }
 
-        /// <summary>This method set the <see cref="GetHashCode"/> return value.
+        /// <summary>This method sets the <see cref="GetHashCode"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.GetHashCode"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
@@ -1289,6 +1300,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetGetHashCode(System.Func<int> func)
         {
             _getHashCode = func;
+        }
+
+        /// <summary>This method sets the <see cref="GetTypeCode"/> return value.
+        /// Set to null to have the methdo return <see cref="System.DateTime.GetTypeCode"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetGetTypeCode(System.Func<System.TypeCode> func)
+        {
+            _getTypeCode = func;
         }
 
         #endregion
