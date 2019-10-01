@@ -115,6 +115,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string[]> _getDateTimeFormatsIFormatProvider;
         private System.Func<int> _getHashCode;
         private System.Func<System.TypeCode> _getTypeCode;
+        private System.Func<bool> _isDaylightSavingTime;
 
         #region Constructors.
 
@@ -891,6 +892,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetTypeCode();
         }
 
+        /// <summary>See <see cref="System.DateTime.IsDaylightSavingTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDaylightSavingTime()
+        {
+            return _isDaylightSavingTime != null ?
+                _isDaylightSavingTime() :
+                _value.IsDaylightSavingTime();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1303,7 +1314,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This method sets the <see cref="GetTypeCode"/> return value.
-        /// Set to null to have the methdo return <see cref="System.DateTime.GetTypeCode"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.GetTypeCode"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
@@ -1311,6 +1322,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetGetTypeCode(System.Func<System.TypeCode> func)
         {
             _getTypeCode = func;
+        }
+
+        /// <summary>This method sets the <see cref="IsDaylightSavingTime"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.IsDaylightSavingTime"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetIsDaylightSavingTime(System.Func<bool> func)
+        {
+            _isDaylightSavingTime = func;
         }
 
         #endregion
