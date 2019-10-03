@@ -3260,7 +3260,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void GetDateTimeFormatsCharIFormatProvider_should_MimicSystem()
         {
-            var anyDate= new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
+            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
             var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
             System.IFormatProvider culture = new CultureInfo("fr-FR", true);
 
@@ -3529,7 +3529,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  Act.
 
-            sut.SetGetHashCode(() =>fakeResult);
+            sut.SetGetHashCode(() => fakeResult);
 
             //  Assert.
             sut.GetHashCode().Should().Be(fakeResult);
@@ -3623,6 +3623,86 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  IsDaylightSavingTime tests.
 
+        #region TimeSpan Subtract(DateTime value) tests.
+
+        [Fact]
+        public void SubtractDateTime_should_MimicSystem()
+        {
+            var anyLargerTicks = 1234;
+            var anyLesserTicks = 34;
+            var expected = new System.DateTime(anyLargerTicks)
+                .Subtract(new System.DateTime(anyLesserTicks));
+
+            //  Act.
+            var result = new Abstractions.DateTime(anyLargerTicks)
+                .Subtract(new Abstractions.DateTime(anyLesserTicks));
+
+            //  Assert.
+            AssertEquals(expected, result);
+        }
+
+        [Fact]
+        public void SubtractDateTime_should_ThrowForOutOfRange()
+        {
+            //  Act.
+            var result = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MinValue
+                    .Subtract(new Abstractions.DateTime(11119999, 1, 1));
+            });
+
+            // It should throw an exception for both too low and too high
+            // but I have not found a way to execute both.
+
+            //  Assert.
+            result.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetSubtractDateTime_should_SetAndReset()
+        {
+            var anyLargerTicks = 1234;
+            var anyLesserTicks = 34;
+            var expected = new System.DateTime(anyLargerTicks)
+                .Subtract(new System.DateTime(anyLesserTicks));
+            var sut = new Abstractions.DateTime(anyLargerTicks);
+            var result = sut
+                .Subtract(new Abstractions.DateTime(anyLesserTicks));
+            AssertEquals(expected, result, "Sanity check we know what we are testing.");
+
+            //  Act.
+            sut.SetSubtractDateTime(() => new Abstractions.TimeSpan(333));
+
+            //  Assert.
+            sut.Subtract(new Abstractions.DateTime(anyLesserTicks))
+                .Should().Be(new Abstractions.TimeSpan(333));
+
+            //  Act.
+            sut.SetSubtractDateTime(null);
+
+            //  Assert.
+            sut.Subtract(new Abstractions.DateTime(anyLesserTicks))
+                .Should().Be(result);
+        }
+
+        #endregion  //  TimeSpan Subtract(DateTime value) tests.
+
+        //[Fact]
+        //public void SubtractDateTime_should_MimicSystem()
+        //{
+        //    var anyLargerTicks = 1234;
+        //    var anyLesserTicks = 34;
+        //    var expected = new System.DateTime(anyLargerTicks)
+        //        .Subtract(new System.TimeSpan(anyLesserTicks));
+
+        //    //  Act.
+        //    var result = new Abstractions.DateTime(anyLargerTicks)
+        //        .Subtract(new Abstractions.TimeSpan(anyLesserTicks));
+
+        //    //  Assert.
+        //    result.Should().Be(expected);
+        //}
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
@@ -3638,7 +3718,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         private static void AssertEquals(
-            System.TimeSpan expected, 
+            System.TimeSpan expected,
             Abstractions.TimeSpan actual,
             string because = "")
         {

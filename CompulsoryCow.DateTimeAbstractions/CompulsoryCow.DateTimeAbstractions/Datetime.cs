@@ -116,6 +116,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<int> _getHashCode;
         private System.Func<System.TypeCode> _getTypeCode;
         private System.Func<bool> _isDaylightSavingTime;
+        private System.Func<TimeSpan> _subtractDateTime;
 
         #region Constructors.
 
@@ -331,7 +332,7 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         /// <summary>See <see cref="System.DateTime.MaxValue"/>.
         /// </summary>
-        public static DateTime MaxValue { get { return new DateTime( System.DateTime.MaxValue.Ticks); } }
+        public static DateTime MaxValue { get { return new DateTime(System.DateTime.MaxValue.Ticks); } }
 
         /// <summary>See <see cref="System.DateTime.MinValue"/>.
         /// </summary>
@@ -348,11 +349,11 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static int Compare(DateTime t1, DateTime t2)
         {
-            if( t1 == null)
+            if (t1 == null)
             {
                 throw new System.ArgumentNullException(nameof(t1));
             }
-            if( t2 == null)
+            if (t2 == null)
             {
                 throw new System.ArgumentNullException(nameof(t2));
             }
@@ -378,16 +379,16 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static bool Equals(DateTime t1, DateTime t2)
         {
-            if( t1 == null)
+            if (t1 == null)
             {
                 throw new System.ArgumentNullException(nameof(t1));
             }
-            if( t2 == null)
+            if (t2 == null)
             {
                 throw new System.ArgumentNullException(nameof(t2));
             }
 
-            return (_equals ?? System.DateTime.Equals)(new System.DateTime( t1.Ticks), new System.DateTime( t2.Ticks));
+            return (_equals ?? System.DateTime.Equals)(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
         }
 
         /// <summary>See <see cref="System.DateTime.FromBinary(long)"/>.
@@ -525,8 +526,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         public static DateTime SpecifyKind(DateTime value, System.DateTimeKind kind)
         {
             var result = System.DateTime.SpecifyKind(
-                new System.DateTime(value.Ticks, value.Kind), 
-                _specifyKind == null ? kind: _specifyKind());
+                new System.DateTime(value.Ticks, value.Kind),
+                _specifyKind == null ? kind : _specifyKind());
             return new DateTime(result.Ticks, result.Kind);
         }
 
@@ -748,11 +749,11 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 return _value.CompareTo(value);
             }
-            if ( _compareToDateTime != null)
+            if (_compareToDateTime != null)
             {
                 return _compareToDateTime();
             }
-                return _value.CompareTo(ToSystem(value));
+            return _value.CompareTo(ToSystem(value));
         }
 
         /// <summary>See <see cref="System.DateTime.CompareTo(object)"/>.
@@ -765,11 +766,11 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 return _value.CompareTo(value);
             }
-            if( (value is DateTime) == false)
+            if ((value is DateTime) == false)
             {
                 _value.CompareTo(value); // Will throw an exception, the same as System will.
             }
-            if ( _compareToObject!= null)
+            if (_compareToObject != null)
             {
                 return _compareToObject();
             }
@@ -782,7 +783,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public override bool Equals(object value)
         {
-            if( _equalsObject != null)
+            if (_equalsObject != null)
             {
                 return _equalsObject();
             }
@@ -790,7 +791,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 return _value.Equals(value);
             }
-            if( value is DateTime)
+            if (value is DateTime)
             {
                 return _value.Equals(ToSystem((DateTime)value));
             }
@@ -813,11 +814,11 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _value.Equals(value);
             }
 
-            if ( _equalsDateTime != null)
+            if (_equalsDateTime != null)
             {
                 return _equalsDateTime();
             }
-            if( value is DateTime)
+            if (value is DateTime)
             {
                 return _value.Equals(ToSystem((DateTime)value));
             }
@@ -902,6 +903,17 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.IsDaylightSavingTime();
         }
 
+        /// <summary>See <see cref="System.DateTime.Subtract(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public TimeSpan Subtract(DateTime value)
+        {
+            return _subtractDateTime != null ?
+                _subtractDateTime() :
+                new TimeSpan(_value.Subtract(ToSystem(value)).Ticks);
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -931,7 +943,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             _daysInMonth = daysInMonthFunc;
         }
-        
+
         /// <summary>This method sets the function used for <see cref="Equals(DateTime, DateTime)"/>.
         /// By default it is set to <see cref="System.DateTime.Equals(System.DateTime, System.DateTime)"/>.
         /// 
@@ -1075,7 +1087,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="returnFunc"></param>
         /// <param name="outFunc"></param>
         internal static void SetTryParseExactStringStringIFormatProviderDateTimeStyles(
-            System.Func<bool> returnFunc, 
+            System.Func<bool> returnFunc,
             System.Func<System.DateTime> outFunc)
         {
             _setTryParseExactStringStringIFormatProviderDateTimeStylesReturn = returnFunc;
@@ -1088,7 +1100,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="returnFunc"></param>
         /// <param name="outFunc"></param>
         internal static void SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
-            System.Func<bool> returnFunc, 
+            System.Func<bool> returnFunc,
             System.Func<System.DateTime> outFunc)
         {
             _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn = returnFunc;
@@ -1335,6 +1347,15 @@ namespace CompulsoryCow.DateTime.Abstractions
             _isDaylightSavingTime = func;
         }
 
+        /// <summary>This method sets the <see cref="Subtract(DateTime)"/> return value.
+        /// Set to null to have teh method return <see cref="System.DateTime.Subtract(System.DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetSubtractDateTime(System.Func<TimeSpan> func){
+            _subtractDateTime = func;
+    }
         #endregion
 
         #endregion
