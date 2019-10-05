@@ -117,6 +117,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<System.TypeCode> _getTypeCode;
         private System.Func<bool> _isDaylightSavingTime;
         private System.Func<TimeSpan> _subtractDateTime;
+        private System.Func<DateTime> _subtractTimeSpan;
 
         #region Constructors.
 
@@ -913,6 +914,17 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _subtractDateTime() :
                 new TimeSpan(_value.Subtract(ToSystem(value)).Ticks);
         }
+        
+        /// <summary>See <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public DateTime Subtract(TimeSpan value)
+        {
+            return _subtractTimeSpan != null ?
+                _subtractTimeSpan() :
+                FromSystemDateTime(_value.Subtract(value.ToSystemTimeSpan()));
+        }
 
         #endregion
 
@@ -1348,14 +1360,26 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This method sets the <see cref="Subtract(DateTime)"/> return value.
-        /// Set to null to have teh method return <see cref="System.DateTime.Subtract(System.DateTime)"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.Subtract(System.DateTime)"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
         internal void SetSubtractDateTime(System.Func<TimeSpan> func){
             _subtractDateTime = func;
-    }
+        }
+
+        /// <summary>This method sets the <see cref="Subtract(TimeSpan)"/> return value.
+        /// Set to null to have the  metohd return <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void   SetSubtractTimeSpan(System.Func<DateTime> func)
+        {
+            _subtractTimeSpan = func;
+        }
+
         #endregion
 
         #endregion

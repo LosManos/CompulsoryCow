@@ -3687,21 +3687,69 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  TimeSpan Subtract(DateTime value) tests.
 
-        //[Fact]
-        //public void SubtractDateTime_should_MimicSystem()
-        //{
-        //    var anyLargerTicks = 1234;
-        //    var anyLesserTicks = 34;
-        //    var expected = new System.DateTime(anyLargerTicks)
-        //        .Subtract(new System.TimeSpan(anyLesserTicks));
+        #region Subtract(TimeSpan value) tests.
 
-        //    //  Act.
-        //    var result = new Abstractions.DateTime(anyLargerTicks)
-        //        .Subtract(new Abstractions.TimeSpan(anyLesserTicks));
+        [Fact]
+        public void SubtractTimeSpan_should_MimicSystem()
+        {
+            var anyLargerTicks = 1234;
+            var anyLesserTicks = 34;
+            var expected = new System.DateTime(anyLargerTicks)
+                .Subtract(new System.TimeSpan(anyLesserTicks));
 
-        //    //  Assert.
-        //    result.Should().Be(expected);
-        //}
+            //  Act.
+            var result = new Abstractions.DateTime(anyLargerTicks)
+                .Subtract(new Abstractions.TimeSpan(anyLesserTicks));
+
+            //  Assert.
+            result.Should().Be(expected);
+        }
+
+        [Fact]
+        public void SubtractTimeSpan_should_ThrowForOutOfRange()
+        {
+            //  Act.
+            var result = Record.Exception(() =>
+            {
+                Abstractions.DateTime.MinValue
+                    .Subtract(new Abstractions.TimeSpan(11119999, 1, 1, 0, 0));
+            });
+
+            // It should throw an exception for both too low and too high
+            // but I have not found a way to execute both.
+
+            //  Assert.
+            result.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetSubtractTimeSpan_should_SetAndReset()
+        {
+            var anyLargerTicks = 1234;
+            var anyLesserTicks = 34;
+            var expected = new System.DateTime(anyLargerTicks)
+                .Subtract(new System.TimeSpan(anyLesserTicks));
+            var sut = new Abstractions.DateTime(anyLargerTicks);
+            var result = sut
+                .Subtract(new Abstractions.TimeSpan(anyLesserTicks));
+            AssertEquals(expected, result, because: "Sanity check we know what we are testing.");
+
+            //  Act.
+            sut.SetSubtractTimeSpan(() => new Abstractions.DateTime(333));
+
+            //  Assert.
+            sut.Subtract(new Abstractions.TimeSpan(anyLesserTicks))
+                .Should().Be(new Abstractions.DateTime(333));
+
+            //  Act.
+            sut.SetSubtractTimeSpan(null);
+
+            //  Assert.
+            sut.Subtract(new Abstractions.TimeSpan(anyLesserTicks))
+                .Should().Be(result);
+        }
+
+        #endregion  //  Subtract(TimeSpan value) tests.
 
         #endregion // Instance method tests.
 
