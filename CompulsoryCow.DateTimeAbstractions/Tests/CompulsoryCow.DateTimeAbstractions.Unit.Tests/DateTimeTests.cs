@@ -3846,6 +3846,61 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToFileTime() tests.
 
+        #region ToFileTime() tests.
+
+        [Fact]
+        public void ToFileTimeUtc_should_MimicSystem()
+        {
+            var anyTicks = new System.DateTime(2019, 10, 06).Ticks;
+            var expected = new System.DateTime(anyTicks).ToFileTimeUtc();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToFileTimeUtc();
+
+            //  Assert.
+            Assert.Equal(expected, res);
+        }
+
+        [Fact]
+        public void ToFileTimeUtc_should_ThrowForWayWayBeforeTheFirstDigitalFile()
+        {
+            //  Act.
+            var res = Record.Exception(() =>
+            {
+                new Abstractions.DateTime(1601, 01, 01)
+                    .AddSeconds(-1)
+                    .ToFileTimeUtc();
+            });
+
+            //  Assert.
+            res.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetToFileUtcTime_should_SetAndReset()
+        {
+            var anyTicks = new System.DateTime(1601, 01, 02).Ticks;
+            var sut = new Abstractions.DateTime(anyTicks);
+            var actual = sut.ToFileTimeUtc();
+            var expected = new System.DateTime(anyTicks).ToFileTimeUtc();
+            actual.Should().Be(expected, "Sanity check we know what we are testing.");
+            long fakeValue = 12;
+
+            //  Act.
+            sut.SetToFileTimeUtc(() => fakeValue);
+
+            //  Assert.
+            sut.ToFileTimeUtc().Should().Be(fakeValue);
+
+            //  Act.
+            sut.SetToFileTimeUtc(null);
+
+            //  Assert.
+            sut.ToFileTimeUtc().Should().Be(expected);
+        }
+
+        #endregion  //  ToFileTime() tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
