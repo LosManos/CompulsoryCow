@@ -118,6 +118,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<bool> _isDaylightSavingTime;
         private System.Func<TimeSpan> _subtractDateTime;
         private System.Func<DateTime> _subtractTimeSpan;
+        private System.Func<long> _toBinary;
 
         #region Constructors.
 
@@ -926,6 +927,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 FromSystemDateTime(_value.Subtract(value.ToSystemTimeSpan()));
         }
 
+        /// <summary>See <see cref="System.DateTime.ToBinary"/>.
+        /// </summary>
+        /// <returns></returns>
+        public long ToBinary()
+        {
+            return _toBinary != null ?
+                _toBinary() :
+                _value.ToBinary();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1370,14 +1381,25 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This method sets the <see cref="Subtract(TimeSpan)"/> return value.
-        /// Set to null to have the  metohd return <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
-        internal void   SetSubtractTimeSpan(System.Func<DateTime> func)
+        internal void SetSubtractTimeSpan(System.Func<DateTime> func)
         {
             _subtractTimeSpan = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToBinary"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToBinary"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToBinary(System.Func<long> func)
+        {
+            _toBinary = func;
         }
 
         #endregion

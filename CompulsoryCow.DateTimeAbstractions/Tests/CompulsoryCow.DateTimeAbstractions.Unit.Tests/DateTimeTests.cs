@@ -3751,6 +3751,46 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  Subtract(TimeSpan value) tests.
 
+        #region ToBinary() tests.
+
+        [Fact]
+        public void ToBinary_should_MimicSystem()
+        {
+            var anyTicks = 424242;
+            var expected = new System.DateTime(anyTicks).ToBinary();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToBinary();
+
+            //  Assert.
+            Assert.Equal(expected, res);
+        }
+
+        [Fact]
+        public void SetToBinary_should_SetAndReset()
+        {
+            var anyTicks = 424242;
+            var sut = new Abstractions.DateTime(anyTicks);
+            var actual = sut.ToBinary();
+            var expected = new System.DateTime(anyTicks).ToBinary();
+            actual.Should().Be(expected, "Sanity check we know what we are testing.");
+            long fakeValue = 12;
+
+            //  Act.
+            sut.SetToBinary(() => fakeValue);
+
+            //  Assert.
+            sut.ToBinary().Should().Be(fakeValue);
+
+            //  Act.
+            sut.SetToBinary(null);
+
+            //  Assert.
+            sut.ToBinary().Should().Be(expected);
+        }
+
+        #endregion  //  ToBinary() tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
