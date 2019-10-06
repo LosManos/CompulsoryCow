@@ -119,6 +119,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<TimeSpan> _subtractDateTime;
         private System.Func<DateTime> _subtractTimeSpan;
         private System.Func<long> _toBinary;
+        private System.Func<long> _toFileTime;
 
         #region Constructors.
 
@@ -937,6 +938,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToBinary();
         }
 
+        /// <summary>See <see cref="System.DateTime.ToFileTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        public long ToFileTime()
+        {
+            return _toFileTime != null ?
+                _toFileTime() :
+                _value.ToFileTime();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1400,6 +1411,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToBinary(System.Func<long> func)
         {
             _toBinary = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToFileTime"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToFileTime"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToFileTime(System.Func<long> func)
+        {
+            _toFileTime = func;
         }
 
         #endregion

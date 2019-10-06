@@ -3791,6 +3791,61 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToBinary() tests.
 
+        #region ToFileTime() tests.
+
+        [Fact]
+        public void ToFileTime_should_MimicSystem()
+        {
+            var anyTicks = new System.DateTime(2019,10,06).Ticks;
+            var expected = new System.DateTime(anyTicks).ToFileTime();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToFileTime();
+
+            //  Assert.
+            Assert.Equal(expected, res);
+        }
+
+        [Fact]
+        public void ToFileTime_should_ThrowForWayWayBeforeTheFirstDigitalFile()
+        {
+            //  Act.
+            var res = Record.Exception(() =>
+            {
+                new Abstractions.DateTime(1601, 01, 01)
+                    .AddSeconds(-1)
+                    .ToFileTime();
+            });
+
+            //  Assert.
+            res.Should().BeOfType<System.ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SetToFileTime_should_SetAndReset()
+        {
+            var anyTicks = new System.DateTime(1601,01,02).Ticks;
+            var sut = new Abstractions.DateTime(anyTicks);
+            var actual = sut.ToFileTime();
+            var expected = new System.DateTime(anyTicks).ToFileTime();
+            actual.Should().Be(expected, "Sanity check we know what we are testing.");
+            long fakeValue = 12;
+
+            //  Act.
+            sut.SetToFileTime(() => fakeValue);
+
+            //  Assert.
+            sut.ToFileTime().Should().Be(fakeValue);
+
+            //  Act.
+            sut.SetToFileTime(null);
+
+            //  Assert.
+            sut.ToFileTime().Should().Be(expected);
+        }
+
+        #endregion  //  ToFileTime() tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
