@@ -123,6 +123,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<long> _toFileTimeUtc;
         private System.Func<DateTime> _toLocalTime;
         private System.Func<string> _toLongDateString;
+        private System.Func<string> _toLongTimeString;
 
         #region Constructors.
 
@@ -981,6 +982,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToLongDateString();
         }
 
+        /// <summary>See <see cref="System.DateTime.ToLongTimeString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public string ToLongTimeString()
+        {
+            return _toLongTimeString != null ?
+                _toLongTimeString() :
+                _value.ToLongTimeString();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1480,7 +1491,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         }
 
         /// <summary>This method sets the <see cref="ToLongDateString"/> return value.
-        /// Set to null to have the method reutrn <see cref="System.DateTime.ToLongDateString"/>.
+        /// Set to null to have the method return <see cref="System.DateTime.ToLongDateString"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
@@ -1488,6 +1499,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToLongDateString(System.Func<string> func)
         {
             _toLongDateString = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToLongTimeString"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToLongTimeString"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToLongTimeString(System.Func<string> func)
+        {
+            _toLongTimeString = func;
         }
 
         #endregion
