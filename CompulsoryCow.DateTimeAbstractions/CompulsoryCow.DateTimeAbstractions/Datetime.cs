@@ -121,6 +121,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<long> _toBinary;
         private System.Func<long> _toFileTime;
         private System.Func<long> _toFileTimeUtc;
+        private System.Func<DateTime> _toLocalTime;
 
         #region Constructors.
 
@@ -959,6 +960,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToFileTime();
         }
 
+        /// <summary>See <see cref="System.DateTime.ToLocalTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        public DateTime ToLocalTime()
+        {
+            return _toLocalTime != null ?
+                _toLocalTime() :
+                FromSystemDateTime(_value.ToLocalTime());
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1444,6 +1455,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToFileTimeUtc(System.Func<long> func)
         {
             _toFileTimeUtc = func;
+        }
+
+        /// <summary>This method sets teh <see cref="ToLocalTime"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToLocalTime"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToLocalTime(System.Func<DateTime> func)
+        {
+            _toLocalTime = func;
         }
 
         #endregion

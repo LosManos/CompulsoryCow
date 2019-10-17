@@ -3846,7 +3846,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToFileTime() tests.
 
-        #region ToFileTime() tests.
+        #region ToFileTimeUtc() tests.
 
         [Fact]
         public void ToFileTimeUtc_should_MimicSystem()
@@ -3899,7 +3899,47 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             sut.ToFileTimeUtc().Should().Be(expected);
         }
 
-        #endregion  //  ToFileTime() tests.
+        #endregion  //  ToFileTimeUtc() tests.
+
+        #region ToLocalTime() tests.
+
+        [Fact]
+        public void ToLocalTime_should_MimicSystem()
+        {
+            var anyTicks = new System.DateTime(2019, 10, 06).Ticks;
+            var expected = new System.DateTime(anyTicks).ToLocalTime();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToLocalTime();
+
+            //  Assert.
+            AssertEquals(expected, res);
+        }
+
+        [Fact]
+        public void SetToLocalTime_should_SetAndReset()
+        {
+            var anyTicks = new System.DateTime(1601, 01, 02).Ticks;
+            var sut = new Abstractions.DateTime(anyTicks);
+            var actual = sut.ToLocalTime();
+            var expected = new System.DateTime(anyTicks).ToLocalTime();
+            actual.Should().Be(expected, "Sanity check we know what we are testing.");
+            var fakeValue = new Abstractions.DateTime(12);
+
+            //  Act.
+            sut.SetToLocalTime(() => fakeValue);
+
+            //  Assert.
+            sut.ToLocalTime().Should().Be(fakeValue);
+
+            //  Act.
+            sut.SetToLocalTime(null);
+
+            //  Assert.
+            sut.ToLocalTime().Should().Be(expected);
+        }
+
+        #endregion  //  ToLocalTime() tests.
 
         #endregion // Instance method tests.
 
