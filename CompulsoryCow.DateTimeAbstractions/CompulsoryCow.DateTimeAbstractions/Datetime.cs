@@ -122,6 +122,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<long> _toFileTime;
         private System.Func<long> _toFileTimeUtc;
         private System.Func<DateTime> _toLocalTime;
+        private System.Func<string> _toLongDateString;
 
         #region Constructors.
 
@@ -970,6 +971,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 FromSystemDateTime(_value.ToLocalTime());
         }
 
+        /// <summary>See <see cref="System.DateTime.ToLongDateString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public string ToLongDateString()
+        {
+            return _toLongDateString != null ?
+                _toLongDateString() :
+                _value.ToLongDateString();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1457,7 +1468,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             _toFileTimeUtc = func;
         }
 
-        /// <summary>This method sets teh <see cref="ToLocalTime"/> return value.
+        /// <summary>This method sets the <see cref="ToLocalTime"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.ToLocalTime"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
@@ -1466,6 +1477,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToLocalTime(System.Func<DateTime> func)
         {
             _toLocalTime = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToLongDateString"/> return value.
+        /// Set to null to have the method reutrn <see cref="System.DateTime.ToLongDateString"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToLongDateString(System.Func<string> func)
+        {
+            _toLongDateString = func;
         }
 
         #endregion

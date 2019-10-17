@@ -3941,6 +3941,48 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToLocalTime() tests.
 
+        #region ToLongDateString tests.
+
+        [Fact]
+        public void ToLongDateString_MimicSystem()
+        {
+            var anyTicks = 1234;
+            var expected = new System.DateTime(anyTicks).ToLongDateString();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToLongDateString();
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        [Fact]
+        public void SetToLongDateString_SetAndReset()
+        {
+            var anyTicks = 1235;
+            var system = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            system.ToLongDateString().Should()
+                .Be( sut.ToLongDateString(), 
+                "Sanity check we know what we are testing.");
+            var fake = "whatever";
+
+            //  Act.
+            sut.SetToLongDateString(() => fake);
+
+            //  Assert.
+            sut.ToLongDateString().Should().Be(fake);
+
+            //  Act.
+            sut.SetToLongDateString(null);
+
+            //  Assert.
+            sut.ToLongDateString().Should()
+                .Be(system.ToLongDateString());
+        }
+
+        #endregion  //  ToLongDateString tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
