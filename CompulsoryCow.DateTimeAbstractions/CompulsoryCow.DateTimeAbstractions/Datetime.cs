@@ -124,6 +124,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<DateTime> _toLocalTime;
         private System.Func<string> _toLongDateString;
         private System.Func<string> _toLongTimeString;
+        private System.Func<double> _toOADate;
 
         #region Constructors.
 
@@ -992,6 +993,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToLongTimeString();
         }
 
+        /// <summary>See <see cref="System.DateTime.ToOADate"/>.
+        /// </summary>
+        /// <returns></returns>
+        public double ToOADate()
+        {
+            return _toOADate != null ?
+                _toOADate() :
+                _value.ToOADate();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1510,6 +1521,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToLongTimeString(System.Func<string> func)
         {
             _toLongTimeString = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToOADate"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToOADate"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToOADate(System.Func<double> func)
+        {
+            _toOADate = func;
         }
 
         #endregion

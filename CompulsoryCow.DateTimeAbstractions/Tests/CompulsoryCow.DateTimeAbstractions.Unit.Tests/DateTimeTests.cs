@@ -4025,6 +4025,50 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToLongDateString tests.
 
+        #region ToOADate tests.
+
+        [Fact]
+        public void ToOADate_MimicSystem()
+        {
+            var anyTicks = 1234;
+            var expected = new System.DateTime(anyTicks).ToOADate();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToOADate();
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        // I see no way to make ToOADate throw an exception, the OverflowException as documentation says.
+
+        [Fact]
+        public void ToOADate_SetAndReset()
+        {
+            var anyTicks = 1235;
+            var system = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            system.ToOADate().Should()
+                .Be( sut.ToOADate(), 
+                "Sanity check we know what we are testing.");
+            var fake = 123.234;
+
+            //  Act.
+            sut.SetToOADate(() => fake);
+
+            //  Assert.
+            sut.ToOADate().Should().Be(fake);
+
+            //  Act.
+            sut.SetToOADate(null);
+
+            //  Assert.
+            sut.ToOADate().Should()
+                .Be(system.ToOADate());
+        }
+
+        #endregion  //  ToLongDateString tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
