@@ -125,6 +125,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string> _toLongDateString;
         private System.Func<string> _toLongTimeString;
         private System.Func<double> _toOADate;
+        private System.Func<string> _toShortDateString;
+        private System.Func<string> _toShortTimeString;
 
         #region Constructors.
 
@@ -1003,6 +1005,26 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToOADate();
         }
 
+        /// <summary>See <see cref="System.DateTime.ToShortDateString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public string ToShortDateString()
+        {
+            return _toShortDateString != null ?
+                _toShortDateString() :
+                _value.ToShortDateString();
+        }
+
+        /// <summary>See <see cref="System.DateTime.ToShortTimeString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public string ToShortTimeString()
+        {
+            return _toShortTimeString != null ?
+                _toShortTimeString() :
+                _value.ToShortTimeString();
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1532,6 +1554,28 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToOADate(System.Func<double> func)
         {
             _toOADate = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToShortDateString"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToShortDateString"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToShortDateString(System.Func<string> func)
+        {
+            _toShortDateString = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToShortTimeString"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToShortTimeString"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToShortTimeString(System.Func<string> func)
+        {
+            _toShortTimeString = func;
         }
 
         #endregion

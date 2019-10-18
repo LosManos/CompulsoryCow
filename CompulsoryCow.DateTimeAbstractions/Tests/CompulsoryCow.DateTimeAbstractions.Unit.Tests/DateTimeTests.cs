@@ -4069,6 +4069,90 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToLongDateString tests.
 
+        #region ToLongDateString tests.
+
+        [Fact]
+        public void ToShortDateString_MimicSystem()
+        {
+            var anyTicks = 1234;
+            var expected = new System.DateTime(anyTicks).ToShortDateString();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToShortDateString();
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        [Fact]
+        public void SetToShortDateString_SetAndReset()
+        {
+            var anyTicks = 1235;
+            var system = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            system.ToShortDateString().Should()
+                .Be(sut.ToShortDateString(),
+                "Sanity check we know what we are testing.");
+            var fake = "whatever";
+
+            //  Act.
+            sut.SetToShortDateString(() => fake);
+
+            //  Assert.
+            sut.ToShortDateString().Should().Be(fake);
+
+            //  Act.
+            sut.SetToShortDateString(null);
+
+            //  Assert.
+            sut.ToShortDateString().Should()
+                .Be(system.ToShortDateString());
+        }
+
+        #endregion  //  ToLongDateString tests.
+
+        #region ToLongTimeString tests.
+
+        [Fact]
+        public void ToShortTimeString_MimicSystem()
+        {
+            var anyTicks = 1234;
+            var expected = new System.DateTime(anyTicks).ToShortTimeString();
+
+            //  Act.
+            var res = new Abstractions.DateTime(anyTicks).ToShortTimeString();
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        [Fact]
+        public void SetToShortTimeString_SetAndReset()
+        {
+            var anyTicks = 1235;
+            var system = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            system.ToShortTimeString().Should()
+                .Be(sut.ToShortTimeString(),
+                "Sanity check we know what we are testing.");
+            var fake = "whatever";
+
+            //  Act.
+            sut.SetToShortTimeString(() => fake);
+
+            //  Assert.
+            sut.ToShortTimeString().Should().Be(fake);
+
+            //  Act.
+            sut.SetToShortTimeString(null);
+
+            //  Assert.
+            sut.ToShortTimeString().Should()
+                .Be(system.ToShortTimeString());
+        }
+
+        #endregion  //  ToLongDateString tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
