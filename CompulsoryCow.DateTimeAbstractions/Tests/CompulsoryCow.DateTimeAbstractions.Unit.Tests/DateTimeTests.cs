@@ -4153,6 +4153,70 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToLongDateString tests.
 
+        #region ToString(string format) tests.
+
+        [Fact]
+        public void ToStringString_MimicSystem()
+        {
+            var anyTicks = 123456;
+            var anyFormat = "u";
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString(anyFormat);
+
+            //  Act.
+            var res = sut.ToString(anyFormat);
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        [Fact]
+        public void ToStringString_ThrowIfInvalidArgument()
+        {
+            var anyTicks = 123456;
+            var anyNotValidFormat = "x";
+            var sut = new Abstractions.DateTime(anyTicks);
+
+            //  Act.
+            var res = Record.Exception(() =>
+            {
+                sut.ToString(anyNotValidFormat);
+            });
+
+            //  Assert.
+            res.Should().BeOfType<System.FormatException>();
+        }
+
+        //  I have found no way to force the ArgumentOutOfRangeException
+        //  for datetime outside valid range.
+
+        [Fact]
+        public void SetToStringString_SetAndReset()
+        {
+            var anyTicks = 123456;
+            var anyFormat = "u";
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString(anyFormat);
+            sut.ToString(anyFormat).Should().Be(expected, "Sanity test we know what we are testing.");
+            var fake = "any fake";
+
+            //  Act.
+            sut.SetToStringString(() => fake);
+
+            //  Assert.
+            sut.ToString(anyFormat).Should().Be(fake);
+
+            //  Act.
+            sut.SetToStringString(null);
+
+            //  Assert.
+            sut.ToString(anyFormat).Should().Be(expected);
+        }
+
+        #endregion  //  ToString(string format) tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.

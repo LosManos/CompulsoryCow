@@ -127,6 +127,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<double> _toOADate;
         private System.Func<string> _toShortDateString;
         private System.Func<string> _toShortTimeString;
+        private System.Func<string> _toStringString;
 
         #region Constructors.
 
@@ -1025,6 +1026,17 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToShortTimeString();
         }
 
+        /// <summary>See <see cref="System.DateTime.ToString"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public string ToString(string format)
+        {
+            return _toStringString != null ?
+                _toStringString() :
+                _value.ToString(format);
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1576,6 +1588,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToShortTimeString(System.Func<string> func)
         {
             _toShortTimeString = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToString(string)"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToString(string)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToStringString(System.Func<string> func)
+        {
+            _toStringString = func;
         }
 
         #endregion
