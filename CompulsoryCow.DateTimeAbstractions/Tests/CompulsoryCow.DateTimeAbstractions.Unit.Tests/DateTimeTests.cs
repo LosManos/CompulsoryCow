@@ -4217,6 +4217,99 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToString(string format) tests.
 
+        #region ToString(IFormatProvider provider) tests.
+
+        [Fact]
+        public void ToStringIFormatProvider_MimicSystem()
+        {
+            var anyTicks = 123456;
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString(culture);
+
+            //  Act.
+            var res = sut.ToString(culture);
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        //  I have found no way to force the ArgumentOutOfRangeException
+        //  for datetime outside valid range.
+
+        [Fact]
+        public void SetToStringIFormatProvider_SetAndReset()
+        {
+            var anyTicks = 123456;
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString(culture);
+            sut.ToString(culture).Should().Be(expected, "Sanity test we know what we are testing.");
+            var fake = "any fake";
+
+            //  Act.
+            sut.SetToStringIFormatProvider(() => fake);
+
+            //  Assert.
+            sut.ToString(culture).Should().Be(fake);
+
+            //  Act.
+            sut.SetToStringIFormatProvider(null);
+
+            //  Assert.
+            sut.ToString(culture).Should().Be(expected);
+        }
+
+        #endregion  //  ToString(IFormatProvider provider) tests.
+
+        #region ToString() tests.
+
+        [Fact]
+        public void ToString_MimicSystem()
+        {
+            // Warning: This test reacts to the current culture and may change between environments.
+            var anyTicks = 123456;
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString();
+
+            //  Act.
+            var res = sut.ToString();
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        //  I have found no way to force the ArgumentOutOfRangeException
+        //  for datetime outside valid range.
+
+        [Fact]
+        public void SetToString_SetAndReset()
+        {
+            var anyTicks = 123456;
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString();
+            sut.ToString().Should().Be(expected, "Sanity test we know what we are testing.");
+            var fake = "any fake";
+
+            //  Act.
+            sut.SetToString(() => fake);
+
+            //  Assert.
+            sut.ToString().Should().Be(fake);
+
+            //  Act.
+            sut.SetToString(null);
+
+            //  Assert.
+            sut.ToString().Should().Be(expected);
+        }
+        
+        #endregion  //  ToString() tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.

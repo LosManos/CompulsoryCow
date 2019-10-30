@@ -128,6 +128,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string> _toShortDateString;
         private System.Func<string> _toShortTimeString;
         private System.Func<string> _toStringString;
+        private System.Func<string> _toStringIFormatProvider;
+        private System.Func<string> _toString;
 
         #region Constructors.
 
@@ -1026,7 +1028,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToShortTimeString();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToString"/>.
+        /// <summary>See <see cref="System.DateTime.ToString(string)"/>.
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
@@ -1035,6 +1037,27 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _toStringString != null ?
                 _toStringString() :
                 _value.ToString(format);
+        }
+
+        /// <summary>See <see cref="System.DateTime.ToString(System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public string ToString(System.IFormatProvider provider)
+        {
+            return _toStringIFormatProvider != null ?
+                _toStringIFormatProvider() :
+                _value.ToString(provider);
+        }
+
+        /// <summary>See <see cref="System.DateTime.ToString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return _toString != null ?
+                _toString() :
+                _value.ToString();
         }
 
         #endregion
@@ -1599,6 +1622,28 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToStringString(System.Func<string> func)
         {
             _toStringString = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToString(System.IFormatProvider)"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToString(System.IFormatProvider)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToStringIFormatProvider(System.Func<string> func)
+        {
+            _toStringIFormatProvider = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToString"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToString()"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToString(System.Func<string> func)
+        {
+            _toString = func;
         }
 
         #endregion
