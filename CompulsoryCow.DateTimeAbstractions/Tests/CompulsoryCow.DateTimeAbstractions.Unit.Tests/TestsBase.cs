@@ -7,7 +7,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
     {
         protected readonly VacheTacheLibrary.PseudoRandom _pr;
 
-        protected TestsBase(ITestOutputHelper output)
+        protected internal TestsBase(ITestOutputHelper output)
         {
             //  Get test info.
             var type = output.GetType();
@@ -18,10 +18,9 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             _pr = new VacheTacheLibrary.PseudoRandom(test.DisplayName);
         }
 
-        protected long AnyTicks()
+        protected internal long AnyTicks()
         {
             return _pr.PositiveLong(1, global::System.DateTime.MaxValue.Ticks);
         }
-
     }
 }
