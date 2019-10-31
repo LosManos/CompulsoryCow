@@ -190,5 +190,113 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         #endregion  //  DateTime operator -(DateTime d, TimeSpan t)
+
+        #region Operator ==(DateTime d1, DateTime d2) tests.
+
+        [Theory]
+        [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, true, "Should be equal.")]
+        [InlineData(13, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, false, "Ticks differ.")]
+        [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Local, true, "Kind differ but is not considered.")]
+        [InlineData(null, null, 12, System.DateTimeKind.Utc, false, "One is null")]
+        [InlineData(null, null, null, null, true, "Both are null.")]
+        public void EqualsOperator_MimicSystem(
+            long? ticks1, System.DateTimeKind? kind1,
+            long? ticks2, System.DateTimeKind? kind2,
+            bool expectedResult, string because)
+        {
+            var a = ticks1.HasValue ? new Abstractions.DateTime(ticks1.Value, kind1.Value) : null;
+            var b = ticks2.HasValue ? new Abstractions.DateTime(ticks2.Value, kind2.Value) : null;
+
+            //  #   Act.
+            (a == b).Should().Be(expectedResult, because);
+        }
+
+        [Fact]
+        public void EqualsOperator_SetAndReset()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetEqualsOperator(null);
+
+            var anyTicks1 = 334455;
+            var anyTicks2 = 223344;
+            var expected = new System.DateTime(anyTicks1) == new System.DateTime(anyTicks2);
+            var actual = new Abstractions.DateTime(anyTicks1) == new Abstractions.DateTime(anyTicks2);
+            expected.Should().Be(false, "Sanity test that we know what we are testing.");
+            actual.Should().Be(expected, because: "Sanity test that we know what we are testing.");
+
+            var anyFakeResult = true;
+            anyFakeResult.Should().Be(!expected, "Sanity check we have different values; so a future refactoring of the test does not mistakenly set to the same values.");
+
+            //  #   Act.
+            Abstractions.DateTime.SetEqualsOperator(() => anyFakeResult);
+
+            //  #   Assert.;
+            actual = new Abstractions.DateTime(anyTicks1) == new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(anyFakeResult);
+
+            //  #   Act.
+            Abstractions.DateTime.SetEqualsOperator(null);
+
+            //  #   Assert.
+            actual = new Abstractions.DateTime(anyTicks1) == new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(expected);
+
+        }
+
+        #endregion  //  Operator ==(DateTime d1, DateTime d2) tests.
+
+        #region Operator !=(DateTime d1, DateTime d2) tests.
+
+        [Theory]
+        [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, false, "Should be equal.")]
+        [InlineData(13, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, true, "Ticks differ.")]
+        [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Local, false, "Kind differ but is not considered.")]
+        [InlineData(null, null, 12, System.DateTimeKind.Utc, true, "One is null")]
+        [InlineData(null, null, null, null, false, "Both are null.")]
+        public void NotEqualsOperator_MimicSystem(
+            long? ticks1, System.DateTimeKind? kind1,
+            long? ticks2, System.DateTimeKind? kind2,
+            bool expectedResult, string because)
+        {
+            var a = ticks1.HasValue ? new Abstractions.DateTime(ticks1.Value, kind1.Value) : null;
+            var b = ticks2.HasValue ? new Abstractions.DateTime(ticks2.Value, kind2.Value) : null;
+
+            //  #   Act.
+            (a != b).Should().Be(expectedResult, because);
+        }
+
+        [Fact]
+        public void NotEqualsOperator_SetAndReset()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetNotEqualsOperator(null);
+
+            var anyTicks1 = 334455;
+            var anyTicks2 = 223344;
+            var expected = new System.DateTime(anyTicks1) != new System.DateTime(anyTicks2);
+            var actual = new Abstractions.DateTime(anyTicks1) != new Abstractions.DateTime(anyTicks2);
+            expected.Should().Be(true, "Sanity test that we know what we are testing.");
+            actual.Should().Be(expected, because: "Sanity test that we know what we are testing.");
+
+            var anyFakeResult = false;
+            anyFakeResult.Should().Be(!expected, "Sanity check we have different values; so a future refactoring of the test does not mistakenly set to the same values.");
+
+            //  #   Act.
+            Abstractions.DateTime.SetNotEqualsOperator(() => anyFakeResult);
+
+            //  #   Assert.;
+            actual = new Abstractions.DateTime(anyTicks1) != new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(anyFakeResult);
+
+            //  #   Act.
+            Abstractions.DateTime.SetNotEqualsOperator(null);
+
+            //  #   Assert.
+            actual = new Abstractions.DateTime(anyTicks1) != new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(expected);
+
+        }
+
+        #endregion  //  Operator ==(DateTime d1, DateTime d2) tests.
     }
 }

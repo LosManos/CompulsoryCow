@@ -21,14 +21,14 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <summary>See <see cref="System.DateTime.Month"/>.
         /// </summary>
         int Month { get; }
-        
+
         /// <summary>See <see cref="Minute"/>.
         /// </summary>
-         int Minute { get; }
-        
+        int Minute { get; }
+
         /// <summary>See <see cref="Millisecond"/>.
         /// </summary>
-         int Millisecond { get; }
+        int Millisecond { get; }
 
         /// <summary>See <see cref="System.DateTime.Kind"/>.
         /// </summary>
@@ -97,6 +97,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<DateTime> _addOperator;
         private static System.Func<TimeSpan> _subtractDateTimeDateTimeOperator;
         private static System.Func<DateTime> _subtractDateTimeTimeSpanOperator;
+        private static System.Func<bool> _equalsOperator;
+        private static System.Func<bool> _notEqualsOperator;
 
         private readonly System.DateTime _value;
 
@@ -388,8 +390,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return (_daysInMonth ?? System.DateTime.DaysInMonth)(year, month);
         }
-
-        // TODO:Implement Equals properly. System.DateTime is a struct while Abstractions.DateTime is a class which means the whole equals has to be implemented. Also check for == >= etc. Also ToString and GetHashCode.
 
         /// <summary>See <see cref="System.DateTime.Equals(System.DateTime, System.DateTime)"/>.
         /// </summary>
@@ -932,7 +932,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _subtractDateTime() :
                 new TimeSpan(_value.Subtract(ToSystem(value)).Ticks);
         }
-        
+
         /// <summary>See <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
         /// </summary>
         /// <param name="value"></param>
@@ -1140,6 +1140,73 @@ namespace CompulsoryCow.DateTime.Abstractions
             return FromSystemDateTime(ToSystem(d) - t.ToSystemTimeSpan());
         }
 
+        /// <summary>See == operator in <see cref="System.DateTime"/>
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_equality
+        /// 
+        /// Note: There is a difference between System.DateTime and Abstractions.DateTime here
+        /// as System.DateTime is a struct and hence cannot be null while Abstractions.DateTime is a class
+        /// and can be null.
+        /// In the future this should change when we can use non nullable references.
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        public static bool operator ==(DateTime d1, DateTime d2)
+        {
+            if( _equalsOperator != null)
+            {
+                return _equalsOperator();
+            }
+
+            if ( OnlyOneIsNull(d1, d2))
+            {
+                return false;
+            }
+
+            if( BothAreNull(d1, d2))
+            {
+                return true;
+            }
+
+            return ToSystem(d1) == ToSystem(d2);
+        }
+
+        /// <summary>See != operator in <see cref="System.DateTime"/>
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_inequality
+        /// 
+        /// Note: There is a difference between System.DateTime and Abstractions.DateTime here
+        /// as System.DateTime is a struct and hence cannot be null while Abstractions.DateTime is a class
+        /// and can be null.
+        /// In the future this should change when we can use non nullable references.
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        public static bool operator !=(DateTime d1, DateTime d2)
+        {
+            if(_notEqualsOperator != null)
+            {
+                return _notEqualsOperator();
+            }
+
+            if (_notEqualsOperator != null)
+            {
+                return _notEqualsOperator();
+            }
+
+            if (OnlyOneIsNull(d1, d2))
+            {
+                return true;
+            }
+
+            if (BothAreNull(d1, d2))
+            {
+                return false;
+            }
+
+            return ToSystem(d1) != ToSystem(d2);
+        }
+
         #endregion  //  Operators.
 
         #region Methods used for testing and not production.
@@ -1290,7 +1357,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseStringIFormatProviderDateTimeStylesDateTime(
             System.Func<bool> returnFunc,
-            System.Func<System.DateTime> outFunc) {
+            System.Func<System.DateTime> outFunc)
+        {
             _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn = returnFunc;
             _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut = outFunc;
         }
@@ -1302,7 +1370,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseStringDateTime(
             System.Func<bool> returnFunc,
-            System.Func<System.DateTime> outFunc) {
+            System.Func<System.DateTime> outFunc)
+        {
             _setTryParseStringDateTimeReturn = returnFunc;
             _setTryParseStringDateTimeOut = outFunc;
         }
@@ -1370,7 +1439,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             _subtractDateTimeDateTimeOperator = func;
         }
-        
+
         /// <summary>This method sets the <see cref="operator -(DateTime, TimeSpan)"/>.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
@@ -1380,6 +1449,28 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static void SetSubtractDateTimeTimeSpanOperator(System.Func<DateTime> func)
         {
             _subtractDateTimeTimeSpanOperator = func;
+        }
+
+        /// <summary>This method sets the <see cref="operator ==(DateTime, DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetEqualsOperator(System.Func<bool> func)
+        {
+            _equalsOperator = func;
+        }
+
+        /// <summary>This method sets the <see cref="operator !=(DateTime, DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetNotEqualsOperator(System.Func<bool> func)
+        {
+            _notEqualsOperator = func;
         }
 
         #endregion  //  Static methods used for testing and not production.
@@ -1612,7 +1703,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
-        internal void SetSubtractDateTime(System.Func<TimeSpan> func){
+        internal void SetSubtractDateTime(System.Func<TimeSpan> func)
+        {
             _subtractDateTime = func;
         }
 
@@ -1787,9 +1879,30 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Private helper methods.
 
+        private static bool BothAreNull(DateTime d1, DateTime d2)
+        {
+            return IsNull(d1) && IsNull(d2);
+        }
+
         private static DateTime FromSystemDateTime(System.DateTime datetime)
         {
             return new DateTime(datetime.Ticks, datetime.Kind);
+        }
+
+        /// <summary>This helper method returns if the datetime is null 
+        /// without touching the == operator we are overloading.
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        private static bool IsNull(DateTime d)
+        {
+            return object.Equals(d, null);
+        }
+
+        private static bool OnlyOneIsNull(DateTime d1, DateTime d2)
+        {
+            return (IsNull(d1) && !IsNull(d2)) ||
+                (!IsNull(d1) && IsNull(d2));
         }
 
         private static System.DateTime ToSystem(DateTime datetime)
