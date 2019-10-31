@@ -131,6 +131,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string> _toStringIFormatProvider;
         private System.Func<string> _toString;
         private System.Func<string> _toStringStringIFormatProvider;
+        private System.Func<DateTime> _toUniversalTime;
 
         #region Constructors.
 
@@ -1073,6 +1074,16 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToString(format, provider);
         }
 
+        /// <summary>See <see cref="System.DateTime.ToUniversalTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        public DateTime ToUniversalTime()
+        {
+            return _toUniversalTime != null ?
+                _toUniversalTime() :
+                FromSystemDateTime(_value.ToUniversalTime());
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1668,6 +1679,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToStringStringIFormatProvider(System.Func<string> func)
         {
             _toStringStringIFormatProvider = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToUniversalTime"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToUniversalTime"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToUniversalTime(System.Func<DateTime> func)
+        {
+            _toUniversalTime = func;
         }
 
         #endregion

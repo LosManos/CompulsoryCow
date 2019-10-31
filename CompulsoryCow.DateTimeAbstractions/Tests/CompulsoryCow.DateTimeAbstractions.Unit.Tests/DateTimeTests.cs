@@ -4387,6 +4387,67 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  ToString(IFormatProvider provider) tests.
 
+        #region ToUniversalTime() tests.
+
+        // The dotnet standard 2.0 documentation says Max and Min is returned
+        // if indata is outside limits. I have found no way to execute this  so it is not tested.
+
+        // The test(s) involve DateTimeKind.Local which is dependent on system settings.
+        // This means the test(s) might change depending on environment.
+
+        // Summary:
+        //     Converts the value of the current System.DateTime object to Coordinated Universal
+        //     Time (UTC).
+        //
+        // Returns:
+        //     An object whose System.DateTime.Kind property is System.DateTimeKind.Utc, and
+        //     whose value is the UTC equivalent to the value of the current System.DateTime
+        //     object, or System.DateTime.MaxValue if the converted value is too large to be
+        //     represented by a System.DateTime object, or System.DateTime.MinValue if the converted
+        //     value is too small to be represented by a System.DateTime object.
+
+        [Fact]
+        public void ToUniversalTime_MimicSystem()
+        {
+            var anyTicks = 123456;
+            var anyDateTimeKindExceptUtc = System.DateTimeKind.Local;
+            var systemDateTime = new System.DateTime(anyTicks, anyDateTimeKindExceptUtc);
+            var sut = new Abstractions.DateTime(anyTicks, anyDateTimeKindExceptUtc);
+            var expected = systemDateTime.ToUniversalTime();
+
+            //  Act.
+            var res = sut.ToUniversalTime();
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        [Fact]
+        public void SetToUniversalTime_SetAndReset()
+        {
+            var anyTicks = 123456;
+            var anySystemDateTimeKindExceptionUtc = System.DateTimeKind.Local;
+            var systemDateTime = new System.DateTime(anyTicks, anySystemDateTimeKindExceptionUtc);
+            var sut = new Abstractions.DateTime(anyTicks, anySystemDateTimeKindExceptionUtc);
+            var expected = systemDateTime.ToUniversalTime();
+            sut.ToUniversalTime().Should().Be(expected, "Sanity test we know what we are testing.");
+            var fake = new Abstractions.DateTime(anyTicks+1, System.DateTimeKind.Unspecified);
+
+            //  Act.
+            sut.SetToUniversalTime(() => fake);
+
+            //  Assert.
+            sut.ToUniversalTime().Should().Be(fake);
+
+            //  Act.
+            sut.SetToUniversalTime(null);
+
+            //  Assert.
+            sut.ToUniversalTime().Should().Be(expected);
+        }
+
+        #endregion  //  ToUniversalTime() tests.
+
         #endregion // Instance method tests.
 
         #region Private helper methods.
