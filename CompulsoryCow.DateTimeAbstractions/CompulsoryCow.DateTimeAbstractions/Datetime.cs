@@ -130,6 +130,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private System.Func<string> _toStringString;
         private System.Func<string> _toStringIFormatProvider;
         private System.Func<string> _toString;
+        private System.Func<string> _toStringStringIFormatProvider;
 
         #region Constructors.
 
@@ -1060,6 +1061,18 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToString();
         }
 
+        /// <summary>See <see cref="System.DateTime.ToString(string, System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        public string ToString(string format, System.IFormatProvider provider)
+        {
+            return _toStringStringIFormatProvider != null ?
+                _toStringStringIFormatProvider() :
+                _value.ToString(format, provider);
+        }
+
         #endregion
 
         #region Methods used for testing and not production.
@@ -1644,6 +1657,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal void SetToString(System.Func<string> func)
         {
             _toString = func;
+        }
+
+        /// <summary>This method sets the <see cref="ToString(string, System.IFormatProvider)"/> return value.
+        /// Set to null to have the method return <see cref="System.DateTime.ToString(string, System.IFormatProvider)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// </summary>
+        /// <param name="func"></param>
+        internal void SetToStringStringIFormatProvider(System.Func<string> func)
+        {
+            _toStringStringIFormatProvider = func;
         }
 
         #endregion

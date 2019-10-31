@@ -4307,8 +4307,85 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             sut.ToString().Should().Be(expected);
         }
-        
+
         #endregion  //  ToString() tests.
+
+        #region ToString(IFormatProvider provider) tests.
+
+        [Fact]
+        public void ToStringStringIFormatProvider_MimicSystem()
+        {
+            var anyTicks = 123456;
+            var anyFormat = "u";
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString(anyFormat, culture);
+
+            //  Act.
+            var res = sut.ToString(anyFormat, culture);
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("ö", "Length of 1 but unknow format specifier.")]
+        public void ToStringStringIFormatProvider_ThrowForBadIndata(string format, string because)
+        {
+            // The dotnet standard 2.0 documentation says ToString can throw an exception for not valid 
+            // custom format pattern. I have found no way to execute this so that case is not tested.
+            // Exceptions:
+            //   T:System.FormatException:
+            //     The length of format is 1, and it is not one of the format specifier characters
+            //     defined for System.Globalization.DateTimeFormatInfo. -or- format does not contain
+            //     a valid custom format pattern.
+            var anyTicks = 1234567;
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+            var sut = new Abstractions.DateTime(anyTicks);
+
+            //  Act.
+            var res = Record.Exception(() =>
+            {
+                sut.ToString(format, culture);
+            });
+
+            //  Assert.
+            res.Should().BeOfType<System.FormatException>(because);
+        }
+
+        // The dotnet standard 2.0 documentation says ToString can throw an exception
+        // for datetime outside min/max. I have found no way to execut this so that case is not tested.
+        //   T:System.ArgumentOutOfRangeException:
+        //     The date and time is outside the range of dates supported by the calendar used
+        //     by provider.
+
+        [Fact]
+        public void SetToStringStringIFormatProvider_SetAndReset()
+        {
+            var anyTicks = 123456;
+            var anyFormat = "u";
+            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
+            var systemDateTime = new System.DateTime(anyTicks);
+            var sut = new Abstractions.DateTime(anyTicks);
+            var expected = systemDateTime.ToString(anyFormat, culture);
+            sut.ToString(anyFormat, culture).Should().Be(expected, "Sanity test we know what we are testing.");
+            var fake = "any fake";
+
+            //  Act.
+            sut.SetToStringStringIFormatProvider(() => fake);
+
+            //  Assert.
+            sut.ToString(anyFormat, culture).Should().Be(fake);
+
+            //  Act.
+            sut.SetToStringStringIFormatProvider(null);
+
+            //  Assert.
+            sut.ToString(anyFormat, culture).Should().Be(expected);
+        }
+
+        #endregion  //  ToString(IFormatProvider provider) tests.
 
         #endregion // Instance method tests.
 
