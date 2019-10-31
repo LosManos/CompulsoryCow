@@ -95,6 +95,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<System.DateTime> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut;
 
         private static System.Func<DateTime> _addOperator;
+        private static System.Func<TimeSpan> _subtractDateTimeDateTimeOperator;
+        private static System.Func<DateTime> _subtractDateTimeTimeSpanOperator;
 
         private readonly System.DateTime _value;
 
@@ -1090,6 +1092,12 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Operators.
 
+        /// <summary>See + operator in <see cref="System.DateTime"/>.
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_addition
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public static DateTime operator +(DateTime d, TimeSpan t)
         {
             if (_addOperator != null)
@@ -1097,12 +1105,39 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _addOperator();
             }
 
-            var systemDateTime = ToSystem(d);
-            var systemTimeSpan = t.ToSystemTimeSpan();
+            return FromSystemDateTime(ToSystem(d) + t.ToSystemTimeSpan());
+        }
 
-            var result = systemDateTime + systemTimeSpan;
+        /// <summary>See - operator in <see cref="System.DateTime"/>.
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_subtraction#System_DateTime_op_Subtraction_System_DateTime_System_DateTime_
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        public static TimeSpan operator -(DateTime d1, DateTime d2)
+        {
+            if (_subtractDateTimeDateTimeOperator != null)
+            {
+                return _subtractDateTimeDateTimeOperator();
+            }
 
-            return FromSystemDateTime(result);
+            return new TimeSpan((ToSystem(d1) - ToSystem(d2)).Ticks);
+        }
+
+        /// <summary>See - operator in <see cref="System.DateTime"/>.
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_subtraction#System_DateTime_op_Subtraction_System_DateTime_System_TimeSpan_
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static DateTime operator -(DateTime d, TimeSpan t)
+        {
+            if (_subtractDateTimeTimeSpanOperator != null)
+            {
+                return _subtractDateTimeTimeSpanOperator();
+            }
+
+            return FromSystemDateTime(ToSystem(d) - t.ToSystemTimeSpan());
         }
 
         #endregion  //  Operators.
@@ -1319,10 +1354,32 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have normal behaviour.
         /// </summary>
-        /// <param name="utcNow"></param>
+        /// <param name="func"></param>
         internal static void SetAddOperator(System.Func<Abstractions.DateTime> func)
         {
             _addOperator = func;
+        }
+
+        /// <summary>This method sets the <see cref="operator -(DateTime, DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetSubtractDateTimeDateTimeOperator(System.Func<TimeSpan> func)
+        {
+            _subtractDateTimeDateTimeOperator = func;
+        }
+        
+        /// <summary>This method sets the <see cref="operator -(DateTime, TimeSpan)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetSubtractDateTimeTimeSpanOperator(System.Func<DateTime> func)
+        {
+            _subtractDateTimeTimeSpanOperator = func;
         }
 
         #endregion  //  Static methods used for testing and not production.
