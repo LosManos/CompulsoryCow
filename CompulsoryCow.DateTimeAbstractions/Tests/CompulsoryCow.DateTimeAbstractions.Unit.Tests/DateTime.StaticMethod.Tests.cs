@@ -184,25 +184,28 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void EqualsShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
+            Abstractions.DateTime.SetEquals(null);
             var anyDateTime1 = new Abstractions.DateTime(1);
             var anyDateTime2 = new Abstractions.DateTime(2);
             anyDateTime1.Ticks.Should().NotBe(anyDateTime2.Ticks, "Sanity test that we have different datetimes.");
-            var expectedResult = true;
+            var expected = System.DateTime.Equals(anyDateTime1, anyDateTime2);
+            expected
+                .Should().Be(Abstractions.DateTime.Equals(anyDateTime1, anyDateTime2), "Sanity check we know what we are testing.");
+            var fake = !expected;
 
             //  #   Act.
-            Abstractions.DateTime.SetEquals(new System.Func<System.DateTime, System.DateTime, bool>((t1, t2) => expectedResult));
+            Abstractions.DateTime.SetEquals(() => fake);
 
             //  #   Arrange.
             var res = Abstractions.DateTime.Equals(anyDateTime1, anyDateTime2);
-            res.Should().Be(expectedResult);
+            res.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetEquals(null);
 
             //  #   Assert.
-            res = Abstractions.DateTime.Equals(anyDateTime1, anyDateTime2);
-            res.Should().BeFalse();
+            Abstractions.DateTime.Equals(anyDateTime1, anyDateTime2)
+                .Should().Be(expected);
         }
 
         #endregion

@@ -71,7 +71,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.DateTime? _utcNow;
         private static System.Func<int> _compare;
         private static System.Func<int> _daysInMonth;
-        private static System.Func<System.DateTime, System.DateTime, bool> _equals;
+        private static System.Func<bool> _equals;
         private static System.Func<long, System.DateTime> _fromBinary;
         private static System.Func<long, System.DateTime> _fromFileTime;
         private static System.Func<long, System.DateTime> _fromFileTimeUtc;
@@ -415,7 +415,9 @@ namespace CompulsoryCow.DateTime.Abstractions
                 throw new System.ArgumentNullException(nameof(t2));
             }
 
-            return (_equals ?? System.DateTime.Equals)(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
+            return _equals != null ?
+                _equals() :
+                System.DateTime.Equals(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
         }
 
         /// <summary>See <see cref="System.DateTime.FromBinary(long)"/>.
@@ -1342,10 +1344,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="Equals(DateTime, DateTime)"/> use its default function.
         /// </summary>
-        /// <param name="equalsFunc"></param>
-        internal static void SetEquals(System.Func<System.DateTime, System.DateTime, bool> equalsFunc)
+        /// <param name="func"></param>
+        internal static void SetEquals(System.Func<bool> func)
         {
-            _equals = equalsFunc;
+            _equals = func;
         }
 
         /// <summary>This method sets the function used for <see cref="FromBinary(long)"/>.
