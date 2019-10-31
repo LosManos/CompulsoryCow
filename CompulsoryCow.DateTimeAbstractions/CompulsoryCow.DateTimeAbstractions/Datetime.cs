@@ -94,6 +94,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<bool> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn;
         private static System.Func<System.DateTime> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut;
 
+        private static System.Func<DateTime> _addOperator;
+
         private readonly System.DateTime _value;
 
         private System.Func<DateTime> _add;
@@ -1084,7 +1086,26 @@ namespace CompulsoryCow.DateTime.Abstractions
                 FromSystemDateTime(_value.ToUniversalTime());
         }
 
-        #endregion
+        #endregion  //  Instance methods.
+
+        #region Operators.
+
+        public static DateTime operator +(DateTime d, TimeSpan t)
+        {
+            if (_addOperator != null)
+            {
+                return _addOperator();
+            }
+
+            var systemDateTime = ToSystem(d);
+            var systemTimeSpan = t.ToSystemTimeSpan();
+
+            var result = systemDateTime + systemTimeSpan;
+
+            return FromSystemDateTime(result);
+        }
+
+        #endregion  //  Operators.
 
         #region Methods used for testing and not production.
 
@@ -1293,7 +1314,18 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="utcNow"></param>
         internal static void SetUtcNow(System.DateTime? utcNow) => _utcNow = utcNow;
 
-        #endregion
+        /// <summary>This method sets the <see cref="operator +(DateTime, TimeSpan)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="utcNow"></param>
+        internal static void SetAddOperator(System.Func<Abstractions.DateTime> func)
+        {
+            _addOperator = func;
+        }
+
+        #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
 
@@ -1698,12 +1730,12 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Private helper methods.
 
-        private DateTime FromSystemDateTime(System.DateTime datetime)
+        private static DateTime FromSystemDateTime(System.DateTime datetime)
         {
             return new DateTime(datetime.Ticks, datetime.Kind);
         }
 
-        private System.DateTime ToSystem(DateTime datetime)
+        private static System.DateTime ToSystem(DateTime datetime)
         {
             return new System.DateTime(datetime.Ticks, datetime.Kind);
         }
