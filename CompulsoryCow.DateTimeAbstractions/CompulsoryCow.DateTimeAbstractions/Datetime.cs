@@ -99,6 +99,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<DateTime> _subtractDateTimeTimeSpanOperator;
         private static System.Func<bool> _equalsOperator;
         private static System.Func<bool> _notEqualsOperator;
+        private static System.Func<bool> _earlierThanOperator;
+        private static System.Func<bool> _laterThanOperator;
 
         private readonly System.DateTime _value;
 
@@ -1189,11 +1191,6 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _notEqualsOperator();
             }
 
-            if (_notEqualsOperator != null)
-            {
-                return _notEqualsOperator();
-            }
-
             if (OnlyOneIsNull(d1, d2))
             {
                 return true;
@@ -1205,6 +1202,54 @@ namespace CompulsoryCow.DateTime.Abstractions
             }
 
             return ToSystem(d1) != ToSystem(d2);
+        }
+
+        /// <summary>See < operator in <see cref="System.DateTime"/>
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_lessthan
+        /// 
+        /// Note: There is a difference between System.DateTime and Abstractions.DateTime here
+        /// as System.DateTime is a struct and hence cannot be null while Abstractions.DateTime is a class
+        /// and can be null.
+        /// In the future this should change when we can use non nullable references.
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"l></param>
+        /// <returns></returns>
+        public static bool operator <(DateTime d1, DateTime d2)
+        {
+            if (_earlierThanOperator != null)
+            {
+                return _earlierThanOperator();
+            }
+
+            ThrowIfNull(nameof(d1), d1);
+            ThrowIfNull(nameof(d2), d2);
+
+            return ToSystem(d1) < ToSystem(d2);
+        }
+
+        /// <summary>See > operator in <see cref="System.DateTime"/>
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_lessthan
+        /// 
+        /// Note: There is a difference between System.DateTime and Abstractions.DateTime here
+        /// as System.DateTime is a struct and hence cannot be null while Abstractions.DateTime is a class
+        /// and can be null.
+        /// In the future this should change when we can use non nullable references.
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"l></param>
+        /// <returns></returns>
+        public static bool operator >(DateTime d1, DateTime d2)
+        {
+            if (_laterThanOperator != null)
+            {
+                return _laterThanOperator();
+            }
+
+            ThrowIfNull(nameof(d1), d1);
+            ThrowIfNull(nameof(d2), d2);
+
+            return ToSystem(d1) > ToSystem(d2);
         }
 
         #endregion  //  Operators.
@@ -1471,6 +1516,28 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static void SetNotEqualsOperator(System.Func<bool> func)
         {
             _notEqualsOperator = func;
+        }
+
+        /// <summary>This method sets the <see cref="operator <(DateTime, DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetEarlierThanOperator(System.Func<bool> func)
+        {
+            _earlierThanOperator = func;
+        }
+
+        /// <summary>This method sets the <see cref="operator >(DateTime, DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetLaterThanOperator(System.Func<bool> func)
+        {
+            _laterThanOperator = func;
         }
 
         #endregion  //  Static methods used for testing and not production.
@@ -1903,6 +1970,14 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return (IsNull(d1) && !IsNull(d2)) ||
                 (!IsNull(d1) && IsNull(d2));
+        }
+
+        private static void ThrowIfNull(string parameterName, DateTime d)
+        {
+            if (object.Equals(d, null))
+            {
+                throw new System.ArgumentNullException(parameterName, "Argument should be considered as not nullable.");
+            }
         }
 
         private static System.DateTime ToSystem(DateTime datetime)
