@@ -44,22 +44,34 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         [Fact]
-        public void CompareShouldBeSettable()
+        public void CompareShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
+            Abstractions.DateTime.SetCompare(null);
             const long anyTicks1 = 1;
             const long anyTicks2 = 2;
-            const int expectedResult = 42;
-            Abstractions.DateTime.SetCompare(new System.Func<System.DateTime, System.DateTime, int>((t1, t2) => expectedResult));
+            var anyDateTime1 = new Abstractions.DateTime(anyTicks1);
+            var anyDateTime2 = new Abstractions.DateTime(anyTicks2);
+            var actual = Abstractions.DateTime.Compare(anyDateTime1, anyDateTime2);
+            var expected = System.DateTime.Compare(new System.DateTime(anyTicks1), new System.DateTime(anyTicks2));
+            actual.Should().Be(expected, "Sanity check we know what we are testing.");
+            const int fake = 42;
 
             //  #   Act.
-            var res = Abstractions.DateTime.Compare(new Abstractions.DateTime(anyTicks1), new Abstractions.DateTime(anyTicks2));
+            Abstractions.DateTime.SetCompare(() => fake);
 
             //  #   Assert.
-            res.Should().Be(expectedResult);
+            Abstractions.DateTime.Compare(anyDateTime1, anyDateTime2)
+                .Should().Be(fake);
+
+            //  #   Act.
+            Abstractions.DateTime.SetCompare(null);
+
+            //  #   Assert.
+            Abstractions.DateTime.Compare(anyDateTime1, anyDateTime2)
+                .Should().Be(expected);
         }
 
-        #endregion
+        #endregion  //  Compare tests.
 
         #region DaysInMonth tests.
 

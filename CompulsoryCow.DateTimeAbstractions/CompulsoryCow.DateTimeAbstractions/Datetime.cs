@@ -69,7 +69,7 @@ namespace CompulsoryCow.DateTime.Abstractions
     {
         private static System.DateTime? _now;
         private static System.DateTime? _utcNow;
-        private static System.Func<System.DateTime, System.DateTime, int> _compare;
+        private static System.Func<int> _compare;
         private static System.Func<int, int, int> _daysInMonth;
         private static System.Func<System.DateTime, System.DateTime, bool> _equals;
         private static System.Func<long, System.DateTime> _fromBinary;
@@ -381,7 +381,10 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 throw new System.ArgumentNullException(nameof(t2));
             }
-            return (_compare ?? System.DateTime.Compare)(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
+
+            return _compare != null ?
+                _compare() :
+                System.DateTime.Compare(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
         }
 
         /// <summary>See <see cref="System.DateTime.DaysInMonth(int, int)"/>.
@@ -1313,10 +1316,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="Compare(DateTime, DateTime)"/> return <see cref="System.DateTime.Compare(System.DateTime, System.DateTime)"/>.
         /// </summary>
-        /// <param name="compareFunc"></param>
-        internal static void SetCompare(System.Func<System.DateTime, System.DateTime, int> compareFunc)
+        /// <param name="func"></param>
+        internal static void SetCompare(System.Func<int> func)
         {
-            _compare = compareFunc;
+            _compare = func;
         }
 
         /// <summary>This method sets the function used for <see cref="DaysInMonth(int, int)"/>.
