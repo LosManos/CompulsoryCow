@@ -70,7 +70,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.DateTime? _now;
         private static System.DateTime? _utcNow;
         private static System.Func<int> _compare;
-        private static System.Func<int, int, int> _daysInMonth;
+        private static System.Func<int> _daysInMonth;
         private static System.Func<System.DateTime, System.DateTime, bool> _equals;
         private static System.Func<long, System.DateTime> _fromBinary;
         private static System.Func<long, System.DateTime> _fromFileTime;
@@ -394,7 +394,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static int DaysInMonth(int year, int month)
         {
-            return (_daysInMonth ?? System.DateTime.DaysInMonth)(year, month);
+            return _daysInMonth != null ?
+                _daysInMonth() :
+                System.DateTime.DaysInMonth(year, month);
         }
 
         /// <summary>See <see cref="System.DateTime.Equals(System.DateTime, System.DateTime)"/>.
@@ -1328,10 +1330,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="DaysInMonth(int, int)"/> use its default function.
         /// </summary>
-        /// <param name="daysInMonthFunc"></param>
-        internal static void SetDaysInMonth(System.Func<int, int, int> daysInMonthFunc)
+        /// <param name="func"></param>
+        internal static void SetDaysInMonth(System.Func<int> func)
         {
-            _daysInMonth = daysInMonthFunc;
+            _daysInMonth = func;
         }
 
         /// <summary>This method sets the function used for <see cref="Equals(DateTime, DateTime)"/>.

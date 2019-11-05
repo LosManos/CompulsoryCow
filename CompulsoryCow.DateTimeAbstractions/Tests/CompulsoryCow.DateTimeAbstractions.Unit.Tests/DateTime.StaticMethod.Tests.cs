@@ -114,24 +114,27 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void DaysInMonthShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
+            Abstractions.DateTime.SetDaysInMonth(null);
             var anyYear = 2019;
             var anyMonth = 7;
-            var expectedDaysInMonth = 42;
+            var expected = System.DateTime.DaysInMonth(anyYear, anyMonth);
+            Abstractions.DateTime.DaysInMonth(anyYear, anyMonth)
+                .Should().Be(expected, "Sanity check we know what we are testing.");
+            var fake = 42;
 
             //  #   Act.
-            Abstractions.DateTime.SetDaysInMonth(new System.Func<int, int, int>((year, month) => expectedDaysInMonth));
+            Abstractions.DateTime.SetDaysInMonth(() => fake);
 
-            //  #   Arrange.
-            var res = Abstractions.DateTime.DaysInMonth(anyYear, anyMonth);
-            res.Should().Be(expectedDaysInMonth);
+            //  #   Assert.
+            Abstractions.DateTime.DaysInMonth(anyYear, anyMonth)
+                .Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetDaysInMonth(null);
 
             //  #   Assert.
-            res = Abstractions.DateTime.DaysInMonth(anyYear, anyMonth);
-            res.Should().Be(System.DateTime.DaysInMonth(anyYear, anyMonth));
+            Abstractions.DateTime.DaysInMonth(anyYear, anyMonth)
+                .Should().Be(expected);
         }
 
         #endregion
