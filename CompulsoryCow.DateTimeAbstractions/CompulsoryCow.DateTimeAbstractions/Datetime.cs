@@ -65,7 +65,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         DateTime Add(TimeSpan value);
     }
 
-    // TODO:OF:Implement interfaces found at https://docs.microsoft.com/en-us/dotnet/api/system.datetime?view=netcore-2.2
     public class DateTime : IDateTime
     {
         private static System.DateTime? _now;
