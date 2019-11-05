@@ -101,6 +101,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<bool> _notEqualsOperator;
         private static System.Func<bool> _earlierThanOperator;
         private static System.Func<bool> _laterThanOperator;
+        private static System.Func<bool> _earlierThanOrEqualOperator;
+        private static System.Func<bool> _laterThanOrEqualOperator;
 
         private readonly System.DateTime _value;
 
@@ -1213,7 +1215,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// In the future this should change when we can use non nullable references.
         /// </summary>
         /// <param name="d1"></param>
-        /// <param name="d2"l></param>
+        /// <param name="d2"></param>
         /// <returns></returns>
         public static bool operator <(DateTime d1, DateTime d2)
         {
@@ -1237,7 +1239,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// In the future this should change when we can use non nullable references.
         /// </summary>
         /// <param name="d1"></param>
-        /// <param name="d2"l></param>
+        /// <param name="d2"></param>
         /// <returns></returns>
         public static bool operator >(DateTime d1, DateTime d2)
         {
@@ -1250,6 +1252,54 @@ namespace CompulsoryCow.DateTime.Abstractions
             ThrowIfNull(nameof(d2), d2);
 
             return ToSystem(d1) > ToSystem(d2);
+        }
+
+        /// <summary>See <= operator in <see cref="System.DateTime"/>
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_lessthan
+        /// 
+        /// Note: There is a difference between System.DateTime and Abstractions.DateTime here
+        /// as System.DateTime is a struct and hence cannot be null while Abstractions.DateTime is a class
+        /// and can be null.
+        /// In the future this should change when we can use non nullable references.
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        public static bool operator <=(DateTime d1, DateTime d2)
+        {
+            if (_earlierThanOrEqualOperator != null)
+            {
+                return _earlierThanOrEqualOperator();
+            }
+
+            ThrowIfNull(nameof(d1), d1);
+            ThrowIfNull(nameof(d2), d2);
+
+            return ToSystem(d1) <= ToSystem(d2);
+        }
+
+        /// <summary>See >= operator in <see cref="System.DateTime"/>
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.datetime.op_lessthan
+        /// 
+        /// Note: There is a difference between System.DateTime and Abstractions.DateTime here
+        /// as System.DateTime is a struct and hence cannot be null while Abstractions.DateTime is a class
+        /// and can be null.
+        /// In the future this should change when we can use non nullable references.
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        public static bool operator >=(DateTime d1, DateTime d2)
+        {
+            if (_laterThanOrEqualOperator != null)
+            {
+                return _laterThanOrEqualOperator();
+            }
+
+            ThrowIfNull(nameof(d1), d1);
+            ThrowIfNull(nameof(d2), d2);
+
+            return ToSystem(d1) >= ToSystem(d2);
         }
 
         #endregion  //  Operators.
@@ -1538,6 +1588,28 @@ namespace CompulsoryCow.DateTime.Abstractions
         internal static void SetLaterThanOperator(System.Func<bool> func)
         {
             _laterThanOperator = func;
+        }
+
+        /// <summary>This method sets the <see cref="operator <=(DateTime, DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetEarlierThanOrEqualOperator(System.Func<bool> func)
+        {
+            _earlierThanOrEqualOperator = func;
+        }
+
+        /// <summary>This method sets the <see cref="operator >=(DateTime, DateTime)"/>.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have normal behaviour.
+        /// </summary>
+        /// <param name="func"></param>
+        internal static void SetLaterThanOrEqualOperator(System.Func<bool> func)
+        {
+            _laterThanOrEqualOperator = func;
         }
 
         #endregion  //  Static methods used for testing and not production.

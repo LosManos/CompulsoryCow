@@ -418,7 +418,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Act..
             var res = Record.Exception(() =>
             {
-                _ = d1 < d2;
+                _ = d1 > d2;
             });
 
             //  #   Assert.
@@ -458,5 +458,158 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         #endregion  //  operator >(DateTime t1, DateTime t2) tests.
+
+        #region operator <=(DateTime t1, DateTime t2) tests.
+
+        [Theory]
+        [InlineData(12, System.DateTimeKind.Utc, 13, System.DateTimeKind.Utc, "Earlier than should be true.")]
+        [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, "Equal should be true.")]
+        [InlineData(13, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, "Later than should be false.")]
+        [InlineData(12, System.DateTimeKind.Utc, 13, System.DateTimeKind.Local, "Kind differs but is not considered.")]
+        public void EarlierThanOrEqualOperator_MimicSystem(
+            long ticks1, System.DateTimeKind kind1,
+            long ticks2, System.DateTimeKind kind2,
+            string because)
+        {
+            var a = new Abstractions.DateTime(ticks1, kind1);
+            var b = new Abstractions.DateTime(ticks2, kind2);
+            var expected = new System.DateTime(ticks1, kind1) <= new System.DateTime(ticks2, kind2);
+
+            //  #   Act.
+            var res = a <= b;
+
+            //  Assert.
+            res.Should().Be(expected, because);
+        }
+
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData(1, null)]
+        [InlineData(null, 1)]
+        public void EarlierThanOrEqualOperator_ThrowForNullValues(long? ticks1, long? ticks2)
+        {
+            var anyKind = System.DateTimeKind.Utc;
+            var d1 = ticks1.HasValue ? new Abstractions.DateTime(ticks1.Value, anyKind) : null;
+            var d2 = ticks2.HasValue ? new Abstractions.DateTime(ticks2.Value, anyKind) : null;
+
+            //  #   Act..
+            var res = Record.Exception(() =>
+            {
+                _ = d1 <= d2;
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType<System.ArgumentNullException>();
+        }
+
+        [Fact]
+        public void EarlierThanOrEqualOperator_SetAndReset()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetEarlierThanOrEqualOperator(null);
+
+            var anyTicks1 = 223344;
+            var anyTicks2 = 334455;
+            var expected = new System.DateTime(anyTicks1) <= new System.DateTime(anyTicks2);
+            var actual = new Abstractions.DateTime(anyTicks1) <= new Abstractions.DateTime(anyTicks2);
+            expected.Should().Be(true, "Sanity test we know what we are testing.");
+            actual.Should().Be(expected, because: "Sanity test we know what we are testing.");
+
+            var anyFakeResult = false;
+            anyFakeResult.Should().Be(!expected, "Sanity check we have different values; so a future refactoring of the test does not mistakenly set to the same values.");
+
+            //  #   Act.
+            Abstractions.DateTime.SetEarlierThanOrEqualOperator(() => anyFakeResult);
+
+            //  #   Assert.;
+            actual = new Abstractions.DateTime(anyTicks1) <= new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(anyFakeResult);
+
+            //  #   Act.
+            Abstractions.DateTime.SetEarlierThanOrEqualOperator(null);
+
+            //  #   Assert.
+            actual = new Abstractions.DateTime(anyTicks1) <= new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(expected);
+        }
+
+        #endregion  //  operator <=(DateTime t1, DateTime t2) tests.
+
+        #region operator >=(DateTime t1, DateTime t2) tests.
+
+        [Theory]
+        [InlineData(12, System.DateTimeKind.Utc, 13, System.DateTimeKind.Utc, "Earlier than should be false.")]
+        [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, "Equal should be true.")]
+        [InlineData(13, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, "Later than should be true.")]
+        [InlineData(13, System.DateTimeKind.Utc, 12, System.DateTimeKind.Local, "Kind differs but is not considered.")]
+        public void LaterThanOrEqualOperator_MimicSystem(
+            long ticks1, System.DateTimeKind kind1,
+            long ticks2, System.DateTimeKind kind2,
+            string because)
+        {
+            var a = new Abstractions.DateTime(ticks1, kind1);
+            var b = new Abstractions.DateTime(ticks2, kind2);
+            var expected = new System.DateTime(ticks1, kind1) >= new System.DateTime(ticks2, kind2);
+
+            //  #   Act.
+            var res = a >= b;
+
+            //  Assert.
+            res.Should().Be(expected, because);
+        }
+
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData(1, null)]
+        [InlineData(null, 1)]
+        public void LaterThanOrEqualOperator_ThrowForNullValues(long? ticks1, long? ticks2)
+        {
+            var anyKind = System.DateTimeKind.Utc;
+            var d1 = ticks1.HasValue ? new Abstractions.DateTime(ticks1.Value, anyKind) : null;
+            var d2 = ticks2.HasValue ? new Abstractions.DateTime(ticks2.Value, anyKind) : null;
+
+            //  #   Act..
+            var res = Record.Exception(() =>
+            {
+                _ = d1 >= d2;
+            });
+
+            //  #   Assert.
+            res.Should().BeOfType<System.ArgumentNullException>();
+        }
+
+        [Fact]
+        public void LaterThanOrEqualOperator_SetAndReset()
+        {
+            //  #   Arrange.
+            Abstractions.DateTime.SetLaterThanOrEqualOperator(null);
+
+            var anyTicks1 = 334455;
+            var anyTicks2 = 223344;
+            var expected = new System.DateTime(anyTicks1) >= new System.DateTime(anyTicks2);
+            var actual = new Abstractions.DateTime(anyTicks1) >= new Abstractions.DateTime(anyTicks2);
+            expected.Should().Be(true, "Sanity test we know what we are testing.");
+            actual.Should().Be(expected, because: "Sanity test we know what we are testing.");
+
+            var anyFakeResult = false;
+            anyFakeResult.Should().Be(!expected, "Sanity check we have different values; so a future refactoring of the test does not mistakenly set to the same values.");
+
+            //  #   Act.
+            Abstractions.DateTime.SetLaterThanOrEqualOperator(() => anyFakeResult);
+
+            //  #   Assert.;
+            actual = new Abstractions.DateTime(anyTicks1) >= new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(anyFakeResult);
+
+            //  #   Act.
+            Abstractions.DateTime.SetLaterThanOrEqualOperator(null);
+
+            //  #   Assert.
+            actual = new Abstractions.DateTime(anyTicks1) >= new Abstractions.DateTime(anyTicks2);
+            actual.Should().Be(expected);
+
+        }
+
+        #endregion  //  operator >=(DateTime t1, DateTime t2) tests.
     }
 }
