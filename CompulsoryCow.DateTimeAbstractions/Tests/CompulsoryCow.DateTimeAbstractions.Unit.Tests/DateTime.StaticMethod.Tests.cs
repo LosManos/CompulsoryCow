@@ -276,32 +276,28 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void FromBinaryShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
-            var anyDateTime1 = new Abstractions.DateTime(AnyTicks());
-            var anySystemDateTime1 = new System.DateTime(anyDateTime1.Ticks);
-            var anyDateData1 = new System.DateTime(anyDateTime1.Ticks).ToBinary();
+            Abstractions.DateTime.SetFromBinary(null);
+            var anyTicks = AnyTicks();
+            var expected = System.DateTime.FromBinary(new System.DateTime(anyTicks).ToBinary());
 
-            var anyDateTime2 = new Abstractions.DateTime(AnyTicks());
-            var anySystemDateTime2 = new System.DateTime(anyDateTime2.Ticks);
+            Abstractions.DateTime.FromBinary(new Abstractions.DateTime(anyTicks).ToBinary())
+                .Should().Be(expected, "Sanity check we know what we are testing.");
 
-            anySystemDateTime1.Ticks.Should().NotBe(anySystemDateTime2.Ticks, "Sanity test we don't happen to randomise two identical datetimes.");
-
-            //  #   Act.
-            // Set `FromBinary` to always return datetime2.
-            Abstractions.DateTime.SetFromBinary(new System.Func<long, System.DateTime>((dateData) => anySystemDateTime2));
-
-            //  #   Assert..
-            // Deserialise datetime1 but get datetime2 back due to `SetFromBinary` call.
-            var res = Abstractions.DateTime.FromBinary(anyDateData1);
-            AssertEquals(anySystemDateTime2, res, because: "FromBinary should return DateTime2 disregarding parameter value.");
+            var fake = new Abstractions.DateTime( anyTicks + 1);
 
             //  #   Act.
-            // Reset and let `FromBinary` call default function.
+            Abstractions.DateTime.SetFromBinary(() => fake);
+
+            //  #   Assert.
+            Abstractions.DateTime.FromBinary(new Abstractions.DateTime(anyTicks).ToBinary())
+                .Should().Be(fake);
+
+            //  #   Act.
             Abstractions.DateTime.SetFromBinary(null);
 
             //  #   Assert.
-            res = Abstractions.DateTime.FromBinary(anyDateData1);
-            AssertEquals(anySystemDateTime1, res);
+            Abstractions.DateTime.FromBinary(new Abstractions.DateTime(anyTicks).ToBinary())
+                .Should().Be(expected);
         }
 
         #endregion

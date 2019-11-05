@@ -72,7 +72,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<int> _compare;
         private static System.Func<int> _daysInMonth;
         private static System.Func<bool> _equals;
-        private static System.Func<long, System.DateTime> _fromBinary;
+        private static System.Func<DateTime> _fromBinary;
         private static System.Func<long, System.DateTime> _fromFileTime;
         private static System.Func<long, System.DateTime> _fromFileTimeUtc;
         private static System.Func<double, System.DateTime> _fromOADate;
@@ -426,7 +426,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static DateTime FromBinary(long dateData)
         {
-            return new DateTime((_fromBinary ?? System.DateTime.FromBinary)(dateData).Ticks);
+            return _fromBinary != null ?
+                _fromBinary() :
+                FromSystemDateTime( System.DateTime.FromBinary(dateData));
         }
 
         /// <summary>See <see cref="System.DateTime.FromFileTime(long)"/>.
@@ -1356,10 +1358,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should onl be used for testing and really not bi in this class at all.
         /// Set to null to have <see cref="FromBinary(long)"/> use its default function.
         /// </summary>
-        /// <param name="fromBinaryFunc"></param>
-        internal static void SetFromBinary(System.Func<long, System.DateTime> fromBinaryFunc)
+        /// <param name="func"></param>
+        internal static void SetFromBinary(System.Func<Abstractions.DateTime> func)
         {
-            _fromBinary = fromBinaryFunc;
+            _fromBinary = func;
         }
 
         /// <summary>This method sets the <see cref="FromFileTime(long)"/> property.
