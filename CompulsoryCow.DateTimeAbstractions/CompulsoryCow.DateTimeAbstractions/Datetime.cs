@@ -73,7 +73,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<int> _daysInMonth;
         private static System.Func<bool> _equals;
         private static System.Func<DateTime> _fromBinary;
-        private static System.Func<long, System.DateTime> _fromFileTime;
+        private static System.Func<DateTime> _fromFileTime;
         private static System.Func<long, System.DateTime> _fromFileTimeUtc;
         private static System.Func<double, System.DateTime> _fromOADate;
         private static System.Func<int, bool> _isLeapYear;
@@ -437,7 +437,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static DateTime FromFileTime(long fileTime)
         {
-            return new DateTime((_fromFileTime ?? System.DateTime.FromFileTime)(fileTime).Ticks, System.DateTimeKind.Local);
+            return _fromFileTime != null ?
+                _fromFileTime() :
+                FromSystemDateTime(System.DateTime.FromFileTime(fileTime));
         }
 
         /// <summary>See <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
@@ -1359,7 +1361,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// Set to null to have <see cref="FromBinary(long)"/> use its default function.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetFromBinary(System.Func<Abstractions.DateTime> func)
+        internal static void SetFromBinary(System.Func<DateTime> func)
         {
             _fromBinary = func;
         }
@@ -1369,8 +1371,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="FromFileTime(long)"/> return <see cref="System.DateTime.FromFileTime(long)"/>.
         /// </summary>
-        /// <param name="fromFileTimeFunc"></param>
-        internal static void SetFromFileTime(System.Func<long, System.DateTime> fromFileTimeFunc) => _fromFileTime = fromFileTimeFunc;
+        /// <param name="func"></param>
+        internal static void SetFromFileTime(System.Func<DateTime> func) => _fromFileTime = func;
 
         /// <summary>This method sets the <see cref="FromFileTimeUtc(long)"/> method.
         /// 

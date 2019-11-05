@@ -344,27 +344,27 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void FromFileTimeShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
+            Abstractions.DateTime.SetFromFileTime(null);
             var anyFileTime = 42;
             var expected = System.DateTime.FromFileTime(anyFileTime);
             var actual = Abstractions.DateTime.FromFileTime(anyFileTime);
             AssertEquals(expected, actual, because: "Sanity test we get the standard System.DateTime.FromFileTime value.");
 
-            var anyOtherFileTime = 43;
+            var fake = Abstractions.DateTime.FromFileTime(anyFileTime + 1);
 
             //  #   Act.
-            Abstractions.DateTime.SetFromFileTime((_) => System.DateTime.FromFileTime(anyOtherFileTime));
+            Abstractions.DateTime.SetFromFileTime(() => fake);
 
             //  #   Assert.
-            var otherExpected = System.DateTime.FromFileTime(anyOtherFileTime);
-            var otherActual = Abstractions.DateTime.FromFileTime(anyOtherFileTime);
+            Abstractions.DateTime.FromFileTime(anyFileTime)
+                .Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetFromFileTime(null);
 
             //  #   Assert.
-            actual = Abstractions.DateTime.FromFileTime(anyFileTime);
-            AssertEquals(expected, actual);
+            Abstractions.DateTime.FromFileTime(anyFileTime)
+                .Should().Be(actual);
         }
 
         #endregion
