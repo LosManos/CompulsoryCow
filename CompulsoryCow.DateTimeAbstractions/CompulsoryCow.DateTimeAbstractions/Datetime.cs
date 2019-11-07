@@ -75,7 +75,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<DateTime> _fromBinary;
         private static System.Func<DateTime> _fromFileTime;
         private static System.Func<DateTime> _fromFileTimeUtc;
-        private static System.Func<double, System.DateTime> _fromOADate;
+        private static System.Func<DateTime> _fromOADate;
         private static System.Func<int, bool> _isLeapYear;
         private static System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseStringFormatProviderStyle;
         private static System.Func<string, System.IFormatProvider, System.DateTime> _parseStringFormatProvider;
@@ -458,7 +458,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static DateTime FromOADate(double d)
         {
-            return new DateTime((_fromOADate ?? System.DateTime.FromOADate)(d).Ticks, System.DateTimeKind.Unspecified);
+            return _fromOADate != null ?
+                _fromOADate() :
+                FromSystemDateTime(System.DateTime.FromOADate(d));
         }
 
         /// <summary>See <see cref="System.DateTime.IsLeapYear(int)"/>.
@@ -1389,8 +1391,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="FromOADate(double)"/> return <see cref="System.DateTime.FromOADate(double)"/>.
         /// </summary>
-        /// <param name="fromOADateFunc"></param>
-        internal static void SetFromOADate(System.Func<double, System.DateTime> fromOADateFunc) => _fromOADate = fromOADateFunc;
+        /// <param name="func"></param>
+        internal static void SetFromOADate(System.Func<DateTime> func) => _fromOADate = func;
 
         /// <summary>This method sets the <see cref="IsLeapYear(int)"/> method.
         /// Set to null to have <see cref="IsLeapYear(int)"/> return <see cref="System.DateTime.IsLeapYear(int)"/>.

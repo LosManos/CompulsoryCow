@@ -436,19 +436,19 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  DateTime FromFileTimeUtc(long fileTime);
 
-        #region FromOADate tests.
+        #region DateTime FromOADate(double d) tests.
 
         [Fact]
         public void FromOADateShouldEqualSystemFromOADate()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetFromOADate(null);
-            var anyFileTime = 1d;
+            var anyFileTime = 42d;
             var expected = System.DateTime.FromOADate(anyFileTime);
 
             //  #   Act.
             var res = Abstractions.DateTime.FromOADate(anyFileTime);
 
+            //  #   Assert.
             AssertEquals(expected, res);
         }
 
@@ -472,30 +472,29 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void FromOADateShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
+            Abstractions.DateTime.SetFromOADate(null);
             var anyFileTime = 42d;
             var expected = System.DateTime.FromOADate(anyFileTime);
             var actual = Abstractions.DateTime.FromOADate(anyFileTime);
-            AssertEquals(expected, actual, because: "Sanity test we get the standard System.DateTime.FromOADate value.");
-
-            var anyOtherFileTime = 43;
+            AssertEquals(expected, actual, because: "Sanity check we know what we are testing.");
+            var fake = Abstractions.DateTime.FromOADate(anyFileTime + 10);
 
             //  #   Act.
-            Abstractions.DateTime.SetFromOADate((_) => System.DateTime.FromOADate(anyOtherFileTime));
+            Abstractions.DateTime.SetFromOADate(() => fake);
 
             //  #   Assert.
-            var otherExpected = System.DateTime.FromOADate(anyOtherFileTime);
-            var otherActual = Abstractions.DateTime.FromOADate(anyOtherFileTime);
+            Abstractions.DateTime.FromOADate(anyFileTime)
+                .Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetFromOADate(null);
 
             //  #   Assert.
-            actual = Abstractions.DateTime.FromOADate(anyFileTime);
-            AssertEquals(expected, actual);
+            Abstractions.DateTime.FromOADate(anyFileTime)
+                .Should().Be(actual);
         }
 
-        #endregion
+        #endregion  //  DateTime FromOADate(double d) tests.
 
         #region IsLeapYear tests.
 
