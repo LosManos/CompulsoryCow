@@ -300,9 +300,9 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
                 .Should().Be(expected);
         }
 
-        #endregion
+        #endregion  //  FromBinary tests.
 
-        #region FromFileTime tests.
+        #region DateTime FromFileTime(long fileTime) tests.
 
         [Fact]
         public void FromFileTimeShouldEqualSystemFromFileTime()
@@ -367,9 +367,9 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
                 .Should().Be(actual);
         }
 
-        #endregion
+        #endregion // DateTime FromFileTime(long fileTime)
 
-        #region FromFileTimeUtc tests.
+        #region DateTime FromFileTimeUtc(long fileTime) tests.
 
         [Fact]
         public void FromFileTimeUtcShouldEqualSystemFromFileTimeUtc()
@@ -411,30 +411,30 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void FromFileTimeUtcShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
+            Abstractions.DateTime.SetFromFileTimeUtc(null);
             var anyFileTime = 42;
             var expected = System.DateTime.FromFileTimeUtc(anyFileTime);
             var actual = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
             AssertEquals(expected, actual, because: "Sanity test we get the standard System.DateTime.FromFileTimeUtc value.");
 
-            var anyOtherFileTime = 43;
+            var fake = Abstractions.DateTime.FromFileTimeUtc(anyFileTime+1);
 
             //  #   Act.
-            Abstractions.DateTime.SetFromFileTimeUtc((_) => System.DateTime.FromFileTimeUtc(anyOtherFileTime));
+            Abstractions.DateTime.SetFromFileTimeUtc(() => fake);
 
             //  #   Assert.
-            var otherExpected = System.DateTime.FromFileTimeUtc(anyOtherFileTime);
-            var otherActual = Abstractions.DateTime.FromFileTimeUtc(anyOtherFileTime);
+            Abstractions.DateTime.FromFileTimeUtc(anyFileTime)
+                .Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetFromFileTimeUtc(null);
 
             //  #   Assert.
-            actual = Abstractions.DateTime.FromFileTimeUtc(anyFileTime);
-            AssertEquals(expected, actual);
+            Abstractions.DateTime.FromFileTimeUtc(anyFileTime)
+                .Should().Be(actual);
         }
 
-        #endregion
+        #endregion  //  DateTime FromFileTimeUtc(long fileTime);
 
         #region FromOADate tests.
 

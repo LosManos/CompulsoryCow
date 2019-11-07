@@ -74,7 +74,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<bool> _equals;
         private static System.Func<DateTime> _fromBinary;
         private static System.Func<DateTime> _fromFileTime;
-        private static System.Func<long, System.DateTime> _fromFileTimeUtc;
+        private static System.Func<DateTime> _fromFileTimeUtc;
         private static System.Func<double, System.DateTime> _fromOADate;
         private static System.Func<int, bool> _isLeapYear;
         private static System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseStringFormatProviderStyle;
@@ -448,7 +448,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static DateTime FromFileTimeUtc(long fileTime)
         {
-            return new DateTime((_fromFileTimeUtc ?? System.DateTime.FromFileTimeUtc)(fileTime).Ticks, System.DateTimeKind.Utc);
+            return _fromFileTimeUtc != null ?
+                _fromFileTimeUtc() :
+                FromSystemDateTime(System.DateTime.FromFileTimeUtc(fileTime));
         }
         /// <summary>See <see cref="System.DateTime.FromOADate(double)"/>.
         /// </summary>
@@ -1379,8 +1381,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="FromFileTimeUtc(long)"/> return <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
         /// </summary>
-        /// <param name="fromFileTimeUtcFunc"></param>
-        internal static void SetFromFileTimeUtc(System.Func<long, System.DateTime> fromFileTimeUtcFunc) => _fromFileTimeUtc = fromFileTimeUtcFunc;
+        /// <param name="func"></param>
+        internal static void SetFromFileTimeUtc(System.Func<DateTime> func) => _fromFileTimeUtc = func;
 
         /// <summary>This method sets the <see cref="FromOADate(double)"/> method.
         /// 
