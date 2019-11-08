@@ -604,29 +604,29 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void ParseStringFormatProviderStylesShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
             var anyDateTime = "2019-08-11 19:37";
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var anyStyle = DateTimeStyles.AssumeUniversal;
-            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
-            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
-            var anyFakeDateTime = new System.DateTime(2);
+            var reference = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            var expected = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            AssertEquals(reference, expected, because: "Sanity test that we know what we are testing.");
+
+            var fake = expected.AddDays(1);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseStringFormatProviderStyle((s, fp, st) => anyFakeDateTime);
+            Abstractions.DateTime.SetParseStringFormatProviderStyle(() => fake);
 
             //  #   Assert.
-            var actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(anyFakeDateTime, actual);
+            var res = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            res.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetParseStringFormatProviderStyle(null);
 
             //  #   Assert.
-            actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, actual);
+            res = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture, anyStyle);
+            res.Should().Be(expected);
         }
 
         #endregion
@@ -669,28 +669,27 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void ParseStringFormatProviderShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetParseStringFormatProvider(null);
             var anyDateTime = "2019-08-11 19:37";
             var anyFormatProvider = CultureInfo.InvariantCulture;
-            var expected = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
-            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
-            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
-            var anyFakeDateTime = new System.DateTime(2);
+            var reference = System.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            var expected = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
+            AssertEquals(reference, expected, because: "Sanity test that we know what we are testing.");
+            var fake = expected.AddDays(2);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseStringFormatProvider((s, fp) => anyFakeDateTime);
+            Abstractions.DateTime.SetParseStringFormatProvider(() => fake);
 
             //  #   Assert.
             var actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
-            AssertEquals(anyFakeDateTime, actual);
+            actual.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetParseStringFormatProvider(null);
 
             //  #   Assert.
             actual = Abstractions.DateTime.Parse(anyDateTime, CultureInfo.InvariantCulture);
-            AssertEquals(expected, actual);
+            actual.Should().Be(expected);
         }
 
         #endregion
@@ -729,27 +728,26 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void ParseStringShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetParseString(null);
             var anyDateTime = "2019-08-11 19:37";
-            var expected = System.DateTime.Parse(anyDateTime);
-            var abstractionResult = Abstractions.DateTime.Parse(anyDateTime);
-            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
-            var anyFakeDateTime = new System.DateTime(2);
+            var reference = System.DateTime.Parse(anyDateTime);
+            var expected = Abstractions.DateTime.Parse(anyDateTime);
+            AssertEquals(reference, expected, because: "Sanity test that we know what we are testing.");
+            var fake = expected.AddDays(3);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseString((s) => anyFakeDateTime);
+            Abstractions.DateTime.SetParseString(() => fake);
 
             //  #   Assert.
             var actual = Abstractions.DateTime.Parse(anyDateTime);
-            AssertEquals(anyFakeDateTime, actual);
+            actual.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetParseString(null);
 
             //  #   Assert.
             actual = Abstractions.DateTime.Parse(anyDateTime);
-            AssertEquals(expected, actual);
+            actual.Should().Be(expected);
         }
 
         #endregion
@@ -807,24 +805,24 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var anyStyle = DateTimeStyles.AssumeUniversal;
-            var expected = System.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
-            var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
-            var anyFakeDateTime = new System.DateTime(2);
+            var reference = System.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
+            var expected = Abstractions.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
+            AssertEquals(reference, expected, because: "Sanity test that we know what we are testing.");
+            var fake = expected.AddDays(4);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseExactStringStringArrayFormatProviderStyle((s, sa, fp, st) => anyFakeDateTime);
+           Abstractions.DateTime.SetParseExactStringStringArrayFormatProviderStyle(() => fake);
 
             //  #   Assert.
             var actual = Abstractions.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(anyFakeDateTime, actual);
+            actual.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetParseExactStringStringArrayFormatProviderStyle(null);
 
             //  #   Assert.
             actual = Abstractions.DateTime.ParseExact(anyDateTime, new[] { anyFormat }, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, actual);
+            actual.Should().Be(expected);
         }
 
         #endregion
@@ -876,30 +874,29 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void ParseExactStringStringFormatProviderStylesShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle(null);
             var anyDateTime = "2019-08-11 19:37";
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
             var anyStyle = DateTimeStyles.AssumeUniversal;
-            var expected = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
-            var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
-            var anyFakeDateTime = new System.DateTime(2);
+            var reference = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
+            var expected = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
+            AssertEquals(reference, expected, because: "Sanity test that we know what we are testing.");
+            var fake = expected.AddDays(5);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle((s, sa, fp, st) => anyFakeDateTime);
+            Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle(() => fake);
 
             //  #   Assert.
             var actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(anyFakeDateTime, actual);
+            actual.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetParseExactStringStringFormatProviderStyle(null);
 
             //  #   Assert.
             actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture, anyStyle);
-            AssertEquals(expected, actual);
+            actual.Should().Be(expected);
         }
 
         #endregion
@@ -954,24 +951,24 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var anyDateTime = "2019-08-11 19:37";
             var anyFormat = "yyyy-MM-dd HH:mm";
             var anyFormatProvider = CultureInfo.InvariantCulture;
-            var expected = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
-            var abstractionResult = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
-            AssertEquals(expected, abstractionResult, because: "Sanity test that we know what we are testing.");
-            var anyFakeDateTime = new System.DateTime(2);
+            var reference = System.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
+            var expected = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
+            AssertEquals(reference, expected, because: "Sanity test that we know what we are testing.");
+            var fake = expected.AddDays(6);
 
             //  #   Act.
-            Abstractions.DateTime.SetParseExactStringStringFormatProvider((s, sa, fp) => anyFakeDateTime);
+            Abstractions.DateTime.SetParseExactStringStringFormatProvider(() => fake);
 
             //  #   Assert.
             var actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
-            AssertEquals(anyFakeDateTime, actual);
+            actual.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetParseExactStringStringFormatProvider(null);
 
             //  #   Assert.
             actual = Abstractions.DateTime.ParseExact(anyDateTime, anyFormat, CultureInfo.InvariantCulture);
-            AssertEquals(expected, actual);
+            actual.Should().Be(expected);
         }
 
         #endregion
