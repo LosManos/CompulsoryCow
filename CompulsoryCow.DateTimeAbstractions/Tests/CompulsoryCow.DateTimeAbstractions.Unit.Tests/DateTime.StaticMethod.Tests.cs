@@ -496,15 +496,14 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         #endregion  //  DateTime FromOADate(double d) tests.
 
-        #region IsLeapYear tests.
+        #region bool IsLeapYear(int year) tests.
 
         [Fact]
         public void IsLeapYearShouldReturnSystemIsLeapYear()
         {
-            //  #   Arrange.
+            Abstractions.DateTime.SetIsLeapYear(null);
             var anyLeapYear = 2004;
             var anyNonLeapYear = 2005;
-            Abstractions.DateTime.SetIsLeapYear(null);
 
             //  #   Act.
             var resLeap = Abstractions.DateTime.IsLeapYear(anyLeapYear);
@@ -518,29 +517,33 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void IsLeapYearShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetIsLeapYear(null);
             var anyLeapYear = 2004;
-            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().Be(true, "Sanity test we know a positive");
+            var expected = true;
+            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().Be(expected, "Sanity test we know a positive");
+            var fake = false;
+            expected.Should().Be(!fake, "Sanity check we know we alter the return value.");
 
             //  #   Act.
-            Abstractions.DateTime.SetIsLeapYear((n) => false);
+            Abstractions.DateTime.SetIsLeapYear(() => fake);
 
             //  #   Assert.
-            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().BeFalse();
+            Abstractions.DateTime.IsLeapYear(anyLeapYear)
+                .Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetIsLeapYear(null);
-            Abstractions.DateTime.IsLeapYear(anyLeapYear).Should().BeTrue();
+            Abstractions.DateTime.IsLeapYear(anyLeapYear)
+                .Should().Be(expected);
         }
 
         [Fact]
         public void IsLeapYearShouldThrowExceptionForInvalidArgument()
         {
             //  # Arrange.
+            Abstractions.DateTime.SetIsLeapYear(null);
             const int tooLowYear = 0;
             const int tooHighYear = 10000;
-            Abstractions.DateTime.SetIsLeapYear(null);
 
             //  # Act.
             var tooLowRes = Record.Exception(() =>
@@ -558,7 +561,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             tooHighRes.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        #endregion
+        #endregion  //  bool IsLeapYear(int year) tests.
 
         #region Parse(string s, IFormatProvider provider, DateTimeStyles styles) tests.
 

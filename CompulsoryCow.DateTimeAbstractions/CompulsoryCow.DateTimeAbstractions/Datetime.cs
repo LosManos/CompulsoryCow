@@ -76,7 +76,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<DateTime> _fromFileTime;
         private static System.Func<DateTime> _fromFileTimeUtc;
         private static System.Func<DateTime> _fromOADate;
-        private static System.Func<int, bool> _isLeapYear;
+        private static System.Func<bool> _isLeapYear;
         private static System.Func<string, System.IFormatProvider, DateTimeStyles, System.DateTime> _parseStringFormatProviderStyle;
         private static System.Func<string, System.IFormatProvider, System.DateTime> _parseStringFormatProvider;
         private static System.Func<string, System.DateTime> _parseString;
@@ -469,7 +469,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static bool IsLeapYear(int year)
         {
-            return (_isLeapYear ?? System.DateTime.IsLeapYear)(year);
+            return _isLeapYear != null ?
+                _isLeapYear() :
+                System.DateTime.IsLeapYear(year);
         }
 
         /// <summary>See <see cref="System.DateTime.Parse(string, System.IFormatProvider, DateTimeStyles)"/>.
@@ -1399,8 +1401,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// 
         /// This method should only be used for testing and really not be in this class at all
         /// </summary>
-        /// <param name="isLeapYearFunc"></param>
-        internal static void SetIsLeapYear(System.Func<int, bool> isLeapYearFunc) => _isLeapYear = isLeapYearFunc;
+        /// <param name="func"></param>
+        internal static void SetIsLeapYear(System.Func<bool> func) => _isLeapYear = func;
 
         /// <summary>This method sets the <see cref="Parse(string, System.IFormatProvider, DateTimeStyles)"/> method.
         /// Set to null to have <see cref="Parse(string, System.IFormatProvider, DateTimeStyles)"/> return <see cref="System.DateTime.Parse(string, System.IFormatProvider, DateTimeStyles)"/>.
