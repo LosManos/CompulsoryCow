@@ -84,14 +84,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<DateTime> _parseExactStringStringFormatProviderStyle;
         private static System.Func<DateTime> _parseExactStringStringFormatProvider;
         private static System.Func<DateTime> _specifyKind;
-        private static System.Func<bool> _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn;
-        private static System.Func<System.DateTime> _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut;
-        private static System.Func<bool> _setTryParseStringDateTimeReturn;
-        private static System.Func<System.DateTime> _setTryParseStringDateTimeOut;
-        private static System.Func<bool> _setTryParseExactStringStringIFormatProviderDateTimeStylesReturn;
-        private static System.Func<System.DateTime> _setTryParseExactStringStringIFormatProviderDateTimeStylesOut;
-        private static System.Func<bool> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn;
-        private static System.Func<System.DateTime> _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut;
+        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseStringIFormatProviderDateTimeStylesDateTime;
+        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseStringDateTime;
+        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseExactStringStringIFormatProviderDateTimeStyles;
+        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles;
 
         private static System.Func<DateTime> _addOperator;
         private static System.Func<TimeSpan> _subtractDateTimeDateTimeOperator;
@@ -574,16 +570,16 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             var ret = System.DateTime.TryParse(s, provider, styles, out var @out);
 
-            ret = _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn == null ?
-                ret : _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn();
+            ret = _setTryParseStringIFormatProviderDateTimeStylesDateTime.Return == null ?
+                ret : _setTryParseStringIFormatProviderDateTimeStylesDateTime.Return();
 
-            resultOut = _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut == null ?
+            resultOut = _setTryParseStringIFormatProviderDateTimeStylesDateTime.Out == null ?
                 new DateTime(
                     @out.Ticks,
                     @out.Kind) :
                 new DateTime(
-                    _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut().Ticks,
-                    _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut().Kind);
+                    _setTryParseStringIFormatProviderDateTimeStylesDateTime.Out().Ticks,
+                    _setTryParseStringIFormatProviderDateTimeStylesDateTime.Out().Kind);
 
             return ret;
         }
@@ -597,16 +593,16 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             var ret = System.DateTime.TryParse(s, out var @out);
 
-            ret = _setTryParseStringDateTimeReturn == null ?
-                ret : _setTryParseStringDateTimeReturn();
+            ret = _setTryParseStringDateTime.Return == null ?
+                ret : _setTryParseStringDateTime.Return();
 
-            result = _setTryParseStringDateTimeOut == null ?
+            result = _setTryParseStringDateTime.Out == null ?
                 new DateTime(
                     @out.Ticks,
                     @out.Kind) :
                 new DateTime(
-                    _setTryParseStringDateTimeOut().Ticks,
-                    _setTryParseStringDateTimeOut().Kind);
+                    _setTryParseStringDateTime.Out().Ticks,
+                    _setTryParseStringDateTime.Out().Kind);
 
             return ret;
         }
@@ -623,16 +619,16 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             var ret = System.DateTime.TryParseExact(s, format, provider, style, out var @out);
 
-            ret = _setTryParseExactStringStringIFormatProviderDateTimeStylesReturn == null ?
-                ret : _setTryParseExactStringStringIFormatProviderDateTimeStylesReturn();
+            ret = _setTryParseExactStringStringIFormatProviderDateTimeStyles.Return == null ?
+                ret : _setTryParseExactStringStringIFormatProviderDateTimeStyles.Return();
 
-            result = _setTryParseExactStringStringIFormatProviderDateTimeStylesOut == null ?
+            result = _setTryParseExactStringStringIFormatProviderDateTimeStyles.Out == null ?
                 new DateTime(
                     @out.Ticks,
                     @out.Kind) :
                     new DateTime(
-                        _setTryParseExactStringStringIFormatProviderDateTimeStylesOut().Ticks,
-                        _setTryParseExactStringStringIFormatProviderDateTimeStylesOut().Kind);
+                        _setTryParseExactStringStringIFormatProviderDateTimeStyles.Out().Ticks,
+                        _setTryParseExactStringStringIFormatProviderDateTimeStyles.Out().Kind);
 
             return ret;
         }
@@ -649,16 +645,16 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             var ret = System.DateTime.TryParseExact(s, formats, provider, style, out var @out);
 
-            ret = _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn == null ?
-                ret : _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn();
+            ret = _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Return == null ?
+                ret : _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Return();
 
-            result = _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut == null ?
+            result = _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Out == null ?
                 new DateTime(
                     @out.Ticks,
                     @out.Kind) :
                     new DateTime(
-                        _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut().Ticks,
-                        _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut().Kind);
+                        _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Out().Ticks,
+                        _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Out().Kind);
 
             return ret;
         }
@@ -1461,10 +1457,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseStringIFormatProviderDateTimeStylesDateTime(
             System.Func<bool> returnFunc,
-            System.Func<System.DateTime> outFunc)
+            System.Func<DateTime> outFunc)
         {
-            _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn = returnFunc;
-            _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut = outFunc;
+            _setTryParseStringIFormatProviderDateTimeStylesDateTime.Return = returnFunc;
+            _setTryParseStringIFormatProviderDateTimeStylesDateTime.Out = outFunc;
         }
 
         /// <summary>This method sets the <see cref="TryParse(string, out DateTime)"/> method.
@@ -1474,10 +1470,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseStringDateTime(
             System.Func<bool> returnFunc,
-            System.Func<System.DateTime> outFunc)
+            System.Func<DateTime> outFunc)
         {
-            _setTryParseStringDateTimeReturn = returnFunc;
-            _setTryParseStringDateTimeOut = outFunc;
+            _setTryParseStringDateTime.Return = returnFunc;
+            _setTryParseStringDateTime.Out = outFunc;
         }
 
         /// <summary>This method sets the <see cref="TryParseExact(string, string, System.IFormatProvider, DateTimeStyles, out System.DateTime)"/> method.
@@ -1487,10 +1483,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseExactStringStringIFormatProviderDateTimeStyles(
             System.Func<bool> returnFunc,
-            System.Func<System.DateTime> outFunc)
+            System.Func<DateTime> outFunc)
         {
-            _setTryParseExactStringStringIFormatProviderDateTimeStylesReturn = returnFunc;
-            _setTryParseExactStringStringIFormatProviderDateTimeStylesOut = outFunc;
+            _setTryParseExactStringStringIFormatProviderDateTimeStyles.Return = returnFunc;
+            _setTryParseExactStringStringIFormatProviderDateTimeStyles.Out = outFunc;
         }
 
         /// <summary>This method sets the <see cref="TryParseExact(string, string[], System.IFormatProvider, DateTimeStyles, out System.DateTime)"/> method.
@@ -1500,10 +1496,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
             System.Func<bool> returnFunc,
-            System.Func<System.DateTime> outFunc)
+            System.Func<DateTime> outFunc)
         {
-            _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesReturn = returnFunc;
-            _setTryParseExactStringStringArrayIFormatProviderDateTimeStylesOut = outFunc;
+            _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Return = returnFunc;
+            _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Out = outFunc;
         }
 
         /// <summary>This method sets the <see cref="Now"/> property.

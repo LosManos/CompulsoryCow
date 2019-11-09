@@ -1060,7 +1060,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void TryParseStringIFormatProviderDateTimeStylesDateTimeShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetTryParseStringIFormatProviderDateTimeStylesDateTime(null, null);
             var anyDateTime = "2019-08-11 19:37";
             var anyFormatProvider = CultureInfo.InvariantCulture;
@@ -1070,7 +1069,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             expected.Should().BeTrue();
             expected.Should().Be(abstractionResult, because: "Sanity test that we know what we are testing.");
             AssertEquals(expectedOut, abstractionOut);
-            var anyFakeDateTime = new System.DateTime(2);
+            var anyFakeDateTime = new Abstractions.DateTime(2);
 
             //  #   Act.
             Abstractions.DateTime.SetTryParseStringIFormatProviderDateTimeStylesDateTime(() => true, () => anyFakeDateTime);
@@ -1078,7 +1077,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  #   Assert.
             var actual = Abstractions.DateTime.TryParse("not even a date", CultureInfo.InvariantCulture, anyStyle, out var actualOut);
             actual.Should().BeTrue();
-            AssertEquals(anyFakeDateTime, actualOut);
+            actualOut.Should().Be(anyFakeDateTime);
 
             //  #   Act.
             Abstractions.DateTime.SetTryParseStringIFormatProviderDateTimeStylesDateTime(null, null);
@@ -1128,7 +1127,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void TryParseStringDateTimeShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetTryParseStringDateTime(null, null);
             var anyDateTime = "2019-08-11 19:37";
             var expected = System.DateTime.TryParse(anyDateTime, out var expectedOut);
@@ -1136,15 +1134,15 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             expected.Should().BeTrue();
             expected.Should().Be(abstractionResult, because: "Sanity test that we know what we are testing.");
             AssertEquals(expectedOut, abstractionOut);
-            var anyFakeDateTime = new System.DateTime(2);
+            var anyFakeDateTime = new Abstractions.DateTime(2);
 
             //  #   Act.
-            Abstractions.DateTime.SetTryParseStringDateTime(() => true, () => anyFakeDateTime);
+            Abstractions.DateTime.SetTryParseStringDateTime(() => false, () => anyFakeDateTime);
 
             //  #   Assert.
             var actual = Abstractions.DateTime.TryParse("not even a date", out var actualOut);
-            actual.Should().BeTrue();
-            AssertEquals(anyFakeDateTime, actualOut);
+            actual.Should().BeFalse();
+            actualOut.Should().Be(anyFakeDateTime);
 
             //  #   Act.
             Abstractions.DateTime.SetTryParseStringDateTime(null, null);
@@ -1213,7 +1211,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(expectedOut, actualOut);
 
             var anyOtherExpectedReturn = false;
-            var anyOtherExpectedOut = System.DateTime.MinValue.AddDays(1);
+            var anyOtherExpectedOut = Abstractions.DateTime.MinValue.AddDays(1);
 
             //  Act.
             Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(
@@ -1223,7 +1221,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out actualOut);
             actualReturn.Should().Be(anyOtherExpectedReturn);
-            AssertEquals(anyOtherExpectedOut, actualOut);
+            actualOut.Should().Be(expectedOut);
 
             //  Act.
             Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(
@@ -1295,7 +1293,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             AssertEquals(expectedOut, actualOut);
 
             var anyOtherExpectedReturn = false;
-            var anyOtherExpectedOut = System.DateTime.MinValue.AddDays(1);
+            var anyOtherExpectedOut = Abstractions.DateTime.MinValue.AddDays(1);
 
             //  Act.
             Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
@@ -1305,7 +1303,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out actualOut);
             actualReturn.Should().Be(anyOtherExpectedReturn);
-            AssertEquals(anyOtherExpectedOut, actualOut);
+            actualOut.Should().Be(expectedOut);
 
             //  Act.
             Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
