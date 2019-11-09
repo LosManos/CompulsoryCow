@@ -997,24 +997,23 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void SpecifyKindShouldBeSettableAndResettable()
         {
-            //  #   Arrange.
             Abstractions.DateTime.SetSpecifyKind(null);
-            var anyDateTime = new Abstractions.DateTime(42, System.DateTimeKind.Local);
-            anyDateTime.Kind.Should().Be(System.DateTimeKind.Local, "Sanity test we have a special DateTimeKind.");
-            var anyOtherDateTimeKind = System.DateTimeKind.Utc;
+            var expected = new Abstractions.DateTime(42, System.DateTimeKind.Unspecified);
+            expected.Kind.Should().Be(System.DateTimeKind.Unspecified, "Sanity test we have a special DateTimeKind.");
+            var fake = new Abstractions.DateTime(expected.AddDays(1).Ticks, System.DateTimeKind.Utc);
 
             //  #   Act.
-            Abstractions.DateTime.SetSpecifyKind(() => anyOtherDateTimeKind);
+            Abstractions.DateTime.SetSpecifyKind(() => fake);
 
             //  #   Assert.
-            var res = Abstractions.DateTime.SpecifyKind(anyDateTime, System.DateTimeKind.Local);
-            res.Kind.Should().Be(System.DateTimeKind.Utc);
+            var res = Abstractions.DateTime.SpecifyKind(expected, System.DateTimeKind.Local);
+            res.Should().Be(fake);
 
             //  #   Act.
             Abstractions.DateTime.SetSpecifyKind(null);
 
             //  #   Assert.
-            res = Abstractions.DateTime.SpecifyKind(anyDateTime, System.DateTimeKind.Local);
+            res = Abstractions.DateTime.SpecifyKind(expected, System.DateTimeKind.Local);
             res.Kind.Should().Be(System.DateTimeKind.Local);
         }
 

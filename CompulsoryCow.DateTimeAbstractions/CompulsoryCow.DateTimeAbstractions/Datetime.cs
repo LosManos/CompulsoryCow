@@ -83,7 +83,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<DateTime> _parseExactStringStringArrayFormatProviderStyle;
         private static System.Func<DateTime> _parseExactStringStringFormatProviderStyle;
         private static System.Func<DateTime> _parseExactStringStringFormatProvider;
-        private static System.Func<System.DateTimeKind> _specifyKind;
+        private static System.Func<DateTime> _specifyKind;
         private static System.Func<bool> _setTryParseStringIFormatProviderDateTimeStylesDateTimeReturn;
         private static System.Func<System.DateTime> _setTryParseStringIFormatProviderDateTimeStylesDateTimeOut;
         private static System.Func<bool> _setTryParseStringDateTimeReturn;
@@ -558,10 +558,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         public static DateTime SpecifyKind(DateTime value, System.DateTimeKind kind)
         {
-            var result = System.DateTime.SpecifyKind(
-                new System.DateTime(value.Ticks, value.Kind),
-                _specifyKind == null ? kind : _specifyKind());
-            return new DateTime(result.Ticks, result.Kind);
+            return _specifyKind != null ?
+                _specifyKind() :
+                FromSystemDateTime(System.DateTime.SpecifyKind(ToSystem(value), kind));
         }
 
         /// <summary>See <see cref="System.DateTime.TryParse(string, System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
@@ -1452,8 +1451,8 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <summary>This method sets the <see cref="SpecifyKind(DateTime, System.DateTimeKind)"/> method.
         /// Set to null to have <see cref="SpecifyKind(DateTime, System.DateTimeKind)"/> return <see cref="System.DateTime.SpecifyKind(System.DateTime, System.DateTimeKind)"/>.
         /// </summary>
-        /// <param name="specifyKindFunc"></param>
-        internal static void SetSpecifyKind(System.Func<System.DateTimeKind> specifyKindFunc) => _specifyKind = specifyKindFunc;
+        /// <param name="func"></param>
+        internal static void SetSpecifyKind(System.Func<DateTime> func) => _specifyKind = func;
 
         /// <summary>This method sets the <see cref="TryParse(string, System.IFormatProvider, DateTimeStyles, out DateTime)"/> method.
         /// Set to null to have <see cref="TryParse(string, System.IFormatProvider, DateTimeStyles, out DateTime)"/> return <see cref="System.DateTime.TryParse(string, System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
