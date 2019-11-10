@@ -901,10 +901,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToShortTimeString();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToString(string)"/>.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string ToString(string format)
         {
             return _toStringString != null ?
@@ -912,10 +909,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToString(format);
         }
 
-        /// <summary>See <see cref="System.DateTime.ToString(System.IFormatProvider)"/>.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string ToString(System.IFormatProvider provider)
         {
             return _toStringIFormatProvider != null ?
@@ -923,9 +917,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToString(provider);
         }
 
-        /// <summary>See <see cref="System.DateTime.ToString"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return _toString != null ?
@@ -933,11 +925,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToString();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToString(string, System.IFormatProvider)"/>.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="provider"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string ToString(string format, System.IFormatProvider provider)
         {
             return _toStringStringIFormatProvider != null ?

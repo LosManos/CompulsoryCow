@@ -229,5 +229,30 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <returns></returns>
         string ToShortTimeString();
+
+        /// <summary>See <see cref="System.DateTime.ToString(string, System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        string ToString(string format, System.IFormatProvider provider);
+
+        /// <summary>See <see cref="System.DateTime.ToString(string)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        string ToString(string format);
+
+        /// <summary>See <see cref="System.DateTime.ToString(System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        string ToString(System.IFormatProvider provider);
+
+        /// <summary>See <see cref="System.DateTime.ToString"/>.
+        /// </summary>
+        /// <returns></returns>
+        string ToString();
+
     }
 }
