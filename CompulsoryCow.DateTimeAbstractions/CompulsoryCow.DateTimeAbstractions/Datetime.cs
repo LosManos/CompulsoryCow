@@ -829,9 +829,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 FromSystemDateTime(_value.Subtract(value.ToSystemTimeSpan()));
         }
 
-        /// <summary>See <see cref="System.DateTime.ToBinary"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public long ToBinary()
         {
             return _toBinary != null ?
@@ -839,9 +837,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToBinary();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToFileTime"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public long ToFileTime()
         {
             return _toFileTime != null ?
@@ -849,9 +845,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToFileTime();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToFileTimeUtc"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public long ToFileTimeUtc()
         {
             return _toFileTimeUtc != null ?
@@ -859,9 +853,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToFileTime();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToLocalTime"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime ToLocalTime()
         {
             return _toLocalTime != null ?
@@ -869,9 +861,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 FromSystemDateTime(_value.ToLocalTime());
         }
 
-        /// <summary>See <see cref="System.DateTime.ToLongDateString"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string ToLongDateString()
         {
             return _toLongDateString != null ?
@@ -879,9 +869,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToLongDateString();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToLongTimeString"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string ToLongTimeString()
         {
             return _toLongTimeString != null ?
@@ -889,9 +877,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToLongTimeString();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToOADate"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public double ToOADate()
         {
             return _toOADate != null ?
@@ -899,9 +885,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToOADate();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToShortDateString"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string ToShortDateString()
         {
             return _toShortDateString != null ?
@@ -909,9 +893,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToShortDateString();
         }
 
-        /// <summary>See <see cref="System.DateTime.ToShortTimeString"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string ToShortTimeString()
         {
             return _toShortTimeString != null ?

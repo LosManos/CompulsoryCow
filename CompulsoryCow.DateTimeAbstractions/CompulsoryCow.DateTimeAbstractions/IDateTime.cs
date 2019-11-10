@@ -184,5 +184,50 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="value"></param>
         /// <returns></returns>
         TimeSpan Subtract(DateTime value);
+
+        /// <summary>See <see cref="System.DateTime.ToBinary"/>.
+        /// </summary>
+        /// <returns></returns>
+        long ToBinary();
+
+        /// <summary>See <see cref="System.DateTime.ToFileTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        long ToFileTime();
+
+        /// <summary>See <see cref="System.DateTime.ToFileTimeUtc"/>.
+        /// </summary>
+        /// <returns></returns>
+        long ToFileTimeUtc();
+
+        /// <summary>See <see cref="System.DateTime.ToLocalTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        DateTime ToLocalTime();
+
+        /// <summary>See <see cref="System.DateTime.ToLongDateString"/>.
+        /// </summary>
+        /// <returns></returns>
+        string ToLongDateString();
+
+        /// <summary>See <see cref="System.DateTime.ToLongTimeString"/>.
+        /// </summary>
+        /// <returns></returns>
+        string ToLongTimeString();
+
+        /// <summary>See <see cref="System.DateTime.ToOADate"/>.
+        /// </summary>
+        /// <returns></returns>
+        double ToOADate();
+
+        /// <summary>See <see cref="System.DateTime.ToShortDateString"/>.
+        /// </summary>
+        /// <returns></returns>
+        string ToShortDateString();
+
+        /// <summary>See <see cref="System.DateTime.ToShortTimeString"/>.
+        /// </summary>
+        /// <returns></returns>
+        string ToShortTimeString();
     }
 }
