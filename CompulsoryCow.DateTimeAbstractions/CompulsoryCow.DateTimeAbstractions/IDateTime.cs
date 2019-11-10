@@ -4,6 +4,8 @@ namespace CompulsoryCow.DateTime.Abstractions
 {
     public interface IDateTime
     {
+        #region Properties.
+
         /// <summary>See <see cref="System.DateTime.Ticks"/>.
         /// </summary>
         long Ticks { get; }
@@ -55,6 +57,10 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <summary>See <see cref="System.DateTime.Year"/>.
         /// </summary>
         int Year { get; }
+
+        #endregion  //  Properties.
+
+        #region Methods.
 
         /// <summary>See <see cref="System.DateTime.Add(System.TimeSpan)"/>.
         /// </summary>
@@ -258,5 +264,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <returns></returns>
         DateTime ToUniversalTime();
+
+        #endregion  //  Methods.
     }
 }

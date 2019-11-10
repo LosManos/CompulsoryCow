@@ -40,7 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<DateTime> _add;
         private System.Func<DateTime> _addDays;
         private System.Func<DateTime> _addHours;
         private System.Func<DateTime> _addMilliseconds;
@@ -605,9 +604,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public DateTime Add(TimeSpan value)
         {
-            return _add == null ?
-                FromSystemDateTime(_value.Add(value.ToSystemTimeSpan())) :
-                _add();
+            return FromSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
         }
 
         /// <inheritdoc/>
@@ -1464,17 +1461,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="Add(TimeSpan)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have <see cref="Add(TimeSpan)"/> return <see cref="System.DateTime.Add(System.TimeSpan)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAdd(System.Func<DateTime> func)
-        {
-            _add = func;
-        }
 
         /// <summary>This method sets the <see cref="AddDays(double)"/> return value.
         /// 
