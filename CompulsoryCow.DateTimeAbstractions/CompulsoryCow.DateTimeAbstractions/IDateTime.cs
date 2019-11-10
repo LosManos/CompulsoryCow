@@ -60,6 +60,13 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        DateTime Add(TimeSpan value);
+        IDateTime Add(TimeSpan value);
+
+        /// <summary>See <see cref="System.DateTime.AddDays(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        IDateTime AddDays(double value);
+
     }
 }

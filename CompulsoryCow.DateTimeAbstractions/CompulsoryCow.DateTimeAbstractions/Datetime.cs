@@ -16,17 +16,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         private static System.Func<DateTime> _fromFileTimeUtc;
         private static System.Func<DateTime> _fromOADate;
         private static System.Func<bool> _isLeapYear;
-        private static System.Func<DateTime> _parseStringFormatProviderStyle;
-        private static System.Func<DateTime> _parseStringFormatProvider;
-        private static System.Func<DateTime> _parseString;
-        private static System.Func<DateTime> _parseExactStringStringArrayFormatProviderStyle;
-        private static System.Func<DateTime> _parseExactStringStringFormatProviderStyle;
-        private static System.Func<DateTime> _parseExactStringStringFormatProvider;
+        private static System.Func<IDateTime> _parseStringFormatProviderStyle;
+        private static System.Func<IDateTime> _parseStringFormatProvider;
+        private static System.Func<IDateTime> _parseString;
+        private static System.Func<IDateTime> _parseExactStringStringArrayFormatProviderStyle;
+        private static System.Func<IDateTime> _parseExactStringStringFormatProviderStyle;
+        private static System.Func<IDateTime> _parseExactStringStringFormatProvider;
         private static System.Func<DateTime> _specifyKind;
-        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseStringIFormatProviderDateTimeStylesDateTime;
-        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseStringDateTime;
-        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseExactStringStringIFormatProviderDateTimeStyles;
-        private static (System.Func<bool> Return, System.Func<DateTime> Out) _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles;
+        private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseStringIFormatProviderDateTimeStylesDateTime;
+        private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseStringDateTime;
+        private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseExactStringStringIFormatProviderDateTimeStyles;
+        private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles;
 
         private static System.Func<DateTime> _addOperator;
         private static System.Func<TimeSpan> _subtractDateTimeDateTimeOperator;
@@ -41,7 +41,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private readonly System.DateTime _value;
 
         private System.Func<DateTime> _add;
-        private System.Func<DateTime> _addDays;
+        private System.Func<IDateTime> _addDays;
         private System.Func<DateTime> _addHours;
         private System.Func<DateTime> _addMilliseconds;
         private System.Func<DateTime> _addMinutes;
@@ -415,7 +415,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="provider"></param>
         /// <param name="styles"></param>
         /// <returns></returns>
-        public static DateTime Parse(string s, System.IFormatProvider provider, DateTimeStyles styles)
+        public static IDateTime Parse(string s, System.IFormatProvider provider, DateTimeStyles styles)
         {
             return _parseStringFormatProviderStyle != null ?
                 _parseStringFormatProviderStyle() :
@@ -427,7 +427,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="s"></param>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static DateTime Parse(string s, System.IFormatProvider provider)
+        public static IDateTime Parse(string s, System.IFormatProvider provider)
         {
             return _parseStringFormatProvider != null ?
                 _parseStringFormatProvider() :
@@ -438,7 +438,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static DateTime Parse(string s)
+        public static IDateTime Parse(string s)
         {
             return _parseString != null ?
                 _parseString():
@@ -452,7 +452,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="provider"></param>
         /// <param name="style"></param>
         /// <returns></returns>
-        public static DateTime ParseExact(string s, string[] formats, System.IFormatProvider provider, DateTimeStyles style)
+        public static IDateTime ParseExact(string s, string[] formats, System.IFormatProvider provider, DateTimeStyles style)
         {
             return _parseExactStringStringArrayFormatProviderStyle != null ?
                 _parseExactStringStringArrayFormatProviderStyle() :
@@ -466,7 +466,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="provider"></param>
         /// <param name="style"></param>
         /// <returns></returns>
-        public static DateTime ParseExact(string s, string format, System.IFormatProvider provider, DateTimeStyles style)
+        public static IDateTime ParseExact(string s, string format, System.IFormatProvider provider, DateTimeStyles style)
         {
             return _parseExactStringStringFormatProviderStyle != null ?
                 _parseExactStringStringFormatProviderStyle():
@@ -479,7 +479,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="format"></param>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static DateTime ParseExact(string s, string format, System.IFormatProvider provider)
+        public static IDateTime ParseExact(string s, string format, System.IFormatProvider provider)
         {
             return _parseExactStringStringFormatProvider != null ?
                 _parseExactStringStringFormatProvider() :
@@ -606,7 +606,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public DateTime Add(TimeSpan value)
+        public IDateTime Add(TimeSpan value)
         {
             return _add == null ?
                 FromSystemDateTime(_value.Add(value.ToSystemTimeSpan())) :
@@ -617,7 +617,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public DateTime AddDays(double value)
+        public IDateTime AddDays(double value)
         {
             return _addDays == null ?
                 FromSystemDateTime(_value.AddDays(value)) :
@@ -1338,7 +1338,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and should really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseStringFormatProviderStyle(System.Func<DateTime> func) => _parseStringFormatProviderStyle = func;
+        internal static void SetParseStringFormatProviderStyle(System.Func<IDateTime> func) => _parseStringFormatProviderStyle = func;
 
         /// <summary>This method set the <see cref="Parse(string, System.IFormatProvider)"/> method.
         /// Set to null to have <see cref="Parse(string, System.IFormatProvider)"/> return <see cref="System.DateTime.Parse(string, System.IFormatProvider)"/>.
@@ -1346,7 +1346,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and should really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseStringFormatProvider(System.Func<DateTime> func) => _parseStringFormatProvider = func;
+        internal static void SetParseStringFormatProvider(System.Func<IDateTime> func) => _parseStringFormatProvider = func;
 
         /// <summary>This method set the <see cref="Parse(string)"/> method.
         /// Set to null to have <see cref="Parse(string)"/> return <see cref="System.DateTime.Parse(string)"/>.
@@ -1354,7 +1354,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseString(System.Func<DateTime> func) => _parseString = func;
+        internal static void SetParseString(System.Func<IDateTime> func) => _parseString = func;
 
         /// <summary>This method set the <see cref="ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/> method.
         /// Set to null to have <see cref="ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/> return <see cref="System.DateTime.ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/>.
@@ -1362,7 +1362,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="parse"></param>
-        internal static void SetParseExactStringStringArrayFormatProviderStyle(System.Func<DateTime> parse) =>
+        internal static void SetParseExactStringStringArrayFormatProviderStyle(System.Func<IDateTime> parse) =>
             _parseExactStringStringArrayFormatProviderStyle = parse;
 
         /// <summary>This method set the <see cref="ParseExact(string, string, System.IFormatProvider, DateTimeStyles)"/> method.
@@ -1371,7 +1371,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseExactStringStringFormatProviderStyle(System.Func<DateTime> func) =>
+        internal static void SetParseExactStringStringFormatProviderStyle(System.Func<IDateTime> func) =>
             _parseExactStringStringFormatProviderStyle = func;
 
         /// <summary>This method sets the <see cref="ParseExact(string, string, System.IFormatProvider)"/> method.
@@ -1380,7 +1380,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseExactStringStringFormatProvider(System.Func<DateTime> func) =>
+        internal static void SetParseExactStringStringFormatProvider(System.Func<IDateTime> func) =>
             _parseExactStringStringFormatProvider = func;
 
         /// <summary>This method sets the <see cref="SpecifyKind(DateTime, System.DateTimeKind)"/> method.
@@ -1422,7 +1422,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseExactStringStringIFormatProviderDateTimeStyles(
             System.Func<bool> returnFunc,
-            System.Func<DateTime> outFunc)
+            System.Func<IDateTime> outFunc)
         {
             _setTryParseExactStringStringIFormatProviderDateTimeStyles.Return = returnFunc;
             _setTryParseExactStringStringIFormatProviderDateTimeStyles.Out = outFunc;
@@ -1435,7 +1435,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="outFunc"></param>
         internal static void SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
             System.Func<bool> returnFunc,
-            System.Func<DateTime> outFunc)
+            System.Func<IDateTime> outFunc)
         {
             _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Return = returnFunc;
             _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles.Out = outFunc;

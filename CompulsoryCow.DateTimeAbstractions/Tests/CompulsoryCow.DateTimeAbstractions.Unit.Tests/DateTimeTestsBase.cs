@@ -32,7 +32,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         protected internal static void AssertEquals(
             System.DateTime expectedDateTime,
-            Abstractions.DateTime actualDateTime,
+            Abstractions.IDateTime actualDateTime,
             System.DateTimeKind? withKind = null,
             string because = "")
         {

@@ -1221,7 +1221,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormat, anyProvider, anyDateTimeStyle, out actualOut);
             actualReturn.Should().Be(anyOtherExpectedReturn);
-            actualOut.Should().Be(expectedOut);
+            actualOut.Should().Be(anyOtherExpectedOut);
 
             //  Act.
             Abstractions.DateTime.SetTryParseExactStringStringIFormatProviderDateTimeStyles(
@@ -1303,7 +1303,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             actualReturn = Abstractions.DateTime.TryParseExact(anyDate, anyFormats, anyProvider, anyDateTimeStyle, out actualOut);
             actualReturn.Should().Be(anyOtherExpectedReturn);
-            actualOut.Should().Be(expectedOut);
+            actualOut.Should().Be(anyOtherExpectedOut);
 
             //  Act.
             Abstractions.DateTime.SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
