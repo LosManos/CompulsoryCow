@@ -157,5 +157,16 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="provider"></param>
         /// <returns></returns>
         string[] GetDateTimeFormats(System.IFormatProvider provider);
+
+        /// <summary>See <see cref="System.DateTime.GetHashCode"/>.
+        /// </summary>
+        /// <returns></returns>
+        int GetHashCode();
+
+        /// <summary>See <see cref="System.DateTime.GetTypeCode"/>.
+        /// </summary>
+        /// <returns></returns>
+        System.TypeCode GetTypeCode();
+
     }
 }

@@ -789,9 +789,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetDateTimeFormats(provider);
         }
 
-        /// <summary>See <see cref="System.DateTime.GetHashCode"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return _getHashCode != null ?
@@ -799,9 +797,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetHashCode();
         }
 
-        /// <summary>See <see cref="System.DateTime.GetTypeCode"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public System.TypeCode GetTypeCode()
         {
             return _getTypeCode != null ?
