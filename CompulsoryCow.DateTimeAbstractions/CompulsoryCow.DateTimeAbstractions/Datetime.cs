@@ -40,14 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<DateTime> _addDays;
-        private System.Func<DateTime> _addHours;
-        private System.Func<DateTime> _addMilliseconds;
-        private System.Func<DateTime> _addMinutes;
-        private System.Func<DateTime> _addMonths;
-        private System.Func<DateTime> _addSeconds;
-        private System.Func<DateTime> _addTicks;
-        private System.Func<DateTime> _addYears;
         private System.Func<int> _compareToDateTime;
         private System.Func<int> _compareToObject;
         private System.Func<bool> _equalsObject;
@@ -610,65 +602,49 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public DateTime AddDays(double value)
         {
-            return _addDays == null ?
-                FromSystemDateTime(_value.AddDays(value)) :
-                _addDays();
+            return FromSystemDateTime(_value.AddDays(value));
         }
 
         /// <inheritdoc/>
         public DateTime AddHours(double value)
         {
-            return _addHours == null ?
-                FromSystemDateTime(_value.AddHours(value)) :
-                _addHours();
+            return FromSystemDateTime(_value.AddHours(value));
         }
 
         /// <inheritdoc/>
         public DateTime AddMilliseconds(double value)
         {
-            return _addMilliseconds == null ?
-                FromSystemDateTime(_value.AddMilliseconds(value)) :
-                _addMilliseconds();
+            return FromSystemDateTime(_value.AddMilliseconds(value));
         }
 
         /// <inheritdoc/>
         public DateTime AddMinutes(double value)
         {
-            return _addMinutes == null ?
-                FromSystemDateTime(_value.AddMinutes(value)) :
-                _addMinutes();
+            return FromSystemDateTime(_value.AddMinutes(value));
         }
 
         /// <inheritdoc/>
         public DateTime AddMonths(int months)
         {
-            return _addMonths == null ?
-                FromSystemDateTime(_value.AddMonths(months)) :
-                _addMonths();
+            return FromSystemDateTime(_value.AddMonths(months));
         }
 
         /// <inheritdoc/>
         public DateTime AddSeconds(double value)
         {
-            return _addSeconds == null ?
-                FromSystemDateTime(_value.AddSeconds(value)) :
-                _addSeconds();
+            return FromSystemDateTime(_value.AddSeconds(value));
         }
 
         /// <inheritdoc/>
         public DateTime AddTicks(long value)
         {
-            return _addTicks == null ?
-                FromSystemDateTime(_value.AddTicks(value)) :
-                _addTicks();
+            return FromSystemDateTime(_value.AddTicks(value));
         }
 
         /// <inheritdoc/>
         public DateTime AddYears(int value)
         {
-            return _addYears == null ?
-                FromSystemDateTime(_value.AddYears(value)) :
-                _addYears();
+            return FromSystemDateTime(_value.AddYears(value));
         }
 
         /// <inheritdoc/>
@@ -1461,94 +1437,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="AddDays(double)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddDays(double)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddDays(System.Func<DateTime> func)
-        {
-            _addDays = func;
-        }
-
-        /// <summary>This method sets the <see cref="AddHours(double)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddHours(double)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddHours(System.Func<DateTime> func)
-        {
-            _addHours = func;
-        }
-
-        /// <summary>This method sets the <see cref="AddMilliseconds(double)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddMilliseconds(double)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddMilliseconds(System.Func<DateTime> func)
-        {
-            _addMilliseconds = func;
-        }
-
-        /// <summary>This method sets the <see cref="AddMinutes(double)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddMinutes(double)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddMinutes(System.Func<DateTime> func)
-        {
-            _addMinutes = func;
-        }
-
-        /// <summary>This method sets the <see cref="AddMonths(int)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddMonths(int)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddMonths(System.Func<DateTime> func)
-        {
-            _addMonths = func;
-        }
-
-        /// <summary>This method sets the <see cref="AddSeconds(double)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddSeconds(double)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddSeconds(System.Func<DateTime> func)
-        {
-            _addSeconds = func;
-        }
-
-        /// <summary>This method sets the <see cref="AddTicks(long)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddTicks(long)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddTicks(System.Func<DateTime> func)
-        {
-            _addTicks = func;
-        }
-
-        /// <summary>This method sets the <see cref="AddYears(int)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.AddYears(int)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetAddYears(System.Func<DateTime> func)
-        {
-            _addYears = func;
-        }
 
         /// <summary>This method set the <see cref="CompareTo(DateTime)"/> return value.
         /// 

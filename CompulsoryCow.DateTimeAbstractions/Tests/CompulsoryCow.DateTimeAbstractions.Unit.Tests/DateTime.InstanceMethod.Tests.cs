@@ -92,42 +92,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        [Fact]
-        public void SetAddDays_ShouldSetAndClear()
-        {
-            var anyDateTimeTicks = 200;
-            var anyDays = 5.5;
-
-            var fakeTicks = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
-
-            var sut = new Abstractions.DateTime(anyDateTimeTicks);
-            var systemDateTime = new System.DateTime(anyDateTimeTicks);
-
-            sut.SetAddDays(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddDays(anyDays),
-                sut.AddDays(anyDays)
-                );
-
-            // Act.
-            sut.SetAddDays(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddDays(anyDays).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddDays(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddDays(anyDays),
-                sut.AddDays(anyDays)
-            );
-        }
-
         #endregion
 
         #region AddHours tests.
@@ -168,42 +132,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public void SetAddHours_ShouldSetAndClear()
-        {
-            var anyDateTimeTicks = 200;
-            var anyHours = 5.5;
-
-            var fakeTicks = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
-
-            var sut = new Abstractions.DateTime(anyDateTimeTicks);
-            var systemDateTime = new System.DateTime(anyDateTimeTicks);
-
-            sut.SetAddHours(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddHours(anyHours),
-                sut.AddHours(anyHours)
-                );
-
-            // Act.
-            sut.SetAddHours(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddHours(anyHours).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddHours(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddHours(anyHours),
-                sut.AddHours(anyHours)
-            );
         }
 
         #endregion
@@ -248,42 +176,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        [Fact]
-        public void SetAddMilliseconds_ShouldSetAndClear()
-        {
-            var anyDateTimeTicks = 200;
-            var anyMilliseconds = 5.5;
-
-            var fakeTicks = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
-
-            var sut = new Abstractions.DateTime(anyDateTimeTicks);
-            var systemDateTime = new System.DateTime(anyDateTimeTicks);
-
-            sut.SetAddMilliseconds(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddMilliseconds(anyMilliseconds),
-                sut.AddMilliseconds(anyMilliseconds)
-                );
-
-            // Act.
-            sut.SetAddMilliseconds(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddMilliseconds(anyMilliseconds).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddMilliseconds(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddMilliseconds(anyMilliseconds),
-                sut.AddMilliseconds(anyMilliseconds)
-            );
-        }
-
         #endregion
 
         #region AddMinutes tests.
@@ -324,42 +216,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public void SetAddMinutes_ShouldSetAndClear()
-        {
-            var anyDateTimeTicks = 200;
-            var anyMinutes = 5.5;
-
-            var fakeTicks = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
-
-            var sut = new Abstractions.DateTime(anyDateTimeTicks);
-            var systemDateTime = new System.DateTime(anyDateTimeTicks);
-
-            sut.SetAddMinutes(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddMinutes(anyMinutes),
-                sut.AddMinutes(anyMinutes)
-                );
-
-            // Act.
-            sut.SetAddMinutes(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddMinutes(anyMinutes).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddMinutes(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddMinutes(anyMinutes),
-                sut.AddMinutes(anyMinutes)
-            );
         }
 
         #endregion
@@ -404,42 +260,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        [Fact]
-        public void SetAddMonths_ShouldSetAndClear()
-        {
-            var anyDateTimeTicks = 200;
-            var anyMonths = 5;
-
-            var fakeTicks = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
-
-            var sut = new Abstractions.DateTime(anyDateTimeTicks);
-            var systemDateTime = new System.DateTime(anyDateTimeTicks);
-
-            sut.SetAddMonths(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddMonths(anyMonths),
-                sut.AddMonths(anyMonths)
-                );
-
-            // Act.
-            sut.SetAddMonths(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddMonths(anyMonths).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddMonths(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddMonths(anyMonths),
-                sut.AddMonths(anyMonths)
-            );
-        }
-
         #endregion
 
         #region AddSeconds tests.
@@ -480,42 +300,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public void SetAddSeconds_ShouldSetAndClear()
-        {
-            var anyDateTimeTicks = 200;
-            var anySeconds = 5.5;
-
-            var fakeTicks = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
-
-            var sut = new Abstractions.DateTime(anyDateTimeTicks);
-            var systemDateTime = new System.DateTime(anyDateTimeTicks);
-
-            sut.SetAddSeconds(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddSeconds(anySeconds),
-                sut.AddSeconds(anySeconds)
-                );
-
-            // Act.
-            sut.SetAddSeconds(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddSeconds(anySeconds).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddSeconds(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddSeconds(anySeconds),
-                sut.AddSeconds(anySeconds)
-            );
         }
 
         #endregion
@@ -560,42 +344,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        [Fact]
-        public void SetAddTicks_ShouldSetAndClear()
-        {
-            var anyDateTimeTicks = 200;
-            var anyTicks = 5;
-
-            var fakeTicks = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeTicks);
-
-            var sut = new Abstractions.DateTime(anyDateTimeTicks);
-            var systemDateTime = new System.DateTime(anyDateTimeTicks);
-
-            sut.SetAddTicks(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddTicks(anyTicks),
-                sut.AddTicks(anyTicks)
-                );
-
-            // Act.
-            sut.SetAddTicks(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddTicks(anyTicks).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddTicks(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddTicks(anyTicks),
-                sut.AddTicks(anyTicks)
-            );
-        }
-
         #endregion
 
         #region AddYears tests.
@@ -636,42 +384,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             tooLowException.Should().BeOfType<System.ArgumentOutOfRangeException>();
             tooHighException.Should().BeOfType<System.ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public void SetAddYears_ShouldSetAndClear()
-        {
-            var anyDateTimeYears = 200;
-            var anyYears = 5;
-
-            var fakeYears = 300;
-            var fakeDateTime = new Abstractions.DateTime(fakeYears);
-
-            var sut = new Abstractions.DateTime(anyDateTimeYears);
-            var systemDateTime = new System.DateTime(anyDateTimeYears);
-
-            sut.SetAddYears(null);
-
-            // Sanity check we get system result to start with.
-            AssertEquals(
-                systemDateTime.AddYears(anyYears),
-                sut.AddYears(anyYears)
-                );
-
-            // Act.
-            sut.SetAddYears(() => fakeDateTime);
-
-            //  Assert.
-            sut.AddYears(anyYears).Should().Be(fakeDateTime);
-
-            //  Act.
-            sut.SetAddYears(null);
-
-            // Assert.
-            AssertEquals(
-                systemDateTime.AddYears(anyYears),
-                sut.AddYears(anyYears)
-            );
         }
 
         #endregion
