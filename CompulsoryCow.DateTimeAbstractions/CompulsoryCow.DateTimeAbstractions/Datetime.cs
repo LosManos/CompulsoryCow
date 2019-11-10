@@ -41,7 +41,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         private readonly System.DateTime _value;
 
         private System.Func<DateTime> _add;
-        private System.Func<IDateTime> _addDays;
+        private System.Func<DateTime> _addDays;
         private System.Func<DateTime> _addHours;
         private System.Func<DateTime> _addMilliseconds;
         private System.Func<DateTime> _addMinutes;
@@ -606,7 +606,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public IDateTime Add(TimeSpan value)
+        public DateTime Add(TimeSpan value)
         {
             return _add == null ?
                 FromSystemDateTime(_value.Add(value.ToSystemTimeSpan())) :
@@ -617,7 +617,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public IDateTime AddDays(double value)
+        public DateTime AddDays(double value)
         {
             return _addDays == null ?
                 FromSystemDateTime(_value.AddDays(value)) :
