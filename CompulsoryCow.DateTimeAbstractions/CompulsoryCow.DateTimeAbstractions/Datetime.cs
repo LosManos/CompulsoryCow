@@ -674,10 +674,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addYears();
         }
 
-        /// <summary>See <see cref="System.DateTime.CompareTo(System.DateTime)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public int CompareTo(DateTime value)
         {
             // Value is never null for System.DateTime.CompareTo as
@@ -696,10 +693,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.CompareTo(ToSystem(value));
         }
 
-        /// <summary>See <see cref="System.DateTime.CompareTo(object)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public int CompareTo(object value)
         {
             if (value == null)

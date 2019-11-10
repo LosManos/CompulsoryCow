@@ -109,5 +109,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="value"></param>
         /// <returns></returns>
         DateTime AddYears(int value);
+
+        /// <summary>See <see cref="System.DateTime.CompareTo(object)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        int CompareTo(object value);
+
+        /// <summary>See <see cref="System.DateTime.CompareTo(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        int CompareTo(DateTime value);
     }
 }
