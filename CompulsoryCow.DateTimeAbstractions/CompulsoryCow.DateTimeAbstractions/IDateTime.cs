@@ -121,5 +121,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="value"></param>
         /// <returns></returns>
         int CompareTo(DateTime value);
+
+        /// <summary>See <see cref="System.DateTime.Equals(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        bool Equals(DateTime value);
+
+        /// <summary>See <see cref="System.DateTime.Equals(object)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        bool Equals(object value);
     }
 }

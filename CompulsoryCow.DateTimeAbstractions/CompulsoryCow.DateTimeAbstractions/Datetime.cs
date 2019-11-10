@@ -711,10 +711,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.CompareTo(ToSystem((DateTime)value));
         }
 
-        /// <summary>See <see cref="System.DateTime.Equals(object)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override bool Equals(object value)
         {
             if (_equalsObject != null)
@@ -732,10 +729,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.Equals(value);
         }
 
-        /// <summary>See <see cref="System.DateTime.Equals(System.DateTime)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public bool Equals(DateTime value)
         {
             // Value is never null for System.DateTime.CompareTo as
