@@ -602,10 +602,7 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         #region Instance methods.
 
-        /// <summary>See <see cref="System.DateTime.Add(System.TimeSpan)"/>l
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime Add(TimeSpan value)
         {
             return _add == null ?
@@ -613,10 +610,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _add();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddDays(double)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddDays(double value)
         {
             return _addDays == null ?
@@ -624,10 +618,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addDays();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddHours(double)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddHours(double value)
         {
             return _addHours == null ?
@@ -635,10 +626,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addHours();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddMilliseconds(double)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddMilliseconds(double value)
         {
             return _addMilliseconds == null ?
@@ -646,10 +634,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addMilliseconds();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddMinutes(double)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddMinutes(double value)
         {
             return _addMinutes == null ?
@@ -657,10 +642,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addMinutes();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddMonths(int)"/>.
-        /// </summary>
-        /// <param name="months"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddMonths(int months)
         {
             return _addMonths == null ?
@@ -668,10 +650,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addMonths();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddSeconds(double)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddSeconds(double value)
         {
             return _addSeconds == null ?
@@ -679,10 +658,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addSeconds();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddTicks(long)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddTicks(long value)
         {
             return _addTicks == null ?
@@ -690,10 +666,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _addTicks();
         }
 
-        /// <summary>See <see cref="System.DateTime.AddYears(int)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime AddYears(int value)
         {
             return _addYears == null ?

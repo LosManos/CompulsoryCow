@@ -68,5 +68,46 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         DateTime AddDays(double value);
 
+        /// <summary>See <see cref="System.DateTime.AddHours(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        DateTime AddHours(double value);
+
+        /// <summary>See <see cref="System.DateTime.AddMilliseconds(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        DateTime AddMilliseconds(double value);
+
+        /// <summary>See <see cref="System.DateTime.AddMinutes(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        DateTime AddMinutes(double value);
+
+        /// <summary>See <see cref="System.DateTime.AddMonths(int)"/>.
+        /// </summary>
+        /// <param name="months"></param>
+        /// <returns></returns>
+        DateTime AddMonths(int months);
+
+        /// <summary>See <see cref="System.DateTime.AddSeconds(double)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        DateTime AddSeconds(double value);
+
+        /// <summary>See <see cref="System.DateTime.AddTicks(long)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        DateTime AddTicks(long value);
+
+        /// <summary>See <see cref="System.DateTime.AddYears(int)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        DateTime AddYears(int value);
     }
 }
