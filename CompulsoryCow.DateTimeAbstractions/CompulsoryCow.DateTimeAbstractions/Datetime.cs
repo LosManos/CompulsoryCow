@@ -805,9 +805,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetTypeCode();
         }
 
-        /// <summary>See <see cref="System.DateTime.IsDaylightSavingTime"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public bool IsDaylightSavingTime()
         {
             return _isDaylightSavingTime != null ?

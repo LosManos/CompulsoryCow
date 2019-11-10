@@ -168,5 +168,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         System.TypeCode GetTypeCode();
 
+        /// <summary>See <see cref="System.DateTime.IsDaylightSavingTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        bool IsDaylightSavingTime();
     }
 }
