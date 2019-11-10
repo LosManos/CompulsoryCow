@@ -254,5 +254,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <returns></returns>
         string ToString();
 
+        /// <summary>See <see cref="System.DateTime.ToUniversalTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        DateTime ToUniversalTime();
     }
 }

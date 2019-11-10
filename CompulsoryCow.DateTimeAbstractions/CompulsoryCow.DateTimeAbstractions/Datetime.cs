@@ -933,9 +933,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.ToString(format, provider);
         }
 
-        /// <summary>See <see cref="System.DateTime.ToUniversalTime"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime ToUniversalTime()
         {
             return _toUniversalTime != null ?
