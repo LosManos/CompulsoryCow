@@ -753,11 +753,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             return _value.Equals(value);
         }
 
-        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="provider"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string[] GetDateTimeFormats(char format, System.IFormatProvider provider)
         {
             return
@@ -766,10 +762,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetDateTimeFormats(format, provider);
         }
 
-        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(char)"/>.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string[] GetDateTimeFormats(char format)
         {
             return
@@ -778,9 +771,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetDateTimeFormats(format);
         }
 
-        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats()"/>.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string[] GetDateTimeFormats()
         {
             return
@@ -789,10 +780,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.GetDateTimeFormats();
         }
 
-        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(System.IFormatProvider)"/>.
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public string[] GetDateTimeFormats(System.IFormatProvider provider)
         {
             return

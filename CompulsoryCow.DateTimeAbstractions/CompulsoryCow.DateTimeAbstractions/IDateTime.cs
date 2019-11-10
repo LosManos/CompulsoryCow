@@ -133,5 +133,29 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <param name="value"></param>
         /// <returns></returns>
         bool Equals(object value);
+
+        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats()"/>.
+        /// </summary>
+        /// <returns></returns>
+        string[] GetDateTimeFormats();
+
+        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        string[] GetDateTimeFormats(char format, System.IFormatProvider provider);
+
+        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(char)"/>.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        string[] GetDateTimeFormats(char format);
+
+        /// <summary>See <see cref="System.DateTime.GetDateTimeFormats(System.IFormatProvider)"/>.
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        string[] GetDateTimeFormats(System.IFormatProvider provider);
     }
 }
