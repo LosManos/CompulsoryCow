@@ -172,5 +172,17 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// </summary>
         /// <returns></returns>
         bool IsDaylightSavingTime();
+
+        /// <summary>See <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        DateTime Subtract(TimeSpan value);
+
+        /// <summary>See <see cref="System.DateTime.Subtract(System.DateTime)"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        TimeSpan Subtract(DateTime value);
     }
 }

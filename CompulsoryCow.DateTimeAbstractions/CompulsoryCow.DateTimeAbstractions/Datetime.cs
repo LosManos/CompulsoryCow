@@ -813,10 +813,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _value.IsDaylightSavingTime();
         }
 
-        /// <summary>See <see cref="System.DateTime.Subtract(System.DateTime)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public TimeSpan Subtract(DateTime value)
         {
             return _subtractDateTime != null ?
@@ -824,10 +821,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 new TimeSpan(_value.Subtract(ToSystem(value)).Ticks);
         }
 
-        /// <summary>See <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public DateTime Subtract(TimeSpan value)
         {
             return _subtractTimeSpan != null ?
