@@ -424,34 +424,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         // There are not exceptions thrown by CompareTo(DateTime).
 
-        [Fact]
-        public void SetCompareToDateTime_Should_SetAndClear()
-        {
-            var anyTicks = 32;
-            var anyOtherTicks = 33;
-            var sameSystemDate = new System.DateTime(anyTicks);
-            var otherSystemDate = new System.DateTime(anyOtherTicks);
-            var expected = sameSystemDate.CompareTo(otherSystemDate);
-            expected.Should().Be(-1, "Sanity check we know the result.");
-
-            var sut = new Abstractions.DateTime(anyTicks);
-            sut.SetCompareToDateTime(null);
-            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks)).Should().Be(expected);
-
-            //  Act.
-            sut.SetCompareToDateTime(() => 1);
-
-            //  Assert.
-            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks)).Should().Be(1);
-
-            //  Act.
-            sut.SetCompareToDateTime(null);
-
-            //  Assert.
-            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks)).Should().Be(expected);
-
-        }
-
         #endregion
 
         #region CompareTo(object value) tests.
@@ -501,34 +473,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             });
 
             res.Should().BeOfType<System.ArgumentException>();
-        }
-
-        [Fact]
-        public void SetCompareToObject_Should_SetAndClear()
-        {
-            var anyTicks = 32;
-            var anyOtherTicks = 33;
-            var sameSystemDate = new System.DateTime(anyTicks);
-            var otherSystemDate = new System.DateTime(anyOtherTicks);
-            var expected = sameSystemDate.CompareTo(otherSystemDate as object);
-            expected.Should().Be(-1, "Sanity check we know the result.");
-
-            var sut = new Abstractions.DateTime(anyTicks);
-            sut.SetCompareToObject(null);
-            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks) as object).Should().Be(expected);
-
-            //  Act.
-            sut.SetCompareToObject(() => 1);
-
-            //  Assert.
-            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks) as object).Should().Be(1);
-
-            //  Act.
-            sut.SetCompareToObject(null);
-
-            //  Assert.
-            sut.CompareTo(new Abstractions.DateTime(anyOtherTicks) as object).Should().Be(expected);
-
         }
 
         #endregion

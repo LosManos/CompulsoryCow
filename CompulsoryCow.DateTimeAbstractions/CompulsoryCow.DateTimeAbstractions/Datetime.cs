@@ -40,8 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<int> _compareToDateTime;
-        private System.Func<int> _compareToObject;
         private System.Func<bool> _equalsObject;
         private System.Func<bool> _equalsDateTime;
         private System.Func<string[]> _getDateTimeFormatsCharIFormatProvider;
@@ -650,37 +648,12 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public int CompareTo(DateTime value)
         {
-            // Value is never null for System.DateTime.CompareTo as
-            // System.DateTime is not nullable.
-            // With Dotnet3 we can probably replicate that with setting the parameter
-            // to be not nullable but for now we return the same result as 
-            // System.DateTime.CompareTo(object).
-            if (value == null)
-            {
-                return _value.CompareTo(value);
-            }
-            if (_compareToDateTime != null)
-            {
-                return _compareToDateTime();
-            }
             return _value.CompareTo(ToSystem(value));
         }
 
         /// <inheritdoc/>
         public int CompareTo(object value)
         {
-            if (value == null)
-            {
-                return _value.CompareTo(value);
-            }
-            if ((value is DateTime) == false)
-            {
-                _value.CompareTo(value); // Will throw an exception, the same as System will.
-            }
-            if (_compareToObject != null)
-            {
-                return _compareToObject();
-            }
             return _value.CompareTo(ToSystem((DateTime)value));
         }
 
@@ -1437,28 +1410,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method set the <see cref="CompareTo(DateTime)"/> return value.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// Set to null to have the method return <see cref="System.DateTime.CompareTo(System.DateTime)"/>.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetCompareToDateTime(System.Func<int> func)
-        {
-            _compareToDateTime = func;
-        }
-
-        /// <summary>This method sets the <see cref="CompareTo(object)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.CompareTo(object)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetCompareToObject(System.Func<int> func)
-        {
-            _compareToObject = func;
-        }
 
         /// <summary>This method sets the <see cref="Equals(object)"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.Equals(object)"/>.
