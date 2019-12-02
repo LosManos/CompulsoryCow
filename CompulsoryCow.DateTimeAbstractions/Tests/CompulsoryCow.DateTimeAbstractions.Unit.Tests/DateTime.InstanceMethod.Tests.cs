@@ -560,44 +560,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().BeOfType<System.FormatException>();
         }
 
-        [Fact]
-        public void SetGetDateTimeFormatsCharIFormatProvider_should_SetAndReset()
-        {
-            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
-            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
-            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
-
-            var expectedResult = new[]
-            {
-                "28/07/2009",
-                "28/07/09",
-                "28.07.09",
-                "28-07-09",
-                "2009-07-28",
-            };
-            var systemResult = anySystemDate.GetDateTimeFormats('d', culture);
-            systemResult.Should().Equal(expectedResult, "Sanity check we have setup the test correctly");
-
-            var res = anyDate.GetDateTimeFormats('d', culture);
-            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
-
-            var expectedFake = new[] { "this is my fake result" };
-
-            //  Act.
-            anyDate.SetGetDateTimeFormatsCharIFormatProvider(() => expectedFake);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats('x', culture); // We can use whatever format and culture.
-            res.Should().Equal(expectedFake);
-
-            //  Act.
-            anyDate.SetGetDateTimeFormatsCharIFormatProvider(null);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats('d', culture);
-            res.Should().Equal(expectedResult);
-        }
-
         #endregion  // GetDateTimeFormatsCharIformatProvider test methods.
 
         #region GetDateTimeFormats(char format) test methods.
@@ -633,35 +595,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().BeOfType<System.FormatException>();
         }
 
-        [Fact]
-        public void SetGetDateTimeFormatsChar_should_SetAndReset()
-        {
-            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
-            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
-
-            var expectedResult = anySystemDate.GetDateTimeFormats('d');
-            // We cannot check for the exact result because it depends on the environment.
-
-            var res = anyDate.GetDateTimeFormats('d');
-            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
-
-            var expectedFake = new[] { "this is my fake result" };
-
-            //  Act.
-            anyDate.SetGetDateTimeFormatsChar(() => expectedFake);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats('x'); // We can use whatever format and culture.
-            res.Should().Equal(expectedFake);
-
-            //  Act.
-            anyDate.SetGetDateTimeFormatsChar(null);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats('d');
-            res.Should().Equal(expectedResult);
-        }
-
         #endregion  //  GetDateTimeFormats(char format) gets methods
 
         #region GetDateTimeFormats(char format) test methods.
@@ -679,35 +612,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var res = anyDate.GetDateTimeFormats();
 
             //  Assert.
-            res.Should().Equal(expectedResult);
-        }
-
-        [Fact]
-        public void SetGetDateTimeFormats_should_SetAndReset()
-        {
-            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
-            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
-
-            var expectedResult = anySystemDate.GetDateTimeFormats();
-            // We cannot check for the exact result because it depends on the environment.
-
-            var res = anyDate.GetDateTimeFormats();
-            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
-
-            var expectedFake = new[] { "this is my fake result" };
-
-            //  Act.
-            anyDate.SetGetDateTimeFormats(() => expectedFake);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats();
-            res.Should().Equal(expectedFake);
-
-            //  Act.
-            anyDate.SetGetDateTimeFormats(null);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats();
             res.Should().Equal(expectedResult);
         }
 
@@ -729,35 +633,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             var res = anyDate.GetDateTimeFormats(culture);
 
             //  Assert.
-            res.Should().Equal(expectedResult);
-        }
-
-        [Fact]
-        public void SetGetDateTimeFormatsIFormatProvider_should_SetAndReset()
-        {
-            var anyDate = new Abstractions.DateTime(2009, 7, 28, 5, 23, 15);
-            var anySystemDate = new System.DateTime(anyDate.Ticks, anyDate.Kind);
-            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
-
-            var expectedResult = anySystemDate.GetDateTimeFormats(culture);
-
-            var res = anyDate.GetDateTimeFormats(culture);
-            res.Should().Equal(expectedResult, "Sanity check we know what we are testing.");
-
-            var expectedFake = new[] { "this is my fake result" };
-
-            //  Act.
-            anyDate.SetGetDateTimeFormatsIFormatProvider(() => expectedFake);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats(culture);
-            res.Should().Equal(expectedFake);
-
-            //  Act.
-            anyDate.SetGetDateTimeFormatsIFormatProvider(null);
-
-            //  Assert.
-            res = anyDate.GetDateTimeFormats(culture);
             res.Should().Equal(expectedResult);
         }
 

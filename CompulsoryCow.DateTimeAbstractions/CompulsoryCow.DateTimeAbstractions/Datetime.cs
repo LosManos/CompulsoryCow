@@ -40,10 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<string[]> _getDateTimeFormatsCharIFormatProvider;
-        private System.Func<string[]> _getDateTimeFormatsChar;
-        private System.Func<string[]> _getDateTimeFormats;
-        private System.Func<string[]> _getDateTimeFormatsIFormatProvider;
         private System.Func<int> _getHashCode;
         private System.Func<System.TypeCode> _getTypeCode;
         private System.Func<bool> _isDaylightSavingTime;
@@ -709,37 +705,25 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public string[] GetDateTimeFormats(char format, System.IFormatProvider provider)
         {
-            return
-                _getDateTimeFormatsCharIFormatProvider != null ?
-                _getDateTimeFormatsCharIFormatProvider() :
-                _value.GetDateTimeFormats(format, provider);
+            return _value.GetDateTimeFormats(format, provider);
         }
 
         /// <inheritdoc/>
         public string[] GetDateTimeFormats(char format)
         {
-            return
-                _getDateTimeFormatsChar != null ?
-                _getDateTimeFormatsChar() :
-                _value.GetDateTimeFormats(format);
+            return _value.GetDateTimeFormats(format);
         }
 
         /// <inheritdoc/>
         public string[] GetDateTimeFormats()
         {
-            return
-                _getDateTimeFormats != null ?
-                _getDateTimeFormats() :
-                _value.GetDateTimeFormats();
+            return _value.GetDateTimeFormats();
         }
 
         /// <inheritdoc/>
         public string[] GetDateTimeFormats(System.IFormatProvider provider)
         {
-            return
-                _getDateTimeFormatsIFormatProvider != null ?
-                _getDateTimeFormatsIFormatProvider() :
-                _value.GetDateTimeFormats(provider);
+            return _value.GetDateTimeFormats(provider);
         }
 
         /// <inheritdoc/>
@@ -1417,50 +1401,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This methods sets the <see cref="GetDateTimeFormats(char, System.IFormatProvider)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetGetDateTimeFormatsCharIFormatProvider(System.Func<string[]> func)
-        {
-            _getDateTimeFormatsCharIFormatProvider = func;
-        }
-
-        /// <summary>This methods sets the <see cref="GetDateTimeFormats(char)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats(char)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetGetDateTimeFormatsChar(System.Func<string[]> func)
-        {
-            _getDateTimeFormatsChar = func;
-        }
-
-        /// <summary>This methods sets the <see cref="GetDateTimeFormats()"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats()"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetGetDateTimeFormats(System.Func<string[]> func)
-        {
-            _getDateTimeFormats = func;
-        }
-
-        /// <summary>This methods sets the <see cref="GetDateTimeFormats(System.IFormatProvider)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats(System.IFormatProvider)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetGetDateTimeFormatsIFormatProvider(System.Func<string[]> func)
-        {
-            _getDateTimeFormatsIFormatProvider = func;
-        }
 
         /// <summary>This method sets the <see cref="GetHashCode"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.GetHashCode"/>.
