@@ -648,12 +648,29 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public int CompareTo(DateTime value)
         {
+            // Value is never null for System.DateTime.CompareTo as
+            // System.DateTime is not nullable.
+            // With Dotnet3 we can probably replicate that with setting the parameter
+            // to be not nullable but for now we return the same result as 
+            // System.DateTime.CompareTo(object).
+            if (value == null)
+            {
+                return _value.CompareTo(value);
+            }
             return _value.CompareTo(ToSystem(value));
         }
 
         /// <inheritdoc/>
         public int CompareTo(object value)
         {
+            if (value == null)
+            {
+                return _value.CompareTo(value);
+            }
+            if ((value is DateTime) == false)
+            {
+                _value.CompareTo(value); // Will throw an exception, the same as System will.
+            }
             return _value.CompareTo(ToSystem((DateTime)value));
         }
 
