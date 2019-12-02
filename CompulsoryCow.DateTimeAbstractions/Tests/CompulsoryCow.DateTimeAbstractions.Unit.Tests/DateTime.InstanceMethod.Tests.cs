@@ -670,29 +670,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().Be(expected);
         }
 
-        [Fact]
-        public void SetGetTypeCode_should_SetAndReset()
-        {
-            var anyTicks = 43;
-            var expected = new System.DateTime(anyTicks).GetTypeCode();
-            var sut = new Abstractions.DateTime(anyTicks);
-            sut.GetTypeCode().Should().Be(expected, "Sanity check we know what we are testing.");
-            var fakeReturn = System.TypeCode.Double;
-            fakeReturn.Should().NotBe(expected, "Sanity check we are not testing the same value.");
-
-            //  Act.
-            sut.SetGetTypeCode(() => fakeReturn);
-
-            //  Assert.
-            sut.GetTypeCode().Should().Be(fakeReturn);
-
-            //  Act.
-            sut.SetGetTypeCode(null);
-
-            //  Assert.
-            sut.GetTypeCode().Should().Be(expected);
-        }
-
         #endregion  // GetTypecode() tests.
 
         #region IsDaylightSavingTime tests.

@@ -40,7 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<System.TypeCode> _getTypeCode;
         private System.Func<bool> _isDaylightSavingTime;
         private System.Func<TimeSpan> _subtractDateTime;
         private System.Func<DateTime> _subtractTimeSpan;
@@ -734,9 +733,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public System.TypeCode GetTypeCode()
         {
-            return _getTypeCode != null ?
-                _getTypeCode() :
-                _value.GetTypeCode();
+            return _value.GetTypeCode();
         }
 
         /// <inheritdoc/>
@@ -1398,17 +1395,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="GetTypeCode"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.GetTypeCode"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetGetTypeCode(System.Func<System.TypeCode> func)
-        {
-            _getTypeCode = func;
-        }
 
         /// <summary>This method sets the <see cref="IsDaylightSavingTime"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.IsDaylightSavingTime"/>.
