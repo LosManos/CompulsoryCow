@@ -653,31 +653,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             actual.Should().Be(expected);
         }
 
-        [Fact]
-        public void SetGetHashCode_Should_SetAndReset()
-        {
-            var anyTicks = 42;
-            var expected = new System.DateTime(anyTicks).GetHashCode();
-            var sut = new Abstractions.DateTime(anyTicks);
-            var actual = sut.GetHashCode();
-            actual.Should().Be(expected, "Sanity check we know what we are testing.");
-            var fakeResult = 77;
-            fakeResult.Should().NotBe(expected, "Sanity check we are not testing the same value.");
-
-            //  Act.
-
-            sut.SetGetHashCode(() => fakeResult);
-
-            //  Assert.
-            sut.GetHashCode().Should().Be(fakeResult);
-
-            //  Act.
-            sut.SetGetHashCode(null);
-
-            //  Assert.
-            sut.GetHashCode().Should().Be(expected);
-        }
-
         #endregion  // GetHashCode() tests.
 
         #region GetTypeCode() tests.

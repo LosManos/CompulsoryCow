@@ -40,7 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<int> _getHashCode;
         private System.Func<System.TypeCode> _getTypeCode;
         private System.Func<bool> _isDaylightSavingTime;
         private System.Func<TimeSpan> _subtractDateTime;
@@ -729,9 +728,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return _getHashCode != null ?
-                _getHashCode() :
-                _value.GetHashCode();
+            return _value.GetHashCode();
         }
 
         /// <inheritdoc/>
@@ -1401,17 +1398,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="GetHashCode"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.GetHashCode"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetGetHashCode(System.Func<int> func)
-        {
-            _getHashCode = func;
-        }
 
         /// <summary>This method sets the <see cref="GetTypeCode"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.GetTypeCode"/>.
