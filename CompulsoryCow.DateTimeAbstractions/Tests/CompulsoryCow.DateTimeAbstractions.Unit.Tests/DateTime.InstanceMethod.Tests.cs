@@ -687,29 +687,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().Be(expected);
         }
 
-        [Fact]
-        public void IsDaylightSavingTime_should_SetAndReset()
-        {
-            var anyTicks = 43;
-            var expected = new System.DateTime(anyTicks).IsDaylightSavingTime();
-            var sut = new Abstractions.DateTime(anyTicks);
-            sut.IsDaylightSavingTime().Should().Be(expected, "Sanity check we know what we are testing.");
-            var fakeReturn = true;
-            fakeReturn.Should().Be(!expected, "Sanity check we are not testing the same value.");
-
-            //  Act.
-            sut.SetIsDaylightSavingTime(() => fakeReturn);
-
-            //  Assert.
-            sut.IsDaylightSavingTime().Should().Be(fakeReturn);
-
-            //  Act.
-            sut.SetIsDaylightSavingTime(null);
-
-            //  Assert.
-            sut.IsDaylightSavingTime().Should().Be(expected);
-        }
-
         #endregion  //  IsDaylightSavingTime tests.
 
         #region TimeSpan Subtract(DateTime value) tests.

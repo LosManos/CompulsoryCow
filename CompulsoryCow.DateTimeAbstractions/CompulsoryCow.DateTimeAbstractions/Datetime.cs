@@ -40,7 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<bool> _isDaylightSavingTime;
         private System.Func<TimeSpan> _subtractDateTime;
         private System.Func<DateTime> _subtractTimeSpan;
         private System.Func<long> _toBinary;
@@ -739,9 +738,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public bool IsDaylightSavingTime()
         {
-            return _isDaylightSavingTime != null ?
-                _isDaylightSavingTime() :
-                _value.IsDaylightSavingTime();
+            return _value.IsDaylightSavingTime();
         }
 
         /// <inheritdoc/>
@@ -1395,17 +1392,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="IsDaylightSavingTime"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.IsDaylightSavingTime"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetIsDaylightSavingTime(System.Func<bool> func)
-        {
-            _isDaylightSavingTime = func;
-        }
 
         /// <summary>This method sets the <see cref="Subtract(DateTime)"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.Subtract(System.DateTime)"/>.
