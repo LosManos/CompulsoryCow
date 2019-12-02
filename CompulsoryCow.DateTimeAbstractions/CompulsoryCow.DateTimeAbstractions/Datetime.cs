@@ -40,8 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<bool> _equalsObject;
-        private System.Func<bool> _equalsDateTime;
         private System.Func<string[]> _getDateTimeFormatsCharIFormatProvider;
         private System.Func<string[]> _getDateTimeFormatsChar;
         private System.Func<string[]> _getDateTimeFormats;
@@ -677,10 +675,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public override bool Equals(object value)
         {
-            if (_equalsObject != null)
-            {
-                return _equalsObject();
-            }
             if (value == null)
             {
                 return _value.Equals(value);
@@ -705,13 +699,9 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _value.Equals(value);
             }
 
-            if (_equalsDateTime != null)
-            {
-                return _equalsDateTime();
-            }
             if (value is DateTime)
             {
-                return _value.Equals(ToSystem((DateTime)value));
+                return _value.Equals(ToSystem(value));
             }
             return _value.Equals(value);
         }
@@ -1427,28 +1417,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="Equals(object)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.Equals(object)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetEqualsObject(System.Func<bool> func)
-        {
-            _equalsObject = func;
-        }
-
-        /// <summary>This method sets the <see cref="Equals(System.DateTime)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.Equals(System.DateTime)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetEqualsDateTime(System.Func<bool> func)
-        {
-            _equalsDateTime = func;
-        }
 
         /// <summary>This methods sets the <see cref="GetDateTimeFormats(char, System.IFormatProvider)"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.GetDateTimeFormats(char, System.IFormatProvider)"/>.

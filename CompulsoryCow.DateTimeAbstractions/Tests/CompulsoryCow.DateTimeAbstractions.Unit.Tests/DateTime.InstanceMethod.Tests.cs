@@ -495,33 +495,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
                 .Be(new System.DateTime(1).Equals(new System.DateTime(2) as object));
         }
 
-        [Fact]
-        public void SetEqualsObject_Should_SetAndReset()
-        {
-            var sut = new Abstractions.DateTime(1);
-            sut.SetEqualsObject(null);
-            var actualResult = sut.Equals(new Abstractions.DateTime(1) as object);
-            var expectedResult = new System.DateTime(1).Equals(new System.DateTime(1) as object);
-            actualResult.Should().BeTrue("Sanity check we know what we are testing.");
-            actualResult.Should().Be(expectedResult, "Sanity check we know what we are testing.");
-
-            //  Act.
-            sut.SetEqualsObject(() => false);
-
-            //  Assert.
-            sut.Equals(new Abstractions.DateTime(1) as object)
-                .Should()
-                .BeFalse();
-
-            //  Act.
-            sut.SetEqualsObject(null);
-
-            //  Assret
-            actualResult = sut.Equals(new Abstractions.DateTime(1) as object);
-            actualResult.Should().BeTrue();
-            actualResult.Should().Be(expectedResult);
-        }
-
         #endregion
 
         #region Equals(object value) tests.
@@ -540,33 +513,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             new Abstractions.DateTime(1).Equals(new Abstractions.DateTime(2))
                 .Should()
                 .Be(new System.DateTime(1).Equals(new System.DateTime(2)));
-        }
-
-        [Fact]
-        public void SetEqualsDateTime_Should_SetAndReset()
-        {
-            var sut = new Abstractions.DateTime(1);
-            sut.SetEqualsDateTime(null);
-            var actualResult = sut.Equals(new Abstractions.DateTime(1));
-            var expectedResult = new System.DateTime(1).Equals(new System.DateTime(1));
-            actualResult.Should().BeTrue("Sanity check we know what we are testing.");
-            actualResult.Should().Be(expectedResult, "Sanity check we know what we are testing.");
-
-            //  Act.
-            sut.SetEqualsDateTime(() => false);
-
-            //  Assert.
-            sut.Equals(new Abstractions.DateTime(1))
-                .Should()
-                .BeFalse();
-
-            //  Act.
-            sut.SetEqualsDateTime(null);
-
-            //  Assret
-            actualResult = sut.Equals(new Abstractions.DateTime(1));
-            actualResult.Should().BeTrue();
-            actualResult.Should().Be(expectedResult);
         }
 
         #endregion
