@@ -1125,12 +1125,15 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         [Fact]
         public void ToFileTime_should_ThrowForWayWayBeforeTheFirstDigitalFile()
         {
+            var tooEarlyDateTime = Abstractions.DateTime.SpecifyKind(
+                new Abstractions.DateTime(1601, 01, 01),
+                System.DateTimeKind.Utc)
+                .AddSeconds(-1);
+
             //  Act.
             var res = Record.Exception(() =>
             {
-                new Abstractions.DateTime(1601, 01, 01)
-                    .AddSeconds(-1)
-                    .ToFileTime();
+                tooEarlyDateTime.ToFileTime();
             });
 
             //  Assert.
