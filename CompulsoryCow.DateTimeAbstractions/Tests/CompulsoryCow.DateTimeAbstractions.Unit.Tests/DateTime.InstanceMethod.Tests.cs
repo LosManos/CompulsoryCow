@@ -724,33 +724,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             result.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        [Fact]
-        public void SetSubtractDateTime_should_SetAndReset()
-        {
-            var anyLargerTicks = 1234;
-            var anyLesserTicks = 34;
-            var expected = new System.DateTime(anyLargerTicks)
-                .Subtract(new System.DateTime(anyLesserTicks));
-            var sut = new Abstractions.DateTime(anyLargerTicks);
-            var result = sut
-                .Subtract(new Abstractions.DateTime(anyLesserTicks));
-            AssertEquals(expected, result, "Sanity check we know what we are testing.");
-
-            //  Act.
-            sut.SetSubtractDateTime(() => new Abstractions.TimeSpan(333));
-
-            //  Assert.
-            sut.Subtract(new Abstractions.DateTime(anyLesserTicks))
-                .Should().Be(new Abstractions.TimeSpan(333));
-
-            //  Act.
-            sut.SetSubtractDateTime(null);
-
-            //  Assert.
-            sut.Subtract(new Abstractions.DateTime(anyLesserTicks))
-                .Should().Be(result);
-        }
-
         #endregion  //  TimeSpan Subtract(DateTime value) tests.
 
         #region Subtract(TimeSpan value) tests.
@@ -786,33 +759,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  Assert.
             result.Should().BeOfType<System.ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public void SetSubtractTimeSpan_should_SetAndReset()
-        {
-            var anyLargerTicks = 1234;
-            var anyLesserTicks = 34;
-            var expected = new System.DateTime(anyLargerTicks)
-                .Subtract(new System.TimeSpan(anyLesserTicks));
-            var sut = new Abstractions.DateTime(anyLargerTicks);
-            var result = sut
-                .Subtract(new Abstractions.TimeSpan(anyLesserTicks));
-            AssertEquals(expected, result, because: "Sanity check we know what we are testing.");
-
-            //  Act.
-            sut.SetSubtractTimeSpan(() => new Abstractions.DateTime(333));
-
-            //  Assert.
-            sut.Subtract(new Abstractions.TimeSpan(anyLesserTicks))
-                .Should().Be(new Abstractions.DateTime(333));
-
-            //  Act.
-            sut.SetSubtractTimeSpan(null);
-
-            //  Assert.
-            sut.Subtract(new Abstractions.TimeSpan(anyLesserTicks))
-                .Should().Be(result);
         }
 
         #endregion  //  Subtract(TimeSpan value) tests.

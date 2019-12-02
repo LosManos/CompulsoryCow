@@ -40,8 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<TimeSpan> _subtractDateTime;
-        private System.Func<DateTime> _subtractTimeSpan;
         private System.Func<long> _toBinary;
         private System.Func<long> _toFileTime;
         private System.Func<long> _toFileTimeUtc;
@@ -744,17 +742,13 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public TimeSpan Subtract(DateTime value)
         {
-            return _subtractDateTime != null ?
-                _subtractDateTime() :
-                new TimeSpan(_value.Subtract(ToSystem(value)).Ticks);
+            return new TimeSpan(_value.Subtract(ToSystem(value)).Ticks);
         }
 
         /// <inheritdoc/>
         public DateTime Subtract(TimeSpan value)
         {
-            return _subtractTimeSpan != null ?
-                _subtractTimeSpan() :
-                FromSystemDateTime(_value.Subtract(value.ToSystemTimeSpan()));
+            return FromSystemDateTime(_value.Subtract(value.ToSystemTimeSpan()));
         }
 
         /// <inheritdoc/>
@@ -1392,28 +1386,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="Subtract(DateTime)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.Subtract(System.DateTime)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetSubtractDateTime(System.Func<TimeSpan> func)
-        {
-            _subtractDateTime = func;
-        }
-
-        /// <summary>This method sets the <see cref="Subtract(TimeSpan)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.Subtract(System.TimeSpan)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetSubtractTimeSpan(System.Func<DateTime> func)
-        {
-            _subtractTimeSpan = func;
-        }
 
         /// <summary>This method sets the <see cref="ToBinary"/> return value.
         /// Set to null to have the method return <see cref="System.DateTime.ToBinary"/>.
