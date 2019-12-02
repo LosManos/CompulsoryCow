@@ -1193,7 +1193,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         }
 
         [Fact]
-        public void SetToFileUtcTime_should_SetAndReset()
+        public void SetToFileTimeUtc_should_SetAndReset()
         {
             var anyTicks = new System.DateTime(1601, 01, 02).Ticks;
             var sut = new Abstractions.DateTime(anyTicks);

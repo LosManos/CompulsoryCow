@@ -813,7 +813,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _toFileTimeUtc != null ?
                 _toFileTimeUtc() :
-                _value.ToFileTime();
+                _value.ToFileTimeUtc();
         }
 
         /// <inheritdoc/>
