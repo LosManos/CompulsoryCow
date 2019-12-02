@@ -40,21 +40,6 @@ namespace CompulsoryCow.DateTime.Abstractions
 
         private readonly System.DateTime _value;
 
-        private System.Func<long> _toBinary;
-        private System.Func<long> _toFileTime;
-        private System.Func<long> _toFileTimeUtc;
-        private System.Func<DateTime> _toLocalTime;
-        private System.Func<string> _toLongDateString;
-        private System.Func<string> _toLongTimeString;
-        private System.Func<double> _toOADate;
-        private System.Func<string> _toShortDateString;
-        private System.Func<string> _toShortTimeString;
-        private System.Func<string> _toStringString;
-        private System.Func<string> _toStringIFormatProvider;
-        private System.Func<string> _toString;
-        private System.Func<string> _toStringStringIFormatProvider;
-        private System.Func<DateTime> _toUniversalTime;
-
         #region Constructors.
 
         /// <summary>See <see cref="System.DateTime.DateTime(long)"/>.
@@ -754,113 +739,85 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public long ToBinary()
         {
-            return _toBinary != null ?
-                _toBinary() :
-                _value.ToBinary();
+            return _value.ToBinary();
         }
 
         /// <inheritdoc/>
         public long ToFileTime()
         {
-            return _toFileTime != null ?
-                _toFileTime() :
-                _value.ToFileTime();
+            return _value.ToFileTime();
         }
 
         /// <inheritdoc/>
         public long ToFileTimeUtc()
         {
-            return _toFileTimeUtc != null ?
-                _toFileTimeUtc() :
-                _value.ToFileTimeUtc();
+            return _value.ToFileTimeUtc();
         }
 
         /// <inheritdoc/>
         public DateTime ToLocalTime()
         {
-            return _toLocalTime != null ?
-                _toLocalTime() :
-                FromSystemDateTime(_value.ToLocalTime());
+            return FromSystemDateTime(_value.ToLocalTime());
         }
 
         /// <inheritdoc/>
         public string ToLongDateString()
         {
-            return _toLongDateString != null ?
-                _toLongDateString() :
-                _value.ToLongDateString();
+            return _value.ToLongDateString();
         }
 
         /// <inheritdoc/>
         public string ToLongTimeString()
         {
-            return _toLongTimeString != null ?
-                _toLongTimeString() :
-                _value.ToLongTimeString();
+            return _value.ToLongTimeString();
         }
 
         /// <inheritdoc/>
         public double ToOADate()
         {
-            return _toOADate != null ?
-                _toOADate() :
-                _value.ToOADate();
+            return _value.ToOADate();
         }
 
         /// <inheritdoc/>
         public string ToShortDateString()
         {
-            return _toShortDateString != null ?
-                _toShortDateString() :
-                _value.ToShortDateString();
+            return _value.ToShortDateString();
         }
 
         /// <inheritdoc/>
         public string ToShortTimeString()
         {
-            return _toShortTimeString != null ?
-                _toShortTimeString() :
-                _value.ToShortTimeString();
+            return _value.ToShortTimeString();
         }
 
         /// <inheritdoc/>
         public string ToString(string format)
         {
-            return _toStringString != null ?
-                _toStringString() :
-                _value.ToString(format);
+            return _value.ToString(format);
         }
 
         /// <inheritdoc/>
         public string ToString(System.IFormatProvider provider)
         {
-            return _toStringIFormatProvider != null ?
-                _toStringIFormatProvider() :
-                _value.ToString(provider);
+            return _value.ToString(provider);
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return _toString != null ?
-                _toString() :
-                _value.ToString();
+            return _value.ToString();
         }
 
         /// <inheritdoc/>
         public string ToString(string format, System.IFormatProvider provider)
         {
-            return _toStringStringIFormatProvider != null ?
-                _toStringStringIFormatProvider() :
-                _value.ToString(format, provider);
+            return _value.ToString(format, provider);
         }
 
         /// <inheritdoc/>
         public DateTime ToUniversalTime()
         {
-            return _toUniversalTime != null ?
-                _toUniversalTime() :
-                FromSystemDateTime(_value.ToUniversalTime());
+            return FromSystemDateTime(_value.ToUniversalTime());
         }
 
         #endregion  //  Instance methods.
@@ -1386,160 +1343,6 @@ namespace CompulsoryCow.DateTime.Abstractions
         #endregion  //  Static methods used for testing and not production.
 
         #region Instance methods used for testing and not production.
-
-        /// <summary>This method sets the <see cref="ToBinary"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToBinary"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToBinary(System.Func<long> func)
-        {
-            _toBinary = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToFileTime"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToFileTime"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToFileTime(System.Func<long> func)
-        {
-            _toFileTime = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToFileTimeUtc"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToFileTimeUtc"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToFileTimeUtc(System.Func<long> func)
-        {
-            _toFileTimeUtc = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToLocalTime"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToLocalTime"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToLocalTime(System.Func<DateTime> func)
-        {
-            _toLocalTime = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToLongDateString"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToLongDateString"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToLongDateString(System.Func<string> func)
-        {
-            _toLongDateString = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToLongTimeString"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToLongTimeString"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToLongTimeString(System.Func<string> func)
-        {
-            _toLongTimeString = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToOADate"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToOADate"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToOADate(System.Func<double> func)
-        {
-            _toOADate = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToShortDateString"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToShortDateString"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToShortDateString(System.Func<string> func)
-        {
-            _toShortDateString = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToShortTimeString"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToShortTimeString"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToShortTimeString(System.Func<string> func)
-        {
-            _toShortTimeString = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToString(string)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToString(string)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToStringString(System.Func<string> func)
-        {
-            _toStringString = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToString(System.IFormatProvider)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToString(System.IFormatProvider)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToStringIFormatProvider(System.Func<string> func)
-        {
-            _toStringIFormatProvider = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToString"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToString()"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToString(System.Func<string> func)
-        {
-            _toString = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToString(string, System.IFormatProvider)"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToString(string, System.IFormatProvider)"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToStringStringIFormatProvider(System.Func<string> func)
-        {
-            _toStringStringIFormatProvider = func;
-        }
-
-        /// <summary>This method sets the <see cref="ToUniversalTime"/> return value.
-        /// Set to null to have the method return <see cref="System.DateTime.ToUniversalTime"/>.
-        /// 
-        /// This method should only be used for testing and really not be in this class at all.
-        /// </summary>
-        /// <param name="func"></param>
-        internal void SetToUniversalTime(System.Func<DateTime> func)
-        {
-            _toUniversalTime = func;
-        }
 
         #endregion
 

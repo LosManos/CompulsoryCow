@@ -778,29 +778,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             Assert.Equal(expected, res);
         }
 
-        [Fact]
-        public void SetToBinary_should_SetAndReset()
-        {
-            var anyTicks = 424242;
-            var sut = new Abstractions.DateTime(anyTicks);
-            var actual = sut.ToBinary();
-            var expected = new System.DateTime(anyTicks).ToBinary();
-            actual.Should().Be(expected, "Sanity check we know what we are testing.");
-            long fakeValue = 12;
-
-            //  Act.
-            sut.SetToBinary(() => fakeValue);
-
-            //  Assert.
-            sut.ToBinary().Should().Be(fakeValue);
-
-            //  Act.
-            sut.SetToBinary(null);
-
-            //  Assert.
-            sut.ToBinary().Should().Be(expected);
-        }
-
         #endregion  //  ToBinary() tests.
 
         #region ToFileTime() tests.
@@ -836,29 +813,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        [Fact]
-        public void SetToFileTime_should_SetAndReset()
-        {
-            var anyTicks = new System.DateTime(1601, 01, 02).Ticks;
-            var sut = new Abstractions.DateTime(anyTicks);
-            var actual = sut.ToFileTime();
-            var expected = new System.DateTime(anyTicks).ToFileTime();
-            actual.Should().Be(expected, "Sanity check we know what we are testing.");
-            long fakeValue = 12;
-
-            //  Act.
-            sut.SetToFileTime(() => fakeValue);
-
-            //  Assert.
-            sut.ToFileTime().Should().Be(fakeValue);
-
-            //  Act.
-            sut.SetToFileTime(null);
-
-            //  Assert.
-            sut.ToFileTime().Should().Be(expected);
-        }
-
         #endregion  //  ToFileTime() tests.
 
         #region ToFileTimeUtc() tests.
@@ -891,29 +845,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().BeOfType<System.ArgumentOutOfRangeException>();
         }
 
-        [Fact]
-        public void SetToFileTimeUtc_should_SetAndReset()
-        {
-            var anyTicks = new System.DateTime(1601, 01, 02).Ticks;
-            var sut = new Abstractions.DateTime(anyTicks);
-            var actual = sut.ToFileTimeUtc();
-            var expected = new System.DateTime(anyTicks).ToFileTimeUtc();
-            actual.Should().Be(expected, "Sanity check we know what we are testing.");
-            long fakeValue = 12;
-
-            //  Act.
-            sut.SetToFileTimeUtc(() => fakeValue);
-
-            //  Assert.
-            sut.ToFileTimeUtc().Should().Be(fakeValue);
-
-            //  Act.
-            sut.SetToFileTimeUtc(null);
-
-            //  Assert.
-            sut.ToFileTimeUtc().Should().Be(expected);
-        }
-
         #endregion  //  ToFileTimeUtc() tests.
 
         #region ToLocalTime() tests.
@@ -929,29 +860,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  Assert.
             AssertEquals(expected, res);
-        }
-
-        [Fact]
-        public void SetToLocalTime_should_SetAndReset()
-        {
-            var anyTicks = new System.DateTime(1601, 01, 02).Ticks;
-            var sut = new Abstractions.DateTime(anyTicks);
-            var actual = sut.ToLocalTime();
-            var expected = new System.DateTime(anyTicks).ToLocalTime();
-            actual.Should().Be(expected, "Sanity check we know what we are testing.");
-            var fakeValue = new Abstractions.DateTime(12);
-
-            //  Act.
-            sut.SetToLocalTime(() => fakeValue);
-
-            //  Assert.
-            sut.ToLocalTime().Should().Be(fakeValue);
-
-            //  Act.
-            sut.SetToLocalTime(null);
-
-            //  Assert.
-            sut.ToLocalTime().Should().Be(expected);
         }
 
         #endregion  //  ToLocalTime() tests.
@@ -971,31 +879,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().Be(expected);
         }
 
-        [Fact]
-        public void SetToLongDateString_SetAndReset()
-        {
-            var anyTicks = 1235;
-            var system = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            system.ToLongDateString().Should()
-                .Be(sut.ToLongDateString(),
-                "Sanity check we know what we are testing.");
-            var fake = "whatever";
-
-            //  Act.
-            sut.SetToLongDateString(() => fake);
-
-            //  Assert.
-            sut.ToLongDateString().Should().Be(fake);
-
-            //  Act.
-            sut.SetToLongDateString(null);
-
-            //  Assert.
-            sut.ToLongDateString().Should()
-                .Be(system.ToLongDateString());
-        }
-
         #endregion  //  ToLongDateString tests.
 
         #region ToLongTimeString tests.
@@ -1011,31 +894,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  Assert.
             res.Should().Be(expected);
-        }
-
-        [Fact]
-        public void SetToLongTimeString_SetAndReset()
-        {
-            var anyTicks = 1235;
-            var system = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            system.ToLongTimeString().Should()
-                .Be(sut.ToLongTimeString(),
-                "Sanity check we know what we are testing.");
-            var fake = "whatever";
-
-            //  Act.
-            sut.SetToLongTimeString(() => fake);
-
-            //  Assert.
-            sut.ToLongTimeString().Should().Be(fake);
-
-            //  Act.
-            sut.SetToLongTimeString(null);
-
-            //  Assert.
-            sut.ToLongTimeString().Should()
-                .Be(system.ToLongTimeString());
         }
 
         #endregion  //  ToLongDateString tests.
@@ -1057,31 +915,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         // I see no way to make ToOADate throw an exception, the OverflowException as documentation says.
 
-        [Fact]
-        public void ToOADate_SetAndReset()
-        {
-            var anyTicks = 1235;
-            var system = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            system.ToOADate().Should()
-                .Be(sut.ToOADate(),
-                "Sanity check we know what we are testing.");
-            var fake = 123.234;
-
-            //  Act.
-            sut.SetToOADate(() => fake);
-
-            //  Assert.
-            sut.ToOADate().Should().Be(fake);
-
-            //  Act.
-            sut.SetToOADate(null);
-
-            //  Assert.
-            sut.ToOADate().Should()
-                .Be(system.ToOADate());
-        }
-
         #endregion  //  ToLongDateString tests.
 
         #region ToLongDateString tests.
@@ -1099,31 +932,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             res.Should().Be(expected);
         }
 
-        [Fact]
-        public void SetToShortDateString_SetAndReset()
-        {
-            var anyTicks = 1235;
-            var system = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            system.ToShortDateString().Should()
-                .Be(sut.ToShortDateString(),
-                "Sanity check we know what we are testing.");
-            var fake = "whatever";
-
-            //  Act.
-            sut.SetToShortDateString(() => fake);
-
-            //  Assert.
-            sut.ToShortDateString().Should().Be(fake);
-
-            //  Act.
-            sut.SetToShortDateString(null);
-
-            //  Assert.
-            sut.ToShortDateString().Should()
-                .Be(system.ToShortDateString());
-        }
-
         #endregion  //  ToLongDateString tests.
 
         #region ToLongTimeString tests.
@@ -1139,31 +947,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
             //  Assert.
             res.Should().Be(expected);
-        }
-
-        [Fact]
-        public void SetToShortTimeString_SetAndReset()
-        {
-            var anyTicks = 1235;
-            var system = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            system.ToShortTimeString().Should()
-                .Be(sut.ToShortTimeString(),
-                "Sanity check we know what we are testing.");
-            var fake = "whatever";
-
-            //  Act.
-            sut.SetToShortTimeString(() => fake);
-
-            //  Assert.
-            sut.ToShortTimeString().Should().Be(fake);
-
-            //  Act.
-            sut.SetToShortTimeString(null);
-
-            //  Assert.
-            sut.ToShortTimeString().Should()
-                .Be(system.ToShortTimeString());
         }
 
         #endregion  //  ToLongDateString tests.
@@ -1206,30 +989,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         //  I have found no way to force the ArgumentOutOfRangeException
         //  for datetime outside valid range.
 
-        [Fact]
-        public void SetToStringString_SetAndReset()
-        {
-            var anyTicks = 123456;
-            var anyFormat = "u";
-            var systemDateTime = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            var expected = systemDateTime.ToString(anyFormat);
-            sut.ToString(anyFormat).Should().Be(expected, "Sanity test we know what we are testing.");
-            var fake = "any fake";
-
-            //  Act.
-            sut.SetToStringString(() => fake);
-
-            //  Assert.
-            sut.ToString(anyFormat).Should().Be(fake);
-
-            //  Act.
-            sut.SetToStringString(null);
-
-            //  Assert.
-            sut.ToString(anyFormat).Should().Be(expected);
-        }
-
         #endregion  //  ToString(string format) tests.
 
         #region ToString(IFormatProvider provider) tests.
@@ -1253,30 +1012,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         //  I have found no way to force the ArgumentOutOfRangeException
         //  for datetime outside valid range.
 
-        [Fact]
-        public void SetToStringIFormatProvider_SetAndReset()
-        {
-            var anyTicks = 123456;
-            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
-            var systemDateTime = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            var expected = systemDateTime.ToString(culture);
-            sut.ToString(culture).Should().Be(expected, "Sanity test we know what we are testing.");
-            var fake = "any fake";
-
-            //  Act.
-            sut.SetToStringIFormatProvider(() => fake);
-
-            //  Assert.
-            sut.ToString(culture).Should().Be(fake);
-
-            //  Act.
-            sut.SetToStringIFormatProvider(null);
-
-            //  Assert.
-            sut.ToString(culture).Should().Be(expected);
-        }
-
         #endregion  //  ToString(IFormatProvider provider) tests.
 
         #region ToString() tests.
@@ -1299,29 +1034,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
 
         //  I have found no way to force the ArgumentOutOfRangeException
         //  for datetime outside valid range.
-
-        [Fact]
-        public void SetToString_SetAndReset()
-        {
-            var anyTicks = 123456;
-            var systemDateTime = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            var expected = systemDateTime.ToString();
-            sut.ToString().Should().Be(expected, "Sanity test we know what we are testing.");
-            var fake = "any fake";
-
-            //  Act.
-            sut.SetToString(() => fake);
-
-            //  Assert.
-            sut.ToString().Should().Be(fake);
-
-            //  Act.
-            sut.SetToString(null);
-
-            //  Assert.
-            sut.ToString().Should().Be(expected);
-        }
 
         #endregion  //  ToString() tests.
 
@@ -1375,31 +1087,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
         //     The date and time is outside the range of dates supported by the calendar used
         //     by provider.
 
-        [Fact]
-        public void SetToStringStringIFormatProvider_SetAndReset()
-        {
-            var anyTicks = 123456;
-            var anyFormat = "u";
-            System.IFormatProvider culture = new CultureInfo("fr-FR", true);
-            var systemDateTime = new System.DateTime(anyTicks);
-            var sut = new Abstractions.DateTime(anyTicks);
-            var expected = systemDateTime.ToString(anyFormat, culture);
-            sut.ToString(anyFormat, culture).Should().Be(expected, "Sanity test we know what we are testing.");
-            var fake = "any fake";
-
-            //  Act.
-            sut.SetToStringStringIFormatProvider(() => fake);
-
-            //  Assert.
-            sut.ToString(anyFormat, culture).Should().Be(fake);
-
-            //  Act.
-            sut.SetToStringStringIFormatProvider(null);
-
-            //  Assert.
-            sut.ToString(anyFormat, culture).Should().Be(expected);
-        }
-
         #endregion  //  ToString(IFormatProvider provider) tests.
 
         #region ToUniversalTime() tests.
@@ -1436,31 +1123,6 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             //  Assert.
             res.Should().Be(expected);
         }
-
-        [Fact]
-        public void SetToUniversalTime_SetAndReset()
-        {
-            var anyTicks = 123456;
-            var anySystemDateTimeKindExceptionUtc = System.DateTimeKind.Local;
-            var systemDateTime = new System.DateTime(anyTicks, anySystemDateTimeKindExceptionUtc);
-            var sut = new Abstractions.DateTime(anyTicks, anySystemDateTimeKindExceptionUtc);
-            var expected = systemDateTime.ToUniversalTime();
-            sut.ToUniversalTime().Should().Be(expected, "Sanity test we know what we are testing.");
-            var fake = new Abstractions.DateTime(anyTicks + 1, System.DateTimeKind.Unspecified);
-
-            //  Act.
-            sut.SetToUniversalTime(() => fake);
-
-            //  Assert.
-            sut.ToUniversalTime().Should().Be(fake);
-
-            //  Act.
-            sut.SetToUniversalTime(null);
-
-            //  Assert.
-            sut.ToUniversalTime().Should().Be(expected);
-        }
-
         #endregion  //  ToUniversalTime() tests.
     }
 }
