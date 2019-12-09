@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CompulsoryCow.ReachIn\CompulsoryCow.ReachIn.csproj" />
-    <ProjectReference Include="..\ReachInTestDotnetFramework\ReachInTestDotnetFramework.csproj" />
+    <ProjectReference Include="..\..\CompulsoryCow.DateTimeAbstractions\CompulsoryCow.DateTimeAbstractions.csproj" />
   </ItemGroup>
 
 </Project>
