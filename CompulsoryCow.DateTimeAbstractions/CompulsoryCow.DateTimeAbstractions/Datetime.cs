@@ -350,6 +350,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 _fromFileTimeUtc() :
                 FromSystemDateTime(System.DateTime.FromFileTimeUtc(fileTime));
         }
+
         /// <summary>See <see cref="System.DateTime.FromOADate(double)"/>.
         /// </summary>
         /// <param name="fileTime"></param>
