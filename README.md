@@ -24,6 +24,11 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 * Parse.StringLine method for splitting a string per character (comma). It is like `string.Split` but with with the possibility to have a comma in the very string.
 * Parse.String method for splitting a string per character (comma) and returns every item as a specific type.
 
+### *CompulsoryCow.DateTimeAbstractions* contains:
+* Help for abstracting System.DateTime to make it deterministic and/or testable.
+  * All of System.DateTime's instance methods and properties implemented as interface for making mocking easier.
+  * All of System.DateTime's static methods, properties and all constructors and operators, but setable for making testing possible in a deterministic way.
+
 ### *CompulsoryCow.DeSerialiser* contains:  
 * A [serialize to XML method](#serialize.toxml) with `CompulsoryCow.Serialize(myObject)`
 * A [deserialize from XML method](#deseralize.fromxml) with `CompulsoryCow.Deserialize<MyType>(myString)`
