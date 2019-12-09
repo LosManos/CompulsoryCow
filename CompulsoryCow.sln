@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{B6BA6D69
 	ProjectSection(SolutionItems) = preProject
 		Build\Build-AreEqual.ps1 = Build\Build-AreEqual.ps1
 		Build\Build-CharacterSeparated.ps1 = Build\Build-CharacterSeparated.ps1
+		Build\Build-DateTimeAbstractions.ps1 = Build\Build-DateTimeAbstractions.ps1
 		Build\Build-DeSerialiser.ps1 = Build\Build-DeSerialiser.ps1
 		Build\Build-IsEqualsImplemented.ps1 = Build\Build-IsEqualsImplemented.ps1
 		Build\Build-Meta.ps1 = Build\Build-Meta.ps1
@@ -108,7 +109,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompulsoryCow.DateTimeAbstr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{62E531C3-07B6-43F6-9A4B-E332628B21AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.DateTimeAbstractions.Unit.Tests", "CompulsoryCow.DateTimeAbstractions\Tests\CompulsoryCow.DateTimeAbstractions.Unit.Tests\CompulsoryCow.DateTimeAbstractions.Unit.Tests.csproj", "{7A8A316F-1C00-44C2-BF7A-B9BFEF8409BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.DateTimeAbstractions.Unit.Tests", "CompulsoryCow.DateTimeAbstractions\Tests\CompulsoryCow.DateTimeAbstractions.Unit.Tests\CompulsoryCow.DateTimeAbstractions.Unit.Tests.csproj", "{7A8A316F-1C00-44C2-BF7A-B9BFEF8409BD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.DateTimeAbstractions", "CompulsoryCow.DateTimeAbstractions\CompulsoryCow.DateTimeAbstractions\CompulsoryCow.DateTimeAbstractions.csproj", "{E1291A4A-F72A-41C6-BE27-52F35E6EDABC}"
 EndProject

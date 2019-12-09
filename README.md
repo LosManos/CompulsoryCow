@@ -3,6 +3,7 @@ CompulsoryCow
 
 CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below  
 CompulsoryCow.AreEqual Version 0.2.0  
+CompulsoryCow.DateTimeAbstractions 0.1.0  
 Compulsorycow.CharacterSeparated Version 0.3.0  
 CompulsoryCow.DeSerialiser Version 0.2.0  
 CompulsoryCow.IsEqualsImplemented Version 0.2.0  
@@ -72,14 +73,14 @@ https://www.gnu.org/licenses/lgpl-3.0.txt
 
 ### NoEvil
 
-The code is not available for companies that create, buy or sell weapons.
-This includes companies and organisations that are owned by companies making weapons. 
+The code is not available for companies that create, buy or sell munition.
+This includes companies and organisations that are owned by companies making munition. 
 The list includes, but is not limited to Bofors, Saab and Lockheed Martin.
 
 The code is not available for countries where capital punishment or torture is allowed or used. 
 The list includes, but is not limited to, Egypt, China and USA. 
 
-An exception to the above is where the company or organisation takes an active role in working against weapons, capital punishment or torture regardless of country. 
+An exception to the above is where the company or organisation takes an active role in working against munition, capital punishment or torture regardless of country. 
 The list includes, but is not limited to Amnesty and Greenpeace.
 
 The code is also not available for companies and persons dealing with unlawful things or aiding the same.
