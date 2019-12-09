@@ -6,8 +6,9 @@ namespace CompulsoryCow.DateTime.Abstractions
 {
     public class DateTime : IDateTime
     {
-        private static System.DateTime? _now;
-        private static System.DateTime? _utcNow;
+        private static System.Func<DateTime> _now;
+        private static System.Func<DateTime> _today;
+        private static System.Func<DateTime> _utcNow;
         private static System.Func<int> _compare;
         private static System.Func<int> _daysInMonth;
         private static System.Func<bool> _equals;
@@ -191,7 +192,22 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             get
             {
-                return new DateTime(_now?.Ticks ?? System.DateTime.Now.Ticks);
+                return _now != null ?
+                    _now() :
+                    FromSystemDateTime(System.DateTime.Now);
+            }
+        }
+
+        /// <summary>See <see cref="System.DateTime.Today"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime Today
+        {
+            get
+            {
+                return _today != null ?
+                    _today() :
+                    FromSystemDateTime(System.DateTime.Today);
             }
         }
 
@@ -201,7 +217,9 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             get
             {
-                return new DateTime(_utcNow?.Ticks ?? System.DateTime.UtcNow.Ticks);
+                return _utcNow != null ?
+                    _utcNow() :
+                    FromSystemDateTime(System.DateTime.UtcNow);
             }
         }
 
@@ -1231,16 +1249,24 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="DateTime.Now"/> return <see cref="System.DateTime.Now"/>.
         /// </summary>
-        /// <param name="now"></param>
-        internal static void SetNow(System.DateTime? now) => _now = now;
+        /// <param name="nowFunc"></param>
+        internal static void SetNow(System.Func<DateTime> nowFunc) => _now = nowFunc;
+
+        /// <summary>This method sets the <see cref="Today"/> property.
+        /// 
+        /// This method should only be used for testing and really not be in this class at all.
+        /// Set to null to have <see cref="Today"/> return <see cref="System.DateTime.Today"/>.
+        /// </summary>
+        /// <param name="todayFunc"></param>
+        internal static void SetToday(System.Func<DateTime> todayFunc) => _today= todayFunc;
 
         /// <summary>This method sets the <see cref="DateTime.UtcNow"/> property.
         /// 
         /// This method should only be used for testing and really not be in this class at all.
         /// Set to null to have <see cref="UtcNow"/> return <see cref="System.DateTime.UtcNow"/>.
         /// </summary>
-        /// <param name="utcNow"></param>
-        internal static void SetUtcNow(System.DateTime? utcNow) => _utcNow = utcNow;
+        /// <param name="utcNowFunc"></param>
+        internal static void SetUtcNow(System.Func<DateTime> utcNowFunc) => _utcNow = utcNowFunc;
 
         /// <summary>This method sets the <see cref="operator +(DateTime, TimeSpan)"/>.
         /// 
