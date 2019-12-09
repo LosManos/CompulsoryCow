@@ -3,6 +3,7 @@ CompulsoryCow
 
 CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below  
 CompulsoryCow.AreEqual Version 0.2.0  
+CompulsoryCow.DateTimeAbstractions 0.1.0  
 Compulsorycow.CharacterSeparated Version 0.3.0  
 CompulsoryCow.DeSerialiser Version 0.2.0  
 CompulsoryCow.IsEqualsImplemented Version 0.2.0  
@@ -23,6 +24,11 @@ Nuget: https://www.nuget.org/packages/CompulsoryCow/
 ### *CompulsoryCow.CharacterSeparated* contains:
 * Parse.StringLine method for splitting a string per character (comma). It is like `string.Split` but with with the possibility to have a comma in the very string.
 * Parse.String method for splitting a string per character (comma) and returns every item as a specific type.
+
+### *CompulsoryCow.DateTimeAbstractions* contains:
+* Help for abstracting System.DateTime to make it deterministic and/or testable.
+  * All of System.DateTime's instance methods and properties implemented as interface for making mocking easier.
+  * All of System.DateTime's static methods, properties and all constructors and operators, but setable for making testing possible in a deterministic way.
 
 ### *CompulsoryCow.DeSerialiser* contains:  
 * A [serialize to XML method](#serialize.toxml) with `CompulsoryCow.Serialize(myObject)`
@@ -67,14 +73,14 @@ https://www.gnu.org/licenses/lgpl-3.0.txt
 
 ### NoEvil
 
-The code is not available for companies that create, buy or sell weapons.
-This includes companies and organisations that are owned by companies making weapons. 
+The code is not available for companies that create, buy or sell munition.
+This includes companies and organisations that are owned by companies making munition. 
 The list includes, but is not limited to Bofors, Saab and Lockheed Martin.
 
 The code is not available for countries where capital punishment or torture is allowed or used. 
 The list includes, but is not limited to, Egypt, China and USA. 
 
-An exception to the above is where the company or organisation takes an active role in working against weapons, capital punishment or torture regardless of country. 
+An exception to the above is where the company or organisation takes an active role in working against munition, capital punishment or torture regardless of country. 
 The list includes, but is not limited to Amnesty and Greenpeace.
 
 The code is also not available for companies and persons dealing with unlawful things or aiding the same.
