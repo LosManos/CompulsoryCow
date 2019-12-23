@@ -194,7 +194,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 return _now != null ?
                     _now() :
-                    FromSystemDateTime(System.DateTime.Now);
+                    System.DateTime.Now.ToAbstractionsDateTime();
             }
         }
 
@@ -207,7 +207,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 return _today != null ?
                     _today() :
-                    FromSystemDateTime(System.DateTime.Today);
+                    System.DateTime.Today.ToAbstractionsDateTime();
             }
         }
 
@@ -219,7 +219,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 return _utcNow != null ?
                     _utcNow() :
-                    FromSystemDateTime(System.DateTime.UtcNow);
+                    System.DateTime.UtcNow.ToAbstractionsDateTime();
             }
         }
 
@@ -344,7 +344,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _fromBinary != null ?
                 _fromBinary() :
-                FromSystemDateTime( System.DateTime.FromBinary(dateData));
+                System.DateTime.FromBinary(dateData).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.FromFileTime(long)"/>.
@@ -355,7 +355,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _fromFileTime != null ?
                 _fromFileTime() :
-                FromSystemDateTime(System.DateTime.FromFileTime(fileTime));
+                System.DateTime.FromFileTime(fileTime).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
@@ -366,7 +366,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _fromFileTimeUtc != null ?
                 _fromFileTimeUtc() :
-                FromSystemDateTime(System.DateTime.FromFileTimeUtc(fileTime));
+                System.DateTime.FromFileTimeUtc(fileTime).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.FromOADate(double)"/>.
@@ -377,7 +377,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _fromOADate != null ?
                 _fromOADate() :
-                FromSystemDateTime(System.DateTime.FromOADate(d));
+                System.DateTime.FromOADate(d).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.IsLeapYear(int)"/>.
@@ -401,7 +401,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _parseStringFormatProviderStyle != null ?
                 _parseStringFormatProviderStyle() :
-                FromSystemDateTime(System.DateTime.Parse(s, provider, styles));
+                System.DateTime.Parse(s, provider, styles).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.Parse(string, System.IFormatProvider)"/>.
@@ -413,7 +413,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _parseStringFormatProvider != null ?
                 _parseStringFormatProvider() :
-                FromSystemDateTime(System.DateTime.Parse(s, provider));
+                System.DateTime.Parse(s, provider).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.Parse(string)"/>.
@@ -424,7 +424,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _parseString != null ?
                 _parseString():
-                FromSystemDateTime(System.DateTime.Parse(s));
+                System.DateTime.Parse(s).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/>.
@@ -438,7 +438,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _parseExactStringStringArrayFormatProviderStyle != null ?
                 _parseExactStringStringArrayFormatProviderStyle() :
-                FromSystemDateTime(System.DateTime.ParseExact(s, formats, provider, style));
+                System.DateTime.ParseExact(s, formats, provider, style).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.ParseExact(string, string, System.IFormatProvider, DateTimeStyles)"/>.
@@ -452,7 +452,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _parseExactStringStringFormatProviderStyle != null ?
                 _parseExactStringStringFormatProviderStyle():
-                FromSystemDateTime(System.DateTime.ParseExact(s, format, provider, style));
+                System.DateTime.ParseExact(s, format, provider, style).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.ParseExact(string, string, System.IFormatProvider)"/>.
@@ -465,7 +465,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _parseExactStringStringFormatProvider != null ?
                 _parseExactStringStringFormatProvider() :
-                FromSystemDateTime(System.DateTime.ParseExact(s, format, provider));
+                System.DateTime.ParseExact(s, format, provider).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.SpecifyKind(System.DateTime, System.DateTimeKind)"/>.
@@ -477,7 +477,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         {
             return _specifyKind != null ?
                 _specifyKind() :
-                FromSystemDateTime(System.DateTime.SpecifyKind(ToSystem(value), kind));
+                System.DateTime.SpecifyKind(value.ToSystemDateTime(), kind).ToAbstractionsDateTime();
         }
 
         /// <summary>See <see cref="System.DateTime.TryParse(string, System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
@@ -587,55 +587,55 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public DateTime Add(TimeSpan value)
         {
-            return FromSystemDateTime(_value.Add(value.ToSystemTimeSpan()));
+            return _value.Add(value.ToSystemTimeSpan()).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddDays(double value)
         {
-            return FromSystemDateTime(_value.AddDays(value));
+            return _value.AddDays(value).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddHours(double value)
         {
-            return FromSystemDateTime(_value.AddHours(value));
+            return _value.AddHours(value).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddMilliseconds(double value)
         {
-            return FromSystemDateTime(_value.AddMilliseconds(value));
+            return _value.AddMilliseconds(value).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddMinutes(double value)
         {
-            return FromSystemDateTime(_value.AddMinutes(value));
+            return _value.AddMinutes(value).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddMonths(int months)
         {
-            return FromSystemDateTime(_value.AddMonths(months));
+            return _value.AddMonths(months).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddSeconds(double value)
         {
-            return FromSystemDateTime(_value.AddSeconds(value));
+            return _value.AddSeconds(value).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddTicks(long value)
         {
-            return FromSystemDateTime(_value.AddTicks(value));
+            return _value.AddTicks(value).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
         public DateTime AddYears(int value)
         {
-            return FromSystemDateTime(_value.AddYears(value));
+            return _value.AddYears(value).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
@@ -650,7 +650,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 return _value.CompareTo(value);
             }
-            return _value.CompareTo(ToSystem(value));
+            return _value.CompareTo(value.ToSystemDateTime());
         }
 
         /// <inheritdoc/>
@@ -664,7 +664,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 _value.CompareTo(value); // Will throw an exception, the same as System will.
             }
-            return _value.CompareTo(ToSystem((DateTime)value));
+            return _value.CompareTo(((DateTime)value).ToSystemDateTime());
         }
 
         /// <inheritdoc/>
@@ -676,7 +676,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             }
             if (value is DateTime)
             {
-                return _value.Equals(ToSystem((DateTime)value));
+                return _value.Equals(((DateTime)value).ToSystemDateTime());
             }
             return _value.Equals(value);
         }
@@ -696,7 +696,7 @@ namespace CompulsoryCow.DateTime.Abstractions
 
             if (value is DateTime)
             {
-                return _value.Equals(ToSystem(value));
+                return _value.Equals(value.ToSystemDateTime());
             }
             return _value.Equals(value);
         }
@@ -746,13 +746,13 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public TimeSpan Subtract(DateTime value)
         {
-            return new TimeSpan(_value.Subtract(ToSystem(value)).Ticks);
+            return new TimeSpan(_value.Subtract(value.ToSystemDateTime()).Ticks);
         }
 
         /// <inheritdoc/>
         public DateTime Subtract(TimeSpan value)
         {
-            return FromSystemDateTime(_value.Subtract(value.ToSystemTimeSpan()));
+            return _value.Subtract(value.ToSystemTimeSpan()).ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
@@ -776,7 +776,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public DateTime ToLocalTime()
         {
-            return FromSystemDateTime(_value.ToLocalTime());
+            return _value.ToLocalTime().ToAbstractionsDateTime();
         }
 
         /// <inheritdoc/>
@@ -836,7 +836,7 @@ namespace CompulsoryCow.DateTime.Abstractions
         /// <inheritdoc/>
         public DateTime ToUniversalTime()
         {
-            return FromSystemDateTime(_value.ToUniversalTime());
+            return _value.ToUniversalTime().ToAbstractionsDateTime();
         }
 
         #endregion  //  Instance methods.
@@ -856,7 +856,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _addOperator();
             }
 
-            return FromSystemDateTime(ToSystem(d) + t.ToSystemTimeSpan());
+            return (d.ToSystemDateTime() + t.ToSystemTimeSpan()).ToAbstractionsDateTime();
         }
 
         /// <summary>See - operator in <see cref="System.DateTime"/>.
@@ -872,7 +872,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _subtractDateTimeDateTimeOperator();
             }
 
-            return new TimeSpan((ToSystem(d1) - ToSystem(d2)).Ticks);
+            return new TimeSpan((d1.ToSystemDateTime() - d2.ToSystemDateTime()).Ticks);
         }
 
         /// <summary>See - operator in <see cref="System.DateTime"/>.
@@ -888,7 +888,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return _subtractDateTimeTimeSpanOperator();
             }
 
-            return FromSystemDateTime(ToSystem(d) - t.ToSystemTimeSpan());
+            return (d.ToSystemDateTime() - t.ToSystemTimeSpan()).ToAbstractionsDateTime();
         }
 
         /// <summary>See == operator in <see cref="System.DateTime"/>
@@ -919,7 +919,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return true;
             }
 
-            return ToSystem(d1) == ToSystem(d2);
+            return d1.ToSystemDateTime() == d2.ToSystemDateTime();
         }
 
         /// <summary>See != operator in <see cref="System.DateTime"/>
@@ -950,7 +950,7 @@ namespace CompulsoryCow.DateTime.Abstractions
                 return false;
             }
 
-            return ToSystem(d1) != ToSystem(d2);
+            return d1.ToSystemDateTime() != d2.ToSystemDateTime();
         }
 
         /// <summary>See < operator in <see cref="System.DateTime"/>
@@ -974,7 +974,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             ThrowIfNull(nameof(d1), d1);
             ThrowIfNull(nameof(d2), d2);
 
-            return ToSystem(d1) < ToSystem(d2);
+            return d1.ToSystemDateTime() < d2.ToSystemDateTime();
         }
 
         /// <summary>See > operator in <see cref="System.DateTime"/>
@@ -998,7 +998,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             ThrowIfNull(nameof(d1), d1);
             ThrowIfNull(nameof(d2), d2);
 
-            return ToSystem(d1) > ToSystem(d2);
+            return d1.ToSystemDateTime() > d2.ToSystemDateTime();
         }
 
         /// <summary>See <= operator in <see cref="System.DateTime"/>
@@ -1022,7 +1022,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             ThrowIfNull(nameof(d1), d1);
             ThrowIfNull(nameof(d2), d2);
 
-            return ToSystem(d1) <= ToSystem(d2);
+            return d1.ToSystemDateTime() <= d2.ToSystemDateTime();
         }
 
         /// <summary>See >= operator in <see cref="System.DateTime"/>
@@ -1046,7 +1046,7 @@ namespace CompulsoryCow.DateTime.Abstractions
             ThrowIfNull(nameof(d1), d1);
             ThrowIfNull(nameof(d2), d2);
 
-            return ToSystem(d1) >= ToSystem(d2);
+            return d1.ToSystemDateTime() >= d2.ToSystemDateTime();
         }
 
         #endregion  //  Operators.
@@ -1382,10 +1382,10 @@ namespace CompulsoryCow.DateTime.Abstractions
             return IsNull(d1) && IsNull(d2);
         }
 
-        private static DateTime FromSystemDateTime(System.DateTime datetime)
-        {
-            return new DateTime(datetime.Ticks, datetime.Kind);
-        }
+        //private static DateTime FromSystemDateTime(System.DateTime datetime)
+        //{
+        //    return new DateTime(datetime.Ticks, datetime.Kind);
+        //}
 
         /// <summary>This helper method returns if the datetime is null 
         /// without touching the == operator we are overloading.
@@ -1409,11 +1409,6 @@ namespace CompulsoryCow.DateTime.Abstractions
             {
                 throw new System.ArgumentNullException(parameterName, "Argument should be considered as not nullable.");
             }
-        }
-
-        private static System.DateTime ToSystem(DateTime datetime)
-        {
-            return new System.DateTime(datetime.Ticks, datetime.Kind);
         }
 
         #endregion
