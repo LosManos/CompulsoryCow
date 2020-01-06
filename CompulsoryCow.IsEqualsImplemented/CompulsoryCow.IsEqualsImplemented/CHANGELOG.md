@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0]
+Added method ` AddInstantiator`  to be able to test classes
+that do not have a default constructor.
+
 ## [0.2.0]
 Moved to a project of its own.
 Created nuspec file.

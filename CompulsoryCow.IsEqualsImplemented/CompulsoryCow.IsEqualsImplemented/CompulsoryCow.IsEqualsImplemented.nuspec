@@ -2,15 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- Continuously updated elements -->
-        <version>0.2.0</version>
+        <version>0.3.0</version>
         <releaseNotes>
-            Moved to a project of its own.
-            Created nuspec file.
+          Added method ` AddInstantiator`  to be able to test classes
+          that do not have a default constructor.
         </releaseNotes>
 
         <!-- Required elements -->
         <id>CompulsoryCow.IsEqualsImplemented</id>
-        <description>Methods for testing if `Equals` has been implemented and has done so correctly.</description>
+        <description>Methods for testing if `Equals` has been implemented and has been implemented correctly.</description>
         <authors>LosManos</authors>
 
         <!-- Optional elements -->
@@ -20,7 +20,7 @@
         <projectUrl>https://github.com/LosManos/CompulsoryCow</projectUrl>
         <copyright>LGPLv3 + NoEvil</copyright>
         <license type="file">license.txt</license>
-        <summary>Methods for testing if `Equals` has been implemented and has done so correctly.</summary>
+        <summary>Methods for testing if `Equals` has been implemented and has been implemented correctly.</summary>
         <dependencies>
             <group targetFramework=".NETStandard2.0">
                 <dependency id="CompulsoryCow.Meta" version="3.0.0" exclude="Build,Analyzers" />

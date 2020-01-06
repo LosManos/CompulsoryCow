@@ -7,6 +7,8 @@ namespace CompulsoryCow.IsEqualsImplemented
 {
     public class Verify
     {
+        private readonly Dictionary<Type, Func<object>> _instantiateObjectActions = new Dictionary<Type, Func<object>>();
+
         private readonly IDictionary<Type, object> _equalValues = new Dictionary<Type, object>
         {
             { typeof(int), 1 },
@@ -38,11 +40,27 @@ namespace CompulsoryCow.IsEqualsImplemented
         /// </summary>
         public string ResultMessage { get; private set; }
 
-        /// <summary>This proerty contains the <see cref="PropertyInfo"/> for the property that was not in the Equals comparison.
+        /// <summary>This property contains the <see cref="PropertyInfo"/> for the property that was not in the Equals comparison.
         /// Updated every time <see cref="IsEqualsImplementedCorrectly{T}"/> is called.
         /// If last check returned true this property is null.
         /// </summary>
         public PropertyInfo ResultProperty { get; private set; }
+
+        /// <summary>This method is used for verifying classes 
+        /// that do not have a default constructor.
+        /// Call it before verifying the class.
+        /// </summary>
+        /// <param name="instantiateObjectAction"></param>
+        /// <example>
+        /// verify.AddInstantiator(() => new Customer("myName"))
+        /// </example>
+        public void AddInstantiator<T>(Func<object> instantiateObjectAction)
+        {
+            //Func<object> x = () => instantiateObjectAction;
+            _instantiateObjectActions.Add(
+                typeof(T),
+                instantiateObjectAction);
+        }
 
         /// <summary>This method goes through an assembly and finds all classes with Equals explicitly implemented. See <see cref="IsEqualsImplementedCorrectly{T}"/> for how the check is done.
         /// True is returned if everything looks ok.
@@ -126,20 +144,25 @@ namespace CompulsoryCow.IsEqualsImplemented
         /// False is returned otherwise and <see cref="ResultProperty"/> and <see cref="ResultMessage"/> are updated with property info and a friendly message respectively.
         /// With "implemented correctly" means that each and every public property is used in the comparison.
         /// 
-        /// The class in question has to have a default constructor. 
+        /// Technically the comparison is just changing the value of each and every property one, by one, and see if Equals changes return value.
         /// 
-        /// If the class has a property that is not handled, just call <see cref="SetComparisonValues{T}(T, T)"/> for every such type.
+        /// If the class in question does not have a default constructor
+        /// a method for explicitly instantiating the class has to be provided
+        /// through <see cref="AddInstantiator{T}(Func{object})"/>.
+        /// 
+        /// If the class has a property of a type that is not handled by <see cref="IsEqualsImplemented"/>, 
+        /// just call <see cref="SetComparisonValues{T}(T, T)"/> for every such type.
         /// 
         /// Note: It is important to implemented GetHashCode and override == and != but this is not checked for.
         /// 
-        /// There is no problem implementing a similar method that takes two already instantiated objects.
+        /// Note for future: There is no problem implementing a similar method that takes two already instantiated objects.
         /// Creating a method that compares other things than public properties requires a bit more afterthought for making used friendly.
         /// 
-        /// Technically the comparison is just changing the value of each and every property one, by one, and see if Equals changes return value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool IsEqualsImplementedCorrectly<T>() where T : new() {
+        public bool IsEqualsImplementedCorrectly<T>()
+        {
             return IsEqualsImplementedCorrectly(typeof(T));
         }
 
@@ -184,11 +207,16 @@ namespace CompulsoryCow.IsEqualsImplemented
 
         private bool IsEqualsImplementedCorrectly(Type type)
         {
-            //var o1 = new T();
-            var o1 = Activator.CreateInstance(type);
+            // var o1 = new T();
+            var o1 = _instantiateObjectActions.ContainsKey(type)?
+                _instantiateObjectActions[type]() :
+                Activator.CreateInstance(type);
             SetAllPropertiesToEqualValues(o1);
-            //var o2 = new T();
-            var o2 = Activator.CreateInstance(type);
+
+            // var o2 = new T();
+            var o2 = _instantiateObjectActions.ContainsKey(type)?
+                _instantiateObjectActions[type]():
+                Activator.CreateInstance(type);
             foreach (var differingProperty in Meta.GetPublicProperties(o2))
             {
                 SetAllPropertiesToEqualValues(o2);

@@ -169,6 +169,18 @@ namespace VerifyTest
             }
         }
 
+        /// <summary>This class has a properly implemented Equals but
+        /// does not have a default constructor.
+        /// </summary>
+        internal class LackingDefaultConstructor: ProperlyImplementedClass
+        {
+            internal LackingDefaultConstructor(int myInt, string myString)
+            {
+                MyInt = myInt;
+                MyString = MyString;
+            }
+        }
+
         internal static IEnumerable<object> IsEqualsTestData
         {
             get

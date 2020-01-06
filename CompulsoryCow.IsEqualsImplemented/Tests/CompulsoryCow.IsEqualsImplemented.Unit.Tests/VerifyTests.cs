@@ -119,9 +119,8 @@ namespace VerifyTest
             true, 
             null,
             "No class in the assembly " + nameof(IsEqualsImplementedAssemblyNoDefinitionAtAll) + " seems to implement Equals.")]
-        public void AreAllQuealsImplementedCorrectlyTests(string assemblyName, bool expectedResult, Type expectedResultClass, string expectedResultMessage)
+        public void AreAllEqualsImplementedCorrectlyTests(string assemblyName, bool expectedResult, Type expectedResultClass, string expectedResultMessage)
         {
-            //  #   Arrange.
             var sut = new Verify();
             var assembly = Assembly.LoadFrom(assemblyName);
 
@@ -131,7 +130,20 @@ namespace VerifyTest
             //  #   Assert.
             resAllOk.Should().Be(expectedResult);
             sut.ResultClass.Should().Be(expectedResultClass);
-            sut.ResultMessage.Should().Be(expectedResultMessage); ;
+            sut.ResultMessage.Should().Be(expectedResultMessage);
+        }
+ 
+        [TestMethod]
+        public void CanUseExplicitlyCreatedObject()
+        {
+            var sut = new Verify();
+            sut.AddInstantiator<LackingDefaultConstructor>(() => new LackingDefaultConstructor(default, default));
+
+            //  #   Act.
+            var resAllOk = sut.IsEqualsImplementedCorrectly<LackingDefaultConstructor>();
+
+            //  #   Assert.
+            resAllOk.Should().BeTrue();
         }
     }
 }
