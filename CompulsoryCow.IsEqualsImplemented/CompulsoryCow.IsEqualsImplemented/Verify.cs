@@ -7,6 +7,8 @@ namespace CompulsoryCow.IsEqualsImplemented
 {
     public class Verify
     {
+        private readonly IList<Type> _ignoredClasses = new List<Type>();
+
         private readonly Dictionary<Type, Func<object>> _instantiateObjectActions = new Dictionary<Type, Func<object>>();
 
         private readonly IDictionary<Type, object> _equalValues = new Dictionary<Type, object>
@@ -56,15 +58,24 @@ namespace CompulsoryCow.IsEqualsImplemented
         /// </example>
         public void AddInstantiator<T>(Func<object> instantiateObjectAction)
         {
-            //Func<object> x = () => instantiateObjectAction;
             _instantiateObjectActions.Add(
                 typeof(T),
                 instantiateObjectAction);
         }
 
+        /// <summary>This method is used for exclude classes from comparison test.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void AddIgnoredClass<T>()
+        {
+            _ignoredClasses.Add(typeof(T));
+        }
+
         /// <summary>This method goes through an assembly and finds all classes with Equals explicitly implemented. See <see cref="IsEqualsImplementedCorrectly{T}"/> for how the check is done.
         /// True is returned if everything looks ok.
         /// Otherwise False is returned and <see cref="ResultClass"/> and <see cref="ResultMessage"/> are updated.
+        /// 
+        /// If a class should not be checked for, add the the type through <see cref="AddIgnoredClass{T}"/>.
         /// </summary>
         /// <param name="assembly"></param>
         /// <returns></returns>
@@ -73,7 +84,9 @@ namespace CompulsoryCow.IsEqualsImplemented
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
 
             IEnumerable<Type> GetAllClassesIn(Assembly a) =>
-                a.GetTypes().Where(classType => HasEqualsBeenDeclared(classType));
+                a.GetTypes()
+                .Where(classType => _ignoredClasses.Contains(classType) == false)
+                .Where(classType => HasEqualsBeenDeclared(classType));
 
             bool Return(Type resultClass, string resultMessage, bool result)
             {

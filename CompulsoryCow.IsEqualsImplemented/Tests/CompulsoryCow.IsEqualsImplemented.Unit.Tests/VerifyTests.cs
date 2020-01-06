@@ -38,7 +38,7 @@ namespace VerifyTest
         }
 
         [TestMethod]
-        public void     IsEqualsImplementedCorrectlyShouldReturnFalseAndInformationForClassLackingFieldInEqualsComparison()
+        public void IsEqualsImplementedCorrectlyShouldReturnFalseAndInformationForClassLackingFieldInEqualsComparison()
         {
             //  #   Arrange.
             var sut = new Verify();
@@ -144,6 +144,24 @@ namespace VerifyTest
 
             //  #   Assert.
             resAllOk.Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void CanIgnoreClasses()
+        {
+            var sut = new Verify();
+        
+            var assembly = Assembly.Load(nameof(IsEqualsImplementedAssemblyNotOk));
+            var res = sut.AreAllEqualsImplementedCorrectly(assembly);
+            res.Should().BeFalse("Sanity check the test would fail without ignoration.");
+
+            //  #   Act.
+            sut.AddIgnoredClass<IsEqualsImplementedAssemblyNotOk.AClassWithEqualsNotCorrectlyImplemented>();
+
+            //  #   Assert.
+            res = sut.AreAllEqualsImplementedCorrectly(assembly);
+            res.Should().BeTrue();
+
         }
     }
 }

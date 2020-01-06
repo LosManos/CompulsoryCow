@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0]
+Added method AddIgnoredClass{T} to be able to exclude classes from being tested.
+
 ## [0.3.0]
 Added method ` AddInstantiator`  to be able to test classes
 that do not have a default constructor.

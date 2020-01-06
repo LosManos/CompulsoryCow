@@ -2,10 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- Continuously updated elements -->
-        <version>0.3.0</version>
+        <version>0.4.0</version>
         <releaseNotes>
-          Added method ` AddInstantiator`  to be able to test classes
-          that do not have a default constructor.
+          Added method AddIgnoredClass{T} to be able to exclude classes from being tested.
         </releaseNotes>
 
         <!-- Required elements -->
