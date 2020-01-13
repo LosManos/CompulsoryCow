@@ -4,7 +4,7 @@ using Parameters = System.Collections.Generic.IEnumerable<object>;
 
 namespace CompulsoryCow.Permutation
 {
-    public class Permutation
+    public partial class Permutation
     {
         /// <summary>This method permutates the input parameters.
         /// The thought of usage is for testing, to make up all possible parameter inputs for a method
