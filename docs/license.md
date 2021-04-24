@@ -1,6 +1,6 @@
 layout: page
 title: "License"
-permalink: /license.html
+permalink: /license/
 
 #License
 
