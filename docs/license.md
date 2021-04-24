@@ -1,3 +1,7 @@
+layout: page
+title: "License"
+permalink: /license.html
+
 #License
 
 License is LGPLv3+NoEvil
