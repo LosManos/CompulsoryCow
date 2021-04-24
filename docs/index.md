@@ -1,7 +1,5 @@
 ## Welcome to Compulsory Cow
 
-This page is still under development.
+Cannot get github pages to work with Jekyll so...
 
-[License](license.html)
-
-Instead [the project site](https://github.com/LosManos/CompulsoryCow) is still the main documentation. Or possibly [the wiki](https://github.com/LosManos/CompulsoryCow/wiki).
+...instead [the project site](https://github.com/LosManos/CompulsoryCow) is still the main documentation. Or possibly [the wiki](https://github.com/LosManos/CompulsoryCow/wiki).
