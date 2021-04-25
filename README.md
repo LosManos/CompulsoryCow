@@ -1,7 +1,7 @@
 CompulsoryCow
 =============
 
-Nuget: https://www.nuget.org/packages/CompulsoryCow/
+Nuget: https://www.nuget.org/packages?q=CompulsoryCow*
 
 **Useful functionality in C#.**  
 Will in the future take over from [CompulsoryCat](http://code.google.com/p/compulsorycat/) of [Selfelected](http://www.selfelected.com) fame.
@@ -9,7 +9,7 @@ Will in the future take over from [CompulsoryCat](http://code.google.com/p/compu
 CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below  
 
 ### Compare 2 objects
-[CompulsoryCow.AreEqual](https://github.com/LosManos/CompulsoryCow/wiki/AreEqual)] Version 0.2.0  
+[CompulsoryCow.AreEqual](https://github.com/LosManos/CompulsoryCow/wiki/AreEqual) Version 0.2.0  
 ### Variant of `string.Split`, like what you would use for parsing a CSV file
 [Compulsorycow.CharacterSeparated](https://github.com/LosManos/CompulsoryCow/wiki/CharacterSeparated) Version 0.3.0  
 ### Mockable System.DateTime and System.TimeSpan makes methods using them testable
