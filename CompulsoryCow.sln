@@ -113,6 +113,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.DateTimeAbstr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.DateTimeAbstractions", "CompulsoryCow.DateTimeAbstractions\CompulsoryCow.DateTimeAbstractions\CompulsoryCow.DateTimeAbstractions.csproj", "{E1291A4A-F72A-41C6-BE27-52F35E6EDABC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompulsoryCow.AssemblyAbstractions", "CompulsoryCow.AssemblyAbstractions", "{4838204B-99B4-4019-9398-FBE48FAE42C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{00BB8B93-6104-45C8-81EA-D2CB177F1259}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.AssemblyAbstractions", "CompulsoryCow.AssemblyAbstractions\CompulsoryCow.AssemblyAbstractions\CompulsoryCow.AssemblyAbstractions.csproj", "{CD6F1BD3-CC57-46D0-8009-936FF852605B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.AssemblyAbstractions.Unit.Tests", "CompulsoryCow.AssemblyAbstractions\Tests\CompulsoryCow.AssemblyAbstractions.Unit.Tests\CompulsoryCow.AssemblyAbstractions.Unit.Tests.csproj", "{B72B0C3F-7704-4477-8013-987F279837BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{8E17479C-722D-4F4C-A380-F55311FE843F}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\pullrequest.yml = .github\workflows\pullrequest.yml
+		.github\workflows\push.yml = .github\workflows\push.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +237,14 @@ Global
 		{E1291A4A-F72A-41C6-BE27-52F35E6EDABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1291A4A-F72A-41C6-BE27-52F35E6EDABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1291A4A-F72A-41C6-BE27-52F35E6EDABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD6F1BD3-CC57-46D0-8009-936FF852605B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6F1BD3-CC57-46D0-8009-936FF852605B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6F1BD3-CC57-46D0-8009-936FF852605B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6F1BD3-CC57-46D0-8009-936FF852605B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72B0C3F-7704-4477-8013-987F279837BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72B0C3F-7704-4477-8013-987F279837BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72B0C3F-7704-4477-8013-987F279837BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72B0C3F-7704-4477-8013-987F279837BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -264,6 +286,10 @@ Global
 		{62E531C3-07B6-43F6-9A4B-E332628B21AB} = {210A7956-112A-4485-9DCE-A4C6A92854B0}
 		{7A8A316F-1C00-44C2-BF7A-B9BFEF8409BD} = {62E531C3-07B6-43F6-9A4B-E332628B21AB}
 		{E1291A4A-F72A-41C6-BE27-52F35E6EDABC} = {210A7956-112A-4485-9DCE-A4C6A92854B0}
+		{00BB8B93-6104-45C8-81EA-D2CB177F1259} = {4838204B-99B4-4019-9398-FBE48FAE42C8}
+		{CD6F1BD3-CC57-46D0-8009-936FF852605B} = {4838204B-99B4-4019-9398-FBE48FAE42C8}
+		{B72B0C3F-7704-4477-8013-987F279837BC} = {00BB8B93-6104-45C8-81EA-D2CB177F1259}
+		{8E17479C-722D-4F4C-A380-F55311FE843F} = {3EAE5209-1053-42F0-9AB7-FDEE1D9405C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C034792-6F0A-4A9F-8155-2858283515F7}
