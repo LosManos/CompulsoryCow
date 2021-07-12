@@ -14,6 +14,8 @@ CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below
 [Compulsorycow.CharacterSeparated](https://github.com/LosManos/CompulsoryCow/wiki/CharacterSeparated) Version 0.3.*  
 ### Mockable System.DateTime and System.TimeSpan makes methods using them testable
 [CompulsoryCow.DateTimeAbstractions](https://github.com/LosManos/CompulsoryCow/wiki/DateTimeAbstractions) 0.1.*  
+### Mockable System.Reflection.Assembly makes methods using them testable  
+[CompulsoryCow.AssemblyAbstractions](https://github.com/LosManos/ComulsoryCow/wiki/AssemblyAbstractions) 0.1.*  
 ### Wrapper for simple de/serialising of objects
 [CompulsoryCow.DeSerialiser](https://github.com/LosManos/CompulsoryCow/wiki/DeSerialiser) Version 0.2.*  
 ### Check if IsEquals is implemented; used for automatic testing
