@@ -38,12 +38,12 @@ jobs:
       with:
           PROJECT_FILE_PATH: CompulsoryCow.DateTimeAbstractions/CompulsoryCow.DateTimeAbstractions/CompulsoryCow.DateTimeAbstractions.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-    - name: Possibly publish CompulsoryCow.DateTimeAbstractions
+    - name: Possibly publish CompulsoryCow.AssemblyAbstractions
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
           PROJECT_FILE_PATH: CompulsoryCow.AssemblyAbstractions/CompulsoryCow.AssemblyAbstractions/CompulsoryCow.AssemblyAbstractions.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-    - name: Possibly publish CompulsoryCow.AssemblyAbstractions
+    - name: Possibly publish CompulsoryCow.DeSerialiser
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
           PROJECT_FILE_PATH: CompulsoryCow.DeSerialiser/CompulsoryCow.DeSerialiser/CompulsoryCow.DeSerialiser.csproj
