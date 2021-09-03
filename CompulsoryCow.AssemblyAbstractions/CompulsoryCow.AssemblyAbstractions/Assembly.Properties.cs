@@ -8,7 +8,7 @@
         {
             get
             {
-                return _fullName ?? _systemReflectionAssembly?.FullName;
+                return _systemReflectionAssembly.FullName;
             }
         }
 

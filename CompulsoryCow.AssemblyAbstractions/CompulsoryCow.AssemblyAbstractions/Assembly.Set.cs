@@ -2,13 +2,9 @@
 
 namespace CompulsoryCow.AssemblyAbstractions
 {
-    partial class Assembly: IAssembly
+    partial class Assembly
     {
         #region Methods used for testing and not production.
-
-        #region Assembly methods.
-
-        #endregion
 
         /// <inheritdoc />
         public void ClearAssembly()
@@ -28,26 +24,6 @@ namespace CompulsoryCow.AssemblyAbstractions
             _systemReflectionAssembly = assemblyFunc();
         }
 
-        #region
-
-        #region FullName methods.
-
         #endregion
-
-        /// <inheritdoc />
-        public void ClearFullName()
-        {
-            SetFullName(null);
-        }
-
-        /// <inheritdoc />
-        public void SetFullName(string value)
-        {
-            _fullName = value;
-        }
-
-        #endregion
-
-#endregion
     }
 }
