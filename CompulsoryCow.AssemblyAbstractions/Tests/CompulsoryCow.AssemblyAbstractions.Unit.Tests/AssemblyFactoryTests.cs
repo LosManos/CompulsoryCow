@@ -36,7 +36,7 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
             var res = sut.GetExecutingAssembly();
 
             //  Assert.
-            res.FullName.Should().Be("CompulsoryCow.AssemblyAbstractions, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null");
+            res.FullName.Should().Be("CompulsoryCow.AssemblyAbstractions, Version=0.2.1.0, Culture=neutral, PublicKeyToken=null");
         }
 
         [Fact]
