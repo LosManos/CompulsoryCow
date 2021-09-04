@@ -16,7 +16,7 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
                 .Select(p => p.GetMethod.IsVirtual);
 
             //  Act.
-            res.Count().Should().Be(1, "Sanity check we know how many methods we have.");
+            res.Count().Should().Be(2, "Sanity check we know how many methods we have.");
 
             //  Assert.
             res.Should().AllBeEquivalentTo(
@@ -37,6 +37,23 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
 
             //  Act.
             var res = sut.FullName;
+
+            //  Assert.
+            res.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Location_ShouldMimicSystem()
+        {
+            var anyType = typeof(int);
+            var expected = System.Reflection.Assembly.GetAssembly(anyType).Location;
+
+            var factory = new AssemblyFactory();
+
+            var sut = factory.GetAssembly(anyType);
+
+            //  Act.
+            var res = sut.Location;
 
             //  Assert.
             res.Should().Be(expected);
