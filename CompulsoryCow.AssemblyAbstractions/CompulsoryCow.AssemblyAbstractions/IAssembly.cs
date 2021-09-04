@@ -8,6 +8,10 @@ namespace CompulsoryCow.AssemblyAbstractions
         /// </summary>
         string FullName { get; }
 
+        /// <summary>See <see cref="System.Reflection.Assembly.Location"/>
+        /// </summary>
+        string Location { get; }
+
         /// <summary>See <see cref="System.Reflection.Assembly.GetAssembly(Type)"/>.
         /// In Dotnet this method is a static constructor
         /// but as that makes unit testing and mocking hard
