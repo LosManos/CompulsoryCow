@@ -7,23 +7,6 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
     public class AssemblyPropertyTests
     {
         [Fact]
-        public void FullName_ShouldMimicSystem()
-        {
-            var anyType = typeof(int);
-            var expected = System.Reflection.Assembly.GetAssembly(anyType).FullName;
-
-            var factory = new AssemblyFactory();
-
-            var sut = factory.GetAssembly(anyType);
-
-            //  Act.
-            var res = sut.FullName;
-
-            //  Assert.
-            res.Should().Be(expected);
-        }
-
-        [Fact]
         public void AllPropertiesShouldBeMockable()
         {
             var properties = typeof(Assembly)
@@ -40,6 +23,23 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
                 true,
                 $"all properties {string.Join(",", properties.Select(m => m.Name))} should be virtual"
             );
+        }
+
+        [Fact]
+        public void FullName_ShouldMimicSystem()
+        {
+            var anyType = typeof(int);
+            var expected = System.Reflection.Assembly.GetAssembly(anyType).FullName;
+
+            var factory = new AssemblyFactory();
+
+            var sut = factory.GetAssembly(anyType);
+
+            //  Act.
+            var res = sut.FullName;
+
+            //  Assert.
+            res.Should().Be(expected);
         }
     }
 }

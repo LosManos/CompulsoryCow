@@ -14,6 +14,36 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
     public class AssemblyFactoryTests
     {
         [Fact]
+        public void AllMethodsShouldBeMockable()
+        {
+            // These methods are out of our control.
+            var objectMethods = new[]
+            {
+                    nameof(AssemblyFactory.Equals),
+                    nameof(AssemblyFactory.GetHashCode),
+                    nameof(AssemblyFactory.GetType),
+                    nameof(AssemblyFactory.ToString),
+            };
+
+            var methods = typeof(AssemblyFactory)
+                .GetMethods()
+                .Where(m => m.IsConstructor == false)
+                .Where(m => objectMethods.Contains(m.Name) == false
+                );
+
+            var res = methods
+                .Select(m => m.IsVirtual);
+
+            //  Act.
+            res.Count().Should().Be(3, "Sanity check we know how many methods we have.");
+
+            res.Should().AllBeEquivalentTo(
+                true,
+                $"all methods {string.Join(",", methods.Select(m => m.Name))} should be virtual"
+            );
+        }
+
+        [Fact]
         public void GetAssembly_Type_ShouldMimicSystem()
         {
             var anyType = typeof(int);
@@ -51,36 +81,5 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
             //  Assert.
             res.FullName.Should().Be(ass.FullName);
         }
-
-        [Fact]
-        public void AllMethodsShouldBeMockable()
-        {
-            // These methods are out of our control.
-            var objectMethods = new[]
-            {
-                    nameof(AssemblyFactory.Equals),
-                    nameof(AssemblyFactory.GetHashCode),
-                    nameof(AssemblyFactory.GetType),
-                    nameof(AssemblyFactory.ToString),
-            };
-
-            var methods = typeof(AssemblyFactory)
-                .GetMethods()
-                .Where(m => m.IsConstructor == false)
-                .Where(m => objectMethods.Contains(m.Name) == false
-                );
-
-            var res = methods
-                .Select(m => m.IsVirtual);
-
-            //  Act.
-            res.Count().Should().Be(3, "Sanity check we know how many methods we have.");
-
-            res.Should().AllBeEquivalentTo(
-                true,
-                $"all methods {string.Join(",", methods.Select(m => m.Name))} should be virtual"
-            );
-        }
-
     }
 }
