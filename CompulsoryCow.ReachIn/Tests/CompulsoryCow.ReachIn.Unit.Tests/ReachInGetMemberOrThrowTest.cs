@@ -1,6 +1,4 @@
-﻿using CompulsoryCow;
-using FluentAssertions;
-using System;
+﻿using System;
 using Xunit;
 
 namespace CompulsoryCow.ReachIn.Tests
