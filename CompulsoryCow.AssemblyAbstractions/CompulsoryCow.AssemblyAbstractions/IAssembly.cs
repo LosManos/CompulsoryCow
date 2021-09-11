@@ -45,8 +45,6 @@ namespace CompulsoryCow.AssemblyAbstractions
         IAssembly LoadFile(string path);
 
         /// <summary>See <see cref="System.Reflection.Assembly.GetName"/>.
-        /// 
-
         /// </summary>
         /// <returns></returns>
         System.Reflection.AssemblyName GetName();
