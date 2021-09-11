@@ -5,6 +5,7 @@ using Xunit;
 
 namespace CompulsoryCow.ReachIn.Tests
 {
+    [Collection("Sequential")]
     public partial class ReachInGetMemberOrThrowTest
     {
         [Theory]

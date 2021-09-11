@@ -8,6 +8,7 @@ using Xunit;
 
 namespace CompulsoryCow.ReachIn.Tests
 {
+    [Collection("Sequential")]
     public class ReachInTest
     {
         [Fact]

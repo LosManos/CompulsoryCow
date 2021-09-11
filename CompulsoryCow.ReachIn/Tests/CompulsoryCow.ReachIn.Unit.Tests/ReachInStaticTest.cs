@@ -7,6 +7,7 @@ using Xunit;
 
 namespace CompulsoryCow.ReachIn.Tests
 {
+    [Collection("Sequential")]
     public class ReachInStaticTest
     {
         [Fact]
@@ -64,7 +65,7 @@ namespace CompulsoryCow.ReachIn.Tests
             value = pr.Int();
             sut.MyStaticPrivateProperty = value;
             res = sut.MyStaticPrivateProperty;
-            res.Should().Be(value);
+            res.Should().Be(value, "MyStaticPrivateProperty should have new value.");
             value = pr.Int();
             sut.MyStaticInternalProperty = value;
             res = sut.MyStaticInternalProperty;
