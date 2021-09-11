@@ -7,6 +7,7 @@ using Xunit;
 
 namespace CompulsoryCow.ReachIn.Tests
 {
+    [Collection(Common.SequentialDueToStatic)]
     public class ReachInStaticTest
     {
         [Fact]

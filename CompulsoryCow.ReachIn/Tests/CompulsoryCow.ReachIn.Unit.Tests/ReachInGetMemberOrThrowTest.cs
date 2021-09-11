@@ -5,6 +5,7 @@ using Xunit;
 
 namespace CompulsoryCow.ReachIn.Tests
 {
+    [Collection(Common.SequentialDueToStatic)]
     public partial class ReachInGetMemberOrThrowTest
     {
         [Theory]
