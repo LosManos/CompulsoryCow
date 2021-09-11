@@ -50,5 +50,10 @@ namespace CompulsoryCow.AssemblyAbstractions
         /// </summary>
         /// <returns></returns>
         System.Reflection.AssemblyName GetName();
+
+        /// <summary>See <see cref="System.Reflection.Assembly.GetTypes"/>
+        /// </summary>
+        /// <returns></returns>
+        Type[] GetTypes();
     }
 }
