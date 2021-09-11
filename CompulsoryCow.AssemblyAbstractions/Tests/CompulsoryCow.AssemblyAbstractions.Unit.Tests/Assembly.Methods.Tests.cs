@@ -21,6 +21,20 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
         }
 
         [Fact]
+        public void GetTypes_void_ShouldMimicSystem()
+        {
+            var expected = System.Reflection.Assembly.GetAssembly(typeof(int)).GetTypes();
+
+            var sut = new AssemblyFactory().GetAssembly(typeof(int));
+            
+            //  Act.
+            var res = sut.GetTypes();
+
+            //  Assert.
+            res.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
         public void AllMethodsShouldBeMockable()
         {
             // These methods are out of our control.
@@ -54,7 +68,7 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
                 .Select(m => m.IsVirtual);
 
             //  Act.
-            res.Count().Should().Be(3, "Sanity check we know how many methods we have.");
+            res.Count().Should().Be(4, "Sanity check we know how many methods we have.");
 
             res.Should().AllBeEquivalentTo(
                 true,
