@@ -1,7 +1,5 @@
 ﻿using System.Globalization;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("CompulsoryCow.DateTimeAbstractions.Unit.Tests")]
-
 namespace CompulsoryCow.DateTime.Abstractions
 {
     public partial class DateTime : IDateTime

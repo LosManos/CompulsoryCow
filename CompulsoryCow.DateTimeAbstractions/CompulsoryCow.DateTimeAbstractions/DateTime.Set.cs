@@ -11,7 +11,7 @@
         /// Set to null to have <see cref="Compare(DateTime, DateTime)"/> return <see cref="System.DateTime.Compare(System.DateTime, System.DateTime)"/>.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetCompare(System.Func<int> func)
+        public static void SetCompare(System.Func<int> func)
         {
             _compare = func;
         }
@@ -23,7 +23,7 @@
         /// Set to null to have <see cref="DaysInMonth(int, int)"/> use its default function.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetDaysInMonth(System.Func<int> func)
+        public static void SetDaysInMonth(System.Func<int> func)
         {
             _daysInMonth = func;
         }
@@ -35,7 +35,7 @@
         /// Set to null to have <see cref="Equals(DateTime, DateTime)"/> use its default function.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetEquals(System.Func<bool> func)
+        public static void SetEquals(System.Func<bool> func)
         {
             _equals = func;
         }
@@ -47,7 +47,7 @@
         /// Set to null to have <see cref="FromBinary(long)"/> use its default function.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetFromBinary(System.Func<DateTime> func)
+        public static void SetFromBinary(System.Func<DateTime> func)
         {
             _fromBinary = func;
         }
@@ -58,7 +58,7 @@
         /// Set to null to have <see cref="FromFileTime(long)"/> return <see cref="System.DateTime.FromFileTime(long)"/>.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetFromFileTime(System.Func<DateTime> func) => _fromFileTime = func;
+        public static void SetFromFileTime(System.Func<DateTime> func) => _fromFileTime = func;
 
         /// <summary>This method sets the <see cref="FromFileTimeUtc(long)"/> method.
         /// 
@@ -66,7 +66,7 @@
         /// Set to null to have <see cref="FromFileTimeUtc(long)"/> return <see cref="System.DateTime.FromFileTimeUtc(long)"/>.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetFromFileTimeUtc(System.Func<DateTime> func) => _fromFileTimeUtc = func;
+        public static void SetFromFileTimeUtc(System.Func<DateTime> func) => _fromFileTimeUtc = func;
 
         /// <summary>This method sets the <see cref="FromOADate(double)"/> method.
         /// 
@@ -74,7 +74,7 @@
         /// Set to null to have <see cref="FromOADate(double)"/> return <see cref="System.DateTime.FromOADate(double)"/>.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetFromOADate(System.Func<DateTime> func) => _fromOADate = func;
+        public static void SetFromOADate(System.Func<DateTime> func) => _fromOADate = func;
 
         /// <summary>This method sets the <see cref="IsLeapYear(int)"/> method.
         /// Set to null to have <see cref="IsLeapYear(int)"/> return <see cref="System.DateTime.IsLeapYear(int)"/>.
@@ -82,7 +82,7 @@
         /// This method should only be used for testing and really not be in this class at all
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetIsLeapYear(System.Func<bool> func) => _isLeapYear = func;
+        public static void SetIsLeapYear(System.Func<bool> func) => _isLeapYear = func;
 
         /// <summary>This method sets the <see cref="Parse(string, System.IFormatProvider, DateTimeStyles)"/> method.
         /// Set to null to have <see cref="Parse(string, System.IFormatProvider, DateTimeStyles)"/> return <see cref="System.DateTime.Parse(string, System.IFormatProvider, DateTimeStyles)"/>.
@@ -90,7 +90,7 @@
         /// This method should only be used for testing and should really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseStringFormatProviderStyle(System.Func<IDateTime> func) => _parseStringFormatProviderStyle = func;
+        public static void SetParseStringFormatProviderStyle(System.Func<IDateTime> func) => _parseStringFormatProviderStyle = func;
 
         /// <summary>This method set the <see cref="Parse(string, System.IFormatProvider)"/> method.
         /// Set to null to have <see cref="Parse(string, System.IFormatProvider)"/> return <see cref="System.DateTime.Parse(string, System.IFormatProvider)"/>.
@@ -98,7 +98,7 @@
         /// This method should only be used for testing and should really not be in this class at all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseStringFormatProvider(System.Func<IDateTime> func) => _parseStringFormatProvider = func;
+        public static void SetParseStringFormatProvider(System.Func<IDateTime> func) => _parseStringFormatProvider = func;
 
         /// <summary>This method set the <see cref="Parse(string)"/> method.
         /// Set to null to have <see cref="Parse(string)"/> return <see cref="System.DateTime.Parse(string)"/>.
@@ -106,7 +106,7 @@
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseString(System.Func<IDateTime> func) => _parseString = func;
+        public static void SetParseString(System.Func<IDateTime> func) => _parseString = func;
 
         /// <summary>This method set the <see cref="ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/> method.
         /// Set to null to have <see cref="ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/> return <see cref="System.DateTime.ParseExact(string, string[], System.IFormatProvider, DateTimeStyles)"/>.
@@ -114,7 +114,7 @@
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="parse"></param>
-        internal static void SetParseExactStringStringArrayFormatProviderStyle(System.Func<IDateTime> parse) =>
+        public static void SetParseExactStringStringArrayFormatProviderStyle(System.Func<IDateTime> parse) =>
             _parseExactStringStringArrayFormatProviderStyle = parse;
 
         /// <summary>This method set the <see cref="ParseExact(string, string, System.IFormatProvider, DateTimeStyles)"/> method.
@@ -123,7 +123,7 @@
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseExactStringStringFormatProviderStyle(System.Func<IDateTime> func) =>
+        public static void SetParseExactStringStringFormatProviderStyle(System.Func<IDateTime> func) =>
             _parseExactStringStringFormatProviderStyle = func;
 
         /// <summary>This method sets the <see cref="ParseExact(string, string, System.IFormatProvider)"/> method.
@@ -132,21 +132,21 @@
         /// This method should only be used for testing and should really not in this class att all.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetParseExactStringStringFormatProvider(System.Func<IDateTime> func) =>
+        public static void SetParseExactStringStringFormatProvider(System.Func<IDateTime> func) =>
             _parseExactStringStringFormatProvider = func;
 
         /// <summary>This method sets the <see cref="SpecifyKind(DateTime, System.DateTimeKind)"/> method.
         /// Set to null to have <see cref="SpecifyKind(DateTime, System.DateTimeKind)"/> return <see cref="System.DateTime.SpecifyKind(System.DateTime, System.DateTimeKind)"/>.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetSpecifyKind(System.Func<DateTime> func) => _specifyKind = func;
+        public static void SetSpecifyKind(System.Func<DateTime> func) => _specifyKind = func;
 
         /// <summary>This method sets the <see cref="TryParse(string, System.IFormatProvider, DateTimeStyles, out DateTime)"/> method.
         /// Set to null to have <see cref="TryParse(string, System.IFormatProvider, DateTimeStyles, out DateTime)"/> return <see cref="System.DateTime.TryParse(string, System.IFormatProvider, DateTimeStyles, out System.DateTime)"/>.
         /// </summary>
         /// <param name="returnFunc"></param>
         /// <param name="outFunc"></param>
-        internal static void SetTryParseStringIFormatProviderDateTimeStylesDateTime(
+        public static void SetTryParseStringIFormatProviderDateTimeStylesDateTime(
             System.Func<bool> returnFunc,
             System.Func<DateTime> outFunc)
         {
@@ -159,7 +159,7 @@
         /// </summary>
         /// <param name="returnFunc"></param>
         /// <param name="outFunc"></param>
-        internal static void SetTryParseStringDateTime(
+        public static void SetTryParseStringDateTime(
             System.Func<bool> returnFunc,
             System.Func<DateTime> outFunc)
         {
@@ -172,7 +172,7 @@
         /// </summary>
         /// <param name="returnFunc"></param>
         /// <param name="outFunc"></param>
-        internal static void SetTryParseExactStringStringIFormatProviderDateTimeStyles(
+        public static void SetTryParseExactStringStringIFormatProviderDateTimeStyles(
             System.Func<bool> returnFunc,
             System.Func<IDateTime> outFunc)
         {
@@ -185,7 +185,7 @@
         /// </summary>
         /// <param name="returnFunc"></param>
         /// <param name="outFunc"></param>
-        internal static void SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
+        public static void SetTryParseExactStringStringArrayIFormatProviderDateTimeStyles(
             System.Func<bool> returnFunc,
             System.Func<IDateTime> outFunc)
         {
@@ -199,7 +199,7 @@
         /// Set to null to have <see cref="DateTime.Now"/> return <see cref="System.DateTime.Now"/>.
         /// </summary>
         /// <param name="nowFunc"></param>
-        internal static void SetNow(System.Func<DateTime> nowFunc) => _now = nowFunc;
+        public static void SetNow(System.Func<DateTime> nowFunc) => _now = nowFunc;
 
         /// <summary>This method sets the <see cref="Today"/> property.
         /// 
@@ -207,7 +207,7 @@
         /// Set to null to have <see cref="Today"/> return <see cref="System.DateTime.Today"/>.
         /// </summary>
         /// <param name="todayFunc"></param>
-        internal static void SetToday(System.Func<DateTime> todayFunc) => _today = todayFunc;
+        public static void SetToday(System.Func<DateTime> todayFunc) => _today = todayFunc;
 
         /// <summary>This method sets the <see cref="DateTime.UtcNow"/> property.
         /// 
@@ -215,7 +215,7 @@
         /// Set to null to have <see cref="UtcNow"/> return <see cref="System.DateTime.UtcNow"/>.
         /// </summary>
         /// <param name="utcNowFunc"></param>
-        internal static void SetUtcNow(System.Func<DateTime> utcNowFunc) => _utcNow = utcNowFunc;
+        public static void SetUtcNow(System.Func<DateTime> utcNowFunc) => _utcNow = utcNowFunc;
 
         /// <summary>This method sets the <see cref="operator +(DateTime, TimeSpan)"/>.
         /// 
@@ -223,7 +223,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetAddOperator(System.Func<Abstractions.DateTime> func)
+        public static void SetAddOperator(System.Func<Abstractions.DateTime> func)
         {
             _addOperator = func;
         }
@@ -234,7 +234,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetSubtractDateTimeDateTimeOperator(System.Func<TimeSpan> func)
+        public static void SetSubtractDateTimeDateTimeOperator(System.Func<TimeSpan> func)
         {
             _subtractDateTimeDateTimeOperator = func;
         }
@@ -245,7 +245,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetSubtractDateTimeTimeSpanOperator(System.Func<DateTime> func)
+        public static void SetSubtractDateTimeTimeSpanOperator(System.Func<DateTime> func)
         {
             _subtractDateTimeTimeSpanOperator = func;
         }
@@ -256,7 +256,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetEqualsOperator(System.Func<bool> func)
+        public static void SetEqualsOperator(System.Func<bool> func)
         {
             _equalsOperator = func;
         }
@@ -267,7 +267,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetNotEqualsOperator(System.Func<bool> func)
+        public static void SetNotEqualsOperator(System.Func<bool> func)
         {
             _notEqualsOperator = func;
         }
@@ -278,7 +278,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetEarlierThanOperator(System.Func<bool> func)
+        public static void SetEarlierThanOperator(System.Func<bool> func)
         {
             _earlierThanOperator = func;
         }
@@ -289,7 +289,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetLaterThanOperator(System.Func<bool> func)
+        public static void SetLaterThanOperator(System.Func<bool> func)
         {
             _laterThanOperator = func;
         }
@@ -300,7 +300,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetEarlierThanOrEqualOperator(System.Func<bool> func)
+        public static void SetEarlierThanOrEqualOperator(System.Func<bool> func)
         {
             _earlierThanOrEqualOperator = func;
         }
@@ -311,7 +311,7 @@
         /// Set to null to have normal behaviour.
         /// </summary>
         /// <param name="func"></param>
-        internal static void SetLaterThanOrEqualOperator(System.Func<bool> func)
+        public static void SetLaterThanOrEqualOperator(System.Func<bool> func)
         {
             _laterThanOrEqualOperator = func;
         }
