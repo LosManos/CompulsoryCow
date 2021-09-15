@@ -41,6 +41,14 @@
         public IAssembly LoadFile(string pathFile)
         {
             var res = new Assembly();
+            res.SetAssembly(() => System.Reflection.Assembly.LoadFile(pathFile));
+            return res;
+        }
+
+        /// <inheritdoc />
+        public IAssembly LoadFrom(string pathFile)
+        {
+            var res = new Assembly();
             res.SetAssembly(() => System.Reflection.Assembly.LoadFrom(pathFile));
             return res;
         }
