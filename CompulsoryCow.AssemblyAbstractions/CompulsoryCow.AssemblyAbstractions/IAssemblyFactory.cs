@@ -20,5 +20,11 @@ namespace CompulsoryCow.AssemblyAbstractions
         /// <param name="pathFile"></param>
         /// <returns></returns>
         IAssembly LoadFile(string pathFile);
+
+        /// <summary>See <see cref="System.Reflection.Assembly.LoadFrom(string)"/>
+        /// </summary>
+        /// <param name="pathFile"></param>
+        /// <returns></returns>
+        IAssembly LoadFrom(string pathFile);
     }
 }

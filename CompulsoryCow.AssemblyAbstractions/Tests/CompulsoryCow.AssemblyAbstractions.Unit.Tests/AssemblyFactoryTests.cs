@@ -35,7 +35,7 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
                 .Select(m => m.IsVirtual);
 
             //  Act.
-            res.Count().Should().Be(3, "Sanity check we know how many methods we have.");
+            res.Count().Should().Be(4, "Sanity check we know how many methods we have.");
 
             res.Should().AllBeEquivalentTo(
                 true,
@@ -66,7 +66,7 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
             var res = sut.GetExecutingAssembly();
 
             //  Assert.
-            res.FullName.Should().Be("CompulsoryCow.AssemblyAbstractions, Version=0.4.0.0, Culture=neutral, PublicKeyToken=null");
+            res.FullName.Should().Be("CompulsoryCow.AssemblyAbstractions, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null");
         }
 
         [Fact]
@@ -77,6 +77,19 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
 
             //  Act.
             var res = sut.LoadFile(ass.Location);
+
+            //  Assert.
+            res.FullName.Should().Be(ass.FullName);
+        }
+
+        [Fact]
+        public void LoadFrom_String_ShouldMimicSystem()
+        {
+            var ass = System.Reflection.Assembly.GetExecutingAssembly();
+            var sut = new AssemblyFactory();
+
+            //  Act.
+            var res = sut.LoadFrom(ass.Location);
 
             //  Assert.
             res.FullName.Should().Be(ass.FullName);
