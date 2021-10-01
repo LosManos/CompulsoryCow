@@ -2,6 +2,8 @@
 
 namespace CompulsoryCow.AssemblyAbstractions
 {
+    /// <summary>Abstract <see cref="System.Reflection.Assembly"/>.
+    /// </summary>
     public partial class Assembly
     {
         public System.Reflection.AssemblyName GetName()

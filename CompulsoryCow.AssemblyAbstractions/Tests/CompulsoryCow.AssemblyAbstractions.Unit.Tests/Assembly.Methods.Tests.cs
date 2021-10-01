@@ -56,10 +56,10 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
 
             var methods = typeof(Assembly)
                 .GetMethods()
-                .Where(m => m.IsConstructor == false)
                 .Where(m =>
                     m.IsConstructor == false &&
-                    m.Name.StartsWith("get_") == false &&
+                    IsProperty( m) == false &&
+                    m.IsStatic == false &&
                     objectMethods.Contains(m.Name) == false &&
                     testingMethods.Contains(m.Name) == false
                 );
@@ -74,6 +74,11 @@ namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
                 true,
                 $"all methods {string.Join(",", methods.Select(m => m.Name))} should be virtual"
             );
+        }
+
+        private static bool IsProperty(System.Reflection.MethodInfo m)
+        {
+            return m.Name.StartsWith("get_");
         }
 
     }

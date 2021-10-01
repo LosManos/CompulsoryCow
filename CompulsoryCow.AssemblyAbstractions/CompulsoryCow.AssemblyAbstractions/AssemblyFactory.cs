@@ -24,33 +24,29 @@
         /// <inheritdoc />
         public IAssembly GetAssembly(System.Type type)
         {
-            var res = new Assembly();
-            res.SetAssembly(() => System.Reflection.Assembly.GetAssembly(type));
-            return res;
+            return new Assembly(
+                System.Reflection.Assembly.GetAssembly(type));
         }
 
         /// <inheritdoc />
         public IAssembly GetExecutingAssembly()
         {
-            var res = new Assembly();
-            res.SetAssembly(() => System.Reflection.Assembly.GetExecutingAssembly());
-            return res;
+            return new Assembly(
+                System.Reflection.Assembly.GetExecutingAssembly());
         }
 
         /// <inheritdoc />
         public IAssembly LoadFile(string pathFile)
         {
-            var res = new Assembly();
-            res.SetAssembly(() => System.Reflection.Assembly.LoadFile(pathFile));
-            return res;
+            return new Assembly(
+                System.Reflection.Assembly.LoadFile(pathFile));
         }
 
         /// <inheritdoc />
         public IAssembly LoadFrom(string pathFile)
         {
-            var res = new Assembly();
-            res.SetAssembly(() => System.Reflection.Assembly.LoadFrom(pathFile));
-            return res;
+            return new Assembly(
+                System.Reflection.Assembly.LoadFrom(pathFile));
         }
 
         #endregion
