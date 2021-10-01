@@ -25,5 +25,14 @@ namespace CompulsoryCow.AssemblyAbstractions
         }
 
         #endregion
+
+        /// <summary>Convert a <see cref="System.Reflection.Assembly"/> to a <see cref="IAssembly"/>.
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        public static IAssembly ToIAssembly( System.Reflection.Assembly assembly)
+        {
+            return new Assembly(assembly);
+        }
     }
 }

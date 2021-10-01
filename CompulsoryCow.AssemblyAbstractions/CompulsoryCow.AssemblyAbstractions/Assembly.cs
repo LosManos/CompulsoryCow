@@ -2,9 +2,16 @@
 
 namespace CompulsoryCow.AssemblyAbstractions
 {
+    /// <summary>Abstract <see cref="System.Reflection.Assembly"/>.
+    /// </summary>
     public partial class Assembly: IAssembly
     {
         private System.Reflection.Assembly _systemReflectionAssembly;
+
+        internal Assembly(System.Reflection.Assembly assembly)
+        {
+            _systemReflectionAssembly = assembly;
+        }
 
         /// <inheritdoc />
         [Obsolete("Use IAssemblyFactory.GetAssembly instead.", true)]

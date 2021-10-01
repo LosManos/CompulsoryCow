@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		HowTo-MergeToMasterAtPublicRepository.md = HowTo-MergeToMasterAtPublicRepository.md
 		license.txt = license.txt
 		README.md = README.md
+		Release.md = Release.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{B6BA6D69-846B-4AB1-B9D5-0D2CA3A7FAC8}"
