@@ -530,10 +530,7 @@ namespace CompulsoryCow.DateTimeAbstractions.Unit.Tests
             expectedResult.Should().Equal(new[]
             {
                 "28/07/2009",
-                "28/07/09",
-                "28.07.09",
-                "28-07-09",
-                "2009-07-28",
+                "28 juil. 2009",
             }, "Sanity check we have setup the test correctly");
 
             //  Act.

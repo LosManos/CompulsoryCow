@@ -1,6 +1,9 @@
 CompulsoryCow - Release notes
 ====================
 
+### Version 3.0
+Updated all dotnet core 3 to dotnet6.
+
 ### Version 2.5.0
 Added method Meta.GetPublicProperties.
 
