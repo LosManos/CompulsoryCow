@@ -22,7 +22,7 @@ namespace SerialiserTest
             res.DocumentElement.Name.Should().Be("SimpleClass");
             res.ChildNodes.Count.Should().Be(2);
             res.InnerXml.Should().Be(
-                "<?xml version=\"1.0\"?><SimpleClass xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><ID>1</ID><Name>asdf</Name></SimpleClass>" 
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?><SimpleClass xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><ID>1</ID><Name>asdf</Name></SimpleClass>" 
             );
         }
 
@@ -39,7 +39,7 @@ namespace SerialiserTest
 
             res.Should().NotBeNull();
             res.InnerXml.Should().Be(
-                "<?xml version=\"1.0\"?><ArrayOfSimpleClass xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><SimpleClass><ID>1</ID><Name>asdf</Name></SimpleClass><SimpleClass><ID>2</ID></SimpleClass></ArrayOfSimpleClass>"
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?><ArrayOfSimpleClass xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><SimpleClass><ID>1</ID><Name>asdf</Name></SimpleClass><SimpleClass><ID>2</ID></SimpleClass></ArrayOfSimpleClass>"
             );
         }
     }
