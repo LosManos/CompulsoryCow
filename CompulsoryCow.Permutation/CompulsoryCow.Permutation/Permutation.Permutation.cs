@@ -41,7 +41,7 @@ namespace CompulsoryCow.Permutation
         public static IEnumerable<Parameters> Permutate(
             IEnumerable<Parameters> parametersCollection)
         {
-            return GetAllPermutationsOf(parametersCollection, new List<object>());
+            return GetAllPermutationsOf(parametersCollection);
         }
 
         /// <summary>This method returns a list of all possible permutations.
@@ -56,27 +56,32 @@ namespace CompulsoryCow.Permutation
         /// https://github.com/dotnet/csharplang/issues/2544
         /// </summary>
         /// <param name="parameters"></param>
-        /// <param name="values">Should be called with a `new List&lt;object&gt;()` to start.</param>
         /// <returns></returns>
         private static IEnumerable<Parameters> GetAllPermutationsOf(
-            IEnumerable<Parameters> parameters,
-            IList<object> values)
+            IEnumerable<Parameters> parameters)
         {
-            var tail = Tail(parameters);
-            foreach (var value in Head(parameters))
-            {
-                var actualValues = new List<object>(values);
-                actualValues.Add(value);
+            return inner(parameters, new List<object>());
 
-                if (tail.Any() == false)
+            static IEnumerable<Parameters> inner(
+                IEnumerable<Parameters> ps,
+                IList<object> values)
+            {
+                var tail = Tail(ps);
+                foreach (var value in Head(ps))
                 {
-                    yield return actualValues;
-                }
-                else
-                {
-                    foreach (var v in GetAllPermutationsOf(tail, actualValues))
+                    var actualValues = new List<object>(values);
+                    actualValues.Add(value);
+
+                    if (tail.Any() == false)
                     {
-                        yield return v;
+                        yield return actualValues;
+                    }
+                    else
+                    {
+                        foreach (var v in inner(tail, actualValues))
+                        {
+                            yield return v;
+                        }
                     }
                 }
             }
