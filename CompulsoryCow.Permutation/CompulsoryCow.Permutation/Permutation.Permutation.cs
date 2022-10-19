@@ -1,11 +1,44 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Parameters = System.Collections.Generic.IEnumerable<object>;
 
 namespace CompulsoryCow.Permutation
 {
     public partial class Permutation
     {
+        /// <summary>Returns an array of all enum items.
+        /// 
+        /// According to Stack overflow <see cref="https://stackoverflow.com/a/6438372/521554"/>
+        /// the generics constraint should include `struct` 
+        /// but I haven\t found a way to create such an object, but not an enum,
+        /// to test the `type.IsEnum` call.
+        /// This means that I either don't test the `type.IsEnum` path
+        /// or that I leave out the `struct` constraint.
+        /// Since this code is meant to be used by test code
+        /// it does not have to be as exact
+        /// so I, at least in the time of writing, prefer testing.
+        /// Ergo, no `struct` in the constratin.
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <returns></returns>
+        public static object[] AllItems<TEnum>() where TEnum : /*struct,*/ IComparable, IConvertible, IFormattable{
+            Type type = typeof(TEnum);
+
+            if( type.IsEnum == false)
+            {
+                throw new ArgumentException($"The type {type} should be an enum.");
+            }
+
+            var ret = new List<object>();
+            foreach( var b in Enum.GetValues(type))
+            {
+                ret.Add(b);
+            }
+            return ret.ToArray();
+        }
+
         /// <summary>This method permutates the input parameters.
         /// The thought of usage is for testing, to make up all possible parameter inputs for a method
         /// and then permutate them.
