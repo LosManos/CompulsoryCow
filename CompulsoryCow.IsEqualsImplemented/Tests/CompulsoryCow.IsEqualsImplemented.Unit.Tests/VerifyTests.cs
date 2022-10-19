@@ -105,6 +105,14 @@ namespace VerifyTest
             resHasBeenDeclaredAsInternal.Should().BeFalse();
         }
 
+        /// <summary>
+        /// Note: To load <see cref="IsEqualsImplementedAssemblyNotOk"/> in ncrunch
+        /// the "Framework utilisation type for MSTest" 
+        /// has to be set to "UseDynamicAnalysis"
+        /// in NCrunch configuration.
+        /// A clue for this is in the error test output.
+        /// More info can be found here: <see cref="https://forum.ncrunch.net/yaf_postst2543_Array-as-datarow-attribute-parameter.aspx"/>.
+        /// </summary>
         [DataTestMethod]
         [DataRow(nameof(IsEqualsImplementedAssemblyOk), 
             true, 
@@ -122,7 +130,9 @@ namespace VerifyTest
         public void AreAllEqualsImplementedCorrectlyTests(string assemblyName, bool expectedResult, Type expectedResultClass, string expectedResultMessage)
         {
             var sut = new Verify();
-            var assembly = Assembly.LoadFrom(assemblyName);
+
+            // This is not an integration test but it relies on files on the hard drive.
+            var assembly = Assembly.LoadFrom(getAssemblyLocation(assemblyName));
 
             //  #   Act.
             var resAllOk = sut.AreAllEqualsImplementedCorrectly(assembly);
@@ -131,6 +141,12 @@ namespace VerifyTest
             resAllOk.Should().Be(expectedResult);
             sut.ResultClass.Should().Be(expectedResultClass);
             sut.ResultMessage.Should().Be(expectedResultMessage);
+
+            static string getAssemblyLocation(string assName)
+            {
+                var ass = Assembly.Load(assName);
+                return ass.Location;
+            }
         }
  
         [TestMethod]
