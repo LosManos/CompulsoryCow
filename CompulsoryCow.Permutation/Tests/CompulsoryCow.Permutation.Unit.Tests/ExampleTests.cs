@@ -19,7 +19,7 @@ public class ExampleTests
 
         //  #   Assert.
         // The assertion is sieved through an algorithm working the same way as production code
-        // preferably without being a copy.
+        // preferably without being too much of a copy.
         if (page == MyDomain.PageEnum.LandingPage)
         {
             res.Should().BeTrue(inData);
@@ -50,10 +50,11 @@ public class ExampleTests
 
         //  #   Assert.
 
-        var isMatch =
-            All_valid_data()
+        var expectedAuthorisation =
+            All_authorised_input()
                 .Any(data => data.IsMatch(page, isLoggedOn, isAdmin));
-        if (isMatch)
+
+        if (expectedAuthorisation)
         {
             res.Should().BeTrue(inDataString);
         }
@@ -63,33 +64,47 @@ public class ExampleTests
         }
     }
 
-    private static IEnumerable<ValidData> All_valid_data()
+    /// <summary>Returns a list of all input variants that yields to granted authorisation.
+    /// Properties left out (==null) of each returned item is not of interest.
+    /// </summary>
+    /// <returns></returns>
+    private static IEnumerable<InputData> All_authorised_input()
     {
-        yield return new ValidData
+        // Everyone can read the landing page.
+        yield return new InputData
         {
             Page = MyDomain.PageEnum.LandingPage,
         };
-        yield return new ValidData
+
+        // Only admins can read the admin page.
+        yield return new InputData
         {
             Page = MyDomain.PageEnum.AdminPage,
             IsLoggedOn = true,
             IsAdmin = true
         };
-        yield return new ValidData
+
+        // Only requirement to read the content page is to be logged in.
+        yield return new InputData
         {
             Page = MyDomain.PageEnum.ContentPage,
             IsLoggedOn = true,
         };
     }
 
+    /// <summary>Returns all variations/permutations of all possible input to the testee.
+    /// </summary>
+    /// <returns></returns>
     public static IEnumerable<object[]> All_variations()
     {
+        // First permutate all possible input.
         return Permutation.Permutate(
             new object[][]{
                 new object[] { MyDomain.PageEnum.LandingPage, MyDomain.PageEnum.AdminPage, MyDomain.PageEnum.ContentPage },
                 new object[] { false, true },
                 new object[] { false, true }
         })
+        // Then convert to a format usable by the test.
         .Select(data =>
         {
             var page = data.First();
@@ -97,19 +112,31 @@ public class ExampleTests
             var isAdmin = data.Skip(2).Single();
             return new[]
             {
+                // Return the test input.
                 page,
                 isLoggedOn,
                 isAdmin,
+                // And a reason/because for the test to output if fail.
                 $"Page={page}, IsLoggedOn={isLoggedOn}, IsAdmin={isAdmin}."
             };
         });
     }
 
-    private class ValidData
+    /// <summary>All the input data to the testee are properties of this class.
+    /// </summary>
+    private class InputData
     {
         internal MyDomain.PageEnum? Page { get; set; }
         internal bool? IsLoggedOn { get; set; }
         internal bool? IsAdmin { get; set; }
+
+        /// <summary>This method compares its parameters to its properties.
+        /// Only non-null properties are interesting for comparison.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="isLoggedOn"></param>
+        /// <param name="isAdmin"></param>
+        /// <returns></returns>
         internal bool IsMatch(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin)
         {
             return

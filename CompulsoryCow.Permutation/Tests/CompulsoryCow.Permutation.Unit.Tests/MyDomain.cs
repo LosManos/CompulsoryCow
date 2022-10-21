@@ -8,6 +8,13 @@ public class MyDomain
         ContentPage
     }
 
+    /// <summary>Fictive authorisation method
+    /// returning true or false depending on if the user is authorised to a page or not.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="isLoggedOn"></param>
+    /// <param name="isAdmin"></param>
+    /// <returns></returns>
     public bool Authorise( PageEnum page, bool isLoggedOn, bool isAdmin)
     {
         switch(page){
