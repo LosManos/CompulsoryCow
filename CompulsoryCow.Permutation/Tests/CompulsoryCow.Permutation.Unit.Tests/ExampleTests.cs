@@ -8,7 +8,7 @@ namespace CompulsoryCow.Permutation.Unit.Tests;
 public class ExampleTests
 {
     [Theory]
-    [MemberData(nameof(AllVariations))]
+    [MemberData(nameof(All_variations))]
     public void Example_usage_with_algorithm(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inData)
     {
         //  #   Arragen.
@@ -39,7 +39,7 @@ public class ExampleTests
     }
 
     [Theory]
-    [MemberData(nameof(AllVariations))]
+    [MemberData(nameof(All_variations))]
     public void Example_usage_with_data(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inDataString)
     {
         //  #   Arrange.
@@ -51,7 +51,7 @@ public class ExampleTests
         //  #   Assert.
 
         var isMatch =
-            AllValidData()
+            All_valid_data()
                 .Any(data => data.IsMatch(page, isLoggedOn, isAdmin));
         if (isMatch)
         {
@@ -63,7 +63,7 @@ public class ExampleTests
         }
     }
 
-    private static IEnumerable<ValidData> AllValidData()
+    private static IEnumerable<ValidData> All_valid_data()
     {
         yield return new ValidData
         {
@@ -82,7 +82,7 @@ public class ExampleTests
         };
     }
 
-    public static IEnumerable<object[]> AllVariations()
+    public static IEnumerable<object[]> All_variations()
     {
         return Permutation.Permutate(
             new object[][]{
