@@ -1,8 +1,12 @@
 ﻿namespace CompulsoryCow.Permutation.Unit.Tests;
 
-public class MyDomain
+public class AuthorisationService
 {
-    public enum PageEnum{
+    /// <summary>The pages of a web site
+    /// where a user has to have certain credentials, or not
+    /// to access/be authorised.
+    /// </summary>
+    public enum WebPage{
         LandingPage, 
         AdminPage,
         ContentPage
@@ -15,19 +19,19 @@ public class MyDomain
     /// <param name="isLoggedOn"></param>
     /// <param name="isAdmin"></param>
     /// <returns></returns>
-    public bool Authorise( PageEnum page, bool isLoggedOn, bool isAdmin)
+    public bool Authorise( WebPage page, bool isLoggedOn, bool isAdmin)
     {
         switch(page){
             // Everyone can read the landing page.
-            case PageEnum.LandingPage:
+            case WebPage.LandingPage:
                 return true;
 
             // Only admins can read the admin pages.
-            case PageEnum.AdminPage:
+            case WebPage.AdminPage:
                 return isLoggedOn && isAdmin;
 
             // The user has to be logged on to read any content.
-            case PageEnum.ContentPage:
+            case WebPage.ContentPage:
                 return isLoggedOn;
 
             // Don't know what happened, it seems we forgot to authorise a page; Bail.

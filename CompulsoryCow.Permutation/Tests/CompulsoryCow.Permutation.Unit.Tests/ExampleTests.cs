@@ -9,10 +9,10 @@ public class ExampleTests
 {
     [Theory]
     [MemberData(nameof(All_variations))]
-    public void Example_usage_with_algorithm(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inData)
+    public void Example_usage_with_algorithm(AuthorisationService.WebPage page, bool isLoggedOn, bool isAdmin, string inData)
     {
         //  #   Arragen.
-        var sut = new MyDomain();
+        var sut = new AuthorisationService();
 
         //  #   Act.
         var res = sut.Authorise(page, isLoggedOn, isAdmin);
@@ -20,18 +20,29 @@ public class ExampleTests
         //  #   Assert.
         // The assertion is sieved through an algorithm working the same way as production code
         // preferably without being too much of a copy.
-        if (page == MyDomain.PageEnum.LandingPage)
+        
+        // Everyone is authorised for the landing page.
+        if (page == AuthorisationService.WebPage.LandingPage)
         {
             res.Should().BeTrue(inData);
         }
-        else if (isLoggedOn && page == MyDomain.PageEnum.AdminPage)
+
+        // Only logged in admins are authorised for the admin page.
+        // Every admin is naturally logged in, but that is also what we test, 
+        // that no admin can be not-logged-in.
+        else if (isLoggedOn && page == AuthorisationService.WebPage.AdminPage)
         {
             res.Should().Be(isAdmin, inData);
         }
-        else if (page == MyDomain.PageEnum.ContentPage)
+
+        // The only requirement to reach the content page is to be logged in.
+        else if (page == AuthorisationService.WebPage.ContentPage)
         {
             res.Should().Be(isLoggedOn, inData);
         }
+
+        // Only the above variants should authorise access for a user.
+        // All other variants should not authorise.
         else
         {
             res.Should().BeFalse(inData);
@@ -40,10 +51,10 @@ public class ExampleTests
 
     [Theory]
     [MemberData(nameof(All_variations))]
-    public void Example_usage_with_data(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inDataString)
+    public void Example_usage_with_data(AuthorisationService.WebPage page, bool isLoggedOn, bool isAdmin, string inDataString)
     {
         //  #   Arrange.
-        var sut = new MyDomain();
+        var sut = new AuthorisationService();
 
         //  #   Act.
         var res = sut.Authorise(page, isLoggedOn, isAdmin);
@@ -52,15 +63,18 @@ public class ExampleTests
 
         var expectedAuthorisation =
             All_authorised_input()
-                .Any(data => data.IsMatch(page, isLoggedOn, isAdmin));
+                .Any(data => isMatch(data, page, isLoggedOn, isAdmin));
 
-        if (expectedAuthorisation)
+        res.Should().Be(expectedAuthorisation, inDataString);
+
+        // Does a comparison of `data` (=possible authorised input combination)
+        // with the real input 'p', 'isL' and 'isA'
+        static bool isMatch(InputData data, AuthorisationService.WebPage p, bool isL, bool isA)
         {
-            res.Should().BeTrue(inDataString);
-        }
-        else
-        {
-            res.Should().BeFalse(inDataString);
+            return
+                (data.Page == null || data.Page == p) &&
+                (data.IsLoggedOn == null || data.IsLoggedOn == isL) &&
+                (data.IsAdmin == null || data.IsAdmin == isA);
         }
     }
 
@@ -73,13 +87,13 @@ public class ExampleTests
         // Everyone can read the landing page.
         yield return new InputData
         {
-            Page = MyDomain.PageEnum.LandingPage,
+            Page = AuthorisationService.WebPage.LandingPage,
         };
 
         // Only admins can read the admin page.
         yield return new InputData
         {
-            Page = MyDomain.PageEnum.AdminPage,
+            Page = AuthorisationService.WebPage.AdminPage,
             IsLoggedOn = true,
             IsAdmin = true
         };
@@ -87,7 +101,7 @@ public class ExampleTests
         // Only requirement to read the content page is to be logged in.
         yield return new InputData
         {
-            Page = MyDomain.PageEnum.ContentPage,
+            Page = AuthorisationService.WebPage.ContentPage,
             IsLoggedOn = true,
         };
     }
@@ -100,7 +114,7 @@ public class ExampleTests
         // First permutate all possible input.
         return Permutation.Permutate(
             new object[][]{
-                new object[] { MyDomain.PageEnum.LandingPage, MyDomain.PageEnum.AdminPage, MyDomain.PageEnum.ContentPage },
+                new object[] { AuthorisationService.WebPage.LandingPage, AuthorisationService.WebPage.AdminPage, AuthorisationService.WebPage.ContentPage },
                 new object[] { false, true },
                 new object[] { false, true }
         })
@@ -122,27 +136,10 @@ public class ExampleTests
         });
     }
 
-    /// <summary>All the input data to the testee are properties of this class.
-    /// </summary>
     private class InputData
     {
-        internal MyDomain.PageEnum? Page { get; set; }
+        internal AuthorisationService.WebPage? Page { get; set; }
         internal bool? IsLoggedOn { get; set; }
         internal bool? IsAdmin { get; set; }
-
-        /// <summary>This method compares its parameters to its properties.
-        /// Only non-null properties are interesting for comparison.
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="isLoggedOn"></param>
-        /// <param name="isAdmin"></param>
-        /// <returns></returns>
-        internal bool IsMatch(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin)
-        {
-            return
-                (this.Page == null || this.Page == page) &&
-                (this.IsLoggedOn == null || this.IsLoggedOn == isLoggedOn) &&
-                (this.IsAdmin == null || this.IsAdmin == isAdmin);
-        }
     }
 }
