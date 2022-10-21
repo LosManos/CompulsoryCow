@@ -8,7 +8,7 @@ namespace CompulsoryCow.Permutation.Unit.Tests;
 public class PermutateTests
 {
     [Fact]
-    public void CanPermutate()
+    public void Can_Permutate()
     {
         //  #   Arrange
         var parametersCollection = new object[][]
@@ -33,7 +33,7 @@ public class PermutateTests
     }
 
     [Fact]
-    public void CanPemutateOnlyOneParameter()
+    public void Can_Pemutate_only_one_parameter()
     {
         //  #   Arrange.
         var parametersCollection = new object[][]
@@ -58,7 +58,7 @@ public class PermutateTests
 
     [Theory]
     [MemberData(nameof(AllVariations))]
-    public void ExampleUsageWithAlgorithm(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inData)
+    public void Example_usage_with_algorithm(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inData)
     {
         //  #   Arragen.
         var sut = new MyDomain();
@@ -89,7 +89,7 @@ public class PermutateTests
 
     [Theory]
     [MemberData(nameof(AllVariations))]
-    public void ExampleUsageWithData(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inDataString)
+    public void Example_usage_with_data(MyDomain.PageEnum page, bool isLoggedOn, bool isAdmin, string inDataString)
     {
         //  #   Arrange.
         var sut = new MyDomain();

@@ -4,10 +4,10 @@ using Xunit;
 
 namespace CompulsoryCow.Permutation.Unit.Tests;
 
-public class Scroll
+public class ScrollTests
 {
     [Fact]
-    public void CanScroll()
+    public void Can_Scroll()
     {
         string value = "<script>";
         string defaultValue = "x";
