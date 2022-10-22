@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Parameters = System.Collections.Generic.IEnumerable<object>;
 
 namespace CompulsoryCow.Permutation;
 
@@ -76,8 +75,8 @@ public partial class Permutation
     /// </summary>
     /// <param name="parametersCollection"></param>
     /// <returns></returns>
-    public static IEnumerable<Parameters> Permutate(
-        params Parameters[] parametersCollection)
+    public static IEnumerable<IEnumerable<object>> Permutate(
+        params IEnumerable<object>[] parametersCollection)
     {
         return GetAllPermutationsOf(parametersCollection, new List<object>());
     }
@@ -96,8 +95,8 @@ public partial class Permutation
     /// <param name="parameters"></param>
     /// <param name="values">Should be called with a `new List&lt;object&gt;()` to start.</param>
     /// <returns></returns>
-    private static IEnumerable<Parameters> GetAllPermutationsOf(
-        IEnumerable<Parameters> parameters,
+    private static IEnumerable<IEnumerable<object>> GetAllPermutationsOf(
+        IEnumerable<IEnumerable<object>> parameters,
         IList<object> values)
     {
         var tail = Tail(parameters);
