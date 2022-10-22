@@ -5,7 +5,7 @@ using Xunit;
 
 namespace CompulsoryCow.Permutation.Unit.Tests;
 
-public class ExampleTests
+public class ExampleExplicitValuesTests
 {
     [Theory]
     [MemberData(nameof(All_variations))]
