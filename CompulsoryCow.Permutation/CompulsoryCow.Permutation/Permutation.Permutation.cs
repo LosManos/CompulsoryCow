@@ -39,6 +39,11 @@ public partial class Permutation
         return ret.ToArray();
     }
 
+    public static object[] AllBools()
+    {
+        return new object[] { false, true };
+    }
+
     /// <summary>This method permutates the input parameters.
     /// The thought of usage is for testing, to make up all possible parameter inputs for a method
     /// and then permutate them.

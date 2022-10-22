@@ -13,8 +13,8 @@ public class ExampleAutomaticValuesTests
         return Permutation.Permutate(
             new object[][] {
                 Permutation.AllItems<WebPage>(),
-                new object[]{false, true},
-                new object[]{false, true},
+                Permutation.AllBools(),
+                Permutation.AllBools(),
             })
             .Select(data =>
             {
