@@ -11,11 +11,10 @@ public class ExampleAutomaticValuesTests
     public static IEnumerable<object[]> Variants()
     {
         return Permutation.Permutate(
-            new object[][] {
                 Permutation.AllIEnumItems<WebPage>(),
                 Permutation.AllBools(),
-                Permutation.AllBools(),
-            })
+                Permutation.AllBools()
+            )
             .Select(data =>
             {
                 return new[] {

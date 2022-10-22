@@ -113,11 +113,10 @@ public class ExampleExplicitValuesTests
     {
         // First permutate all possible input.
         return Permutation.Permutate(
-            new object[][]{
                 new object[] { AuthorisationService.WebPage.LandingPage, AuthorisationService.WebPage.AdminPage, AuthorisationService.WebPage.ContentPage },
                 new object[] { false, true },
                 new object[] { false, true }
-        })
+        )
         // Then convert to a format usable by the test.
         .Select(data =>
         {

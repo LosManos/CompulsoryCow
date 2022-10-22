@@ -77,7 +77,7 @@ public partial class Permutation
     /// <param name="parametersCollection"></param>
     /// <returns></returns>
     public static IEnumerable<Parameters> Permutate(
-        IEnumerable<Parameters> parametersCollection)
+        params Parameters[] parametersCollection)
     {
         return GetAllPermutationsOf(parametersCollection, new List<object>());
     }
