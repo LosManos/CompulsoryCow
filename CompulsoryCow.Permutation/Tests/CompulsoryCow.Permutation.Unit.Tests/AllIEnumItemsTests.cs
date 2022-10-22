@@ -4,7 +4,7 @@ using Xunit;
 
 namespace CompulsoryCow.Permutation.Unit.Tests;
 
-public class AllItemsTests
+public class AllIEnumItemsTests
 {
     public enum MyEnum
     {
@@ -13,25 +13,25 @@ public class AllItemsTests
     }
 
     [Fact]
-    public void AllItems_Should_throw_exception_if_not_an_enum()
+    public void AllEnumItems_Should_throw_exception_if_not_an_enum()
     {
         //  Act.
         var res = Record.Exception(() =>
         {
-            var res = Permutation.AllItems<EnumLookAlikeClass>();
+            var res = Permutation.AllIEnumItems<EnumLookAlikeClass>();
         });
 
         res.Should().BeOfType(typeof(ArgumentException));
     }
 
     [Fact]
-    public void AllItems_Should_return_all_items_Given_an_enum()
+    public void AllIEnumtems_Should_return_all_items_Given_an_enum()
     {
         var expectednumName = typeof(MyEnum).Name;
         var expectedEnumLength = Enum.GetValues(typeof(MyEnum)).Length;
 
         //  Act.
-        var res = Permutation.AllItems<MyEnum>();
+        var res = Permutation.AllIEnumItems<MyEnum>();
 
         //  Assert.
         res.Length.Should().Be(expectedEnumLength);

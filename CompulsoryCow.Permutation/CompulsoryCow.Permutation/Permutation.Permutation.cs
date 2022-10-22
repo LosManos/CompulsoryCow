@@ -22,7 +22,7 @@ public partial class Permutation
     /// </summary>
     /// <typeparam name="TEnum"></typeparam>
     /// <returns></returns>
-    public static object[] AllItems<TEnum>() where TEnum : /*struct,*/ IComparable, IConvertible, IFormattable
+    public static object[] AllIEnumItems<TEnum>() where TEnum : /*struct,*/ IComparable, IConvertible, IFormattable
     {
         Type type = typeof(TEnum);
 

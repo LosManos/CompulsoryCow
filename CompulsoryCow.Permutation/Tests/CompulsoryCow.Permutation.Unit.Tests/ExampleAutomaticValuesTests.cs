@@ -12,7 +12,7 @@ public class ExampleAutomaticValuesTests
     {
         return Permutation.Permutate(
             new object[][] {
-                Permutation.AllItems<WebPage>(),
+                Permutation.AllIEnumItems<WebPage>(),
                 Permutation.AllBools(),
                 Permutation.AllBools(),
             })
