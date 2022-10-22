@@ -39,15 +39,15 @@ public class ExampleAutomaticValuesTests
 
         static bool expectedResult(WebPage p, bool isL, bool isA)
         {
-            if( p == WebPage.LandingPage)
+            if (p == WebPage.LandingPage)
             {
                 return true;
             }
-            if( p == WebPage.AdminPage && isL && isA)
+            if (p == WebPage.AdminPage && isL && isA)
             {
                 return true;
             }
-            if( p==WebPage.ContentPage && isL)
+            if (p == WebPage.ContentPage && isL)
             {
                 return true;
             }

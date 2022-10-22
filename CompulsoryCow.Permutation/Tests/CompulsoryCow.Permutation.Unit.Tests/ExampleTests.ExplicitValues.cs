@@ -20,7 +20,7 @@ public class ExampleExplicitValuesTests
         //  #   Assert.
         // The assertion is sieved through an algorithm working the same way as production code
         // preferably without being too much of a copy.
-        
+
         // Everyone is authorised for the landing page.
         if (page == AuthorisationService.WebPage.LandingPage)
         {
