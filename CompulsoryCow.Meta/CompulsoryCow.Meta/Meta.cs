@@ -94,7 +94,9 @@ public static class Meta
     public static MemberInfo GetProperty(this object me)
     {
         const string Prefix = "get_";
+#pragma warning disable CS0618 // Type or member is obsolete
         var callingMethod = GetCallingMethod();
+#pragma warning restore CS0618 // Type or member is obsolete
 
         //	Remove the "get_"-prefix
         var propertyName = callingMethod.Name.StartsWith(Prefix) ?
@@ -115,6 +117,9 @@ public static class Meta
     /// <returns></returns>
     public static FieldInfo GetPrivateField<T>(T theObject, string name)
     {
+        if (theObject == null) { throw new ArgumentNullException(nameof(theObject)); }
+        if (name == null) { throw new ArgumentNullException(nameof(name)); }
+
         return theObject.GetType().GetField(
             name,
             BindingFlags.NonPublic | BindingFlags.Instance);
@@ -141,6 +146,9 @@ public static class Meta
     /// <returns></returns>
     public static MethodInfo GetPrivateMethod<T>(T theObject, string name)
     {
+        if (theObject == null) { throw new ArgumentNullException(nameof(theObject)); }
+        if (name == null) { throw new ArgumentNullException(nameof(name)); }
+
         return theObject.GetType().GetMethod(
             name,
             BindingFlags.NonPublic | BindingFlags.Instance);
@@ -167,6 +175,9 @@ public static class Meta
     /// <returns></returns>
     public static PropertyInfo GetPrivateProperty<T>(T theObject, string name)
     {
+        if (theObject == null) { throw new ArgumentNullException(nameof(theObject)); }
+        if (name == null) { throw new ArgumentNullException(nameof(name)); }
+
         return theObject.GetType().GetProperty(
             name,
             BindingFlags.NonPublic | BindingFlags.Instance);
@@ -188,10 +199,12 @@ public static class Meta
     /// <summary>This method returns <see cref="PropertyInfo"/> for all public properties in a class.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="a"></param>
+    /// <param name="theClass"></param>
     /// <returns></returns>
-    public static PropertyInfo[] GetPublicProperties<T>(T a)
+    public static PropertyInfo[] GetPublicProperties<T>(T theClass)
     {
-        return a.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        if (theClass == null) { throw new ArgumentNullException(nameof(theClass)); }
+
+        return theClass.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
     }
 }

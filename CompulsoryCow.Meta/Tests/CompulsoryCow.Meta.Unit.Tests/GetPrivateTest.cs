@@ -1,11 +1,37 @@
 ﻿using CompulsoryCow;
 using FluentAssertions;
+using System;
 using Xunit;
 
 namespace MetaTest;
 
 public class GetPrivateTest
 {
+    #region GetPrivateField tests.
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+    [Fact]
+    public void GetPrivateField_Should_throw_When_null_parameter()
+    {
+        {
+            var res = Record.Exception(() =>
+                Meta.GetPrivateField<object>(null, "")
+            );
+
+            res.Should().BeOfType<ArgumentNullException>();
+            ((ArgumentNullException)res).ParamName.Should().Be("theObject");
+        }
+        {
+            var res = Record.Exception(() =>
+                Meta.GetPrivateField<object>(new object(), null)
+            );
+
+            res.Should().BeOfType<ArgumentNullException>();
+            ((ArgumentNullException)res).ParamName.Should().Be("name");
+        }
+    }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
     [Fact]
     public void GetPrivateField_ReturnFieldData()
     {
@@ -13,6 +39,33 @@ public class GetPrivateTest
         var res = Meta.GetPrivateField<MyClass>(sut, "_myField");
         res.Name.Should().Be("_myField");
     }
+
+    #endregion
+
+    #region GetPrivateMethod tests.
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+    [Fact]
+    public void GetPrivateMethod_Should_throw_When_null_parameter()
+    {
+        {
+            var res = Record.Exception(() =>
+                Meta.GetPrivateMethod<object>(null, "")
+            );
+
+            res.Should().BeOfType<ArgumentNullException>();
+            ((ArgumentNullException)res).ParamName.Should().Be("theObject");
+        }
+        {
+            var res = Record.Exception(() =>
+                Meta.GetPrivateMethod<object>(new object(), null)
+            );
+
+            res.Should().BeOfType<ArgumentNullException>();
+            ((ArgumentNullException)res).ParamName.Should().Be("name");
+        }
+    }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
     [Fact]
     public void GetPrivateMethod_ReturnData()
@@ -24,6 +77,33 @@ public class GetPrivateTest
         res.Name.Should().Be("MySetMethod");
     }
 
+    #endregion
+
+    #region GetPrivateProperty tests.
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+    [Fact]
+    public void GetPrivateProperty_Should_throw_When_null_parameter()
+    {
+        {
+            var res = Record.Exception(() =>
+                Meta.GetPrivateProperty<object>(null, "")
+            );
+
+            res.Should().BeOfType<ArgumentNullException>();
+            ((ArgumentNullException)res).ParamName.Should().Be("theObject");
+        }
+        {
+            var res = Record.Exception(() =>
+                Meta.GetPrivateProperty<object>(new object(), null)
+            );
+
+            res.Should().BeOfType<ArgumentNullException>();
+            ((ArgumentNullException)res).ParamName.Should().Be("name");
+        }
+    }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
     [Fact]
     public void GetPrivateProperty_ReturnPropertyData()
     {
@@ -31,6 +111,8 @@ public class GetPrivateTest
         var res = Meta.GetPrivateProperty<MyClass>(sut, "MyProperty");
         res.Name.Should().Be("MyProperty");
     }
+
+    #endregion
 
     [Fact]
     public void GetPrivateStaticField_ReturnFieldData()
