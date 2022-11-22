@@ -4,26 +4,26 @@ using System.Reflection;
 namespace CompulsoryCow;
 
 public static class Meta
-	{
-		/// <summary>This method returns information about the calling method.
-		/// It walks the stack which might be expensive.
-		/// /// <para>
-		/// Use it like so:
-		///	void MyFirstMethod(){
-		///		MySecondMethod();
-		///	}
-		///	void MySecondMethod(){
-		///		var callingMethod = CompulsoryCow.Meta.GetCallingMethod();
-		///		//	callingMethod.Name is now "MyFirstMethod".
-		///	}
-		///	</para>
-		/// </summary>
-		/// <returns></returns>
+{
+    /// <summary>This method returns information about the calling method.
+    /// It walks the stack which might be expensive.
+    /// /// <para>
+    /// Use it like so:
+    ///	void MyFirstMethod(){
+    ///		MySecondMethod();
+    ///	}
+    ///	void MySecondMethod(){
+    ///		var callingMethod = CompulsoryCow.Meta.GetCallingMethod();
+    ///		//	callingMethod.Name is now "MyFirstMethod".
+    ///	}
+    ///	</para>
+    /// </summary>
+    /// <returns></returns>
     [Obsolete("This method only works in debug mode. Might be remedied by [MethodImplAttribute(MethodImplOptions.NoInlining)]. This method might be deprecated in the future.", false)]
-		public static MethodBase GetCallingMethod()
-		{
-			return new System.Diagnostics.StackTrace().GetFrame(2).GetMethod();
-		}
+    public static MethodBase GetCallingMethod()
+    {
+        return new System.Diagnostics.StackTrace().GetFrame(2).GetMethod();
+    }
 
     /// <summary>This method retuns the <see cref="System.Type"/> of the class in the parameter.
     /// If nothing is found an <see cref="System.ArgumentException"/> exception is thrown.
@@ -92,21 +92,21 @@ public static class Meta
     /// <param name="me"></param>
     /// <returns></returns>
     public static MemberInfo GetProperty(this object me)
-		{
-			const string Prefix = "get_";
-			var callingMethod = GetCallingMethod();
+    {
+        const string Prefix = "get_";
+        var callingMethod = GetCallingMethod();
 
-			//	Remove the "get_"-prefix
-			var propertyName = callingMethod.Name.StartsWith(Prefix) ?
-				callingMethod.Name.Substring(Prefix.Length) :
-				callingMethod.Name;
+        //	Remove the "get_"-prefix
+        var propertyName = callingMethod.Name.StartsWith(Prefix) ?
+            callingMethod.Name.Substring(Prefix.Length) :
+            callingMethod.Name;
 
-			var property = callingMethod.DeclaringType.GetProperty(
-				propertyName,
-				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance );
+        var property = callingMethod.DeclaringType.GetProperty(
+            propertyName,
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
-			return property;
-		}
+        return property;
+    }
 
     /// <summary>This method returns <see cref="FieldInfo"/> for the private field in the parameter.
     /// </summary>
@@ -169,10 +169,10 @@ public static class Meta
     {
         return theObject.GetType().GetProperty(
             name,
-            BindingFlags.NonPublic | BindingFlags.Instance );
+            BindingFlags.NonPublic | BindingFlags.Instance);
 
     }
-    
+
     /// <summary>This method returns <see cref="PropertyInfo"/> for the static property in the parameter.
     /// </summary>
     /// <param name="objectType"></param>
@@ -190,8 +190,8 @@ public static class Meta
     /// <typeparam name="T"></typeparam>
     /// <param name="a"></param>
     /// <returns></returns>
-		public static PropertyInfo[] GetPublicProperties<T>(T a)
-		{
-			return a.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-		}
-	}
+    public static PropertyInfo[] GetPublicProperties<T>(T a)
+    {
+        return a.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+    }
+}
