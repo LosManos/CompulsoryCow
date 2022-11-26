@@ -5,7 +5,7 @@ using Xunit;
 
 namespace MetaTest;
 
-public class GetPropertiesTests
+public class GetPublicPropertiesTests
 {
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
     [Fact]
