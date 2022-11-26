@@ -21,7 +21,7 @@ public class GetPublicPropertiesTests
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
     [Fact]
-    public void GetPublicProperties_OnlyPublicProperteis()
+    public void GetPublicProperties_Should_only_return_public_properteis()
     {
         //	#	Arrange;
         var o = new ClassWithAllScopes();
