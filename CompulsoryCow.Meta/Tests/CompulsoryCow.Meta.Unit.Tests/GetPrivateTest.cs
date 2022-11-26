@@ -33,7 +33,7 @@ public class GetPrivateTest
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
     [Fact]
-    public void GetPrivateField_ReturnFieldData()
+    public void GetPrivateField_Should_return_field_data()
     {
         var sut = new MyClass();
         var res = Meta.GetPrivateField<MyClass>(sut, "_myField");
@@ -68,7 +68,7 @@ public class GetPrivateTest
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
     [Fact]
-    public void GetPrivateMethod_ReturnData()
+    public void GetPrivateMethod_Should_return_data()
     {
         var sut = new MyClass();
         var res = Meta.GetPrivateMethod<MyClass>(sut, "MyGetMethod");
@@ -105,7 +105,7 @@ public class GetPrivateTest
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
     [Fact]
-    public void GetPrivateProperty_ReturnPropertyData()
+    public void GetPrivateProperty_Should_return_property_data()
     {
         var sut = new MyClass();
         var res = Meta.GetPrivateProperty<MyClass>(sut, "MyProperty");
@@ -115,14 +115,14 @@ public class GetPrivateTest
     #endregion
 
     [Fact]
-    public void GetPrivateStaticField_ReturnFieldData()
+    public void GetPrivateStaticField_Should_return_field_data()
     {
         var res = Meta.GetPrivateStaticField(typeof(MyStaticClass), "_myField");
         res.Name.Should().Be("_myField");
     }
 
     [Fact]
-    public void GetPrivateStaticMethod_ReturnData()
+    public void GetPrivateStaticMethod_Should_return_data()
     {
         var res = Meta.GetPrivateStaticMethod(typeof(MyStaticClass), "MyGetMethod");
         res.Name.Should().Be("MyGetMethod");
@@ -131,7 +131,7 @@ public class GetPrivateTest
     }
 
     [Fact]
-    public void GetPrivateStaticProperty_ReturnPropertyData()
+    public void GetPrivateStaticProperty_Should_return_property_data()
     {
         var res = Meta.GetPrivateStaticProperty(typeof(MyStaticClass), "MyProperty");
         res.Name.Should().Be("MyProperty");

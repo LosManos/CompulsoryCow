@@ -27,7 +27,7 @@ public class GetClassTests
     }
 
     [Fact]
-    public void GetClass_UnknowClass_ThowException()
+    public void GetClass_Should_throw_exception_When_unknow_class()
     {
         //  #   Act.
         Assert.Throws<ArgumentException>(() =>
@@ -47,7 +47,7 @@ public class GetClassTests
     [InlineData("MyInnerStaticPublicClass")]
     [InlineData("MyInnerStaticInternalClass")]
     [InlineData("MyInnerStaticPrivateClass")]
-    public void GetClassOrNull_KnownClass_ReturnClassesType(string className)
+    public void GetClassOrNull_Should_return_classes_type_When_known_class(string className)
     {
         var res = Meta.GetClassOrNull(typeof(MyPublicClass), className);
         res.Should().NotBeNull();
@@ -55,7 +55,7 @@ public class GetClassTests
     }
 
     [Fact]
-    public void GetClassOrNull_UnknowClass_ThowException()
+    public void GetClassOrNull_Should_throw_exception_When_unknow_class()
     {
         //  #   Act.
         var res = Meta.GetClassOrNull(typeof(MyPublicClass), "doesnotexist");
@@ -72,7 +72,7 @@ public class GetClassTests
     [InlineData("MyInnerStaticPublicClass")]
     [InlineData("MyInnerStaticInternalClass")]
     [InlineData("MyInnerStaticPrivateClass")]
-    public void GetStaticClass_KnownClass_ReturnClassesType(string className)
+    public void GetStaticClass_Should_return_classes_type_When_known_class(string className)
     {
         //  #   Act.
         var res = Meta.GetClass<MyPublicStaticClass>(className);
@@ -83,7 +83,7 @@ public class GetClassTests
     }
 
     [Fact]
-    public void GetStaticClass_UnknowClass_ReturnNull()
+    public void GetStaticClass_Should_return_null_When_unknown_class()
     {
         //  #   Act.
         Assert.Throws<ArgumentException>(() =>
@@ -104,7 +104,7 @@ public class GetClassTests
     [InlineData("MetaTestClassesDotnetFramework", "MyInternalStaticClass+MyInnerStaticPublicClass")]
     [InlineData("MetaTestClassesDotnetFramework", "MyInternalStaticClass+MyInnerStaticInternalClass")]
     [InlineData("MetaTestClassesDotnetFramework", "MyInternalStaticClass+MyInnerStaticPrivateClass")]
-    public void GetInternalClass_KnownNamespaceAndKnownClass_Type(string @namespace, string className)
+    public void GetInternalClass_Should_return_type_When_known_namespace_and_known_class(string @namespace, string className)
     {
         //  #   Arrange.
         Console.WriteLine($"Indata:{{Namespace={@namespace},ClassName{className}}}");
@@ -128,7 +128,7 @@ public class GetClassTests
     }
 
     [Fact]
-    public void GetInternalClass_KnownAssemblyAndNamespaceAndUnknownClass_ThrowArgumentException()
+    public void GetInternalClass_Should_throw_argumentexception_When_known_assembly_and_namespace_and_unknown_class()
     {
         //  #   Arrange.
         const string AssemblyName = "MetaTestClassesDotnetFramework";
@@ -145,7 +145,7 @@ public class GetClassTests
     }
 
     [Fact]
-    public void GetInternalClass_KnownAssemblyAndUnknownNamespace_ThrowArgumentException()
+    public void GetInternalClass_Should_throw_argumentexception_When_known_assembly_and_unknown_namespace()
     {
         //  #   Arrange.
         const string AssemblyName = "MetaTestClassesDotnetFramework";
@@ -161,7 +161,7 @@ public class GetClassTests
     }
 
     [Fact]
-    public void GetInternalClass_UnknownAssembly_ThrowArgumentException()
+    public void GetInternalClass_Should_throw_argumentexception_When_unknown_assembly()
     {
         //  #   Arrange.
         const string AssemblyName = "MetaTestClassesDotnetFramework";

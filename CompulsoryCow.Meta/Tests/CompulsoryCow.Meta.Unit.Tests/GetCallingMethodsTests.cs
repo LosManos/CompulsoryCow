@@ -38,7 +38,7 @@ public class GetCallingMethodsTests
         /// we should consider making the method obsolete.
         /// </summary>
 	[Fact]
-	public void GetCallingMethod_given_ProperData_should_ReturnCaller()
+	public void GetCallingMethod_Should_return_caller_When_given_proper_data()
 	{
 		//	#	Arrange.
 		var myClass = new MyClass(Meta.GetCallingMethod);
