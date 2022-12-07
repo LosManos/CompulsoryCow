@@ -21,7 +21,7 @@ CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below
 ### Check if IsEquals is implemented; used for automatic testing
 [CompulsoryCow.IsEqualsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsEqualsImplemented) Version 0.2.*  
 ### Various helper methods to get meta information
-[CompulsoryCow.Meta Version](https://github.com/LosManos/CompulsoryCow/wiki/Meta) 3.0.*  
+[CompulsoryCow.Meta Version](https://github.com/LosManos/CompulsoryCow/wiki/Meta) 5.0.*  
 ### Permutate parameters for a method; used for automatic testing for testing *all possible input*
 [CompulsoryCow.Permutation](https://github.com/LosManos/CompulsoryCow/wiki/Permutation) Version 0.1.*  
 ### Helper method to make it easy to call private methods, properties and fields

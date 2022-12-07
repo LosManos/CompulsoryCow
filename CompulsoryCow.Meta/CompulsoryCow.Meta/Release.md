@@ -1,6 +1,10 @@
 CompulsoryCow.IsEqualsImplemented - Release notes
 ====================
 
+### Version 5.0.0
+`public static PropertyInfo[] GetPublicProperties<T>(T theClass)` is exchanged for
+`public static PropertyInfo[] GetPublicProperties(Type type, bool recurse = false)`.
+
 ### Version 4.0.0
 GetPrivateField, GetPrivateProperty, GetPrivateMethod, GetPublicProperties returns ArgumentNullException if null arguments are provided.
 
