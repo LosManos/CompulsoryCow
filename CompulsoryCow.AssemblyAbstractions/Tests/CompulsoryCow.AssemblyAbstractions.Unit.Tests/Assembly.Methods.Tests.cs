@@ -2,84 +2,83 @@ using FluentAssertions;
 using System.Linq;
 using Xunit;
 
-namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
+namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests;
+
+public class AssemblyMethodsTests
 {
-    public class AssemblyMethodsTests
+    [Fact]
+    public void GetName_void_ShouldMimicSystem()
     {
-        [Fact]
-        public void GetName_void_ShouldMimicSystem()
-        {
-            var expected = System.Reflection.Assembly.GetAssembly(typeof(int));
+        var expected = System.Reflection.Assembly.GetAssembly(typeof(int));
 
-            var sut = new AssemblyFactory().GetAssembly(typeof(int));
+        var sut = new AssemblyFactory().GetAssembly(typeof(int));
 
-            //  Act.
-            var res = sut.GetName();
+        //  Act.
+        var res = sut.GetName();
 
-            //  Assert.
-            res.Name.Should().Be(expected.GetName().Name);
-        }
-
-        [Fact]
-        public void GetTypes_void_ShouldMimicSystem()
-        {
-            var expected = System.Reflection.Assembly.GetAssembly(typeof(int)).GetTypes();
-
-            var sut = new AssemblyFactory().GetAssembly(typeof(int));
-            
-            //  Act.
-            var res = sut.GetTypes();
-
-            //  Assert.
-            res.Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public void AllMethodsShouldBeMockable()
-        {
-            // These methods are out of our control.
-            var objectMethods = new[]
-            {
-                    nameof(Assembly.Equals),
-                    nameof(Assembly.GetHashCode),
-                    nameof(Assembly.GetType),
-                    nameof(Assembly.ToString)
-            };
-
-            // These methods are used for setting up tests.
-            var testingMethods = new[]
-            {
-                nameof(Assembly.ClearAssembly),
-                nameof(Assembly.GetAssembly),
-                nameof(Assembly.SetAssembly)
-            };
-
-            var methods = typeof(Assembly)
-                .GetMethods()
-                .Where(m =>
-                    m.IsConstructor == false &&
-                    IsProperty( m) == false &&
-                    m.IsStatic == false &&
-                    objectMethods.Contains(m.Name) == false &&
-                    testingMethods.Contains(m.Name) == false
-                );
-
-            var res = methods
-                .Select(m => m.IsVirtual);
-
-            //  Act.
-            res.Count().Should().Be(4, "Sanity check we know how many methods we have.");
-
-            res.Should().AllBeEquivalentTo(
-                true,
-                $"all methods {string.Join(",", methods.Select(m => m.Name))} should be virtual"
-            );
-        }
-
-        private static bool IsProperty(System.Reflection.MethodInfo m)
-        {
-            return m.Name.StartsWith("get_");
-        }
-
+        //  Assert.
+        res.Name.Should().Be(expected.GetName().Name);
     }
+
+    [Fact]
+    public void GetTypes_void_ShouldMimicSystem()
+    {
+        var expected = System.Reflection.Assembly.GetAssembly(typeof(int)).GetTypes();
+
+        var sut = new AssemblyFactory().GetAssembly(typeof(int));
+        
+        //  Act.
+        var res = sut.GetTypes();
+
+        //  Assert.
+        res.Should().BeEquivalentTo(expected);
+    }
+
+    [Fact]
+    public void AllMethodsShouldBeMockable()
+    {
+        // These methods are out of our control.
+        var objectMethods = new[]
+        {
+                nameof(Assembly.Equals),
+                nameof(Assembly.GetHashCode),
+                nameof(Assembly.GetType),
+                nameof(Assembly.ToString)
+        };
+
+        // These methods are used for setting up tests.
+        var testingMethods = new[]
+        {
+            nameof(Assembly.ClearAssembly),
+            nameof(Assembly.GetAssembly),
+            nameof(Assembly.SetAssembly)
+        };
+
+        var methods = typeof(Assembly)
+            .GetMethods()
+            .Where(m =>
+                m.IsConstructor == false &&
+                IsProperty( m) == false &&
+                m.IsStatic == false &&
+                objectMethods.Contains(m.Name) == false &&
+                testingMethods.Contains(m.Name) == false
+            );
+
+        var res = methods
+            .Select(m => m.IsVirtual);
+
+        //  Act.
+        res.Count().Should().Be(4, "Sanity check we know how many methods we have.");
+
+        res.Should().AllBeEquivalentTo(
+            true,
+            $"all methods {string.Join(",", methods.Select(m => m.Name))} should be virtual"
+        );
+    }
+
+    private static bool IsProperty(System.Reflection.MethodInfo m)
+    {
+        return m.Name.StartsWith("get_");
+    }
+
 }

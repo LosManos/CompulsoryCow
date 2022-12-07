@@ -3,96 +3,95 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests
+namespace CompulsoryCow.AssemblyAbstractions.Unit.Tests;
+
+/// <summary>This class contains tests of the (static) constructors
+/// in <see cref="System.Reflection.Assembly"/>
+/// which in AssemblyAbstractions is moved 
+/// from Assembly to AssemblyFactory
+/// as static constructors are impossible(?) to mock.
+/// </summary>
+public class AssemblyFactoryTests
 {
-    /// <summary>This class contains tests of the (static) constructors
-    /// in <see cref="System.Reflection.Assembly"/>
-    /// which in AssemblyAbstractions is moved 
-    /// from Assembly to AssemblyFactory
-    /// as static constructors are impossible(?) to mock.
-    /// </summary>
-    public class AssemblyFactoryTests
+    [Fact]
+    public void AllMethodsShouldBeMockable()
     {
-        [Fact]
-        public void AllMethodsShouldBeMockable()
+        // These methods are out of our control.
+        var objectMethods = new[]
         {
-            // These methods are out of our control.
-            var objectMethods = new[]
-            {
-                    nameof(AssemblyFactory.Equals),
-                    nameof(AssemblyFactory.GetHashCode),
-                    nameof(AssemblyFactory.GetType),
-                    nameof(AssemblyFactory.ToString),
-            };
+                nameof(AssemblyFactory.Equals),
+                nameof(AssemblyFactory.GetHashCode),
+                nameof(AssemblyFactory.GetType),
+                nameof(AssemblyFactory.ToString),
+        };
 
-            var methods = typeof(AssemblyFactory)
-                .GetMethods()
-                .Where(m => m.IsConstructor == false)
-                .Where(m => objectMethods.Contains(m.Name) == false
-                );
-
-            var res = methods
-                .Select(m => m.IsVirtual);
-
-            //  Act.
-            res.Count().Should().Be(4, "Sanity check we know how many methods we have.");
-
-            res.Should().AllBeEquivalentTo(
-                true,
-                $"all methods {string.Join(",", methods.Select(m => m.Name))} should be virtual"
+        var methods = typeof(AssemblyFactory)
+            .GetMethods()
+            .Where(m => m.IsConstructor == false)
+            .Where(m => objectMethods.Contains(m.Name) == false
             );
-        }
 
-        [Fact]
-        public void GetAssembly_Type_ShouldMimicSystem()
-        {
-            var anyType = typeof(int);
-            var sut = new AssemblyFactory();
+        var res = methods
+            .Select(m => m.IsVirtual);
 
-            //  Act.
-            var res = sut.GetAssembly(anyType);
+        //  Act.
+        res.Count().Should().Be(4, "Sanity check we know how many methods we have.");
 
-            //  Assert.
-            res.GetName().Name.Should().Be(
-                System.Reflection.Assembly.GetAssembly(anyType).GetName().Name);
-        }
+        res.Should().AllBeEquivalentTo(
+            true,
+            $"all methods {string.Join(",", methods.Select(m => m.Name))} should be virtual"
+        );
+    }
 
-        [Fact]
-        public void GetExecutingAssembly_Void_ShouldMimicSystem()
-        {
-            var sut = new AssemblyFactory();
+    [Fact]
+    public void GetAssembly_Type_ShouldMimicSystem()
+    {
+        var anyType = typeof(int);
+        var sut = new AssemblyFactory();
 
-            //  Act.
-            var res = sut.GetExecutingAssembly();
+        //  Act.
+        var res = sut.GetAssembly(anyType);
 
-            //  Assert.
-            res.FullName.Should().Be("CompulsoryCow.AssemblyAbstractions, Version=0.6.0.0, Culture=neutral, PublicKeyToken=null");
-        }
+        //  Assert.
+        res.GetName().Name.Should().Be(
+            System.Reflection.Assembly.GetAssembly(anyType).GetName().Name);
+    }
 
-        [Fact]
-        public void LoadFile_String_ShouldMimicSystem()
-        {
-            var ass = System.Reflection.Assembly.GetExecutingAssembly();
-            var sut = new AssemblyFactory();
+    [Fact]
+    public void GetExecutingAssembly_Void_ShouldMimicSystem()
+    {
+        var sut = new AssemblyFactory();
 
-            //  Act.
-            var res = sut.LoadFile(ass.Location);
+        //  Act.
+        var res = sut.GetExecutingAssembly();
 
-            //  Assert.
-            res.FullName.Should().Be(ass.FullName);
-        }
+        //  Assert.
+        res.FullName.Should().Be("CompulsoryCow.AssemblyAbstractions, Version=0.6.0.0, Culture=neutral, PublicKeyToken=null");
+    }
 
-        [Fact]
-        public void LoadFrom_String_ShouldMimicSystem()
-        {
-            var ass = System.Reflection.Assembly.GetExecutingAssembly();
-            var sut = new AssemblyFactory();
+    [Fact]
+    public void LoadFile_String_ShouldMimicSystem()
+    {
+        var ass = System.Reflection.Assembly.GetExecutingAssembly();
+        var sut = new AssemblyFactory();
 
-            //  Act.
-            var res = sut.LoadFrom(ass.Location);
+        //  Act.
+        var res = sut.LoadFile(ass.Location);
 
-            //  Assert.
-            res.FullName.Should().Be(ass.FullName);
-        }
+        //  Assert.
+        res.FullName.Should().Be(ass.FullName);
+    }
+
+    [Fact]
+    public void LoadFrom_String_ShouldMimicSystem()
+    {
+        var ass = System.Reflection.Assembly.GetExecutingAssembly();
+        var sut = new AssemblyFactory();
+
+        //  Act.
+        var res = sut.LoadFrom(ass.Location);
+
+        //  Assert.
+        res.FullName.Should().Be(ass.FullName);
     }
 }
