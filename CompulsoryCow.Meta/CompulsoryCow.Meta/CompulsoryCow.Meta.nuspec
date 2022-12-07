@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- Continuously updated elements -->
-        <version>4.0.0</version>
+        <version>5.0.0</version>
         <releaseNotes>
             Moved to a project of its own.
         </releaseNotes>
