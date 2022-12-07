@@ -198,18 +198,6 @@ public static class Meta
             BindingFlags.NonPublic | BindingFlags.Static);
     }
 
-    /// <summary>This method returns <see cref="PropertyInfo"/> for all public properties in a class.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="theClass"></param>
-    /// <returns></returns>
-    public static PropertyInfo[] GetPublicProperties<T>(T theClass)
-    {
-        if (theClass == null) { throw new ArgumentNullException(nameof(theClass)); }
-
-        return theClass.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-    }
-
     /// <summary>This method returns <see cref="PropertyInfo"/>for all public properties for a type.
     /// Use <paramref name="recurse"/> for telling it to, recursively, dive into properties.
     /// 
