@@ -1,18 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VacheTacheLibrary;
 
-namespace AreEqualTest
+namespace AreEqualTest;
+
+public class TestBase
 {
-    public class TestBase
+    protected PseudoRandom _pr;
+
+    public TestContext TestContext { get; set; }
+
+    [TestInitialize]
+    public void Initialise()
     {
-        protected PseudoRandom _pr;
-
-        public TestContext TestContext { get; set; }
-
-        [TestInitialize]
-        public void Initialise()
-        {
-            _pr = new PseudoRandom(TestContext.TestName);
-        }
+        _pr = new PseudoRandom(TestContext.TestName);
     }
 }
