@@ -8,6 +8,9 @@
     <FileVersion>0.2.0</FileVersion>
     <Version>0.2.0</Version>
 
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
+    
     <Authors>LosManos</Authors>
     <Company>LosManos</Company>
     <Product>CompulsoryCow.DateTimeAbstractions</Product>
