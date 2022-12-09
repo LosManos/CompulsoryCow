@@ -1,9 +1,8 @@
-﻿namespace CompulsoryCow.ReachIn.Tests
+﻿namespace CompulsoryCow.ReachIn.Tests;
+
+public partial class ReachInGetMemberOrThrowTest
 {
-    public partial class ReachInGetMemberOrThrowTest
+    private class MyChildClass : MyBaseClass
     {
-        private class MyChildClass : MyBaseClass
-        {
-        }
     }
 }
