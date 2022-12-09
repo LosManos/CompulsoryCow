@@ -1,7 +1,6 @@
-﻿namespace IsEqualsImplementedAssemblyNoDefinitionAtAll
+﻿namespace IsEqualsImplementedAssemblyNoDefinitionAtAll;
+
+public class AClassWithEqualsNotDefined
 {
-    public class AClassWithEqualsNotDefined
-    {
-        public int MyProperty { get; set; }
-    }
+    public int MyProperty { get; set; }
 }
