@@ -13,35 +13,36 @@ public partial class DateTime : IDateTime
     private static System.Func<DateTime> _systemUtcNow = () => System.DateTime.UtcNow.ToAbstractionsDateTime();
     private static System.Func<DateTime> _utcNow = _systemUtcNow;
 
+    // There are lots of nullable references below. Can we get rid of them?
     private static System.Func<int>? _compare;
     private static System.Func<int>? _daysInMonth;
-    private static System.Func<bool> _equals;
-    private static System.Func<DateTime> _fromBinary;
-    private static System.Func<DateTime> _fromFileTime;
-    private static System.Func<DateTime> _fromFileTimeUtc;
-    private static System.Func<DateTime> _fromOADate;
-    private static System.Func<bool> _isLeapYear;
-    private static System.Func<IDateTime> _parseStringFormatProviderStyle;
-    private static System.Func<IDateTime> _parseStringFormatProvider;
-    private static System.Func<IDateTime> _parseString;
-    private static System.Func<IDateTime> _parseExactStringStringArrayFormatProviderStyle;
-    private static System.Func<IDateTime> _parseExactStringStringFormatProviderStyle;
-    private static System.Func<IDateTime> _parseExactStringStringFormatProvider;
-    private static System.Func<DateTime> _specifyKind;
+    private static System.Func<bool>? _equals;
+    private static System.Func<DateTime>? _fromBinary;
+    private static System.Func<DateTime>? _fromFileTime;
+    private static System.Func<DateTime>? _fromFileTimeUtc;
+    private static System.Func<DateTime>? _fromOADate;
+    private static System.Func<bool>? _isLeapYear;
+    private static System.Func<IDateTime>? _parseStringFormatProviderStyle;
+    private static System.Func<IDateTime>? _parseStringFormatProvider;
+    private static System.Func<IDateTime>? _parseString;
+    private static System.Func<IDateTime>? _parseExactStringStringArrayFormatProviderStyle;
+    private static System.Func<IDateTime>? _parseExactStringStringFormatProviderStyle;
+    private static System.Func<IDateTime>? _parseExactStringStringFormatProvider;
+    private static System.Func<DateTime>? _specifyKind;
     private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseStringIFormatProviderDateTimeStylesDateTime;
     private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseStringDateTime;
     private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseExactStringStringIFormatProviderDateTimeStyles;
     private static (System.Func<bool> Return, System.Func<IDateTime> Out) _setTryParseExactStringStringArrayIFormatProviderDateTimeStyles;
 
-    private static System.Func<DateTime> _addOperator;
-    private static System.Func<TimeSpan> _subtractDateTimeDateTimeOperator;
-    private static System.Func<DateTime> _subtractDateTimeTimeSpanOperator;
-    private static System.Func<bool> _equalsOperator;
-    private static System.Func<bool> _notEqualsOperator;
-    private static System.Func<bool> _earlierThanOperator;
-    private static System.Func<bool> _laterThanOperator;
-    private static System.Func<bool> _earlierThanOrEqualOperator;
-    private static System.Func<bool> _laterThanOrEqualOperator;
+    private static System.Func<DateTime>? _addOperator;
+    private static System.Func<TimeSpan>? _subtractDateTimeDateTimeOperator;
+    private static System.Func<DateTime>? _subtractDateTimeTimeSpanOperator;
+    private static System.Func<bool>? _equalsOperator;
+    private static System.Func<bool>? _notEqualsOperator;
+    private static System.Func<bool>? _earlierThanOperator;
+    private static System.Func<bool>? _laterThanOperator;
+    private static System.Func<bool>? _earlierThanOrEqualOperator;
+    private static System.Func<bool>? _laterThanOrEqualOperator;
 
     private readonly System.DateTime _value;
 

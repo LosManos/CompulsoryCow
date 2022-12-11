@@ -1,4 +1,6 @@
-﻿namespace CompulsoryCow.DateTime.Abstractions;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CompulsoryCow.DateTime.Abstractions;
 
 public static class DateTimeExtensions
 {
@@ -7,13 +9,8 @@ public static class DateTimeExtensions
     /// </summary>
     /// <param name="me"></param>
     /// <returns></returns>
-    public static System.DateTime ToSystemDateTime(this DateTime me)
+    public static System.DateTime ToSystemDateTime([DisallowNull] this DateTime me)
     {
-        // Hopefully dotnetcore3 can make sure ` me`  is not null instead of throwing.
-        if( me == null)
-        {
-            throw new System.ArgumentNullException(nameof(me));
-        }
         return new System.DateTime(me.Ticks, me.Kind);
     }
 
