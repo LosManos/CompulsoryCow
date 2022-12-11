@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
@@ -34,19 +35,19 @@ public class Verify
     /// <summary>This property contains the Type of the class that does not have Equals implemented correctly.
     /// Updated every time <see cref="AreAllEqualsImplementedCorrectly(Assembly){T}"/> is called.
     /// </summary>
-    public Type ResultClass { get; private set; }
-    
+    public Type? ResultClass { get; private set; }
+
     /// <summary>This property contains a friendly message about which property was not used in the Equals comparison. 
     /// Updated every time <see cref="IsEqualsImplementedCorrectly{T}"/> or <see cref="AreAllEqualsImplementedCorrectly(Assembly)"/> is called.
     /// If last check returned true this property is null.
     /// </summary>
-    public string ResultMessage { get; private set; }
+    public string ResultMessage { get; private set; } = "";
 
     /// <summary>This property contains the <see cref="PropertyInfo"/> for the property that was not in the Equals comparison.
     /// Updated every time <see cref="IsEqualsImplementedCorrectly{T}"/> is called.
     /// If last check returned true this property is null.
     /// </summary>
-    public PropertyInfo ResultProperty { get; private set; }
+    public PropertyInfo? ResultProperty { get; private set; }
 
     /// <summary>This method is used for verifying classes 
     /// that do not have a default constructor.
@@ -88,14 +89,14 @@ public class Verify
             .Where(classType => _ignoredClasses.Contains(classType) == false)
             .Where(classType => HasEqualsBeenDeclared(classType));
 
-        bool Return(Type resultClass, string resultMessage, bool result)
+        bool Return(Type? resultClass, string resultMessage, bool result)
         {
             ResultClass = resultClass;
             ResultMessage = resultMessage;
             return result;
         }
 
-        bool ReturnSuccess(Type resultClass, string resultMessage) =>
+        bool ReturnSuccess(Type? resultClass, string resultMessage) =>
             Return(resultClass, resultMessage, true);
 
         bool ReturnFail(Type resultClass, string resultMessage) =>
@@ -120,24 +121,24 @@ public class Verify
 
         var allClassesDefiningEquals = GetAllClassesIn(assembly).ToList();
 
-        if( allClassesDefiningEquals.Count() == 0)
+        if (allClassesDefiningEquals.Count() == 0)
         {
             return ReturnSuccess(
-                null, 
+                null,
                 $"No class in the assembly {assembly.GetName().Name} seems to implement Equals.");
         }
 
         var allClassesWithEqualsImplementation = IsImplementedCorrectlyOrNot(allClassesDefiningEquals).ToList();
 
-        if( IsAllEqualsImplementedCorrectly( allClassesDefiningEquals, allClassesWithEqualsImplementation))
+        if (IsAllEqualsImplementedCorrectly(allClassesDefiningEquals, allClassesWithEqualsImplementation))
         {
-            return ReturnSuccess(null, null);
+            return ReturnSuccess(null, string.Empty);
         }
         else
         {
             var aClass = AnyClassWithFailingImplementation(allClassesWithEqualsImplementation);
             return ReturnFail(
-                aClass, 
+                aClass,
                 $"It seems class {aClass.Name} does not implement Equals correctly.");
         }
     }
@@ -153,7 +154,7 @@ public class Verify
     }
 
     /// <summary>This method checks if the Equals method is implemented correctly.
-    /// If Equals seems to be implemented correcxtly True is returned. <see cref="ResultProperty"/> and <see cref="ResultMessage"/> are set to null.
+    /// If Equals seems to be implemented correcxtly True is returned. <see cref="ResultProperty"/> is sett to null and <see cref="ResultMessage"/> are set to empty string.
     /// False is returned otherwise and <see cref="ResultProperty"/> and <see cref="ResultMessage"/> are updated with property info and a friendly message respectively.
     /// With "implemented correctly" means that each and every public property is used in the comparison.
     /// 
@@ -184,7 +185,7 @@ public class Verify
     /// <typeparam name="T"></typeparam>
     /// <param name="equalValue"></param>
     /// <param name="differingValue"></param>
-    public void SetComparisonValues<T>(T equalValue, T differingValue)
+    public void SetComparisonValues<T>([DisallowNull] T equalValue, [DisallowNull] T differingValue)
     {
         _equalValues.Add(typeof(T), equalValue);
         _differingValues.Add(typeof(T), differingValue);
@@ -192,7 +193,7 @@ public class Verify
 
     #region Private helper methods.
 
-    private static object GetDefault(Type type)
+    private static object? GetDefault(Type type)
     {
         // https://stackoverflow.com/a/353073/521554
         if (type.IsValueType)
@@ -221,14 +222,14 @@ public class Verify
     private bool IsEqualsImplementedCorrectly(Type type)
     {
         // var o1 = new T();
-        var o1 = _instantiateObjectActions.ContainsKey(type)?
+        var o1 = _instantiateObjectActions.ContainsKey(type) ?
             _instantiateObjectActions[type]() :
             Activator.CreateInstance(type);
         SetAllPropertiesToEqualValues(o1);
 
         // var o2 = new T();
-        var o2 = _instantiateObjectActions.ContainsKey(type)?
-            _instantiateObjectActions[type]():
+        var o2 = _instantiateObjectActions.ContainsKey(type) ?
+            _instantiateObjectActions[type]() :
             Activator.CreateInstance(type);
         foreach (var differingProperty in Meta.GetPublicProperties(o2))
         {
@@ -242,7 +243,7 @@ public class Verify
             }
         }
 
-        ResultMessage = null;
+        ResultMessage = "";
         ResultProperty = null;
         return true;
     }

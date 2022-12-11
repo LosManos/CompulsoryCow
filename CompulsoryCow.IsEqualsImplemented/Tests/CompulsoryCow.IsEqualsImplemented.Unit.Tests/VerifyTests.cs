@@ -20,7 +20,7 @@ public partial class VerifyTests
 
         //  #   Assert.
         res.Should().BeTrue();
-        sut.ResultMessage.Should().BeNull();
+        sut.ResultMessage.Should().BeEmpty();
         sut.ResultProperty.Should().BeNull();
     }
 
@@ -117,7 +117,7 @@ public partial class VerifyTests
     [DataRow(nameof(IsEqualsImplementedAssemblyOk),
         true,
         null,
-        null)]
+        "")]
     [DataRow(nameof(IsEqualsImplementedAssemblyNotOk),
         false,
         typeof(IsEqualsImplementedAssemblyNotOk.AClassWithEqualsNotCorrectlyImplemented),

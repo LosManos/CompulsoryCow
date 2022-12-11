@@ -74,8 +74,15 @@ public partial class VerifyTests
         {
             throw new NotImplementedException("There is no need for implementing anything in this method, it is only for checking if the Equals method exists.");
         }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException("If we get here something is wrong with the tests. It is declared only to get rid of build warnings.");
+        }
     }
 
+    /// <summary>Declaring an Equals method with 'wrong' parameters does not count as a proper Equals implementation.
+    /// </summary>
     internal class ClassWithEqualsDeclarationWithWrongParameters
     {
         public bool Equals(object obj, string s)
@@ -84,12 +91,16 @@ public partial class VerifyTests
         }
     }
 
+    /// <summary>Declaring an Equals method as internal does not count as a proper Equals implementation.
+    /// </summary>
     internal class ClassWithInternalEqualsDefinition
     {
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         internal bool Equals(object obj)
         {
             throw new NotImplementedException("This is a variant of an correctly almost-Equals method");
         }
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
     }
 
     /// <summary>This class should not contain any explicit Equal implementation.
@@ -98,12 +109,16 @@ public partial class VerifyTests
     {
     }
 
+    /// <summary>Declaring an Equals method as static does not count as a proper Equals implementation.
+    /// </summary>
     internal class ClassWithStaticEqualsDeclaration
     {
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public static bool Equals(object obj)
         {
             throw new NotImplementedException("This is a variant of an correctly almost-Equals method");
         }
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
     }
 
     /// <summary>This class does not have a properly implemented Equals
@@ -172,7 +187,7 @@ public partial class VerifyTests
     /// <summary>This class has a properly implemented Equals but
     /// does not have a default constructor.
     /// </summary>
-    internal class LackingDefaultConstructor: ProperlyImplementedClass
+    internal class LackingDefaultConstructor : ProperlyImplementedClass
     {
         internal LackingDefaultConstructor(int myInt, string myString)
         {
