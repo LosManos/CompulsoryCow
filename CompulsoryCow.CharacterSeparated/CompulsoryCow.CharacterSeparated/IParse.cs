@@ -16,7 +16,7 @@ public interface IParse
     /// </summary>
     /// <param name="line"></param>
     /// <returns></returns>
-    IEnumerable<object> Line(string line);
+    IEnumerable<object?> Line(string line);
 
     /// <summary>This method splits a string into words per comma (,).
     /// If you have a word with a comma in it, quote the string with quotes ("). The quotes are a part of the word.
