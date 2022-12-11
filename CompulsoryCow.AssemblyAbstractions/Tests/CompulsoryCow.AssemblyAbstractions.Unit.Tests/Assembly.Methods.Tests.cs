@@ -1,4 +1,5 @@
 using FluentAssertions;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -17,16 +18,17 @@ public class AssemblyMethodsTests
         var res = sut.GetName();
 
         //  Assert.
-        res.Name.Should().Be(expected.GetName().Name);
+        var expectedName = expected?.GetName().Name ?? throw new Exception("Test error, case not considered.");
+        res.Name.Should().Be(expectedName);
     }
 
     [Fact]
     public void GetTypes_void_ShouldMimicSystem()
     {
-        var expected = System.Reflection.Assembly.GetAssembly(typeof(int)).GetTypes();
+        var expected = System.Reflection.Assembly.GetAssembly(typeof(int))?.GetTypes() ?? throw new Exception("Test error, case not considered.");
 
         var sut = new AssemblyFactory().GetAssembly(typeof(int));
-        
+
         //  Act.
         var res = sut.GetTypes();
 
@@ -49,7 +51,6 @@ public class AssemblyMethodsTests
         // These methods are used for setting up tests.
         var testingMethods = new[]
         {
-            nameof(Assembly.ClearAssembly),
             nameof(Assembly.GetAssembly),
             nameof(Assembly.SetAssembly)
         };
@@ -58,7 +59,7 @@ public class AssemblyMethodsTests
             .GetMethods()
             .Where(m =>
                 m.IsConstructor == false &&
-                IsProperty( m) == false &&
+                IsProperty(m) == false &&
                 m.IsStatic == false &&
                 objectMethods.Contains(m.Name) == false &&
                 testingMethods.Contains(m.Name) == false

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -13,7 +14,7 @@ public class AssemblyPropertyTests
             .GetProperties();
 
         var res = properties
-            .Select(p => p.GetMethod.IsVirtual);
+            .Select(p => p.GetMethod?.IsVirtual ?? false);
 
         //  Act.
         res.Count().Should().Be(2, "Sanity check we know how many methods we have.");
@@ -29,7 +30,7 @@ public class AssemblyPropertyTests
     public void FullName_ShouldMimicSystem()
     {
         var anyType = typeof(int);
-        var expected = System.Reflection.Assembly.GetAssembly(anyType).FullName;
+        var expected = System.Reflection.Assembly.GetAssembly(anyType)?.FullName ?? throw new Exception("Test error, case not considered.");
 
         var factory = new AssemblyFactory();
 
@@ -46,7 +47,7 @@ public class AssemblyPropertyTests
     public void Location_ShouldMimicSystem()
     {
         var anyType = typeof(int);
-        var expected = System.Reflection.Assembly.GetAssembly(anyType).Location;
+        var expected = System.Reflection.Assembly.GetAssembly(anyType)?.Location ?? throw new Exception("Test error, case not considered.");
 
         var factory = new AssemblyFactory();
 

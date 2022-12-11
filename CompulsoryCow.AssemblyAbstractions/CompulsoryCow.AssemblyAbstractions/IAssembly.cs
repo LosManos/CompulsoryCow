@@ -6,7 +6,7 @@ namespace CompulsoryCow.AssemblyAbstractions
     {
         /// <summary>See <see cref="System.Reflection.Assembly.FullName"/>.
         /// </summary>
-        string FullName { get; }
+        string? FullName { get; }
 
         /// <summary>See <see cref="System.Reflection.Assembly.Location"/>
         /// </summary>

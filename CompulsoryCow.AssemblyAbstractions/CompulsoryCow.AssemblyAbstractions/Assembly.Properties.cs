@@ -3,7 +3,7 @@
     partial class Assembly
     {
         /// <inheritdoc />
-        public string FullName
+        public string? FullName
         {
             get
             {

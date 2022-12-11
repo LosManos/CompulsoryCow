@@ -1,4 +1,6 @@
-﻿namespace CompulsoryCow.AssemblyAbstractions
+﻿using System;
+
+namespace CompulsoryCow.AssemblyAbstractions
 {
     public partial class AssemblyFactory : IAssemblyFactory
     {
@@ -24,8 +26,17 @@
         /// <inheritdoc />
         public IAssembly GetAssembly(System.Type type)
         {
-            return new Assembly(
-                System.Reflection.Assembly.GetAssembly(type));
+            var ass = System.Reflection.Assembly.GetAssembly(type);
+
+            // We are covering for a very weird case here. There is no way for a type to _not_ be in an assembly AFAIK.
+            // There might be a way, by creating a type runtime, if even possible. But that is a border case
+            // so let's just bail.
+            if (ass == null)
+            {
+                throw new ArgumentException($"Type {type} is not in an assembly", nameof(type));
+            }
+
+            return new Assembly(ass);
         }
 
         /// <inheritdoc />

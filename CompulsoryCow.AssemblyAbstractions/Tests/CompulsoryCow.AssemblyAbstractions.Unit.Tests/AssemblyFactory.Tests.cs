@@ -53,8 +53,9 @@ public class AssemblyFactoryTests
         var res = sut.GetAssembly(anyType);
 
         //  Assert.
+        var expectedAssemlbyName = System.Reflection.Assembly.GetAssembly(anyType)?.GetName().Name ?? throw new Exception("Test error, case not considered.");
         res.GetName().Name.Should().Be(
-            System.Reflection.Assembly.GetAssembly(anyType).GetName().Name);
+            expectedAssemlbyName);
     }
 
     [Fact]
