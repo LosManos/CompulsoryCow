@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Xml;
 
 namespace CompulsoryCow;
 
@@ -12,11 +14,11 @@ public static class Serialiser
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static XmlDocument ToXml(object obj)
+    public static XmlDocument ToXml([DisallowNull] object obj)
     {
         if (null == obj)
         {
-            return null;
+            throw new ArgumentNullException(nameof(obj));
         }
         var doc = new XmlDocument();
         var serializer = new System.Xml.Serialization.XmlSerializer(obj.GetType());

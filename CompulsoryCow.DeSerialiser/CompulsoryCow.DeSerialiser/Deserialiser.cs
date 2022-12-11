@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -14,11 +16,11 @@ public static class Deserialiser
     /// </summary>
     /// <param name="doc"></param>
     /// <returns></returns>
-    public static T FromXml<T>(XmlDocument doc) where T:class 
+    public static T FromXml<T>([DisallowNull] XmlDocument doc) where T:class 
     {
         if (null == doc)
         {
-            return null;
+            throw new ArgumentNullException(nameof(doc));
         }
         using (var stringreader = new StringReader(doc.InnerXml))
         {

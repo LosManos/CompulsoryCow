@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using SerialiserTest;
 using Xunit;
@@ -10,8 +11,11 @@ public class DeSerialiserTest
     [Fact]
     public void FromXml_Null()
     {
-        var res = CompulsoryCow.Deserialiser.FromXml<object>(null);
-        res.Should().BeNull();
+        var res = Record.Exception(() =>
+        {
+            CompulsoryCow.Deserialiser.FromXml<object>(null);
+        });
+        res.Should().BeOfType<ArgumentNullException>();
     }
 
     [Fact]
