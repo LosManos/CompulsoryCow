@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0]
 Abstractions.DateTime.Compare returns NullReferenceException instead of ArgumentNullException.
 Abstractions.DateTime.Equals returns NullReferenceException instead of ArgumentNullException.
+DotnetStandard raised to 2.1 to allow for DisallowNull attribute.
+This is a breaking change.
 
 ## [0.2.0]
 Update set methods to be public.

@@ -36,7 +36,7 @@ public class DateTimeExtensionsTests : DateTimeTestsBase
         });
 
         //  Assert.
-        result.Should().BeOfType<System.ArgumentNullException>();
+        result.Should().BeOfType<System.NullReferenceException>();
     }
 
     [Fact]
