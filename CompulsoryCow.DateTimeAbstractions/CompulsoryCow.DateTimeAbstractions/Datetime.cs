@@ -4,11 +4,17 @@ namespace CompulsoryCow.DateTime.Abstractions;
 
 public partial class DateTime : IDateTime
 {
-    private static System.Func<DateTime> _now;
-    private static System.Func<DateTime> _today;
-    private static System.Func<DateTime> _utcNow;
-    private static System.Func<int> _compare;
-    private static System.Func<int> _daysInMonth;
+    private static System.Func<DateTime> _systemNowFunc = () => System.DateTime.Now.ToAbstractionsDateTime();
+    private static System.Func<DateTime> _now = _systemNowFunc;
+
+    private static System.Func<DateTime> _systemTodayFunc = () => System.DateTime.Today.ToAbstractionsDateTime();
+    private static System.Func<DateTime> _today = _systemTodayFunc;
+
+    private static System.Func<DateTime> _systemUtcNow = () => System.DateTime.UtcNow.ToAbstractionsDateTime();
+    private static System.Func<DateTime> _utcNow = _systemUtcNow;
+
+    private static System.Func<int>? _compare;
+    private static System.Func<int>? _daysInMonth;
     private static System.Func<bool> _equals;
     private static System.Func<DateTime> _fromBinary;
     private static System.Func<DateTime> _fromFileTime;
@@ -190,9 +196,7 @@ public partial class DateTime : IDateTime
     {
         get
         {
-            return _now != null ?
-                _now() :
-                System.DateTime.Now.ToAbstractionsDateTime();
+            return _now();
         }
     }
 
@@ -203,9 +207,7 @@ public partial class DateTime : IDateTime
     {
         get
         {
-            return _today != null ?
-                _today() :
-                System.DateTime.Today.ToAbstractionsDateTime();
+            return _today();
         }
     }
 
@@ -215,9 +217,7 @@ public partial class DateTime : IDateTime
     {
         get
         {
-            return _utcNow != null ?
-                _utcNow() :
-                System.DateTime.UtcNow.ToAbstractionsDateTime();
+            return _utcNow();
         }
     }
 
@@ -287,15 +287,6 @@ public partial class DateTime : IDateTime
     /// <returns></returns>
     public static int Compare(DateTime t1, DateTime t2)
     {
-        if (t1 == null)
-        {
-            throw new System.ArgumentNullException(nameof(t1));
-        }
-        if (t2 == null)
-        {
-            throw new System.ArgumentNullException(nameof(t2));
-        }
-
         return _compare != null ?
             _compare() :
             System.DateTime.Compare(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
@@ -320,15 +311,6 @@ public partial class DateTime : IDateTime
     /// <returns></returns>
     public static bool Equals(DateTime t1, DateTime t2)
     {
-        if (t1 == null)
-        {
-            throw new System.ArgumentNullException(nameof(t1));
-        }
-        if (t2 == null)
-        {
-            throw new System.ArgumentNullException(nameof(t2));
-        }
-
         return _equals != null ?
             _equals() :
             System.DateTime.Equals(new System.DateTime(t1.Ticks), new System.DateTime(t2.Ticks));
