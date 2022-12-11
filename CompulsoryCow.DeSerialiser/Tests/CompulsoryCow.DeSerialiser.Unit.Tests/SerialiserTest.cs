@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 
@@ -9,8 +10,11 @@ public class SerialiserTest
     [Fact]
     public void ToXml_Null()
     {
-        var res = CompulsoryCow.Serialiser.ToXml(null);
-        res.Should().BeNull();
+        var res = Record.Exception(() =>
+        {
+            CompulsoryCow.Serialiser.ToXml(null);
+        });
+        res.Should().BeOfType<ArgumentNullException>();
     }
 
     [Fact]
