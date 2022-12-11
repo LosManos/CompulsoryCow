@@ -8,10 +8,10 @@ public class AClassWithEqualsNotCorrectlyImplemented
     public int MyProperty { get; set; }
     public int AnotherProperty { get; set; }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         var implemented = obj as AClassWithEqualsNotCorrectlyImplemented;
-        return implemented != null &&
+        return implemented is not null &&
                MyProperty == implemented.MyProperty;
     }
 
