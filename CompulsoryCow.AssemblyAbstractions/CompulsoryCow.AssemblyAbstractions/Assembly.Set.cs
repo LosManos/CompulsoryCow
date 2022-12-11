@@ -7,12 +7,6 @@ namespace CompulsoryCow.AssemblyAbstractions
         #region Methods used for testing and not production.
 
         /// <inheritdoc />
-        public void ClearAssembly()
-        {
-            _systemReflectionAssembly = null;
-        }
-
-        /// <inheritdoc />
         public System.Reflection.Assembly GetAssembly()
         {
             return _systemReflectionAssembly;
