@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WordParseResult = System.Tuple<bool, object>;
+using WordParseResult = System.Tuple<bool, object?>;
 using System.Linq;
 
 namespace CompulsoryCow.CharacterSeparated;
@@ -20,7 +20,7 @@ public class Parse : IParse
     private const string QuoteCharacter = "\"";
     private const string SeparatorCharacter = ",";
 
-    public IList<WordParser> _wordParsers;
+    public IList<WordParser> _wordParsers = new List<WordParser>();
 
     private static readonly WordParser _defaultAsIsParser = (word, implicitString) =>
         implicitString ?
@@ -74,7 +74,7 @@ public class Parse : IParse
     /// <summary>
     private static readonly WordParser _defaultStringQuotedWhenNotImplicitParser = (word, implicitString) =>
         (implicitString == false && word.Left(1) == QuoteCharacter) ?
-            ParseResultParsed(word.Middle()):
+            ParseResultParsed(word.Middle()) :
             ParseResultNotParsed;
 
     #endregion
@@ -98,12 +98,12 @@ public class Parse : IParse
 
     /// <summary>This method is for returning a blank word as null if we have implicit string.
     /// </summary>
-    public WordParser DefaultStringIfImplicitParser = (word, implicitString) => 
+    public WordParser DefaultStringIfImplicitParser = (word, implicitString) =>
         _defaultStringIfImplicitParser(word, implicitString);
 
     /// <summary>This method is for returning a quoted string as a string when we do not have implicit string.
     /// </summary>
-    public WordParser DefaultStringQuotedWhenNotImplicitParser = (word, implicitString) => 
+    public WordParser DefaultStringQuotedWhenNotImplicitParser = (word, implicitString) =>
         _defaultStringQuotedWhenNotImplicitParser(word, implicitString);
 
     /// <summary>This is the list of default word parsers that should suffice for most lines.
@@ -128,13 +128,13 @@ public class Parse : IParse
 
     #region Constructors.
 
-    public Parse( ParseOptions options)
+    public Parse(ParseOptions options)
     {
         Options = options;
     }
 
     public Parse(ParseOptions options, IEnumerable<WordParser> wordParsers)
-        :this(options)
+        : this(options)
     {
         _wordParsers = wordParsers.ToList();
     }
@@ -155,13 +155,13 @@ public class Parse : IParse
     /// </summary>
     /// <param name="line"></param>
     /// <returns></returns>
-    public IEnumerable<object> Line(string line)
+    public IEnumerable<object?> Line(string line)
     {
         if (line == null) { throw new ArgumentNullException(nameof(line)); }
 
         if (line.Contains(SeparatorCharacter) == false)
         {
-            return new object[] { ParseWord(line, Options.ImplicitString, _wordParsers) };
+            return new object?[] { ParseWord(line, Options.ImplicitString, _wordParsers) };
         }
         return Traverse(line, Options.ImplicitString, _wordParsers);
     }
@@ -195,15 +195,16 @@ public class Parse : IParse
 
     private static WordParseResult ParseResultNotParsed => new WordParseResult(false, null);
 
-    private static WordParseResult ParseResultParsed(object result) => new WordParseResult(true, result);
+    private static WordParseResult ParseResultParsed(object? result) => new WordParseResult(true, result);
 
-    private static object ParseWord(string word, bool implicitString, IList<WordParser> wordParsers)
+    private static object? ParseWord(string word, bool implicitString, IList<WordParser> wordParsers)
     {
         if (implicitString == false)
         {
             word = word.Trim();
         }
-        foreach (var wordParser in wordParsers ?? DefaultWordParserList)
+
+        foreach (var wordParser in wordParsers.Any() ? wordParsers : DefaultWordParserList)
         {
             var result = wordParser(word, implicitString);
             if (result.Item1)
@@ -253,9 +254,9 @@ public class Parse : IParse
         return res;
     }
 
-    private static IEnumerable<object> Traverse(string line, bool implicitString, IList<WordParser> wordParsers)
+    private static IEnumerable<object?> Traverse(string line, bool implicitString, IList<WordParser> wordParsers)
     {
-        var res = new List<object>();
+        var res = new List<object?>();
         var word = string.Empty;
         var isInQuote = false;
         do

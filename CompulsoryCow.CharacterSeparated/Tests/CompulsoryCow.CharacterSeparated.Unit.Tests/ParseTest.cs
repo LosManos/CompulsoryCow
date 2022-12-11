@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WordParseResult = System.Tuple<bool, object>;
+using WordParseResult = System.Tuple<bool, object?>;
 
 namespace CharacterSeparatedTest;
 
@@ -90,21 +90,21 @@ public class ParseTest
 
     #region StringLine tests.
 
-    private static IEnumerable<object[]> ParseStringLineData
+    private static IEnumerable<object?[]> ParseStringLineData
     {
         get
         {
-            yield return new object[] { "No split.", "", null, new[] { "" } };
-            yield return new object[] { "Empty split.", ",", null, new[] { "", "" } };
-            yield return new object[] { "Without split.", "a", null, new[] { "a" } };
-            yield return new object[] { "Long string.", "abc", null, new[] { "abc" } };
-            yield return new object[] { "Splitting longer.", "abc, def", null, new[] { "abc", " def" } };
-            yield return new object[] { "Split without any special chars.", "a,b", null, new[] { "a", "b" } };
-            yield return new object[] { "With quoted separator.", "\"a,b\",c", null, new[] { "\"a,b\"", "c" } };
-            yield return new object[] { "With escaped escape character.", "\\\\", null, new[] { "\\\\" } };
-            yield return new object[] { "With escaped characters.", "\"\\\"\\", null, new[] { "\"\\\"\\" } };
-            yield return new object[] { "With trimming.", " a ", null, new[] { " a " } };
-            yield return new object[] { "No trimming with quotes.", " \"a\" ", true, new[] { " \"a\" " } };
+            yield return new object?[] { "No split.", "", null, new[] { "" } };
+            yield return new object?[] { "Empty split.", ",", null, new[] { "", "" } };
+            yield return new object?[] { "Without split.", "a", null, new[] { "a" } };
+            yield return new object?[] { "Long string.", "abc", null, new[] { "abc" } };
+            yield return new object?[] { "Splitting longer.", "abc, def", null, new[] { "abc", " def" } };
+            yield return new object?[] { "Split without any special chars.", "a,b", null, new[] { "a", "b" } };
+            yield return new object?[] { "With quoted separator.", "\"a,b\",c", null, new[] { "\"a,b\"", "c" } };
+            yield return new object?[] { "With escaped escape character.", "\\\\", null, new[] { "\\\\" } };
+            yield return new object?[] { "With escaped characters.", "\"\\\"\\", null, new[] { "\"\\\"\\" } };
+            yield return new object?[] { "With trimming.", " a ", null, new[] { " a " } };
+            yield return new object?[] { "No trimming with quotes.", " \"a\" ", true, new[] { " \"a\" " } };
         }
     }
 
@@ -149,7 +149,9 @@ public class ParseTest
         var sut = new Parse(new ParseOptions { ImplicitString = implicitString });
 
         //  #   Act.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         Action callingWithNull = () => sut.StringLine(null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         //  #   Assert.
         ; callingWithNull.Should().Throw<ArgumentNullException>("Null parameter is not supported.");
@@ -159,29 +161,29 @@ public class ParseTest
 
     #region Line tests.
 
-    private static IEnumerable<object[]> ParseLineData
+    private static IEnumerable<object?[]> ParseLineData
     {
         get
         {
-            yield return new object[] { "No split.", "", false, new object[] { null } };
+            yield return new object[] { "No split.", "", false, new object?[] { null } };
             yield return new object[] { "No split.", "", true, new object[] { string.Empty } };
-            yield return new object[] { "Empty split.", ",", false, new object[] { null, null } };
+            yield return new object[] { "Empty split.", ",", false, new object?[] { null, null } };
             yield return new object[] { "Empty split.", ",", true, new object[] { string.Empty, string.Empty } };
-            yield return new object[] { "Without split, int value.", "1", null, new object[] { 1 } };
+            yield return new object?[] { "Without split, int value.", "1", null, new object[] { 1 } };
             yield return new object[] { "Empty quoted string.", "\"\"", false, new object[] { string.Empty } };
             yield return new object[] { "Empty quoted string.", "\"\"", true, new object[] { "\"\"" } };
             yield return new object[] { "String value..", "\"a\"", false, new object[] { "a" } };
             yield return new object[] { "String value..", "\"a\"", true, new object[] { "\"a\"" } };
             yield return new object[] { "Longer string value.", "\"abc\",\"def\"", false, new object[] { "abc", "def" } };
             yield return new object[] { "Longer string value.", "\"abc\",\"def\"", true, new object[] { "\"abc\"", "\"def\"" } };
-            yield return new object[] { "Double value", "1.0", null, new object[] { 1.0 } };
+            yield return new object?[] { "Double value", "1.0", null, new object[] { 1.0 } };
             yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", false, new object[] { false, false, false, true, true, true } };
             yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", true, new object[] { "False", "false", "FALSE", "True", "true", "TRUE" } };
             yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", false, new object[] { "a,b", "c" } };
             yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", true, new object[] { "\"a,b\"","\"c\"" } };
             yield return new object[] { "Different types.", "\"abc\", 1, 1.0, false", false, new object[] { "abc", (int)1, (double)1.0, false } };
             yield return new object[] { "Different types.", "\"abc\", 1, 1.0,false", true, new object[] { "\"abc\"", (int)1, (double)1.0, "false" } };
-            yield return new object[] { "Trimming value.", " 1 ", null, new object[] { 1 } };
+            yield return new object?[] { "Trimming value.", " 1 ", null, new object[] { 1 } };
             yield return new object[] { "Only trim implicit string.", " \"a\" ", false, new object[] { "a" } };
             yield return new object[] { "Only trim implicit string.", " \"a\" ", true, new object[] { " \"a\" " } };
             yield return new object[] { "Space inside string.", " \" a \" ", false, new object[] { " a " } };
@@ -191,7 +193,7 @@ public class ParseTest
 
     [DataTestMethod]
     [DynamicData(nameof(ParseLineData))]
-    public void LineSuccessful(string becauseMessage, string input, bool? implicitStringOrBoth, object[] expectedOutput)
+    public void LineSuccessful(string becauseMessage, string input, bool? implicitStringOrBoth, object?[] expectedOutput)
     {
         foreach (var implicitString in ImplicitStringVariants(implicitStringOrBoth))
         {
@@ -216,7 +218,9 @@ public class ParseTest
         var sut = new Parse(new ParseOptions { ImplicitString = implicitString });
 
         //  #   Act.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         Action callingWithNull = () => sut.Line(null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         //  #   Assert.
         callingWithNull.Should().Throw<ArgumentNullException>("Null parameter is not supported.");
@@ -224,14 +228,20 @@ public class ParseTest
 
     #endregion
 
-    private static void AssertExactType(List<object> res, object[] expectedOutput)
+    private static void AssertExactType(List<object?> actualResult, object?[] expectedOutput)
     {
-        for (var i = 0; i < res.Count; ++i)
+        for (var i = 0; i < actualResult.Count; ++i)
         {
-            if (res[i] != null)
+            if (actualResult[i] != null)
             {
-                res[i].GetType().Should().Be(expectedOutput[i].GetType(),
-                    $"The types should be exactly equal. Expected {expectedOutput[i].GetType()}.");
+                object actualRes = actualResult[i]!;
+                var actualType = actualRes.GetType();
+
+                object? expetedOutp = expectedOutput[i];
+                var expectedType = expetedOutp?.GetType();
+
+                actualType.Should().Be(expectedType,
+                    $"The types should be exactly equal. Expected {expectedType}.");
             }
         }
     }
