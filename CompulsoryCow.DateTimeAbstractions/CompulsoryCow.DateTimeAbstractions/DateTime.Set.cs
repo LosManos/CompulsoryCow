@@ -199,7 +199,7 @@ public partial class DateTime
     /// Set to null to have <see cref="DateTime.Now"/> return <see cref="System.DateTime.Now"/>.
     /// </summary>
     /// <param name="nowFunc"></param>
-    public static void SetNow(System.Func<DateTime> nowFunc) => _now = nowFunc;
+    public static void SetNow(System.Func<DateTime> nowFunc) => _now = nowFunc ?? _systemNowFunc;
 
     /// <summary>This method sets the <see cref="Today"/> property.
     /// 
@@ -207,7 +207,7 @@ public partial class DateTime
     /// Set to null to have <see cref="Today"/> return <see cref="System.DateTime.Today"/>.
     /// </summary>
     /// <param name="todayFunc"></param>
-    public static void SetToday(System.Func<DateTime> todayFunc) => _today = todayFunc;
+    public static void SetToday(System.Func<DateTime> todayFunc) => _today = todayFunc ?? _systemTodayFunc;
 
     /// <summary>This method sets the <see cref="DateTime.UtcNow"/> property.
     /// 
@@ -215,7 +215,7 @@ public partial class DateTime
     /// Set to null to have <see cref="UtcNow"/> return <see cref="System.DateTime.UtcNow"/>.
     /// </summary>
     /// <param name="utcNowFunc"></param>
-    public static void SetUtcNow(System.Func<DateTime> utcNowFunc) => _utcNow = utcNowFunc;
+    public static void SetUtcNow(System.Func<DateTime> utcNowFunc) => _utcNow = utcNowFunc ?? _systemUtcNow;
 
     /// <summary>This method sets the <see cref="operator +(DateTime, TimeSpan)"/>.
     /// 

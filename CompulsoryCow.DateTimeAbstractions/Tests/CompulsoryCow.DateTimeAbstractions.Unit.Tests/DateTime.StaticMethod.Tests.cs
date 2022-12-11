@@ -40,7 +40,7 @@ public partial class DateTimeTests
         });
 
         //  #   Assert.
-        res.Should().BeOfType<System.ArgumentNullException>();
+        res.Should().BeOfType<System.NullReferenceException>();
     }
 
     [Fact]
@@ -178,7 +178,7 @@ public partial class DateTimeTests
                 ticks2.HasValue ? new Abstractions.DateTime(ticks2.Value) : null);
         });
 
-        res.Should().BeOfType<System.ArgumentNullException>();
+        res.Should().BeOfType<System.NullReferenceException>();
     }
 
     [Fact]
