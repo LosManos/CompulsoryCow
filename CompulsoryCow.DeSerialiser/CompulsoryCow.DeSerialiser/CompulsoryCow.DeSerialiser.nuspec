@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- Continuously updated elements -->
-        <version>0.2.0</version>
+        <version>0.3.1</version>
         <releaseNotes>
             Moved to a project of its own.
             Renamed DeSerializer to DeSerialiser.
@@ -23,7 +23,7 @@
         <license type="file">license.txt</license>
         <summary>A library for serialising and deserialising dotnet objects.</summary>
         <dependencies>
-            <group targetFramework=".NETStandard2.0">
+            <group targetFramework=".NETStandard2.1">
                 <dependency id="CompulsoryCow.Meta" version="3.0.0" exclude="Build,Analyzers" />
             </group>
         </dependencies>
@@ -31,6 +31,6 @@
     <files>
         <file src="..\..\license.txt" target="" />
         <file src="CHANGELOG.md" target="" />
-        <file src="bin\Release\netstandard2.0\*.dll" target="lib\netstandard2.0" />
+        <file src="bin\Release\netstandard2.1\*.dll" target="lib\netstandard2.1" />
     </files>
 </package>
