@@ -2,11 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- Continuously updated elements -->
-        <version>0.3.1</version>
+        <version>0.3.2</version>
         <releaseNotes>
-            Moved to a project of its own.
-            Renamed DeSerializer to DeSerialiser.
-            Created nuspec file.
+          Update to dotnetstandard2.1
         </releaseNotes>
 
         <!-- Required elements -->
