@@ -28,51 +28,61 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Possibly publish CompulsoryCow.AreEqual
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.AreEqual/CompulsoryCow.AreEqual/CompulsoryCow.AreEqual.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.CharacterSeparated
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.CharacterSeparated/CompulsoryCow.CharacterSeparated/CompulsoryCow.CharacterSeparated.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.DateTimeAbstractions
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.DateTimeAbstractions/CompulsoryCow.DateTimeAbstractions/CompulsoryCow.DateTimeAbstractions.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.AssemblyAbstractions
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.AssemblyAbstractions/CompulsoryCow.AssemblyAbstractions/CompulsoryCow.AssemblyAbstractions.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.DeSerialiser
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.DeSerialiser/CompulsoryCow.DeSerialiser/CompulsoryCow.DeSerialiser.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.IsEqualsImplemented
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.IsEqualsImplemented/CompulsoryCow.IsEqualsImplemented/CompulsoryCow.IsEqualsImplemented.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.Meta
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.Meta/CompulsoryCow.Meta/CompulsoryCow.Meta.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.Permutation
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.Permutation/CompulsoryCow.Permutation/CompulsoryCow.Permutation.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.ReachIn
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.ReachIn/CompulsoryCow.ReachIn/CompulsoryCow.ReachIn.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.StringExtensions
+      if: success() || failure()
       uses: alirezanet/publish-nuget@v3.0.0
       with:
           PROJECT_FILE_PATH: CompulsoryCow.StringExtensions/CompulsoryCow.StringExtensions/CompulsoryCow.StringExtensions.csproj
