@@ -1,4 +1,8 @@
-﻿using System;
+﻿// The whole `ReachPrivateIn` is obsolete. So to get rid of build warnings we mark all tests as obsolete, 
+// until we remove the testee all together.
+#pragma warning disable CS0618 // Type or member is obsolete
+
+using System;
 using CompulsoryCow.ReachIn;
 using Xunit;
 

@@ -73,7 +73,7 @@ public class ReachPrivateIn : DynamicObject
 /// <summary>This class should not be used. Use <see cref="ReachIn"/> instead.
 /// </summary>
 [Obsolete("Use ReachIn instead.", error: false)]
-public class ReachPrivateIn<T> : DynamicObject
+public class ReachPrivateIn<T> : DynamicObject where T : notnull
 {
     private T sut;
 
@@ -84,12 +84,12 @@ public class ReachPrivateIn<T> : DynamicObject
 
     public override bool TryGetMember(GetMemberBinder binder, out object result)
     {
-        var property = 
+        var property =
             Meta.GetPrivateProperty(sut, binder.Name) ??
             Meta.GetPrivateStaticProperty(sut.GetType(), binder.Name);
         if (property != null)
         {
-            result = property.GetValue(sut,null);
+            result = property.GetValue(sut, null);
             return true;
         }
 
@@ -119,12 +119,12 @@ public class ReachPrivateIn<T> : DynamicObject
 
     public override bool TrySetMember(SetMemberBinder binder, object value)
     {
-        var property = 
+        var property =
             Meta.GetPrivateProperty(sut, binder.Name) ??
             Meta.GetPrivateStaticProperty(sut.GetType(), binder.Name);
         if (property != null)
         {
-            property.SetValue(sut, value,null);
+            property.SetValue(sut, value, null);
             return true;
         }
 

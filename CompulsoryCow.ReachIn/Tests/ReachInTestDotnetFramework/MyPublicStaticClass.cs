@@ -1,4 +1,10 @@
-﻿namespace ReachInTestDotnetFramework
+﻿#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable CS0169 // Field is never used
+#pragma warning disable CS0414 // Field is assigned but never used
+#pragma warning disable CS0649 // Field is never assigned to and will always have its default value
+
+namespace ReachInTestDotnetFramework
 {
     public static class MyPublicStaticClass
     {
