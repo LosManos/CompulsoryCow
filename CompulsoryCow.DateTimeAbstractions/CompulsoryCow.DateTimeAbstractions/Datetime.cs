@@ -624,13 +624,15 @@ public partial class DateTime : IDateTime
     {
         // Value is never null for System.DateTime.CompareTo as
         // System.DateTime is not nullable.
-        // With Dotnet3 we can probably replicate that with setting the parameter
-        // to be not nullable but for now we return the same result as 
-        // System.DateTime.CompareTo(object).
+        // Using [DisallowNull] does not solve that we cannot have null as argument
+        // to 100% so we have to code for it.
+        // The solution is to all System.DateTime.ComapreTo(Object).
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         if (value == null)
         {
             return _value.CompareTo(value);
         }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         return _value.CompareTo(value.ToSystemDateTime());
     }
 
@@ -667,13 +669,15 @@ public partial class DateTime : IDateTime
     {
         // Value is never null for System.DateTime.CompareTo as
         // System.DateTime is not nullable.
-        // With Dotnet3 we can probably replicate that with setting the parameter
-        // to be not nullable but for now we return the same result as 
-        // System.DateTime.CompareTo(object).
+        // Using [DisallowNull] does not solve that we cannot have null as argument
+        // to 100% so we have to code for it.
+        // The solution is to all System.DateTime.Equals(Object).
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         if (value == null)
         {
             return _value.Equals(value);
         }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         if (value is DateTime)
         {
