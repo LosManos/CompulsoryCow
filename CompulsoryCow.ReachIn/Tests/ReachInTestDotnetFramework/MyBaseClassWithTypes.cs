@@ -1,4 +1,7 @@
-﻿namespace ReachInTestDotnetFramework
+﻿#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable CS0169 // Field is never used
+
+namespace ReachInTestDotnetFramework
 {
     public class MyBaseClassWithTypes
     {

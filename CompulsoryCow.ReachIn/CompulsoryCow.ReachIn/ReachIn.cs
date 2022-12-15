@@ -7,7 +7,7 @@ namespace CompulsoryCow.ReachIn;
 
 public class ReachIn : DynamicObject
 {
-    private readonly object _obj;
+    private readonly object? _obj;
     private readonly Type _type;
 
     public ReachIn(Type type)
@@ -22,7 +22,7 @@ public class ReachIn : DynamicObject
         _type = obj.GetType();
     }
 
-    public override bool TryGetMember(GetMemberBinder binder, out object result)
+    public override bool TryGetMember(GetMemberBinder binder, out object? result)
     {
         var member = GetMemberOrThrow(_type, binder.Name);
         switch (member.MemberType)
@@ -52,7 +52,7 @@ public class ReachIn : DynamicObject
         }
     }
 
-    public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+    public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object? result)
     {
         var member = GetMemberOrThrow(_type, binder.Name);
         switch (member.MemberType)
