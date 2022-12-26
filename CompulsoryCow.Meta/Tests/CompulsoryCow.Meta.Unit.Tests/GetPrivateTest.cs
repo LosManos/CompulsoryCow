@@ -137,6 +137,9 @@ public class GetPrivateTest
         res.Name.Should().Be("MyProperty");
     }
 
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable CS0169 // Field is never used
     private class MyClass
     {
         private int _myMethodField;
@@ -166,5 +169,9 @@ public class GetPrivateTest
             _myMethodField = value;
         }
     }
+
+#pragma warning restore IDE0051 // Remove unused private members
+#pragma warning restore IDE0044 // Add readonly modifier
+#pragma warning restore CS0169
 
 }
