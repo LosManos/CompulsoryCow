@@ -1,6 +1,12 @@
 CompulsoryCow.IsEqualsImplemented - Release notes
 ====================
 
+### [6.0.0]
+Deprecated GetCallintMethod.
+Deprecated GetProperty.
+Instead use CallerMemberNameAttribute.
+Remove compile warnings.
+
 ### Version 5.0.0
 `public static PropertyInfo[] GetPublicProperties<T>(T theClass)` is exchanged for
 `public static PropertyInfo[] GetPublicProperties(Type type, bool recurse = false)`.
