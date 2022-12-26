@@ -3,6 +3,7 @@ using System;
 using CompulsoryCow;
 using Xunit;
 using FluentAssertions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MetaTest;
 
@@ -10,14 +11,14 @@ public class GetCallingMethodsTests
 {
 	private class MyClass
 	{
-		internal MethodBase MyMethodBase{private set; get;}
+		internal MethodBase? MyMethodBase{private set; get;}
 
 		internal Func<MethodBase> Sut { set; private get; }
 
 		/// <summary>Constructor for injecting the method we test.
 		/// </summary>
 		/// <param name="sut"></param>
-		public MyClass(Func<MethodBase> sut)
+		public MyClass([DisallowNull]Func<MethodBase> sut)
 		{
 			Sut = sut;
 		}

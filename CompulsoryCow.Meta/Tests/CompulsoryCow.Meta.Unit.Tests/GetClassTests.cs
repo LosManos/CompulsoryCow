@@ -114,9 +114,9 @@ public class GetClassTests
         new MetaTestClassesDotnetFramework.MyPublicClass();
         var assembly =
             AppDomain.CurrentDomain.GetAssemblies()
-            .SingleOrDefault(a => a.FullName.StartsWith(AssemblyName));
+            .SingleOrDefault(a => a.FullName?.StartsWith(AssemblyName)?? false);
         assembly.Should().NotBeNull("Intermediary check we have managed to load the assembly(/class).");
-        var @class = assembly.GetType($"{@namespace}.{className}");
+        var @class = assembly?.GetType($"{@namespace}.{className}");
         @class.Should().NotBeNull("Intermediary check we have managed to load the (assembly/)class.");
 
         //  #   Act.
