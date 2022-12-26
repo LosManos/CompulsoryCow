@@ -14,7 +14,7 @@ public partial class VerifyTests
         {
             public char MyChar { get; set; }
 
-            public override bool Equals(object obj)
+            public override bool Equals(object? obj)
             {
                 var @class = obj as InnerClass;
                 return @class != null &&
@@ -41,7 +41,7 @@ public partial class VerifyTests
 
         public InnerClass MyInnerClass { get; set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var type = obj as ClassWithCustomType;
             return type != null &&
@@ -70,7 +70,7 @@ public partial class VerifyTests
     /// </summary>
     internal class ClassWithEqualsDeclaration
     {
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             throw new NotImplementedException("There is no need for implementing anything in this method, it is only for checking if the Equals method exists.");
         }
@@ -129,7 +129,7 @@ public partial class VerifyTests
         public int MyInt { get; set; }
         public string MyString { get; set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var @class = obj as LackingAFieldInEqualsComparisonClass;
             return @class != null &&
@@ -160,7 +160,7 @@ public partial class VerifyTests
         public int MyInt { get; set; }
         public string MyString { get; set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var @class = obj as ProperlyImplementedClass;
             return @class != null &&
