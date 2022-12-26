@@ -7,24 +7,16 @@ namespace CompulsoryCow;
 
 public static class Meta
 {
-    /// <summary>This method returns information about the calling method.
-    /// It walks the stack which might be expensive.
-    /// /// <para>
-    /// Use it like so:
-    ///	void MyFirstMethod(){
-    ///		MySecondMethod();
-    ///	}
-    ///	void MySecondMethod(){
-    ///		var callingMethod = CompulsoryCow.Meta.GetCallingMethod();
-    ///		//	callingMethod.Name is now "MyFirstMethod".
-    ///	}
-    ///	</para>
+    /// <summary>Deprecated.
+    /// Instead use <see cref="System.Runtime.CompilerServices.CallerMemberNameAttribute"/>
+    /// The reason for deprecation is that the implementation walked the stack
+    /// and that only works in a non-optimised complile. Possibly only in debug compilation too.
     /// </summary>
     /// <returns></returns>
-    [Obsolete("This method only works in debug mode. Might be remedied by [MethodImplAttribute(MethodImplOptions.NoInlining)]. This method might be deprecated in the future.", false)]
+    [Obsolete("Deprecated. Instead use CallerMemberNameAttribute", true)]
     public static MethodBase GetCallingMethod()
     {
-        return new System.Diagnostics.StackTrace().GetFrame(2).GetMethod();
+        throw new NotImplementedException("Do not use. Use CallerMemberNameAttribute instead.");
     }
 
     /// <summary>This method retuns the <see cref="System.Type"/> of the class in the parameter.
@@ -79,37 +71,16 @@ public static class Meta
             ?? throw new ArgumentException($"The arguments evaluates to [{createTypeName()} to find the class. Nohting was found.");
     }
 
-    /// <summary>This method returns the MemberInfo of the property we are calling it from.
-    /// Use it like:
-    /// class MyClass{
-    ///     public string Title{
-    ///	      get{
-    ///	          //  Just call with this.GetProperty.
-    ///             Log( "The user just called the property" + this.GetProperty().Name );
-    ///             return _title;
-    ///         }
-    ///     }
-    /// }
+    /// <summary>Deprecated.
+    /// Instead use <see cref="System.Runtime.CompilerServices.CallerMemberNameAttribute"/>
+    /// The reason for deprecation is that the implementation walked the stack
+    /// and that only works in a non-optimised complile. Possibly only in debug compilation too.
     /// </summary>
-    /// <param name="me"></param>
     /// <returns></returns>
+    [Obsolete("Deprecated. Instead use CallerMemberNameAttribute", true)]
     public static MemberInfo GetProperty(this object me)
     {
-        const string Prefix = "get_";
-#pragma warning disable CS0618 // Type or member is obsolete
-        var callingMethod = GetCallingMethod();
-#pragma warning restore CS0618 // Type or member is obsolete
-
-        //	Remove the "get_"-prefix
-        var propertyName = callingMethod.Name.StartsWith(Prefix) ?
-            callingMethod.Name.Substring(Prefix.Length) :
-            callingMethod.Name;
-
-        var property = callingMethod.DeclaringType.GetProperty(
-            propertyName,
-            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-
-        return property;
+        throw new NotImplementedException("Do not use. Use CallerMemberNameAttribute instead.");
     }
 
     /// <summary>This method returns <see cref="FieldInfo"/> for the private field in the parameter.
