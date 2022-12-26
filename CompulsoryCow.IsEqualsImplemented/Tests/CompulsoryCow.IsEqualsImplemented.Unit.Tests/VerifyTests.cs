@@ -31,7 +31,9 @@ public partial class VerifyTests
         var sut = new Verify();
 
         //  #   Act.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         Action comparison = () => { sut.AreAllEqualsImplementedCorrectly(null); };
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         //  #   Assert.
         comparison.Should().Throw<ArgumentException>();
@@ -153,7 +155,7 @@ public partial class VerifyTests
     public void CanUseExplicitlyCreatedObject()
     {
         var sut = new Verify();
-        sut.AddInstantiator<LackingDefaultConstructor>(() => new LackingDefaultConstructor(default, default));
+        sut.AddInstantiator<LackingDefaultConstructor>(() => new LackingDefaultConstructor(default, string.Empty));
 
         //  #   Act.
         var resAllOk = sut.IsEqualsImplementedCorrectly<LackingDefaultConstructor>();

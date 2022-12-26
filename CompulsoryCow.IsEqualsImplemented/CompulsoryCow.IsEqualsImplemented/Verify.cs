@@ -80,7 +80,7 @@ public class Verify
     /// </summary>
     /// <param name="assembly"></param>
     /// <returns></returns>
-    public bool AreAllEqualsImplementedCorrectly(Assembly assembly)
+    public bool AreAllEqualsImplementedCorrectly([DisallowNull]Assembly assembly)
     {
         if (assembly == null) throw new ArgumentNullException(nameof(assembly));
 
