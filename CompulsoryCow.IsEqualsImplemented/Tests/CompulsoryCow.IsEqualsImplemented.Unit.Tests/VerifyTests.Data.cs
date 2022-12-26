@@ -17,7 +17,7 @@ public partial class VerifyTests
             public override bool Equals(object? obj)
             {
                 var @class = obj as InnerClass;
-                return @class != null &&
+                return @class is not null &&
                        MyChar == @class.MyChar;
             }
 
@@ -37,14 +37,14 @@ public partial class VerifyTests
             }
         }
 
-        public string MyString { get; set; }
+        public string? MyString { get; set; }
 
-        public InnerClass MyInnerClass { get; set; }
+        public InnerClass? MyInnerClass { get; set; }
 
         public override bool Equals(object? obj)
         {
             var type = obj as ClassWithCustomType;
-            return type != null &&
+            return type is not null &&
                    MyString == type.MyString &&
                    EqualityComparer<InnerClass>.Default.Equals(MyInnerClass, type.MyInnerClass);
         }
@@ -127,12 +127,12 @@ public partial class VerifyTests
     internal class LackingAFieldInEqualsComparisonClass
     {
         public int MyInt { get; set; }
-        public string MyString { get; set; }
+        public string? MyString { get; set; }
 
         public override bool Equals(object? obj)
         {
             var @class = obj as LackingAFieldInEqualsComparisonClass;
-            return @class != null &&
+            return @class is not null &&
                    MyInt == @class.MyInt;
         }
 
@@ -158,12 +158,12 @@ public partial class VerifyTests
     internal class ProperlyImplementedClass
     {
         public int MyInt { get; set; }
-        public string MyString { get; set; }
+        public string? MyString { get; set; }
 
         public override bool Equals(object? obj)
         {
             var @class = obj as ProperlyImplementedClass;
-            return @class != null &&
+            return @class is not null &&
                    MyInt == @class.MyInt &&
                    MyString == @class.MyString;
         }
