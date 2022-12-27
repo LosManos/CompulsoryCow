@@ -36,7 +36,7 @@ public class ParseTest
     {
         //  #   Arrange.
         var sut = new Parse(
-            new ParseOptions { ImplicitString = false }, 
+            new ParseOptions { ImplicitString = false },
             new WordParser[] { (word, implicitString) =>
                 new WordParseResult(true, "whatever") });
 
@@ -53,7 +53,7 @@ public class ParseTest
         {
             yield return new object[] { false };
             yield return new object[] { true };
-        }                                                      
+        }
     }
 
     [DataTestMethod]
@@ -75,7 +75,7 @@ public class ParseTest
     public void CanUseDefaultWordParsers()
     {
         //  #   Arrange.
-        var sut1 = new Parse(new ParseOptions{ImplicitString = true}, Parse.DefaultWordParserList);
+        var sut1 = new Parse(new ParseOptions { ImplicitString = true }, Parse.DefaultWordParserList);
         var sut2 = new Parse(new ParseOptions { ImplicitString = true });
 
         //  #   Act.
@@ -165,35 +165,58 @@ public class ParseTest
     {
         get
         {
-            yield return new object[] { "No split.", "", false, new object?[] { null } };
-            yield return new object[] { "No split.", "", true, new object[] { string.Empty } };
-            yield return new object[] { "Empty split.", ",", false, new object?[] { null, null } };
-            yield return new object[] { "Empty split.", ",", true, new object[] { string.Empty, string.Empty } };
-            yield return new object?[] { "Without split, int value.", "1", null, new object[] { 1 } };
-            yield return new object[] { "Empty quoted string.", "\"\"", false, new object[] { string.Empty } };
-            yield return new object[] { "Empty quoted string.", "\"\"", true, new object[] { "\"\"" } };
-            yield return new object[] { "String value..", "\"a\"", false, new object[] { "a" } };
-            yield return new object[] { "String value..", "\"a\"", true, new object[] { "\"a\"" } };
-            yield return new object[] { "Longer string value.", "\"abc\",\"def\"", false, new object[] { "abc", "def" } };
-            yield return new object[] { "Longer string value.", "\"abc\",\"def\"", true, new object[] { "\"abc\"", "\"def\"" } };
-            yield return new object?[] { "Double value", "1.0", null, new object[] { 1.0 } };
-            yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", false, new object[] { false, false, false, true, true, true } };
-            yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", true, new object[] { "False", "false", "FALSE", "True", "true", "TRUE" } };
-            yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", false, new object[] { "a,b", "c" } };
-            yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", true, new object[] { "\"a,b\"","\"c\"" } };
-            yield return new object[] { "Different types.", "\"abc\", 1, 1.0, false", false, new object[] { "abc", (int)1, (double)1.0, false } };
-            yield return new object[] { "Different types.", "\"abc\", 1, 1.0,false", true, new object[] { "\"abc\"", (int)1, (double)1.0, "false" } };
-            yield return new object?[] { "Trimming value.", " 1 ", null, new object[] { 1 } };
-            yield return new object[] { "Only trim implicit string.", " \"a\" ", false, new object[] { "a" } };
-            yield return new object[] { "Only trim implicit string.", " \"a\" ", true, new object[] { " \"a\" " } };
-            yield return new object[] { "Space inside string.", " \" a \" ", false, new object[] { " a " } };
-            yield return new object[] { "Space inside string.", " \" a \" ", true, new object[] { " \" a \" " } };
+            yield return new object[] { "No split.", "", false,
+               new (Type?, object?)[] { (null, null) } };
+            yield return new object[] { "No split.", "", true,
+                new (Type, object)[] { (typeof(string), string.Empty )} };
+            yield return new object[] { "Empty split.", ",", false,
+                new (Type?, object?)[] { (null,null), (null,null )} };
+            yield return new object[] { "Empty split.", ",", true,
+                new (Type, object)[] { (typeof(string), string.Empty), (typeof(string), string.Empty) } };
+            yield return new object?[] { "Without split, int value.", "1", null,
+                new (Type, object)[] {(typeof(int), 1) } };
+            yield return new object[] { "Empty quoted string.", "\"\"", false,
+                new (Type, object)[] { (typeof(string),string.Empty) } };
+            yield return new object[] { "Empty quoted string.", "\"\"", true,
+                new (Type, object)[] {(typeof(string), "\"\"" )} };
+            yield return new object[] { "String value..", "\"a\"", false,
+                new (Type,object)[] {(typeof(string), "a") } };
+            yield return new object[] { "String value..", "\"a\"", true,
+                new (Type,object)[] { (typeof(string),"\"a\"") } };
+            yield return new object[] { "Longer string value.", "\"abc\",\"def\"", false,
+                new (Type, object)[] { (typeof(string),"abc"), (typeof(string),"def") } };
+            yield return new object[] { "Longer string value.", "\"abc\",\"def\"", true,
+                new (Type, object)[] { (typeof(string),"\"abc\""),(typeof(string), "\"def\"" )} };
+            yield return new object?[] { "Double value", "1.0", null,
+                new (Type, object)[] {  (typeof(double),(double)1.0 )} };
+            yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", false,
+                new (Type, object)[] {(typeof(bool), false),(typeof(bool), false),(typeof(bool), false),(typeof(bool), true),(typeof(bool), true),(typeof(bool), true )} };
+            yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", true,
+                new (Type,object)[] {(typeof(string), "False"),(typeof(string), "false"),(typeof(string), "FALSE"),(typeof(string), "True"), (typeof(string),"true"),(typeof(string), "TRUE") } };
+            yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", false,
+                new (Type,object)[] { (typeof(string), "a,b"), (typeof(string), "c") } };
+            yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", true,
+                new (Type, object)[] {(typeof(string), "\"a,b\""),(typeof(string),"\"c\"" )} };
+            yield return new object[] { "Different types.", "\"abc\", 1, 1.0, false", false,
+                new (Type, object)[] { (typeof(string), "abc"), (typeof(int),1), (typeof(double),1.0),(typeof(bool), false )} };
+            yield return new object[] { "Different types.", "\"abc\", 1, 1.0,false", true,
+                new (Type, object)[] { (typeof(string), "\"abc\""),( typeof(int), 1), (typeof(double),1.0),(typeof(string), "false" )} };
+            yield return new object?[] { "Trimming value.", " 1 ", null,
+                new (Type,object)[] {(typeof(int), 1 )} };
+            yield return new object[] { "Only trim implicit string.", " \"a\" ", false,
+                new (Type,object)[] { (typeof(string), "a") } };
+            yield return new object[] { "Only trim implicit string.", " \"a\" ", true,
+                new (Type,object)[] {(typeof(string), " \"a\" ") } };
+            yield return new object[] { "Space inside string.", " \" a \" ", false,
+                new (Type,object)[] {(typeof(string), " a ") } };
+            yield return new object[] { "Space inside string.", " \" a \" ", true,
+                new (Type,object)[] { (typeof(string)," \" a \" " )} };
         }
     }
 
     [DataTestMethod]
     [DynamicData(nameof(ParseLineData))]
-    public void LineSuccessful(string becauseMessage, string input, bool? implicitStringOrBoth, object?[] expectedOutput)
+    public void LineSuccessful(string becauseMessage, string input, bool? implicitStringOrBoth, (Type? expType, object? expValue)[] expectedOutput)
     {
         foreach (var implicitString in ImplicitStringVariants(implicitStringOrBoth))
         {
@@ -204,7 +227,8 @@ public class ParseTest
             var res = sut.Line(input).ToList();
 
             //  #   Assert.
-            res.Should().BeEquivalentTo(expectedOutput, $"{becauseMessage}, [implicitStringOrBoth:{implicitStringOrBoth}].");
+            var expectedValues = expectedOutput.Select(eo => eo.expValue);
+            res.Should().BeEquivalentTo(expectedValues, $"{becauseMessage}, [implicitStringOrBoth:{implicitStringOrBoth}].");
             AssertExactType(res, expectedOutput);
         }
     }
@@ -228,7 +252,7 @@ public class ParseTest
 
     #endregion
 
-    private static void AssertExactType(List<object?> actualResult, object?[] expectedOutput)
+    private static void AssertExactType(List<object?> actualResult, (Type? expType, object? expValue)[] expectedOutput)
     {
         for (var i = 0; i < actualResult.Count; ++i)
         {
@@ -237,8 +261,7 @@ public class ParseTest
                 object actualRes = actualResult[i]!;
                 var actualType = actualRes.GetType();
 
-                object? expetedOutp = expectedOutput[i];
-                var expectedType = expetedOutp?.GetType();
+                var expectedType = expectedOutput[i].expType;
 
                 actualType.Should().Be(expectedType,
                     $"The types should be exactly equal. Expected {expectedType}.");

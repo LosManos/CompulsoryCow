@@ -27,7 +27,7 @@ public partial class DateTimeTests
 
     [Theory]
     [InlineData(null, 1L)]
-    [InlineData(1, null)]
+    [InlineData(1L, null)]
     [InlineData(null, null)]
     public void CompareShouldThrowNullArgumentExceptionForNullParameters(long? ticks1, long? ticks2)
     {
