@@ -194,10 +194,10 @@ public partial class DateTimeTests : DateTimeTestsBase
     #region Operator ==(DateTime d1, DateTime d2) tests.
 
     [Theory]
-    [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, true, "Should be equal.")]
-    [InlineData(13, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, false, "Ticks differ.")]
-    [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Local, true, "Kind differ but is not considered.")]
-    [InlineData(null, null, 12, System.DateTimeKind.Utc, false, "One is null")]
+    [InlineData(12L, System.DateTimeKind.Utc, 12L, System.DateTimeKind.Utc, true, "Should be equal.")]
+    [InlineData(13L, System.DateTimeKind.Utc, 12L, System.DateTimeKind.Utc, false, "Ticks differ.")]
+    [InlineData(12L, System.DateTimeKind.Utc, 12L, System.DateTimeKind.Local, true, "Kind differ but is not considered.")]
+    [InlineData(null, null, 12L, System.DateTimeKind.Utc, false, "One is null")]
     [InlineData(null, null, null, null, true, "Both are null.")]
     public void EqualsOperator_MimicSystem(
         long? ticks1, System.DateTimeKind? kind1,
@@ -251,10 +251,10 @@ public partial class DateTimeTests : DateTimeTestsBase
     #region Operator !=(DateTime d1, DateTime d2) tests.
 
     [Theory]
-    [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, false, "Should be equal.")]
-    [InlineData(13, System.DateTimeKind.Utc, 12, System.DateTimeKind.Utc, true, "Ticks differ.")]
-    [InlineData(12, System.DateTimeKind.Utc, 12, System.DateTimeKind.Local, false, "Kind differ but is not considered.")]
-    [InlineData(null, null, 12, System.DateTimeKind.Utc, true, "One is null")]
+    [InlineData(12L, System.DateTimeKind.Utc, 12L, System.DateTimeKind.Utc, false, "Should be equal.")]
+    [InlineData(13L, System.DateTimeKind.Utc, 12L, System.DateTimeKind.Utc, true, "Ticks differ.")]
+    [InlineData(12L, System.DateTimeKind.Utc, 12L, System.DateTimeKind.Local, false, "Kind differ but is not considered.")]
+    [InlineData(null, null, 12L, System.DateTimeKind.Utc, true, "One is null")]
     [InlineData(null, null, null, null, false, "Both are null.")]
     public void NotEqualsOperator_MimicSystem(
         long? ticks1, System.DateTimeKind? kind1,
@@ -330,8 +330,8 @@ public partial class DateTimeTests : DateTimeTestsBase
 
     [Theory]
     [InlineData(null, null)]
-    [InlineData(1, null)]
-    [InlineData(null, 1)]
+    [InlineData(1L, null)]
+    [InlineData(null, 1L)]
     public void EarlierThanOperator_ThrowForNullValues(long? ticks1, long? ticks2)
     {
         var anyKind = System.DateTimeKind.Utc;
@@ -407,8 +407,8 @@ public partial class DateTimeTests : DateTimeTestsBase
 
     [Theory]
     [InlineData(null, null)]
-    [InlineData(1, null)]
-    [InlineData(null, 1)]
+    [InlineData(1L, null)]
+    [InlineData(null, 1L)]
     public void LaterThanOperator_ThrowForNullValues(long? ticks1, long? ticks2)
     {
         var anyKind = System.DateTimeKind.Utc;
@@ -484,8 +484,8 @@ public partial class DateTimeTests : DateTimeTestsBase
 
     [Theory]
     [InlineData(null, null)]
-    [InlineData(1, null)]
-    [InlineData(null, 1)]
+    [InlineData(1L, null)]
+    [InlineData(null, 1L)]
     public void EarlierThanOrEqualOperator_ThrowForNullValues(long? ticks1, long? ticks2)
     {
         var anyKind = System.DateTimeKind.Utc;
@@ -560,8 +560,8 @@ public partial class DateTimeTests : DateTimeTestsBase
 
     [Theory]
     [InlineData(null, null)]
-    [InlineData(1, null)]
-    [InlineData(null, 1)]
+    [InlineData(1L, null)]
+    [InlineData(null, 1L)]
     public void LaterThanOrEqualOperator_ThrowForNullValues(long? ticks1, long? ticks2)
     {
         var anyKind = System.DateTimeKind.Utc;
