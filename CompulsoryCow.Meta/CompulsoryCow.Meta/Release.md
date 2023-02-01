@@ -2,12 +2,13 @@ CompulsoryCow.IsEqualsImplemented - Release notes
 ====================
 
 ### [6.1.0]
-Add Meta.`GetClassesWithAttribute<TAttribute>(AppDomain appDomain) where TAttribute : Attribute` method.
+Add `Meta.GetClassesWithAttribute<TAttribute>(AppDomain appDomain) where TAttribute : Attribute` method.
+Add `Meta.GetDefaultConstructor<TClass>()` method.
 
 ### [6.0.0]
-Deprecated GetCallintMethod.
-Deprecated GetProperty.
-Instead use CallerMemberNameAttribute.
+Deprecated `GetCallintMethod`.
+Deprecated `GetProperty`.
+Instead use `CallerMemberNameAttribute`.
 Remove compile warnings.
 
 ### Version 5.0.0
