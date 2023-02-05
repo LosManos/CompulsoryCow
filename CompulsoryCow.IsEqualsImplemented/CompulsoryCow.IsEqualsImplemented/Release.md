@@ -1,6 +1,9 @@
 CompulsoryCow.IsEqualsImplemented - Release notes
 ====================
 
+## [0.4.2]
+Use Meta v6.
+
 ## [0.4.1]
 `AreAllEqualsImplementedCorrectly` returns empty string, instead of null, when ResultMessage is empty.
 `IsEqualsImplementedCorrectly` returns empty string, instead of null, when ResultMessage is empty.
