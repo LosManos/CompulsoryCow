@@ -231,7 +231,7 @@ public class Verify
         var o2 = _instantiateObjectActions.ContainsKey(type) ?
             _instantiateObjectActions[type]() :
             Activator.CreateInstance(type);
-        foreach (var differingProperty in Meta.GetPublicProperties(o2))
+        foreach (var differingProperty in Meta.GetPublicProperties(o2.GetType()))
         {
             SetAllPropertiesToEqualValues(o2);
             SetPropertyToDifferingValue(o2, differingProperty);
@@ -250,7 +250,7 @@ public class Verify
 
     private void SetAllPropertiesToEqualValues<T>(T o1) where T : new()
     {
-        foreach (var property in Meta.GetPublicProperties(o1))
+        foreach (var property in Meta.GetPublicProperties(o1.GetType()))
         {
             SetPropertyToValue(o1, property, _equalValues);
         }
