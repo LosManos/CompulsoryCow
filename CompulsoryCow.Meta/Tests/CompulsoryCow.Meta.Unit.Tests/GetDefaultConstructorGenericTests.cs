@@ -4,7 +4,7 @@ using Xunit;
 
 namespace MetaTest;
 
-public class GetConstructorTests
+public class GetDefaultConstructorGenericTests
 {
     [Fact]
     public void GetDefaultConstructor_SHOULD_return_constructor_information_WHEN_there_is_a_default_constructor()
