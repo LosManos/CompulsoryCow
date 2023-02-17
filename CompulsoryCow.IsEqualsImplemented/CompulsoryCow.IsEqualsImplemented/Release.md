@@ -1,6 +1,9 @@
 CompulsoryCow.IsEqualsImplemented - Release notes
 ====================
 
+## [0.5.0]
+`Constructor.IsDefaultImplemented` returns whether a class contains a default constructor.
+
 ## [0.4.2]
 Use Meta v6.
 

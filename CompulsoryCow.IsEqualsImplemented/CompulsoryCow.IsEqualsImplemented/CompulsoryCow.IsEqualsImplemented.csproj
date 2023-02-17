@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-    <AssemblyVersion>0.4.1</AssemblyVersion>
-    <FileVersion>0.4.1</FileVersion>
-    <Version>0.4.1</Version>
+    <AssemblyVersion>0.5.0</AssemblyVersion>
+    <FileVersion>0.5.0</FileVersion>
+    <Version>0.5.0</Version>
 
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -21,7 +21,10 @@
     <PackageProjectUrl>https://github.com/LosManos/CompulsoryCow</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LosManos/CompulsoryCow</RepositoryUrl>
 
-    <Description>Methods for testing if `Equals` has been implemented and has done so correctly.</Description>
+    <Description>
+      Methods for testing if `Equals` has been implemented and has done so correctly.
+      Methods for testing if all classes with a (custom) attribute has default constructor. Use for making sure all DTOs are serialisable through standard dotnet method.
+    </Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CompulsoryCow.Meta" Version="6.0.0" />
+    <PackageReference Include="CompulsoryCow.Meta" Version="6.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
   </ItemGroup>
 

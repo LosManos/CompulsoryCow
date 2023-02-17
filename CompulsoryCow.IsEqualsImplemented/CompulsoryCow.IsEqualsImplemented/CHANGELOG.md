@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [not released]
 Refactoring to get rid of compiler warnings.
 
+## [0.5.0]
+`Constructor.IsDefaultImplemented` returns whether a class contains a default constructor.
+
 ## [0.4.1]
 `AreAllEqualsImplementedCorrectly` returns empty string, instead of null, when ResultMessage is empty.
 `IsEqualsImplementedCorrectly` returns empty string, instead of null, when ResultMessage is empty.

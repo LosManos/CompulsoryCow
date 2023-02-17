@@ -128,6 +128,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 		.github\workflows\push.yml = .github\workflows\push.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.Constructor.Unit.Tests", "CompulsoryCow.IsEqualsImplemented\Tests\CompulsoryCow.Constructor.Unit.Tests\CompulsoryCow.Constructor.Unit.Tests.csproj", "{850349BC-2943-4592-9C5E-BAA89E8DFBD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -246,6 +248,10 @@ Global
 		{B72B0C3F-7704-4477-8013-987F279837BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B72B0C3F-7704-4477-8013-987F279837BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B72B0C3F-7704-4477-8013-987F279837BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -291,6 +297,7 @@ Global
 		{CD6F1BD3-CC57-46D0-8009-936FF852605B} = {4838204B-99B4-4019-9398-FBE48FAE42C8}
 		{B72B0C3F-7704-4477-8013-987F279837BC} = {00BB8B93-6104-45C8-81EA-D2CB177F1259}
 		{8E17479C-722D-4F4C-A380-F55311FE843F} = {3EAE5209-1053-42F0-9AB7-FDEE1D9405C8}
+		{850349BC-2943-4592-9C5E-BAA89E8DFBD9} = {60D76C33-015C-4E05-AA5A-7D25ECB67030}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C034792-6F0A-4A9F-8155-2858283515F7}
