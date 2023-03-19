@@ -60,7 +60,7 @@ public class ParseTest
     public void CanSetOptions(bool implicitString)
     {
         //  #   Arrange.
-        var options = new ParseOptions { ImplicitString = true };
+        var options = new ParseOptions { ImplicitString = implicitString };
         var sut = new Parse(options);
 
         //  #   Act.
