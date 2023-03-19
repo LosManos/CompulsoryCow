@@ -1,19 +1,18 @@
 using CompulsoryCow.CharacterSeparated;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 using WordParseResult = System.Tuple<bool, object?>;
 
 namespace CharacterSeparatedTest;
 
 using WordParser = Func<string, bool, WordParseResult>;
 
-[TestClass]
 public class ParseTest
 {
-    [TestMethod]
+    [Fact]
     public void CanChangeWordParsers()
     {
         //  #   Arrange.
@@ -31,7 +30,7 @@ public class ParseTest
         res.Single().Should().Be("match", "We parse as simple as can be, just a constant.");
     }
 
-    [TestMethod]
+    [Fact]
     public void CanSetWordParsers()
     {
         //  #   Arrange.
@@ -47,7 +46,7 @@ public class ParseTest
         res.Single().Should().Be("whatever", "We parse as simple as can be, just a constant.");
     }
 
-    private static IEnumerable<object[]> CanSetOptionsData
+    public static IEnumerable<object[]> CanSetOptionsData
     {
         get
         {
@@ -56,8 +55,8 @@ public class ParseTest
         }
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(CanSetOptionsData))]
+    [Theory]
+    [MemberData(nameof(CanSetOptionsData))]
     public void CanSetOptions(bool implicitString)
     {
         //  #   Arrange.
@@ -71,7 +70,7 @@ public class ParseTest
         options.Should().Be(res);
     }
 
-    [TestMethod]
+    [Fact]
     public void CanUseDefaultWordParsers()
     {
         //  #   Arrange.
@@ -90,7 +89,7 @@ public class ParseTest
 
     #region StringLine tests.
 
-    private static IEnumerable<object?[]> ParseStringLineData
+    public static IEnumerable<object?[]> ParseStringLineData
     {
         get
         {
@@ -108,8 +107,8 @@ public class ParseTest
         }
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(ParseStringLineData))]
+    [Theory]
+    [MemberData(nameof(ParseStringLineData))]
     public void StringLine(string becauseMessage, string inputString, bool? implicitStringOrBoth, string[] expectedOutput)
     {
         var implicitStrings = ImplicitStringVariants(implicitStringOrBoth);
@@ -140,9 +139,9 @@ public class ParseTest
         }
     }
 
-    [TestMethod]
-    [DataRow(false)]
-    [DataRow(true)]
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     public void StringLine_NullArgument_ThrowNullArgumentException(bool implicitString)
     {
         //  #   Arrange.
@@ -161,7 +160,7 @@ public class ParseTest
 
     #region Line tests.
 
-    private static IEnumerable<object?[]> ParseLineData
+    public static IEnumerable<object?[]> ParseLineData
     {
         get
         {
@@ -192,15 +191,15 @@ public class ParseTest
             yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", false,
                 new (Type, object)[] {(typeof(bool), false),(typeof(bool), false),(typeof(bool), false),(typeof(bool), true),(typeof(bool), true),(typeof(bool), true )} };
             yield return new object[] { "All variants of bool.", "False,false,FALSE,True,true,TRUE", true,
-                new (Type,object)[] {(typeof(string), "False"),(typeof(string), "false"),(typeof(string), "FALSE"),(typeof(string), "True"), (typeof(string),"true"),(typeof(string), "TRUE") } };
+                new (Type,object)[] {(typeof(bool), false),(typeof(bool), false),(typeof(bool), false),(typeof(bool), true), (typeof(bool), true),(typeof(bool), true) } };
             yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", false,
                 new (Type,object)[] { (typeof(string), "a,b"), (typeof(string), "c") } };
             yield return new object[] { "With quoted separator in string.", "\"a,b\",\"c\"", true,
                 new (Type, object)[] {(typeof(string), "\"a,b\""),(typeof(string),"\"c\"" )} };
             yield return new object[] { "Different types.", "\"abc\", 1, 1.0, false", false,
                 new (Type, object)[] { (typeof(string), "abc"), (typeof(int),1), (typeof(double),1.0),(typeof(bool), false )} };
-            yield return new object[] { "Different types.", "\"abc\", 1, 1.0,false", true,
-                new (Type, object)[] { (typeof(string), "\"abc\""),( typeof(int), 1), (typeof(double),1.0),(typeof(string), "false" )} };
+            yield return new object[] { "Different types.", "\"abc\", 1, 1.0, false", true,
+                new (Type, object)[] { (typeof(string), "\"abc\""),( typeof(int), 1), (typeof(double),1.0),(typeof(bool), false )} };
             yield return new object?[] { "Trimming value.", " 1 ", null,
                 new (Type,object)[] {(typeof(int), 1 )} };
             yield return new object[] { "Only trim implicit string.", " \"a\" ", false,
@@ -214,8 +213,8 @@ public class ParseTest
         }
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(ParseLineData))]
+    [Theory]
+    [MemberData(nameof(ParseLineData))]
     public void LineSuccessful(string becauseMessage, string input, bool? implicitStringOrBoth, (Type? expType, object? expValue)[] expectedOutput)
     {
         foreach (var implicitString in ImplicitStringVariants(implicitStringOrBoth))
@@ -233,9 +232,9 @@ public class ParseTest
         }
     }
 
-    [TestMethod]
-    [DataRow(false)]
-    [DataRow(true)]
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     public void Line_NullArgument_ThrowNullArgumentException(bool implicitString)
     {
         //  #   Arrange.

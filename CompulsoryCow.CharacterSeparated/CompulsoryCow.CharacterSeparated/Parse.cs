@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using WordParseResult = System.Tuple<bool, object?>;
 using System.Linq;
+using System.Globalization;
 
 namespace CompulsoryCow.CharacterSeparated;
 
@@ -31,21 +32,20 @@ public class Parse : IParse
     /// </summary>
     private static readonly WordParser _defaultBoolParser = (word, implicitString) =>
     {
-        if (implicitString == false)
+        var w = implicitString ? word.Trim() : word;
+        if (bool.TryParse(w, out bool boolResult))
         {
-            if (bool.TryParse(word, out bool boolResult))
-            {
-                return ParseResultParsed(boolResult);
-            }
+            return ParseResultParsed(boolResult);
         }
         return ParseResultNotParsed;
     };
 
-    /// <summary>This method returns a double if teh word can be parsed as  such.
+    /// <summary>This method returns a double if the word can be parsed as  such.
     /// </summary>
     private static readonly WordParser _defaultDoubleParser = (word, implicitString) =>
     {
-        if (double.TryParse(word, out double doubleResult))
+        var w = implicitString ? word.Trim(): word;
+        if (double.TryParse(w, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double doubleResult))
         {
             return ParseResultParsed(doubleResult);
         }
