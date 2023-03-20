@@ -80,7 +80,7 @@ public class Verify
     /// </summary>
     /// <param name="assembly"></param>
     /// <returns></returns>
-    public bool AreAllEqualsImplementedCorrectly([DisallowNull]Assembly assembly)
+    public bool AreAllEqualsImplementedCorrectly([DisallowNull] Assembly assembly)
     {
         if (assembly == null) throw new ArgumentNullException(nameof(assembly));
 
@@ -221,14 +221,12 @@ public class Verify
 
     private bool IsEqualsImplementedCorrectly(Type type)
     {
-        // var o1 = new T();
-        var o1 = _instantiateObjectActions.ContainsKey(type) ?
+        object o1 = _instantiateObjectActions.ContainsKey(type) ?
             _instantiateObjectActions[type]() :
             Activator.CreateInstance(type);
         SetAllPropertiesToEqualValues(o1);
 
-        // var o2 = new T();
-        var o2 = _instantiateObjectActions.ContainsKey(type) ?
+        object o2 = _instantiateObjectActions.ContainsKey(type) ?
             _instantiateObjectActions[type]() :
             Activator.CreateInstance(type);
         foreach (var differingProperty in Meta.GetPublicProperties(o2.GetType()))
@@ -248,7 +246,7 @@ public class Verify
         return true;
     }
 
-    private void SetAllPropertiesToEqualValues<T>(T o1) where T : new()
+    private void SetAllPropertiesToEqualValues<T>([NotNull] T o1) where T : notnull, new()
     {
         foreach (var property in Meta.GetPublicProperties(o1.GetType()))
         {
