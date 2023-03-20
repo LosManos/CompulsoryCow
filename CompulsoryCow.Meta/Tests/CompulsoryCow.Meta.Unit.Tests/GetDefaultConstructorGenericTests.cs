@@ -9,15 +9,15 @@ public class GetDefaultConstructorGenericTests
     [Fact]
     public void GetDefaultConstructor_SHOULD_return_constructor_information_WHEN_there_is_a_default_constructor()
     {
-        var res = Meta.GetDefaultConstructor<ClassWithImplicitDefaultConstructor>();
+        var res = Meta.GetDefaultConstructor<ClassWithImplicitDefaultConstructor>()!;
         res.Name.Should().Be(".ctor");
         res.GetParameters().Should().BeEmpty();
 
-        res = Meta.GetDefaultConstructor<ClassWithExplicitDefaultConstructor>();
+        res = Meta.GetDefaultConstructor<ClassWithExplicitDefaultConstructor>()!;
         res.Name.Should().Be(".ctor");
         res.GetParameters().Should().BeEmpty();
 
-        res = Meta.GetDefaultConstructor<ClassWithExplicitDefaultConstructorAmongstOther>();
+        res = Meta.GetDefaultConstructor<ClassWithExplicitDefaultConstructorAmongstOther>()!;
         res.Name.Should().Be(".ctor");
         res.GetParameters().Should().BeEmpty();
     }
