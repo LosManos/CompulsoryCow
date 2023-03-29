@@ -128,7 +128,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 		.github\workflows\push.yml = .github\workflows\push.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.Constructor.Unit.Tests", "CompulsoryCow.IsEqualsImplemented\Tests\CompulsoryCow.Constructor.Unit.Tests\CompulsoryCow.Constructor.Unit.Tests.csproj", "{850349BC-2943-4592-9C5E-BAA89E8DFBD9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompulsoryCow.IsImplemented", "CompulsoryCow.IsImplemented", "{D00A292F-D518-4312-8A01-D112CA6C49D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.IsImplemented", "CompulsoryCow.IsImplemented\CompulsoryCow.IsImplemented\CompulsoryCow.IsImplemented.csproj", "{03465A88-DF0C-4485-80D0-65CD8443076B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7B7C2825-728D-4035-8EA0-018CA7DED274}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.IsEqualsImplemented.Unit.Tests", "CompulsoryCow.IsImplemented\Tests\CompulsoryCow.IsEqualsImplemented.Unit.Tests\CompulsoryCow.IsEqualsImplemented.Unit.Tests.csproj", "{5D2422B6-3128-491B-990C-B84FC90FC79F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsEqualsImplementedAssemblyNoDefinitionAtAll", "CompulsoryCow.IsImplemented\Tests\IsEqualsImplementedAssemblyNoDefinitionAtAll\IsEqualsImplementedAssemblyNoDefinitionAtAll.csproj", "{F23C0978-95CA-45B1-AB0C-8D722E8381A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsEqualsImplementedAssemblyNotOk", "CompulsoryCow.IsImplemented\Tests\IsEqualsImplementedAssemblyNotOk\IsEqualsImplementedAssemblyNotOk.csproj", "{9F896B16-164A-421F-8BA5-36B028BE6824}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsEqualsImplementedAssemblyOk", "CompulsoryCow.IsImplemented\Tests\IsEqualsImplementedAssemblyOk\IsEqualsImplementedAssemblyOk.csproj", "{D2C0EB0F-A1DC-46EE-83D6-144C8D7E34F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompulsoryCow.IsImplemented.Constructor.Unit.Tests", "CompulsoryCow.IsImplemented\Tests\Constructor.Unit.Tests\CompulsoryCow.IsImplemented.Constructor.Unit.Tests.csproj", "{69623FF4-E644-4B8D-A611-BBE456040621}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -248,10 +262,30 @@ Global
 		{B72B0C3F-7704-4477-8013-987F279837BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B72B0C3F-7704-4477-8013-987F279837BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B72B0C3F-7704-4477-8013-987F279837BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03465A88-DF0C-4485-80D0-65CD8443076B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03465A88-DF0C-4485-80D0-65CD8443076B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03465A88-DF0C-4485-80D0-65CD8443076B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03465A88-DF0C-4485-80D0-65CD8443076B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2422B6-3128-491B-990C-B84FC90FC79F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2422B6-3128-491B-990C-B84FC90FC79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2422B6-3128-491B-990C-B84FC90FC79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2422B6-3128-491B-990C-B84FC90FC79F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F23C0978-95CA-45B1-AB0C-8D722E8381A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F23C0978-95CA-45B1-AB0C-8D722E8381A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F23C0978-95CA-45B1-AB0C-8D722E8381A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F23C0978-95CA-45B1-AB0C-8D722E8381A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F896B16-164A-421F-8BA5-36B028BE6824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F896B16-164A-421F-8BA5-36B028BE6824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F896B16-164A-421F-8BA5-36B028BE6824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F896B16-164A-421F-8BA5-36B028BE6824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C0EB0F-A1DC-46EE-83D6-144C8D7E34F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C0EB0F-A1DC-46EE-83D6-144C8D7E34F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C0EB0F-A1DC-46EE-83D6-144C8D7E34F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C0EB0F-A1DC-46EE-83D6-144C8D7E34F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69623FF4-E644-4B8D-A611-BBE456040621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69623FF4-E644-4B8D-A611-BBE456040621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69623FF4-E644-4B8D-A611-BBE456040621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69623FF4-E644-4B8D-A611-BBE456040621}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -297,7 +331,13 @@ Global
 		{CD6F1BD3-CC57-46D0-8009-936FF852605B} = {4838204B-99B4-4019-9398-FBE48FAE42C8}
 		{B72B0C3F-7704-4477-8013-987F279837BC} = {00BB8B93-6104-45C8-81EA-D2CB177F1259}
 		{8E17479C-722D-4F4C-A380-F55311FE843F} = {3EAE5209-1053-42F0-9AB7-FDEE1D9405C8}
-		{850349BC-2943-4592-9C5E-BAA89E8DFBD9} = {60D76C33-015C-4E05-AA5A-7D25ECB67030}
+		{03465A88-DF0C-4485-80D0-65CD8443076B} = {D00A292F-D518-4312-8A01-D112CA6C49D4}
+		{7B7C2825-728D-4035-8EA0-018CA7DED274} = {D00A292F-D518-4312-8A01-D112CA6C49D4}
+		{5D2422B6-3128-491B-990C-B84FC90FC79F} = {7B7C2825-728D-4035-8EA0-018CA7DED274}
+		{F23C0978-95CA-45B1-AB0C-8D722E8381A9} = {7B7C2825-728D-4035-8EA0-018CA7DED274}
+		{9F896B16-164A-421F-8BA5-36B028BE6824} = {7B7C2825-728D-4035-8EA0-018CA7DED274}
+		{D2C0EB0F-A1DC-46EE-83D6-144C8D7E34F6} = {7B7C2825-728D-4035-8EA0-018CA7DED274}
+		{69623FF4-E644-4B8D-A611-BBE456040621} = {7B7C2825-728D-4035-8EA0-018CA7DED274}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C034792-6F0A-4A9F-8155-2858283515F7}

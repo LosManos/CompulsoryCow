@@ -4,17 +4,17 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-    <AssemblyVersion>0.6.0</AssemblyVersion>
-    <FileVersion>0.6.0</FileVersion>
-    <Version>0.6.0</Version>
+    <AssemblyVersion>0.7.0</AssemblyVersion>
+    <FileVersion>0.7.0</FileVersion>
+    <Version>0.7.0</Version>
 
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     
     <Authors>LosManos</Authors>
     <Company>LosManos</Company>
-    <Product>CompulsoryCow.IsEqualsImplemented</Product>
-    <Title>CompulsoryCow.IsEqualsImplemented</Title>
+    <Product>CompulsoryCow.IsImplemented</Product>
+    <Title>CompulsoryCow.IsImplemented</Title>
     <Copyright>LGPLv3 + NoEvil</Copyright>
 
     <PackageLicenseFile>license.txt</PackageLicenseFile>
