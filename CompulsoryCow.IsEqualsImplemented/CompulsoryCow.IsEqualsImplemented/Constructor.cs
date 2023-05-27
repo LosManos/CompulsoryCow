@@ -5,6 +5,7 @@ namespace CompulsoryCow.IsEqualsImplemented;
 
 /// <summary>This class contains constructor related logic.
 /// </summary>
+[Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
 public class Constructor
 {
     /// <summary>Returns true if the  <paramref name="appDomain"/> contains classes 
@@ -21,6 +22,7 @@ public class Constructor
     /// <typeparam name="TAttribute"></typeparam>
     /// <param name="appDomain"></param>
     /// <returns></returns>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public bool IsDefaultImplemented<TAttribute>(AppDomain appDomain) where TAttribute : Attribute
     {
         var classTypes = Meta.GetClassesWithAttribute<TAttribute>(appDomain);
@@ -35,6 +37,7 @@ public class Constructor
     /// </summary>
     /// <typeparam name="TClass"></typeparam>
     /// <returns></returns>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public bool IsDefaultImplemented<TClass>() where TClass : new()
     {
         // Calling this method in runtime is not necessary, as the compiler will break if `TClass` does not contain an accessible default constructor.
@@ -49,6 +52,7 @@ public class Constructor
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public bool IsDefaultImplemented(Type type)
     {
         var res = Meta.GetDefaultConstructor(type);
