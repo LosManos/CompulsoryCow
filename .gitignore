@@ -7,6 +7,9 @@ obj
 *.user
 .vs
 
+# Rider
+.idea
+
 # mstest test results
 TestResults
 *.suo
