@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace CompulsoryCow.IsEqualsImplemented;
 
+[Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
 public class Verify
 {
     private readonly IList<Type> _ignoredClasses = new List<Type>();
@@ -35,18 +36,21 @@ public class Verify
     /// <summary>This property contains the Type of the class that does not have Equals implemented correctly.
     /// Updated every time <see cref="AreAllEqualsImplementedCorrectly(Assembly){T}"/> is called.
     /// </summary>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public Type? ResultClass { get; private set; }
 
     /// <summary>This property contains a friendly message about which property was not used in the Equals comparison. 
     /// Updated every time <see cref="IsEqualsImplementedCorrectly{T}"/> or <see cref="AreAllEqualsImplementedCorrectly(Assembly)"/> is called.
     /// If last check returned true this property is null.
     /// </summary>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public string ResultMessage { get; private set; } = "";
 
     /// <summary>This property contains the <see cref="PropertyInfo"/> for the property that was not in the Equals comparison.
     /// Updated every time <see cref="IsEqualsImplementedCorrectly{T}"/> is called.
     /// If last check returned true this property is null.
     /// </summary>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public PropertyInfo? ResultProperty { get; private set; }
 
     /// <summary>This method is used for verifying classes 
@@ -57,6 +61,7 @@ public class Verify
     /// <example>
     /// verify.AddInstantiator(() => new Customer("myName"))
     /// </example>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public void AddInstantiator<T>(Func<object> instantiateObjectAction)
     {
         _instantiateObjectActions.Add(
@@ -67,6 +72,7 @@ public class Verify
     /// <summary>This method is used for exclude classes from comparison test.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public void AddIgnoredClass<T>()
     {
         _ignoredClasses.Add(typeof(T));
@@ -80,6 +86,7 @@ public class Verify
     /// </summary>
     /// <param name="assembly"></param>
     /// <returns></returns>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public bool AreAllEqualsImplementedCorrectly([DisallowNull] Assembly assembly)
     {
         if (assembly == null) throw new ArgumentNullException(nameof(assembly));
@@ -148,6 +155,7 @@ public class Verify
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public bool HasEqualsBeenDeclared<T>()
     {
         return HasEqualsBeenDeclared(typeof(T));
@@ -175,6 +183,7 @@ public class Verify
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public bool IsEqualsImplementedCorrectly<T>()
     {
         return IsEqualsImplementedCorrectly(typeof(T));
@@ -185,6 +194,7 @@ public class Verify
     /// <typeparam name="T"></typeparam>
     /// <param name="equalValue"></param>
     /// <param name="differingValue"></param>
+    [Obsolete("Deprecated. Use CompulsoryCow.IsImplemented instead.", false)]
     public void SetComparisonValues<T>([DisallowNull] T equalValue, [DisallowNull] T differingValue)
     {
         _equalValues.Add(typeof(T), equalValue);

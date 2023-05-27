@@ -4,14 +4,15 @@
         <!-- Continuously updated elements -->
         <version>0.5.0</version>
         <releaseNotes>
-          Added methods `Constructor.IsDefaultImplemented` to verify all classes of certain type of decorated have a default constructor.
+            Deprecated. Use CompulsoryCow.IsImplemented instead.
         </releaseNotes>
 
         <!-- Required elements -->
         <id>CompulsoryCow.IsEqualsImplemented</id>
         <description>
-          Methods for testing if `Equals` has been implemented and has done so correctly.
-          Methods for testing if all classes with a (custom) attribute has default constructor. Use for making sure all DTOs are serialisable through standard 
+            Deprecated. Use CompulsoryCow.IsImplemented instead.
+            Methods for testing if `Equals` has been implemented and has done so correctly.
+            Methods for testing if all classes with a (custom) attribute has default constructor. Use for making sure all DTOs are serialisable through standard
         </description>
         <authors>LosManos</authors>
 
@@ -22,7 +23,11 @@
         <projectUrl>https://github.com/LosManos/CompulsoryCow</projectUrl>
         <copyright>LGPLv3 + NoEvil</copyright>
         <license type="file">license.txt</license>
-        <summary>Methods for testing if `Equals` has been implemented and has been implemented correctly.</summary>
+        <summary>
+            Deprecated. Use CompulsoryCow.IsImplemented instead.
+            Methods for testing if `Equals` has been implemented and has done so correctly.
+            Methods for testing if all classes with a (custom) attribute has default constructor. Use for making sure all DTOs are serialisable through standard
+        </summary>
         <dependencies>
             <group targetFramework=".NETStandard2.0">
                 <dependency id="CompulsoryCow.Meta" version="6.2.0" exclude="Build,Analyzers" />
