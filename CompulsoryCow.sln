@@ -130,6 +130,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.Constructor.Unit.Tests", "CompulsoryCow.IsEqualsImplemented\Tests\CompulsoryCow.Constructor.Unit.Tests\CompulsoryCow.Constructor.Unit.Tests.csproj", "{850349BC-2943-4592-9C5E-BAA89E8DFBD9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompulsoryCow.IsImplemented", "CompulsoryCow.IsImplemented", "{5EB15A51-E328-4DDF-903E-BCF42F81813D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompulsoryCow.IsImplemented", "CompulsoryCow.IsImplemented\CompulsoryCow.IsImplemented\CompulsoryCow.IsImplemented.csproj", "{69F3C2E2-B3C8-4B15-B932-6FB0E4B19810}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{949A41A7-3330-4730-B97C-F85907AC97E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEqualsImplemented.Unit.Tests", "CompulsoryCow.IsImplemented\Tests\IsEqualsImplemented.Unit.Tests\IsEqualsImplemented.Unit.Tests.csproj", "{1260FA11-B4E6-4464-BC40-1EA11C27D0C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEqualsImplementedAssemblyOk", "CompulsoryCow.IsImplemented\Tests\IsEqualsImplementedAssemblyOk\IsEqualsImplementedAssemblyOk.csproj", "{84C32686-3D05-4A5F-BDE8-DB451D1100A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEqualsImplementedAssemblyNotOk", "CompulsoryCow.IsImplemented\Tests\IsEqualsImplementedAssemblyNotOk\IsEqualsImplementedAssemblyNotOk.csproj", "{6F8EDBCF-067F-4335-9700-5F6BC8EBA830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEqualsImplementedAssemblyNoDefinitionAtAll", "CompulsoryCow.IsImplemented\Tests\IsEqualsImplementedAssemblyNoDefinitionAtAll\IsEqualsImplementedAssemblyNoDefinitionAtAll.csproj", "{20FD3A1C-9190-472A-8BEE-5587C6EFBC80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -252,6 +266,26 @@ Global
 		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{850349BC-2943-4592-9C5E-BAA89E8DFBD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69F3C2E2-B3C8-4B15-B932-6FB0E4B19810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69F3C2E2-B3C8-4B15-B932-6FB0E4B19810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69F3C2E2-B3C8-4B15-B932-6FB0E4B19810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69F3C2E2-B3C8-4B15-B932-6FB0E4B19810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1260FA11-B4E6-4464-BC40-1EA11C27D0C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1260FA11-B4E6-4464-BC40-1EA11C27D0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1260FA11-B4E6-4464-BC40-1EA11C27D0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1260FA11-B4E6-4464-BC40-1EA11C27D0C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84C32686-3D05-4A5F-BDE8-DB451D1100A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C32686-3D05-4A5F-BDE8-DB451D1100A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C32686-3D05-4A5F-BDE8-DB451D1100A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C32686-3D05-4A5F-BDE8-DB451D1100A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F8EDBCF-067F-4335-9700-5F6BC8EBA830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F8EDBCF-067F-4335-9700-5F6BC8EBA830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F8EDBCF-067F-4335-9700-5F6BC8EBA830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F8EDBCF-067F-4335-9700-5F6BC8EBA830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FD3A1C-9190-472A-8BEE-5587C6EFBC80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FD3A1C-9190-472A-8BEE-5587C6EFBC80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FD3A1C-9190-472A-8BEE-5587C6EFBC80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FD3A1C-9190-472A-8BEE-5587C6EFBC80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -298,6 +332,12 @@ Global
 		{B72B0C3F-7704-4477-8013-987F279837BC} = {00BB8B93-6104-45C8-81EA-D2CB177F1259}
 		{8E17479C-722D-4F4C-A380-F55311FE843F} = {3EAE5209-1053-42F0-9AB7-FDEE1D9405C8}
 		{850349BC-2943-4592-9C5E-BAA89E8DFBD9} = {60D76C33-015C-4E05-AA5A-7D25ECB67030}
+		{69F3C2E2-B3C8-4B15-B932-6FB0E4B19810} = {5EB15A51-E328-4DDF-903E-BCF42F81813D}
+		{949A41A7-3330-4730-B97C-F85907AC97E4} = {5EB15A51-E328-4DDF-903E-BCF42F81813D}
+		{1260FA11-B4E6-4464-BC40-1EA11C27D0C4} = {949A41A7-3330-4730-B97C-F85907AC97E4}
+		{84C32686-3D05-4A5F-BDE8-DB451D1100A0} = {949A41A7-3330-4730-B97C-F85907AC97E4}
+		{6F8EDBCF-067F-4335-9700-5F6BC8EBA830} = {949A41A7-3330-4730-B97C-F85907AC97E4}
+		{20FD3A1C-9190-472A-8BEE-5587C6EFBC80} = {949A41A7-3330-4730-B97C-F85907AC97E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C034792-6F0A-4A9F-8155-2858283515F7}
