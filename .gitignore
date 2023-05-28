@@ -9,6 +9,7 @@ obj
 
 # Rider
 .idea
+.DS_Store
 
 # mstest test results
 TestResults
