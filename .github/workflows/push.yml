@@ -67,6 +67,12 @@ jobs:
       if: success() || failure()
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
+          PROJECT_FILE_PATH: CompulsoryCow.IsImplemented/CompulsoryCow.IsImplemented/CompulsoryCow.IsImplemented.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+    - name: Possibly publish CompulsoryCow.Meta
+      if: success() || failure()
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
           PROJECT_FILE_PATH: CompulsoryCow.Meta/CompulsoryCow.Meta/CompulsoryCow.Meta.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.Permutation
