@@ -65,7 +65,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.IsImplemented
       if: success() || failure()
-      run: nuget push **\CompulsoryCow.IsEqualsImplemented.*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+      run: nuget push **\CompulsoryCow.IsImplemented.*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
     - name: Possibly publish CompulsoryCow.Meta
       if: success() || failure()
       uses: brandedoutcast/publish-nuget@v2.5.5
