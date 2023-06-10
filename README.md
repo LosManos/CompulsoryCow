@@ -19,7 +19,9 @@ CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below
 ### Wrapper for simple de/serialising of objects
 [CompulsoryCow.DeSerialiser](https://github.com/LosManos/CompulsoryCow/wiki/DeSerialiser) Version 0.2.*  
 ### Check if IsEquals is implemented; used for automatic testing
-[CompulsoryCow.IsEqualsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsEqualsImplemented) Version 0.2.*  
+[CompulsoryCow.IsEqualsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsEqualsImplemented) Version 0.6.*  
+### Check if a method is implemented, presently only IsEquals; used for automatic testing
+[CompulsoryCow.IsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsImplemented) Version 0.7.*  
 ### Various helper methods to get meta information
 [CompulsoryCow.Meta Version](https://github.com/LosManos/CompulsoryCow/wiki/Meta) 5.0.*  
 ### Permutate parameters for a method; used for automatic testing for testing *all possible input*
