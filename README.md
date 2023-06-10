@@ -18,7 +18,7 @@ CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below
 [CompulsoryCow.AssemblyAbstractions](https://github.com/LosManos/CompulsoryCow/wiki/AssemblyAbstractions) 0.1.*  
 ### Wrapper for simple de/serialising of objects
 [CompulsoryCow.DeSerialiser](https://github.com/LosManos/CompulsoryCow/wiki/DeSerialiser) Version 0.2.*  
-### Check if IsEquals is implemented; used for automatic testing
+### Check if IsEquals is implemented; used for automatic testing. Note: Deprecated, use IsImplemented instead.
 [CompulsoryCow.IsEqualsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsEqualsImplemented) Version 0.6.*  
 ### Check if a method is implemented, presently only IsEquals; used for automatic testing
 [CompulsoryCow.IsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsImplemented) Version 0.7.*  
