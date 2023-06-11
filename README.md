@@ -12,15 +12,15 @@ CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below
 [CompulsoryCow.AreEqual](https://github.com/LosManos/CompulsoryCow/wiki/AreEqual) Version 0.2.*  
 ### Variant of `string.Split`, like what you would use for parsing a CSV file
 [Compulsorycow.CharacterSeparated](https://github.com/LosManos/CompulsoryCow/wiki/CharacterSeparated) Version 0.3.*  
-### Mockable System.DateTime and System.TimeSpan makes methods using them testable
+### Mockable `System.DateTime` and `System.TimeSpan` makes methods using them testable
 [CompulsoryCow.DateTimeAbstractions](https://github.com/LosManos/CompulsoryCow/wiki/DateTimeAbstractions) 0.1.*  
-### Mockable System.Reflection.Assembly makes methods using them testable  
+### Mockable `System.Reflection.Assembly` makes methods using them testable  
 [CompulsoryCow.AssemblyAbstractions](https://github.com/LosManos/CompulsoryCow/wiki/AssemblyAbstractions) 0.1.*  
 ### Wrapper for simple de/serialising of objects
 [CompulsoryCow.DeSerialiser](https://github.com/LosManos/CompulsoryCow/wiki/DeSerialiser) Version 0.2.*  
-### Check if IsEquals is implemented; used for automatic testing. Note: Deprecated, use IsImplemented instead.
+### Check if `Equals` is implemented; used for automatic testing. Note: Deprecated, use IsImplemented instead.
 [CompulsoryCow.IsEqualsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsEqualsImplemented) Version 0.6.*  
-### Check if a method is implemented, presently only IsEquals; used for automatic testing
+### Check if a method is implemented, presently only `Equals`; used for automatic testing
 [CompulsoryCow.IsImplemented](https://github.com/LosManos/CompulsoryCow/wiki/IsImplemented) Version 0.7.*  
 ### Various helper methods to get meta information
 [CompulsoryCow.Meta Version](https://github.com/LosManos/CompulsoryCow/wiki/Meta) 5.0.*  
@@ -28,7 +28,7 @@ CompulsoryCow Version 2.5.0 <- deprecated in favour of the ones below
 [CompulsoryCow.Permutation](https://github.com/LosManos/CompulsoryCow/wiki/Permutation) Version 0.1.*  
 ### Helper method to make it easy to call private methods, properties and fields
 [CompulsoryCow.ReachIn Version](https://github.com/LosManos/CompulsoryCow/wiki/ReachIn) 3.0.*  
-### Nifty extension methods to the System.String class.
+### Nifty extension methods to the `System.String` class.
 [CompulsoryCow.StringExtensions](https://github.com/LosManos/CompulsoryCow/wiki/StringExtensions)  Version 3.0.0
 
 ## License
